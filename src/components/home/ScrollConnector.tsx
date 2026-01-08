@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 
 interface ScrollConnectorProps {
-  onConnect: () => void
+  setServicesPowered: (powered: boolean) => void
+  setCalendarPowered: (powered: boolean) => void
 }
 
-export function ScrollConnector({ onConnect }: ScrollConnectorProps) {
+export function ScrollConnector({ setServicesPowered, setCalendarPowered }: ScrollConnectorProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Track scroll progress within this specific container
@@ -16,66 +17,56 @@ export function ScrollConnector({ onConnect }: ScrollConnectorProps) {
     offset: ["start start", "end end"]
   })
 
-  // Smooth out the progress
-  const pathLength = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+  // Smooth physics for the visual line (prevents "robotic" feel)
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 15,
     restDelta: 0.001
   })
 
-  // Trigger callback when connection is made (95%)
+  // Visual height based on smooth physics
+  const height = useTransform(smoothProgress, [0, 1], ["0%", "100%"])
+
+  // Logic triggers based on RAW progress (instant response)
   useEffect(() => {
-    return pathLength.on("change", (latest) => {
-      if (latest >= 0.95) {
-        onConnect()
+    return scrollYProgress.on("change", (latest) => {
+      // 1. Services Trigger (Earlier ~45% to ensure it's lit when user sees it)
+      if (latest >= 0.45) {
+        setServicesPowered(true)
+      } else {
+        setServicesPowered(false)
+      }
+
+      // 2. Calendar Trigger (Late ~85% right before footer)
+      if (latest >= 0.85) {
+        setCalendarPowered(true)
+      } else {
+        setCalendarPowered(false)
       }
     })
-  }, [pathLength, onConnect])
+  }, [scrollYProgress, setServicesPowered, setCalendarPowered])
 
   return (
-    <div ref={containerRef} className="absolute inset-x-0 top-0 bottom-0 pointer-events-none overflow-hidden">
-      <svg
-        className="absolute w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
+    <div ref={containerRef} className="absolute top-0 bottom-0 pointer-events-none overflow-hidden left-1/2 -translate-x-1/2 md:left-24 md:translate-x-0">
+      {/* Background Track */}
+      <div className="h-full w-[2px] bg-green-500/20" />
+
+      {/* Animated Energy Line */}
+      <motion.div
+        style={{ 
+          height,
+          boxShadow: "0 0 15px #22c55e, 0 0 30px #22c55e"
+        }}
+        className="absolute top-0 w-[3px] bg-gradient-to-b from-green-500 via-green-400 to-green-500"
       >
-        <defs>
-          <linearGradient id="neonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="10%" stopColor="#22c55e" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#22c55e" />
-            <stop offset="90%" stopColor="#22c55e" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#4ade80" />
-          </linearGradient>
-          
-          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
-
-        {/* Background track (dim) */}
-        <motion.path
-          d="M 50% 0 L 50% 100%"
-          stroke="#22c55e"
-          strokeWidth="2"
-          strokeOpacity="0.1"
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-        />
-
-        {/* Animated Connector */}
-        <motion.path
-          d="M 50% 0 L 50% 100%"
-          stroke="url(#neonGradient)"
-          strokeWidth="3"
-          fill="none"
-          strokeLinecap="round"
-          filter="url(#glow)"
-          style={{ pathLength }}
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+        {/* Pulsing Head/End of line (High Voltage Spark) */}
+         <motion.div 
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-white rounded-full blur-[4px]"
+            style={{ boxShadow: "0 0 20px 5px rgba(255, 255, 255, 0.8), 0 0 40px 10px rgba(34, 197, 94, 0.6)" }}
+            animate={{ opacity: [0.8, 1, 0.8], scale: [1, 1.3, 1] }}
+            transition={{ duration: 0.1, repeat: Infinity }}
+         />
+      </motion.div>
     </div>
   )
 }

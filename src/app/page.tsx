@@ -10,7 +10,8 @@ import Cal, { getCalApi } from "@calcom/embed-react"
 import { useEffect } from "react"
 
 export default function Home() {
-  const [isPowered, setIsPowered] = useState(false)
+  const [servicesPowered, setServicesPowered] = useState(false)
+  const [calendarPowered, setCalendarPowered] = useState(false)
 
   useEffect(() => {
 	  (async function () {
@@ -48,14 +49,17 @@ export default function Home() {
       {/* Scrollytelling Container */}
       <div className="relative">
         {/* Neural Cable Background */}
-        <ScrollConnector onConnect={() => setIsPowered(true)} />
+        <ScrollConnector 
+          setServicesPowered={setServicesPowered} 
+          setCalendarPowered={setCalendarPowered}
+        />
 
         {/* Hero Section */}
         <section className="pt-32 pb-20 px-6 relative z-10">
           <div className="container mx-auto max-w-7xl">
             <div className="animate-fade-in-up">
-              <div className="max-w-4xl bg-background/50 backdrop-blur-sm p-4 rounded-xl inline-block">
-                <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 text-balance">
+              <div className="max-w-4xl bg-background/95 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5 shadow-2xl">
+                <h1 className="text-4xl md:text-8xl font-bold leading-none mb-6 text-balance">
                   Ingeniería de escalamiento acelerado
                   <span className="block text-primary mt-2">para negocios digitales.</span>
                 </h1>
@@ -108,7 +112,7 @@ export default function Home() {
         {/* Services Grid */}
         <section id="servicios" className="py-24 px-6 relative z-10">
           <div className="container mx-auto max-w-7xl">
-            <div className="mb-16 text-center md:text-left bg-background/50 backdrop-blur-sm p-4 rounded-xl inline-block">
+            <div className="mb-16 text-center md:text-left bg-background/90 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5">
               <h2 className="text-5xl font-bold mb-4">Ecosistema de servicios</h2>
               <p className="text-xl text-muted-foreground max-w-2xl">
                 Soluciones modulares que trabajan juntas para acelerar tu crecimiento digital.
@@ -142,15 +146,18 @@ export default function Home() {
                 <motion.div
                   key={index}
                   initial={{ opacity: 0.5, scale: 1 }}
-                  animate={isPowered ? {
+                  animate={servicesPowered ? {
                     opacity: 1,
                     scale: 1.02,
-                    borderColor: "hsl(var(--primary))",
+                    borderColor: "#22c55e", // Primary green
                     boxShadow: "0 0 30px rgba(34,197,94,0.3)"
                   } : {}}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl ${!isPowered ? 'border-border' : ''}`}
+                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl relative overflow-visible ${!servicesPowered ? 'border-border' : ''}`}
                 >
+                  {/* Horizontal Connection Line */}
+                  <div className="absolute top-1/2 right-full w-32 h-[2px] bg-gradient-to-l from-green-500/50 to-transparent hidden md:block opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
                   <div className="flex items-start justify-between mb-6">
                     <div className="p-3 bg-primary/10 rounded-lg">
                       <service.icon className="w-8 h-8 text-primary" />
@@ -172,7 +179,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </div>
+
 
       {/* Why Section */}
       <section className="py-24 px-6 bg-secondary/30">
@@ -243,15 +250,23 @@ export default function Home() {
             Agenda una auditoría gratuita y descubre cómo nuestra infraestructura puede acelerar tu crecimiento.
           </p>
           
-          <div className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative">
+          <motion.div 
+             className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
+             animate={calendarPowered ? {
+               borderColor: "#22c55e",
+               boxShadow: "0 0 40px rgba(34,197,94,0.2)"
+             } : {}}
+             transition={{ duration: 0.8 }}
+          >
              <Cal 
               calLink="juan-arango-publicidad-ixgzdu/auditoria-tecnica"
               style={{width:"100%",height:"100%",overflow:"scroll"}}
               config={{layout: 'month_view', theme: 'dark'}}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
+      </div> {/* Scrollytelling Container Ends Here now */}
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-12 px-6">
