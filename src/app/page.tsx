@@ -6,9 +6,18 @@ import { Card } from "@/components/ui/card"
 import { ArrowRight, Zap, TrendingUp, ShoppingCart, BarChart3, MessageSquare, Search, Package } from "lucide-react"
 import { motion } from "framer-motion"
 import { ScrollConnector } from "@/components/home/ScrollConnector"
+import Cal, { getCalApi } from "@calcom/embed-react"
+import { useEffect } from "react"
 
 export default function Home() {
   const [isPowered, setIsPowered] = useState(false)
+
+  useEffect(() => {
+	  (async function () {
+		const cal = await getCalApi({});
+		cal("ui", {"theme":"dark", "styles":{"branding":{"brandColor":"#22c55e"}},"hideEventTypeDetails":false,"layout":"month_view"});
+	  })();
+	}, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -226,24 +235,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section id="contacto" className="py-24 px-6">
-        <div className="container mx-auto max-w-4xl text-center">
+      {/* CTA Section / Booking */}
+      <section id="contacto" className="py-24 px-6 relative z-10">
+        <div className="container mx-auto max-w-5xl text-center">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 text-balance">¿Listo para escalar tu negocio?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
             Agenda una auditoría gratuita y descubre cómo nuestra infraestructura puede acelerar tu crecimiento.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6">
-              Agenda tu Auditoría Gratuita
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-6 border-border hover:border-primary bg-transparent"
-            >
-              Ver Casos de Estudio
-            </Button>
+          
+          <div className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative">
+             <Cal 
+              calLink="juan-arango-publicidad-ixgzdu/auditoria-tecnica"
+              style={{width:"100%",height:"100%",overflow:"scroll"}}
+              config={{layout: 'month_view', theme: 'dark'}}
+            />
           </div>
         </div>
       </section>
