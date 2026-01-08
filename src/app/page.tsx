@@ -1,10 +1,17 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Zap, TrendingUp, ShoppingCart, BarChart3, MessageSquare, Search, Package } from "lucide-react"
+import { motion } from "framer-motion"
+import { ScrollConnector } from "@/components/home/ScrollConnector"
 
 export default function Home() {
+  const [isPowered, setIsPowered] = useState(false)
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Navigation */}
       <nav className="border-b border-border/50 backdrop-blur-sm fixed top-0 w-full z-50 bg-background/80">
         <div className="container mx-auto px-6 py-4">
@@ -29,203 +36,134 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="animate-fade-in-up">
-            <div className="max-w-4xl">
-              <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 text-balance">
-                Arquitectos de
-                <span className="block text-primary mt-2">ecosistemas digitales</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed text-pretty max-w-2xl">
-                No montamos tiendas. Construimos infraestructura tecnológica que escala tu negocio de 6 a 7 cifras.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 group"
-                >
-                  Auditoría Gratuita
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-lg px-8 py-6 border-border hover:border-primary bg-transparent"
-                >
-                  Ver Casos de Éxito
-                </Button>
+      {/* Scrollytelling Container */}
+      <div className="relative">
+        {/* Neural Cable Background */}
+        <ScrollConnector onConnect={() => setIsPowered(true)} />
+
+        {/* Hero Section */}
+        <section className="pt-32 pb-20 px-6 relative z-10">
+          <div className="container mx-auto max-w-7xl">
+            <div className="animate-fade-in-up">
+              <div className="max-w-4xl bg-background/50 backdrop-blur-sm p-4 rounded-xl inline-block">
+                <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 text-balance">
+                  Ingeniería de escalamiento acelerado
+                  <span className="block text-primary mt-2">para negocios digitales.</span>
+                </h1>
+                <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed text-pretty max-w-2xl">
+                  No solo creamos webs. Diseñamos la estrategia, automatizaciones e infraestructura necesarias para eliminar tus cuellos de botella y acelerar tu crecimiento.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    size="lg"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 group"
+                  >
+                    Solicitar Diagnóstico Estratégico
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-lg px-8 py-6 border-border hover:border-primary bg-background/80"
+                  >
+                    Ver Casos de Éxito
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Metrics Bar */}
-      <section id="metricas" className="py-16 px-6 border-y border-border/50">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { value: "10x", label: "ROI Promedio", suffix: "" },
-              { value: "99.9", label: "Uptime", suffix: "%" },
-              { value: "<200", label: "Tiempo de Carga", suffix: "ms" },
-              { value: "50+", label: "Proyectos Escalados", suffix: "" },
-            ].map((metric, index) => (
-              <div key={index} className="text-center">
-                <div className="text-5xl font-bold text-primary mb-2">
-                  {metric.value}
-                  {metric.suffix}
-                </div>
-                <div className="text-muted-foreground">{metric.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section id="servicios" className="py-24 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="mb-16">
-            <h2 className="text-5xl font-bold mb-4">Ecosistema de servicios</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Soluciones modulares que trabajan juntas para acelerar tu crecimiento digital.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* NitroBot */}
-            <Card className="bg-card border-border p-8 hover:border-primary transition-all duration-300 group">
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <MessageSquare className="w-8 h-8 text-primary" />
-                </div>
-                <span className="text-sm text-primary font-mono">01</span>
-              </div>
-              <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">NitroBot</h3>
-              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                Agentes de chat con IA que convierten conversaciones en ventas. Soporte 24/7, calificación de leads y
-                automatización inteligente.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">Conversión +35%</span>
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">Soporte 24/7</span>
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">Lead Scoring</span>
-              </div>
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-primary/80 p-0 group-hover:translate-x-2 transition-transform"
-              >
-                Explorar <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Card>
-
-            {/* NitroSearch */}
-            <Card className="bg-card border-border p-8 hover:border-primary transition-all duration-300 group">
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <Search className="w-8 h-8 text-primary" />
-                </div>
-                <span className="text-sm text-primary font-mono">02</span>
-              </div>
-              <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">NitroSearch</h3>
-              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                Estrategia de visibilidad omnicanal. SEO técnico, optimización de conversión y posicionamiento en redes
-                sociales que genera tráfico calificado.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">Tráfico +200%</span>
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">SEO Técnico</span>
-                <span className="text-xs bg-secondary px-3 py-1 rounded-full">Social Growth</span>
-              </div>
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-primary/80 p-0 group-hover:translate-x-2 transition-transform"
-              >
-                Explorar <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Card>
-
-            {/* NitroCommerce */}
-            <Card className="bg-card border-border p-8 hover:border-primary transition-all duration-300 group lg:col-span-2">
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <ShoppingCart className="w-8 h-8 text-primary" />
-                </div>
-                <span className="text-sm text-primary font-mono">03</span>
-              </div>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">NitroCommerce</h3>
-                  <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                    Ecosistemas de ecommerce headless de última generación. Arquitectura desacoplada, rendimiento
-                    extremo y experiencias de compra que convierten.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="text-xs bg-secondary px-3 py-1 rounded-full">Headless CMS</span>
-                    <span className="text-xs bg-secondary px-3 py-1 rounded-full">Tiempo de carga {"<"}1s</span>
-                    <span className="text-xs bg-secondary px-3 py-1 rounded-full">Escalabilidad Infinita</span>
+        {/* Metrics Bar */}
+        <section id="metricas" className="py-16 px-6 relative z-10">
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                { value: "150%", label: "Aumento de Eficiencia", suffix: "" },
+                { value: "<200", label: "Infraestructura de Grado Militar", suffix: "ms" },
+                { value: "99.9%", label: "Uptime de Sistemas", suffix: "" },
+                { value: "50+", label: "Sistemas Automatizados", suffix: "" },
+              ].map((metric, index) => (
+                <div key={index} className="text-center bg-background/50 backdrop-blur-sm p-4 rounded-lg">
+                  <div className="text-5xl font-bold text-primary mb-2">
+                    {metric.value}
+                    {metric.suffix}
                   </div>
+                  <div className="text-muted-foreground">{metric.label}</div>
                 </div>
-                <div className="flex items-center justify-center">
-                  <div className="bg-secondary/50 p-8 rounded-lg border border-border">
-                    <Package className="w-24 h-24 text-primary/50 mb-4" />
-                    <div className="text-sm text-muted-foreground">Stack Tecnológico:</div>
-                    <div className="text-xs text-muted-foreground mt-2 space-y-1">
-                      <div>→ Next.js 16 + React 19</div>
-                      <div>→ Headless CMS (Sanity/Contentful)</div>
-                      <div>→ Stripe/Shopify API</div>
-                      <div>→ Vercel Edge Network</div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Services Grid */}
+        <section id="servicios" className="py-24 px-6 relative z-10">
+          <div className="container mx-auto max-w-7xl">
+            <div className="mb-16 text-center md:text-left bg-background/50 backdrop-blur-sm p-4 rounded-xl inline-block">
+              <h2 className="text-5xl font-bold mb-4">Ecosistema de servicios</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                Soluciones modulares que trabajan juntas para acelerar tu crecimiento digital.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  id: "01",
+                  icon: MessageSquare,
+                  title: "NitroBot",
+                  desc: "Eficiencia Operativa. No es solo un chat, es liberar tiempo de tu equipo mediante automatización inteligente.",
+                  cta: "Ver Automatización"
+                },
+                {
+                  id: "02",
+                  icon: ShoppingCart,
+                  title: "NitroCommerce",
+                  desc: "Velocidad sin fricción. Arquitectura Headless (<200ms) diseñada para soportar tráfico masivo y maximizar la conversión.",
+                  cta: "Ver Infraestructura"
+                },
+                {
+                  id: "03",
+                  icon: BarChart3,
+                  title: "NitroStrategy",
+                  desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico que tu empresa necesita para escalar sin fricción.",
+                  cta: "Ver Consultoría"
+                }
+              ].map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0.5, scale: 1 }}
+                  animate={isPowered ? {
+                    opacity: 1,
+                    scale: 1.02,
+                    borderColor: "hsl(var(--primary))",
+                    boxShadow: "0 0 30px rgba(34,197,94,0.3)"
+                  } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl ${!isPowered ? 'border-border' : ''}`}
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                      <service.icon className="w-8 h-8 text-primary" />
                     </div>
+                    <span className="text-sm text-primary font-mono">{service.id}</span>
                   </div>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-primary/80 p-0 mt-4 group-hover:translate-x-2 transition-transform"
-              >
-                Ver Arquitectura <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Card>
-
-            {/* AuditoríaNitro */}
-            <Card className="bg-card border-border p-8 hover:border-primary transition-all duration-300 group lg:col-span-2">
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <BarChart3 className="w-8 h-8 text-primary" />
-                </div>
-                <span className="text-sm text-primary font-mono">04</span>
-              </div>
-              <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors">AuditoríaNitro</h3>
-              <p className="text-muted-foreground text-lg mb-6 leading-relaxed max-w-3xl">
-                Consultoría especializada en comercio electrónico y marketing digital. Análisis profundo de tu operación
-                actual, identificación de cuellos de botella y roadmap estratégico para escalar tu negocio.
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 mb-6">
-                <div className="bg-secondary/30 p-4 rounded-lg border border-border/50">
-                  <div className="text-2xl font-bold text-primary mb-1">Análisis</div>
-                  <div className="text-sm text-muted-foreground">Auditoría técnica completa</div>
-                </div>
-                <div className="bg-secondary/30 p-4 rounded-lg border border-border/50">
-                  <div className="text-2xl font-bold text-primary mb-1">Estrategia</div>
-                  <div className="text-sm text-muted-foreground">Roadmap de crecimiento</div>
-                </div>
-                <div className="bg-secondary/30 p-4 rounded-lg border border-border/50">
-                  <div className="text-2xl font-bold text-primary mb-1">Ejecución</div>
-                  <div className="text-sm text-muted-foreground">Implementación guiada</div>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-primary/80 p-0 group-hover:translate-x-2 transition-transform"
-              >
-                Solicitar Auditoría <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Card>
+                  <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {service.desc}
+                  </p>
+                  <Button
+                    variant="ghost"
+                    className="text-primary hover:text-primary/80 p-0 group-hover:translate-x-2 transition-transform"
+                  >
+                    {service.cta} <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Why Section */}
       <section className="py-24 px-6 bg-secondary/30">
@@ -236,7 +174,7 @@ export default function Home() {
                 Por qué las empresas que escalan nos eligen
               </h2>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                No somos una agencia más. Somos ingenieros de sistemas que entienden tanto el código como el negocio.
+                Somos tus socios estratégicos de infraestructura. Integramos estrategia de negocio con ingeniería avanzada para automatizar tu éxito.
               </p>
               <div className="space-y-6">
                 {[
@@ -341,7 +279,7 @@ export default function Home() {
                 </li>
                 <li>
                   <a href="#" className="hover:text-primary transition-colors">
-                    AuditoríaNitro
+                    NitroStrategy
                   </a>
                 </li>
               </ul>
