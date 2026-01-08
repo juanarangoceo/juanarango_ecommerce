@@ -5,19 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Zap, TrendingUp, ShoppingCart, BarChart3, MessageSquare, Search, Package } from "lucide-react"
 import { motion } from "framer-motion"
-import { ScrollConnector } from "@/components/home/ScrollConnector"
-import Cal, { getCalApi } from "@calcom/embed-react"
-import { useEffect } from "react"
+import dynamic from "next/dynamic"
+
+// Dynamic Cal import with skeleton loader
+const Cal = dynamic(() => import("@calcom/embed-react").then((mod) => mod.default), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-slate-900/50 animate-pulse flex items-center justify-center text-muted-foreground p-8">Cargando Calendario...</div>
+})
 
 export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0)
-
-  useEffect(() => {
-	  (async function () {
-		const cal = await getCalApi({});
-		cal("ui", {"theme":"dark", "styles":{"branding":{"brandColor":"#22c55e"}},"hideEventTypeDetails":false,"layout":"month_view"});
-	  })();
-	}, []);
+  const [loadCalendar, setLoadCalendar] = useState(false)
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -45,19 +42,15 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Scrollytelling Container */}
+      {/* Optimized Layout Container */}
       <div className="relative">
-        {/* Neural Cable Background */}
-        <ScrollConnector 
-          onScrollChange={setScrollProgress} 
-        />
-
+        
         {/* Hero Section */}
-        <section className="pt-32 pb-20 px-6 relative z-10">
+        <section className="pt-24 md:pt-32 pb-20 px-6 relative z-10">
           <div className="container mx-auto max-w-7xl">
             <div className="animate-fade-in-up">
               <div className="max-w-4xl bg-background/95 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5 shadow-2xl">
-                <h1 className="text-4xl md:text-8xl font-bold leading-none mb-6 text-balance">
+                <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-none mb-6 text-balance">
                   Ingeniería de escalamiento acelerado
                   <span className="block text-primary mt-2">para negocios digitales.</span>
                 </h1>
@@ -140,23 +133,20 @@ export default function Home() {
                   desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico que tu empresa necesita para escalar sin fricción.",
                   cta: "Ver Consultoría"
                 }
-              ].map((service, index) => {
-                const isLit = scrollProgress > (0.30 + (index * 0.05)) // Earlier trigger: 0.30, 0.35, 0.40
-                return (
+              ].map((service, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0.5, scale: 1 }}
-                  animate={isLit ? {
-                    opacity: 1,
-                    scale: 1.02,
-                    borderColor: "#22c55e", // Primary green
-                    boxShadow: "0 0 30px rgba(34,197,94,0.3)"
-                  } : {}}
-                  transition={{ duration: 0.5 }}
-                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl relative overflow-visible ${!isLit ? 'border-border' : ''}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    borderColor: "#22c55e", 
+                    boxShadow: "0 0 20px rgba(34,197,94,0.3)" 
+                  }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-card border border-border/50 p-8 transition-all duration-300 group rounded-xl relative overflow-visible hover:border-primary/50"
                 >
-                  {/* Horizontal Connection Line */}
-                  <div className="absolute top-1/2 right-full w-4 md:w-32 h-[2px] bg-gradient-to-l from-green-500/50 to-transparent block opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="flex items-start justify-between mb-6">
                     <div className="p-3 bg-primary/10 rounded-lg">
@@ -175,8 +165,7 @@ export default function Home() {
                     {service.cta} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </motion.div>
-                )
-              })}
+              ))}
             </div>
           </div>
         </section>
@@ -251,24 +240,25 @@ export default function Home() {
             Agenda una auditoría gratuita y descubre cómo nuestra infraestructura puede acelerar tu crecimiento.
           </p>
           
-          {/* Connection Point / Socket */}
-          <div className="flex justify-center mb-0 relative z-20">
-            <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 ${scrollProgress > 0.85 ? 'bg-green-500 border-green-400 shadow-[0_0_20px_#22c55e]' : 'bg-slate-900 border-white/10'}`} />
-          </div>
-
           <motion.div 
              className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
-             animate={scrollProgress > 0.85 ? {
-               borderColor: "#22c55e",
-               boxShadow: "0 0 40px rgba(34,197,94,0.2)"
-             } : {}}
+             initial={{ opacity: 0, borderColor: "rgba(255,255,255,0.1)" }}
+             whileInView={{ 
+               opacity: 1, 
+               borderColor: "#22c55e", 
+               boxShadow: "0 0 40px rgba(34,197,94,0.2)" 
+             }}
+             viewport={{ once: true }}
+             onViewportEnter={() => setLoadCalendar(true)}
              transition={{ duration: 0.8 }}
           >
-             <Cal 
-              calLink="juan-arango-publicidad-ixgzdu/auditoria-tecnica"
-              style={{width:"100%",height:"100%",overflow:"scroll"}}
-              config={{layout: 'month_view', theme: 'dark'}}
-            />
+             {loadCalendar && (
+               <Cal 
+                calLink="juan-arango-publicidad-ixgzdu/auditoria-tecnica"
+                style={{width:"100%",height:"100%",overflow:"scroll"}}
+                config={{layout: 'month_view', theme: 'dark'}}
+              />
+             )}
           </motion.div>
         </div>
       </section>
