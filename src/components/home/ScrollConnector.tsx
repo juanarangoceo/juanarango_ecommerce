@@ -34,7 +34,7 @@ export function ScrollConnector({ onScrollChange }: ScrollConnectorProps) {
   }, [scrollYProgress, onScrollChange])
 
   return (
-    <div ref={containerRef} className="absolute top-0 bottom-0 pointer-events-none overflow-hidden left-8 md:left-24">
+    <div ref={containerRef} className="absolute top-0 bottom-0 pointer-events-none overflow-hidden left-5 md:left-24">
       {/* Background Track */}
       <div className="h-full w-[2px] bg-green-500/20" />
 

@@ -109,7 +109,7 @@ export default function Home() {
 
         {/* Services Grid */}
         <section id="servicios" className="py-24 px-6 relative z-10">
-          <div className="container mx-auto max-w-7xl">
+          <div className="container mx-auto max-w-7xl pl-8 md:pl-0">
             <div className="mb-16 text-center md:text-left bg-background/90 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5">
               <h2 className="text-5xl font-bold mb-4">Ecosistema de servicios</h2>
               <p className="text-xl text-muted-foreground max-w-2xl">
@@ -141,7 +141,7 @@ export default function Home() {
                   cta: "Ver Consultoría"
                 }
               ].map((service, index) => {
-                const isLit = scrollProgress > (0.42 + (index * 0.08)) // Staggered: 0.42, 0.50, 0.58
+                const isLit = scrollProgress > (0.30 + (index * 0.05)) // Earlier trigger: 0.30, 0.35, 0.40
                 return (
                 <motion.div
                   key={index}
