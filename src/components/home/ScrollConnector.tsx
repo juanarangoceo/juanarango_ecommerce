@@ -4,11 +4,10 @@ import { useEffect, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 
 interface ScrollConnectorProps {
-  setServicesPowered: (powered: boolean) => void
-  setCalendarPowered: (powered: boolean) => void
+  onScrollChange: (progress: number) => void
 }
 
-export function ScrollConnector({ setServicesPowered, setCalendarPowered }: ScrollConnectorProps) {
+export function ScrollConnector({ onScrollChange }: ScrollConnectorProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Track scroll progress within this specific container
@@ -27,27 +26,15 @@ export function ScrollConnector({ setServicesPowered, setCalendarPowered }: Scro
   // Visual height based on smooth physics
   const height = useTransform(smoothProgress, [0, 1], ["0%", "100%"])
 
-  // Logic triggers based on RAW progress (instant response)
+  // Report raw progress to parent logic
   useEffect(() => {
     return scrollYProgress.on("change", (latest) => {
-      // 1. Services Trigger (Earlier ~45% to ensure it's lit when user sees it)
-      if (latest >= 0.45) {
-        setServicesPowered(true)
-      } else {
-        setServicesPowered(false)
-      }
-
-      // 2. Calendar Trigger (Late ~85% right before footer)
-      if (latest >= 0.85) {
-        setCalendarPowered(true)
-      } else {
-        setCalendarPowered(false)
-      }
+      onScrollChange(latest)
     })
-  }, [scrollYProgress, setServicesPowered, setCalendarPowered])
+  }, [scrollYProgress, onScrollChange])
 
   return (
-    <div ref={containerRef} className="absolute top-0 bottom-0 pointer-events-none overflow-hidden left-1/2 -translate-x-1/2 md:left-24 md:translate-x-0">
+    <div ref={containerRef} className="absolute top-0 bottom-0 pointer-events-none overflow-hidden left-8 md:left-24">
       {/* Background Track */}
       <div className="h-full w-[2px] bg-green-500/20" />
 

@@ -10,8 +10,7 @@ import Cal, { getCalApi } from "@calcom/embed-react"
 import { useEffect } from "react"
 
 export default function Home() {
-  const [servicesPowered, setServicesPowered] = useState(false)
-  const [calendarPowered, setCalendarPowered] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
 	  (async function () {
@@ -41,7 +40,7 @@ export default function Home() {
                 Contacto
               </a>
             </div>
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">Consulta Gratuita</Button>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 hidden sm:inline-flex">Consulta Gratuita</Button>
           </div>
         </div>
       </nav>
@@ -50,8 +49,7 @@ export default function Home() {
       <div className="relative">
         {/* Neural Cable Background */}
         <ScrollConnector 
-          setServicesPowered={setServicesPowered} 
-          setCalendarPowered={setCalendarPowered}
+          onScrollChange={setScrollProgress} 
         />
 
         {/* Hero Section */}
@@ -69,15 +67,15 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 group"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 group h-auto whitespace-normal text-left"
                   >
-                    Solicitar Diagnóstico Estratégico
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    <span className="flex-1">Solicitar Diagnóstico Estratégico</span>
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </Button>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="text-lg px-8 py-6 border-border hover:border-primary bg-background/80"
+                    className="text-lg px-8 py-6 border-border hover:border-primary bg-background/80 h-auto whitespace-normal"
                   >
                     Ver Casos de Éxito
                   </Button>
@@ -142,21 +140,23 @@ export default function Home() {
                   desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico que tu empresa necesita para escalar sin fricción.",
                   cta: "Ver Consultoría"
                 }
-              ].map((service, index) => (
+              ].map((service, index) => {
+                const isLit = scrollProgress > (0.42 + (index * 0.08)) // Staggered: 0.42, 0.50, 0.58
+                return (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0.5, scale: 1 }}
-                  animate={servicesPowered ? {
+                  animate={isLit ? {
                     opacity: 1,
                     scale: 1.02,
                     borderColor: "#22c55e", // Primary green
                     boxShadow: "0 0 30px rgba(34,197,94,0.3)"
                   } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl relative overflow-visible ${!servicesPowered ? 'border-border' : ''}`}
+                  transition={{ duration: 0.5 }}
+                  className={`bg-card border p-8 transition-all duration-300 group rounded-xl relative overflow-visible ${!isLit ? 'border-border' : ''}`}
                 >
                   {/* Horizontal Connection Line */}
-                  <div className="absolute top-1/2 right-full w-32 h-[2px] bg-gradient-to-l from-green-500/50 to-transparent hidden md:block opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-1/2 right-full w-4 md:w-32 h-[2px] bg-gradient-to-l from-green-500/50 to-transparent block opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="flex items-start justify-between mb-6">
                     <div className="p-3 bg-primary/10 rounded-lg">
@@ -175,7 +175,8 @@ export default function Home() {
                     {service.cta} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </motion.div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
@@ -252,7 +253,7 @@ export default function Home() {
           
           <motion.div 
              className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
-             animate={calendarPowered ? {
+             animate={scrollProgress > 0.85 ? {
                borderColor: "#22c55e",
                boxShadow: "0 0 40px rgba(34,197,94,0.2)"
              } : {}}
