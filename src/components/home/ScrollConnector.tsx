@@ -42,16 +42,15 @@ export function ScrollConnector({ onScrollChange }: ScrollConnectorProps) {
       <motion.div
         style={{ 
           height,
-          boxShadow: "0 0 15px #22c55e, 0 0 30px #22c55e"
+          boxShadow: "0 0 10px #22c55e, 0 0 20px #22c55e"
         }}
-        className="absolute top-0 w-[3px] bg-gradient-to-b from-green-500 via-green-400 to-green-500"
+        className="absolute top-0 w-[3px] bg-gradient-to-b from-green-500 via-green-400 to-green-500 will-change-[height]"
       >
-        {/* Pulsing Head/End of line (High Voltage Spark) */}
+        {/* Pulsing Head/End of line (Stable Energy Orb) */}
          <motion.div 
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-white rounded-full blur-[4px]"
-            style={{ boxShadow: "0 0 20px 5px rgba(255, 255, 255, 0.8), 0 0 40px 10px rgba(34, 197, 94, 0.6)" }}
-            animate={{ opacity: [0.8, 1, 0.8], scale: [1, 1.3, 1] }}
-            transition={{ duration: 0.1, repeat: Infinity }}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_rgba(34,197,94,0.8)]"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
          />
       </motion.div>
     </div>

@@ -109,7 +109,7 @@ export default function Home() {
 
         {/* Services Grid */}
         <section id="servicios" className="py-24 px-6 relative z-10">
-          <div className="container mx-auto max-w-7xl pl-8 md:pl-0">
+          <div className="container mx-auto max-w-7xl">
             <div className="mb-16 text-center md:text-left bg-background/90 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5">
               <h2 className="text-5xl font-bold mb-4">Ecosistema de servicios</h2>
               <p className="text-xl text-muted-foreground max-w-2xl">
@@ -251,6 +251,11 @@ export default function Home() {
             Agenda una auditoría gratuita y descubre cómo nuestra infraestructura puede acelerar tu crecimiento.
           </p>
           
+          {/* Connection Point / Socket */}
+          <div className="flex justify-center mb-0 relative z-20">
+            <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 ${scrollProgress > 0.85 ? 'bg-green-500 border-green-400 shadow-[0_0_20px_#22c55e]' : 'bg-slate-900 border-white/10'}`} />
+          </div>
+
           <motion.div 
              className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
              animate={scrollProgress > 0.85 ? {
