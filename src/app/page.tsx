@@ -5,8 +5,7 @@ import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
 import { BookingSection } from "@/components/booking-section"
 
-// Dynamic import for the heavy interactive banner
-// Using ssr: true ensures the H1 is present in the initial HTML for SEO
+// FIXED: Dynamic import with ssr: true to avoid full bundle download while maintaining SEO for H1
 const NitroBanner = dynamic(() => import("@/components/nitro-banner"), {
   ssr: true,
   loading: () => <div className="min-h-[80vh] w-full bg-background animate-pulse" />,
@@ -39,7 +38,7 @@ export default function Home() {
       <Navbar />
       
       <main className="flex-1 flex flex-col">
-        {/* ISLA 1: Banner Interactivo */}
+        {/* ISLA 1: Banner Interactivo (Dynamic Import) */}
         <NitroBanner />
         
         {/* Metrics Bar - Server Component Content */}
