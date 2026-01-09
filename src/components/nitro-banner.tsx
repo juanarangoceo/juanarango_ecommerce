@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
-export default function NitroBanner() {
+export function NitroBanner() {
   return (
     <section className="pt-32 md:pt-40 pb-20 px-6 relative z-10">
       <div className="container mx-auto max-w-7xl">
