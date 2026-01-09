@@ -54,16 +54,16 @@ export default function Page() {
         {/* 3. CONTENIDO: Espacio preparado para secciones estáticas (SEO) */}
         
         {/* Metrics Bar - Server Component Content */}
-        <section id="metricas" className="py-16 px-6 relative z-10">
+        <section id="resultados" className="py-12 md:py-24 px-6 relative z-10 border-y border-white/5 bg-white/[0.02]">
           <div className="container mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {metrics.map((metric, index) => (
-                <div key={index} className="text-center bg-background/50 backdrop-blur-sm p-4 rounded-lg">
-                  <div className="text-5xl font-bold text-primary mb-2">
+                <div key={index} className="text-center group">
+                  <div className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-primary to-emerald-600 mb-3 tracking-tight">
                     {metric.value}
-                    {metric.suffix}
+                    <span className="text-3xl text-primary/50 ml-1 align-top">{metric.suffix}</span>
                   </div>
-                  <div className="text-muted-foreground">{metric.label}</div>
+                  <div className="text-xs uppercase tracking-widest text-slate-500 font-medium">{metric.label}</div>
                 </div>
               ))}
             </div>
@@ -74,11 +74,11 @@ export default function Page() {
         <ServicesGrid />
 
         {/* Why Section - Server Component Content */}
-        <section className="py-24 px-6 bg-secondary/30">
+        <section className="py-16 md:py-24 px-6 bg-secondary/30">
           <div className="container mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h2 className="text-5xl font-bold mb-6 leading-tight text-balance">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-balance">
                   Por qué las empresas que escalan nos eligen
                 </h2>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
@@ -123,7 +123,9 @@ export default function Page() {
         </section>
 
         {/* ISLA 3: Booking Section (Interactive) */}
-        <BookingSection />
+        <div id="contacto">
+            <BookingSection />
+        </div>
 
       </main>
 

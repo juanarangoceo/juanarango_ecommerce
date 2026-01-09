@@ -1,37 +1,48 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 export function NitroBanner() {
   return (
-    <section className="pt-32 md:pt-40 pb-20 px-6 relative z-10">
+    <section className="relative pt-24 md:pt-48 pb-24 px-6 z-10 overflow-hidden">
+      {/* Glow Effect Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] -z-10 pointer-events-none" />
+
       <div className="container mx-auto max-w-7xl">
-        <div className="animate-fade-in-up">
-          <div className="max-w-4xl bg-background/95 backdrop-blur-md p-6 rounded-2xl inline-block border border-white/5 shadow-2xl">
-            <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-none mb-6 text-balance">
-              Ingeniería de escalamiento acelerado
-              <span className="block text-primary mt-2">para negocios digitales.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed text-pretty max-w-2xl">
-              No solo creamos webs. Diseñamos la estrategia, automatizaciones e infraestructura necesarias para eliminar tus cuellos de botella y acelerar tu crecimiento.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+        <div className="animate-fade-in-up flex flex-col items-center text-center">
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 text-balance">
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
+              Ingeniería de escalamiento
+            </span>
+            <span className="block text-primary mt-2">acelerado.</span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed text-pretty max-w-[65ch]">
+            No solo creamos webs. Diseñamos la estrategia, automatizaciones e infraestructura necesarias para eliminar tus cuellos de botella y acelerar tu crecimiento.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <Link href="#contacto" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 group h-auto whitespace-normal text-left"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 h-14"
               >
-                <span className="flex-1">Solicitar Diagnóstico Estratégico</span>
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                Solicitar Diagnóstico
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
+            </Link>
+            <Link href="#resultados" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-6 border-border hover:border-primary bg-background/80 h-auto whitespace-normal"
+                className="w-full text-lg px-8 py-6 h-14 border-white/10 hover:bg-white/5 hover:text-white text-slate-300"
               >
                 Ver Casos de Éxito
               </Button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
