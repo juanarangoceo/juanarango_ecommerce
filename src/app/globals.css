@@ -43,27 +43,11 @@
   /* Alineamos el modo oscuro explícito con la identidad Nitro (igual que :root) */
   --background: #050505;
   --foreground: oklch(0.98 0 0);
-  --card: oklch(0.12 0 0); /* Ligeramente más claro que bg por capas */
-/* ... existing content ... */
-}
-
-/* ... existing content ... */
-
-.animate-aurora-1 {
-  animation: aurora-1 60s ease-in-out infinite alternate; /* Slowed down significantly */
-}
-
-.animate-aurora-2 {
-  animation: aurora-2 80s ease-in-out infinite alternate; /* Slowed down significantly */
-}
-
-@utility text-glow {
-  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5); /* Very subtle glow */
-}
+  --card: oklch(0.12 0 0);
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.82 0.22 145); /* Accento Verde Nitro */
+  --primary: oklch(0.82 0.22 145);
   --primary-foreground: oklch(0.1 0 0);
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.98 0 0);
@@ -92,7 +76,6 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -195,13 +178,13 @@
 }
 
 .animate-aurora-1 {
-  animation: aurora-1 25s ease-in-out infinite alternate;
+  animation: aurora-1 60s ease-in-out infinite alternate;
 }
 
 .animate-aurora-2 {
-  animation: aurora-2 30s ease-in-out infinite alternate;
+  animation: aurora-2 80s ease-in-out infinite alternate;
 }
 
 @utility text-glow {
-  text-shadow: 0 0 15px var(--primary); /* Reduced from 20px for subtler effect */
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
 }
