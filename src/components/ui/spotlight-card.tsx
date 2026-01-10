@@ -12,7 +12,7 @@ interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(34, 197, 94, 0.15)", // Much lighter opacity for elegance
+  spotlightColor = "rgba(34, 197, 94, 0.04)", // Subtle whisper effect
   ...props
 }: SpotlightCardProps) {
   const divRef = useRef<HTMLDivElement>(null)
@@ -38,9 +38,9 @@ export function SpotlightCard({
       {...props}
     >
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-700 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), ${spotlightColor}, transparent 40%)`,
+          background: `radial-gradient(1200px circle at var(--mouse-x) var(--mouse-y), ${spotlightColor}, transparent 40%)`,
         }}
       />
       <div className="relative h-full">{children}</div>

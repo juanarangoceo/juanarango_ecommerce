@@ -12,7 +12,9 @@ export function Navbar() {
   const closeMenu = () => setIsMenuOpen(false)
 
   return (
-    <nav className="border-b border-border/50 backdrop-blur-sm fixed top-0 w-full z-50 bg-background/80">
+    <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-2xl border-b border-white/[0.08] transition-all">
+      {/* Top inner border for 3D effect */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-white/[0.05]" />
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold tracking-tight" onClick={closeMenu}>
