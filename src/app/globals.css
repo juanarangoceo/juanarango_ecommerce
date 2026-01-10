@@ -15,7 +15,7 @@
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.65 0 0); /* Increased lightness from 0.55 for accessibility */
+  --muted-foreground: #a1a1aa; /* Zinc 400 - Safe contrast for accessibility (AA compliant on black) */
   --accent: oklch(0.82 0.22 145);
   --accent-foreground: oklch(0.1 0 0);
   --destructive: oklch(0.577 0.245 27.325);

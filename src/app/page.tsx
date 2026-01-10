@@ -48,15 +48,21 @@ export default function Page() {
       <Navbar />
 
       {/* Aurora Background */}
-      {/* Aurora Background */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-background">
-        {/* Virtual Mesh Grid */}
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
+      {/* Aurora Background & Virtual Mesh - Optimized */}
+      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#050505]">
+        {/* Optimized SVG Mesh Pattern - Lightweight & GPU friendly */}
+        <div className="absolute inset-0 opacity-[0.03]"
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM22.485 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 22.485l.828.83-1.415 1.415-.828-.828-.828.828L-2.83 22.485l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 54.627l.828.83-1.415 1.415-.828-.828-.828.828L-2.83 54.627l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM56.627 60V0h-3.254v60h3.254zM24.485 60V0h-3.254v60h3.254zM0 60V0h-3.254v60h3.254zM60 27.74H0v-3.254h60v3.254zM60 59.882H0v-3.254h60v3.254zM60 0H0V-3.254h60V0z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`
+             }}
+        />
         
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-primary/10 blur-[120px] animate-aurora-1 opacity-30" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-900/10 blur-[120px] animate-aurora-2 opacity-30" />
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-background/60 backdrop-blur-[1px]" />
+        {/* Blobs - opacity reduced for better text contrast */}
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px] animate-aurora-1 opacity-20" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[100px] animate-aurora-2 opacity-20" />
+        
+        {/* Noise - kept for texture but very subtle */}
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
       </div>
       
       <main className="flex-1 flex flex-col">
