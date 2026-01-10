@@ -51,7 +51,7 @@ export function AnimatedBanner() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[500px] md:h-[600px] overflow-hidden bg-background flex items-center justify-center cursor-crosshair border-y border-white/5 py-12 md:py-0"
+      className="relative w-full min-h-[500px] md:h-[600px] overflow-hidden bg-background flex items-center justify-center cursor-crosshair py-12 md:py-0"
     >
       {/* Animated grid lines */}
       <div className="absolute inset-0 overflow-hidden">
@@ -205,24 +205,6 @@ export function AnimatedBanner() {
           }}
         />
       ))}
-
-      {/* Corner decorations */}
-      <motion.div
-        className="absolute top-4 left-4 md:top-8 md:left-8 text-muted-foreground text-xs md:text-sm font-mono opacity-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 1.2 }}
-      >
-        {"<speed>"}
-      </motion.div>
-      <motion.div
-        className="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-muted-foreground text-xs md:text-sm font-mono opacity-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 1.4 }}
-      >
-        {"</speed>"}
-      </motion.div>
     </div>
   )
 }

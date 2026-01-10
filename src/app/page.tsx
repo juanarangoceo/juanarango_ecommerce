@@ -89,8 +89,10 @@ export default function Page() {
         {/* ISLA 2: Services Grid (Interactive) */}
         <ServicesGrid />
 
-        {/* Animated Banner from External Source */}
-        <AnimatedBanner />
+        {/* Animated Banner from External Source - Desktop Only */}
+        <div className="hidden md:block">
+          <AnimatedBanner />
+        </div>
 
         {/* Why Section - Server Component Content */}
         <section className="py-16 md:py-24 px-6 bg-secondary/30">
