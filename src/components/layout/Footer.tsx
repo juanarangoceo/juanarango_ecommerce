@@ -62,13 +62,13 @@ export function Footer() {
           <div>
             <h4 className="font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>hola@nitrotech.com</li>
+              <li>nitroecom@gmail.com</li>
               <li>+1 (555) 123-4567</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-border/50 pt-8 text-center text-sm text-muted-foreground">
-          © 2026 NitroTech. Construido con Next.js 16 en Vercel Edge Network.
+          © 2026 NITROECOM. Todos los derechos reservados a NITROECOM.
         </div>
       </div>
     </footer>

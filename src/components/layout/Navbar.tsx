@@ -37,9 +37,11 @@ export function Navbar() {
 
           <div className="flex items-center gap-4">
              {/* CTA Button (Desktop) */}
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 hidden sm:inline-flex">
-              Consulta Gratuita
-            </Button>
+            <Link href="#contacto" className="hidden sm:inline-flex">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                Consulta Gratuita
+              </Button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <button 

@@ -38,7 +38,7 @@ export function NitroBanner() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full text-lg px-8 py-6 h-14 border-white/10 hover:bg-white/5 hover:text-white text-slate-300"
+                className="w-full text-lg px-8 py-6 h-14 border-white/10 hover:bg-white/5 hover:text-white text-slate-200"
               >
                 Ver Casos de Éxito
               </Button>
