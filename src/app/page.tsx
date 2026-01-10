@@ -20,6 +20,10 @@ const NitroBanner = dynamic(
   }
 )
 
+const AnimatedBanner = dynamic(
+  () => import("@/components/ui/animated-banner").then((mod) => mod.AnimatedBanner)
+)
+
 export default function Page() {
   const metrics = [
     { value: "150%", label: "Aumento de Eficiencia", suffix: "" },
@@ -84,6 +88,9 @@ export default function Page() {
 
         {/* ISLA 2: Services Grid (Interactive) */}
         <ServicesGrid />
+
+        {/* Animated Banner from External Source */}
+        <AnimatedBanner />
 
         {/* Why Section - Server Component Content */}
         <section className="py-16 md:py-24 px-6 bg-secondary/30">

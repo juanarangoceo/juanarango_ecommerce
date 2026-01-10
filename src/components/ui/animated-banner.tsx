@@ -1,12 +1,11 @@
 "use client"
 
 import type React from "react"
-
 import { useRef } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { Zap } from "lucide-react"
 
-export function NitroBanner() {
+export function AnimatedBanner() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const mouseX = useMotionValue(0)
@@ -52,7 +51,7 @@ export function NitroBanner() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-screen overflow-hidden bg-background flex items-center justify-center cursor-crosshair"
+      className="relative w-full h-[600px] overflow-hidden bg-background flex items-center justify-center cursor-crosshair border-y border-white/5"
     >
       {/* Animated grid lines */}
       <div className="absolute inset-0 overflow-hidden">
@@ -158,10 +157,10 @@ export function NitroBanner() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-balance">
+          <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-balance">
             <span className="text-primary">NITRO</span>
             <span className="text-foreground ml-2 md:ml-4">ECOM</span>
-          </h1>
+          </h2>
         </motion.div>
 
         {/* Tagline */}
