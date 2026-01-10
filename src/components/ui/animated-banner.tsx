@@ -51,7 +51,7 @@ export function AnimatedBanner() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[600px] overflow-hidden bg-background flex items-center justify-center cursor-crosshair border-y border-white/5"
+      className="relative w-full min-h-[500px] md:h-[600px] overflow-hidden bg-background flex items-center justify-center cursor-crosshair border-y border-white/5 py-12 md:py-0"
     >
       {/* Animated grid lines */}
       <div className="absolute inset-0 overflow-hidden">
@@ -84,7 +84,7 @@ export function AnimatedBanner() {
       {/* Glowing orbs */}
       <motion.div
         style={{ x: orb1X, y: orb1Y }}
-        className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-30"
+        className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl opacity-30"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
@@ -94,7 +94,7 @@ export function AnimatedBanner() {
 
       <motion.div
         style={{ x: orb2X, y: orb2Y }}
-        className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-80 md:h-80 rounded-full blur-3xl opacity-20"
+        className="absolute bottom-1/4 right-1/4 w-32 h-32 md:w-80 md:h-80 rounded-full blur-3xl opacity-20"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1, delay: 0.5 }}
@@ -105,7 +105,7 @@ export function AnimatedBanner() {
       {/* Central glow effect that follows mouse */}
       <motion.div
         style={{ x: glowX, y: glowY }}
-        className="absolute w-[600px] h-[600px] rounded-full blur-[100px] opacity-40"
+        className="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] rounded-full blur-[80px] md:blur-[100px] opacity-40"
       >
         <div className="w-full h-full rounded-full bg-primary/50" />
       </motion.div>
@@ -135,7 +135,7 @@ export function AnimatedBanner() {
       </div>
 
       {/* Main content */}
-      <motion.div style={{ x: textX, y: textY }} className="relative z-10 text-center px-4">
+      <motion.div style={{ x: textX, y: textY }} className="relative z-10 text-center px-4 w-full max-w-4xl mx-auto">
         {/* Logo icon */}
         <motion.div
           className="flex justify-center mb-6"
@@ -157,7 +157,7 @@ export function AnimatedBanner() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-balance">
+          <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-balance uppercase">
             <span className="text-primary">NITRO</span>
             <span className="text-foreground ml-2 md:ml-4">ECOM</span>
           </h2>
@@ -165,7 +165,7 @@ export function AnimatedBanner() {
 
         {/* Tagline */}
         <motion.p
-          className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-md mx-auto text-pretty"
+          className="mt-6 md:mt-8 text-base md:text-xl text-muted-foreground max-w-xs md:max-w-md mx-auto text-pretty leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -177,7 +177,8 @@ export function AnimatedBanner() {
         <motion.div
           className="mt-8 mx-auto h-1 bg-primary rounded-full"
           initial={{ width: 0 }}
-          animate={{ width: "200px" }}
+          animate={{ width: "100px" }}
+          whileInView={{ width: "200px" }}
           transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
         />
       </motion.div>
@@ -207,17 +208,17 @@ export function AnimatedBanner() {
 
       {/* Corner decorations */}
       <motion.div
-        className="absolute top-8 left-8 text-muted-foreground text-sm font-mono"
+        className="absolute top-4 left-4 md:top-8 md:left-8 text-muted-foreground text-xs md:text-sm font-mono opacity-50"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: 0.5 }}
         transition={{ delay: 1.2 }}
       >
         {"<speed>"}
       </motion.div>
       <motion.div
-        className="absolute bottom-8 right-8 text-muted-foreground text-sm font-mono"
+        className="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-muted-foreground text-xs md:text-sm font-mono opacity-50"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: 0.5 }}
         transition={{ delay: 1.4 }}
       >
         {"</speed>"}
