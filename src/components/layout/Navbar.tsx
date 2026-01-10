@@ -18,8 +18,8 @@ export function Navbar() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold tracking-tight" onClick={closeMenu}>
-            <span className="text-primary">Nitro</span>
-            <span className="text-foreground">Tech</span>
+            <span className="text-primary">NITRO</span>
+            <span className="text-foreground"> ECOM</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -45,7 +45,7 @@ export function Navbar() {
             <button 
               className="md:hidden text-muted-foreground hover:text-foreground p-1"
               onClick={toggleMenu}
-              aria-label="Toggle menu"
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
