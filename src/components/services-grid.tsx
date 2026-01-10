@@ -67,12 +67,13 @@ export function ServicesGrid() {
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors tracking-tight">
                   {service.title}
                 </h3>
-                <p className="text-zinc-400 mb-8 leading-relaxed text-pretty text-sm flex-1">
+                <p className="text-zinc-300 mb-8 leading-relaxed text-pretty text-sm flex-1">
                   {service.desc}
                 </p>
                 <Button
                   variant="ghost"
                   className="text-primary hover:text-white hover:bg-primary p-0 h-auto hover:bg-transparent hover:text-primary justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit"
+                  aria-label={`Ver más detalles sobre ${service.title}`}
                 >
                   <span className="mr-2 font-semibold">{service.cta}</span>
                   <ArrowRight className="w-4 h-4" />

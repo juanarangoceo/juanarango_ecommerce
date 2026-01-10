@@ -20,12 +20,12 @@ export function NitroBanner() {
             <span className="block text-primary mt-2">acelerado.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed text-pretty max-w-[65ch]">
+          <p className="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed text-pretty max-w-[65ch]">
             No solo creamos webs. Diseñamos la estrategia, automatizaciones e infraestructura necesarias para eliminar tus cuellos de botella y acelerar tu crecimiento.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <Link href="#contacto" className="w-full sm:w-auto">
+            <Link href="#contacto" className="w-full sm:w-auto" aria-label="Solicitar un diagnóstico gratuito">
               <Button
                 size="lg"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 h-14"
@@ -34,7 +34,7 @@ export function NitroBanner() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <Link href="#resultados" className="w-full sm:w-auto">
+            <Link href="#resultados" className="w-full sm:w-auto" aria-label="Ver nuestros casos de éxito">
               <Button
                 size="lg"
                 variant="outline"
