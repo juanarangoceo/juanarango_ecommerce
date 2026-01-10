@@ -46,6 +46,14 @@ export default function Page() {
     <div className="flex flex-col min-h-screen font-sans selection:bg-primary selection:text-primary-foreground">
       {/* 1. SHELL: Navbar de Servidor (Carga Instantánea) */}
       <Navbar />
+
+      {/* Aurora Background */}
+      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-background">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-primary/10 blur-[120px] animate-aurora-1" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-900/10 blur-[120px] animate-aurora-2" />
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-background/60 backdrop-blur-[1px]" />
+      </div>
       
       <main className="flex-1 flex flex-col">
         {/* 2. ISLA: Banner Interactivo (Carga Diferida) */}

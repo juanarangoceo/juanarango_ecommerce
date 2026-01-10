@@ -13,7 +13,7 @@ export function NitroBanner() {
       <div className="container mx-auto max-w-7xl">
         <div className="animate-fade-in-up flex flex-col items-center text-center">
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 text-balance">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 text-balance text-glow">
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
               Ingeniería de escalamiento
             </span>
