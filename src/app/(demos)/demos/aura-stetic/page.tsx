@@ -20,7 +20,7 @@ export default function AuraSteticPage() {
     <main className="min-h-screen bg-black overflow-x-hidden font-sans">
       
       {/* --- FAKE NAVBAR (Solo para la demo) --- */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
+      <nav className="fixed top-10 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-tr from-teal-400 to-emerald-500 rounded-lg flex items-center justify-center">
