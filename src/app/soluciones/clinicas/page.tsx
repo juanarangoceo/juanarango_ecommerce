@@ -48,7 +48,7 @@ export default function ClinicasPage() {
 
             <div className="flex flex-wrap gap-4">
               <Link 
-                href="#demo"
+                href="/demos/aura-stetic"
                 className="bg-teal-500 hover:bg-teal-400 text-black font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2"
               >
                 Ver Demo Interactiva <ArrowRight className="w-4 h-4" />
