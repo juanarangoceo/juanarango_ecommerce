@@ -1,7 +1,9 @@
 import dynamic from "next/dynamic"
+import Link from "next/link"
 import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
+import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { BookingSection } from "@/components/booking-section"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
 
@@ -51,6 +53,18 @@ export default function Page() {
       {/* 1. SHELL: Navbar de Servidor (Carga Instantánea) */}
       <Navbar />
 
+      {/* Notification Bar */}
+      <div className="w-full bg-teal-950/30 border-b border-teal-500/20 py-1.5 text-center relative z-40 backdrop-blur-sm">
+        <Link 
+          href="/soluciones/clinicas" 
+          className="text-xs md:text-sm text-teal-400 hover:text-teal-300 transition-colors font-medium flex items-center justify-center gap-2"
+        >
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"/>
+          Soluciones especializadas para Clínicas 
+          <span aria-hidden="true" className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+        </Link>
+      </div>
+
       {/* Aurora Background */}
       {/* Aurora Background & Virtual Mesh - Optimized */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#050505]">
@@ -88,6 +102,9 @@ export default function Page() {
 
         {/* ISLA 2: Services Grid (Interactive) */}
         <ServicesGrid />
+
+        {/* ISLA 2.5: Nitro Negocios (Verticals) */}
+        <NitroBusinessGrid />
 
         {/* Animated Banner from External Source - Desktop Only */}
         <div className="hidden md:block">
