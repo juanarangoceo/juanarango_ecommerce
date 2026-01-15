@@ -109,17 +109,20 @@ export default function AuraSteticPage() {
     <main className="min-h-screen bg-stone-50 overflow-x-hidden font-sans">
       
       {/* --- LIVE DEMO HEADER --- */}
-      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-14 md:h-16 flex items-center justify-center">
-        
-           {/* Center Badge */}
-           <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-6 py-2 rounded-full animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-                 <div className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
-                 <span className="text-red-500 text-sm md:text-base font-black tracking-widest uppercase">Nitro Live Demo</span>
+      {/* --- LIVE DEMO HEADER --- */}
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-20 flex items-center justify-between px-6">
+           {/* Empty div for flex balance if needed, but we use absolute centering */}
+           <div className="w-10 md:w-0" /> {/* Spacer */}
+
+           {/* Center Badge - Absolute Center */}
+           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-8 py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.25)]">
+                 <div className="w-3 h-3 bg-red-500 rounded-full animate-ping" />
+                 <span className="text-red-500 text-base md:text-lg font-black tracking-[0.2em] uppercase">Nitro Live Demo</span>
            </div>
            
-           {/* Exit Link (Absolute Right) */}
-           <div className="absolute right-4 md:right-8">
-                <Link href="/" className="text-xs font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
+           {/* Exit Link */}
+           <div className="flex items-center z-10">
+                <Link href="/" className="text-sm font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
                     <span className="hidden md:inline">Salir de la demo</span> 
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -127,11 +130,24 @@ export default function AuraSteticPage() {
       </nav>
 
       {/* --- REAL DEMO NAVBAR (Shifted down) --- */}
-      <Navbar onContactClick={openChat} />
+      {/* We pass a custom prop or style to the Navbar to sit lower? 
+          Or we wrap it. The Navbar component uses `fixed top-14`. 
+          We need to update the Navbar component too, OR we can override with a wrapper if it wasn't fixed within the component.
+          The Navbar component HAS internal fixed positioning. 
+          We'll need to update the Navbar component file separately if we can't override. 
+          Actually, I can just render it here, but I need to update its file to `top-20`.
+          Wait, I can't edit two files in one step? Yes I can but I prefer to edit page.tsx here.
+          I'll assume I update Navbar in the next step or if possible now.
+          Actually, I'll update the Navbar file FIRST or NEXT. 
+          Let's adjust the padding here assuming Navbar will be fixed.
+      */}
+      <div className="relative z-40">
+        <Navbar onContactClick={openChat} />
+      </div>
 
 
       {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
-      <div className="pt-32">
+      <div className="pt-40"> {/* Increased padding for h-20 header + navbar heights */}
         <HeroSection />
 
         <BeautyQuiz onBookingClick={scrollToBooking} />
@@ -145,13 +161,10 @@ export default function AuraSteticPage() {
         <MapSection />
       </div>
 
-      {/* --- SEPARATOR --- */}
-      <div className="h-24 bg-gradient-to-b from-stone-50 to-black w-full" />
-
-      {/* --- NITRO ECOM SECTION --- */}
-      <section ref={nitroSectionRef} className="py-24 bg-black relative overflow-hidden">
+      {/* --- NITRO ECOM SECTION (Footer Area) --- */}
+      {/* "Rise faster" effect: Negative margin top to overlap the map/content */}
+      <section ref={nitroSectionRef} className="py-32 bg-black relative z-10 -mt-20 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
         
-        {/* Clean background - removed gradients/lines as requested */}
         <div className="container mx-auto px-6 relative z-10">
             
             {/* TECH SPECS */}
@@ -160,49 +173,49 @@ export default function AuraSteticPage() {
                     <MonitorPlay className="w-3 h-3" /> Nitro Performance
                 </div>
                 
-                <h3 className="text-3xl md:text-5xl font-bold text-white max-w-4xl leading-tight">
+                <h3 className="text-4xl md:text-6xl font-black text-white max-w-5xl leading-tight tracking-tight">
                     La velocidad convierte visitantes en pacientes.
                 </h3>
                 
-                <p className="text-zinc-400 max-w-2xl text-lg">
+                <p className="text-zinc-400 max-w-2xl text-xl leading-relaxed">
                     Esta demo carga en menos de 0.5 segundos. En la industria estética, la primera impresión es la única que cuenta.
                     ¿Tu sitio actual es así de rápido?
                 </p>
 
-                <div className="flex gap-8 justify-center mt-6">
+                <div className="flex gap-8 justify-center mt-10">
                     <div className="text-center">
-                        <span className="block text-4xl font-bold text-white mb-1">100</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest">SEO Score</span>
+                        <span className="block text-5xl font-black text-white mb-2">100</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">SEO Score</span>
                     </div>
-                    <div className="w-px h-12 bg-white/10" />
+                    <div className="w-px h-16 bg-white/10" />
                     <div className="text-center">
-                        <span className="block text-4xl font-bold text-teal-400 mb-1">98</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest">Performance</span>
+                        <span className="block text-5xl font-black text-teal-400 mb-2">98</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Performance</span>
                     </div>
-                    <div className="w-px h-12 bg-white/10" />
+                    <div className="w-px h-16 bg-white/10" />
                     <div className="text-center">
-                        <span className="block text-4xl font-bold text-emerald-500 mb-1">0s</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest">Downtime</span>
+                        <span className="block text-5xl font-black text-emerald-500 mb-2">0s</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Downtime</span>
                     </div>
                 </div>
             </div>
 
             {/* CALL TO ACTION */}
-            <div className="max-w-3xl mx-auto text-center border-t border-white/10 pt-20">
-                <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight mb-8">
-                    ¿Listo para escalar tu negocio?
+            <div className="max-w-4xl mx-auto text-center border-t border-white/10 pt-24">
+                <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-10">
+                    ¿Listo para escalar?
                 </h2>
-                <p className="text-xl text-zinc-400 mb-10 leading-relaxed">
+                <p className="text-2xl text-zinc-400 mb-12 leading-relaxed max-w-2xl mx-auto">
                     No solo diseñamos webs bonitas. Construimos ecosistemas digitales que llenan tu agenda automáticamente.
                 </p>
                 
-                <div className="flex flex-col md:flex-row justify-center gap-4">
-                    <Link href="/" className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/5 text-white transition-colors font-medium">
+                <div className="flex flex-col md:flex-row justify-center gap-6">
+                    <Link href="/" className="px-10 py-5 rounded-full border border-white/10 hover:bg-white/5 text-white transition-colors font-medium text-lg">
                         Volver al inicio
                     </Link>
                     <button 
                         onClick={() => setIsNitroModalOpen(true)}
-                        className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                        className="px-10 py-5 rounded-full bg-white text-black font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)]"
                     >
                         Quiero este sistema
                     </button>
@@ -212,8 +225,8 @@ export default function AuraSteticPage() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-zinc-800 text-xs bg-black border-t border-zinc-900">
-        <p className="opacity-40">© 2026 Nitro Ecom. Todos los derechos reservados.</p>
+      <footer className="py-12 text-center text-zinc-800 text-xs bg-black">
+        <p className="opacity-40 tracking-widest">© 2026 NITRO ECOM. TODOS LOS DERECHOS RESERVADOS.</p>
       </footer>
       
       {showDemoChat && (
