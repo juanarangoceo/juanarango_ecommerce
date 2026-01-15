@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
   Zap, 
   MapPin, 
-  ArrowRight
+  ArrowRight,
+  MonitorPlay
 } from "lucide-react";
 import Link from "next/link";
-import { BookingSection } from "@/components/booking-section";
 import type { Treatment } from "./_components/types";
 
 // Imported Components from DEMO
@@ -21,6 +21,7 @@ import { MapSection } from "./_components/map-section";
 import { ChatWidget } from "./_components/chat-widget";
 import { ServiceModal } from "./_components/service-modal";
 import { BeautyQuiz } from "./_components/beauty-quiz";
+import { NitroBookingModal } from "./_components/nitro-booking-modal";
 
 export const treatments: Treatment[] = [
   {
@@ -65,7 +66,11 @@ export const treatments: Treatment[] = [
 
 export default function AuraSteticPage() {
   const [isChatOpen, setIsChatOpen] = useState(true);
+  const [showDemoChat, setShowDemoChat] = useState(true);
   const [selectedTreatment, setSelectedTreatment] = useState<Treatment | null>(null);
+  const [isNitroModalOpen, setIsNitroModalOpen] = useState(false);
+  
+  const nitroSectionRef = useRef<HTMLElement>(null);
 
   const openChat = () => setIsChatOpen(true);
   const closeChat = () => setIsChatOpen(false);
@@ -73,14 +78,54 @@ export default function AuraSteticPage() {
   const closeServiceModal = () => setSelectedTreatment(null);
   
   const scrollToBooking = () => {
-    document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
+    // In this demo page, maybe we scroll to top or just open the services?
+    // Let's scroll to treatments for the "Agendar Cita" button within the demo context
+    document.getElementById("treatments")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Logic to hide chat when reaching Nitro section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (nitroSectionRef.current) {
+        const rect = nitroSectionRef.current.getBoundingClientRect();
+        // If the top of the Nitro section is near the bottom of the viewport (meaning we are entering it)
+        // or if we have scrolled past it.
+        // We want to hide the chat as soon as the Nitro section starts becoming visible.
+        const triggerPoint = window.innerHeight * 0.8;
+        if (rect.top <= triggerPoint) {
+            setShowDemoChat(false);
+        } else {
+            setShowDemoChat(true);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <main className="min-h-screen bg-stone-50 overflow-x-hidden font-sans">
       
-      {/* --- FAKE NAVBAR (Solo para la demo) --- */}
-      <nav className="fixed top-10 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
+      {/* --- LIVE DEMO HEADER --- */}
+      <nav className="fixed top-0 w-full z-50 bg-black text-white border-b border-white/10 shadow-2xl">
+        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
+           <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full animate-pulse">
+                 <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
+                 <span className="text-red-500 text-xs font-bold tracking-widest uppercase">Nitro Live Demo</span>
+              </div>
+              <span className="text-zinc-500 text-sm hidden md:inline-block">Estás viendo una demostración interactiva</span>
+           </div>
+           
+           <Link href="/" className="text-xs font-medium text-zinc-400 hover:text-white transition-colors flex items-center gap-2 group">
+              Salir de la demo <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+           </Link>
+        </div>
+      </nav>
+
+      {/* --- FAKE CLIENT NAVBAR (Shifted down) --- */}
+      <nav className="absolute top-14 w-full z-40 bg-black/50 backdrop-blur-md border-b border-white/5">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-tr from-teal-400 to-emerald-500 rounded-lg flex items-center justify-center">
@@ -102,94 +147,98 @@ export default function AuraSteticPage() {
         </div>
       </nav>
 
-      {/* --- NEW HERO SECTION --- */}
-      <HeroSection />
+      {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
+      <div className="pt-32">
+        <HeroSection />
 
-      {/* --- BEAUTY QUIZ --- */}
-      <BeautyQuiz onBookingClick={scrollToBooking} />
+        <BeautyQuiz onBookingClick={scrollToBooking} />
 
-      {/* --- SERVICES GRID --- */}
-      <TreatmentsGrid treatments={treatments} onServiceClick={openServiceModal} />
+        <TreatmentsGrid treatments={treatments} onServiceClick={openServiceModal} />
 
-      {/* --- VIDEO TESTIMONIALS --- */}
-      <VideoTestimonialSection />
+        <VideoTestimonialSection />
 
-      {/* --- REVIEWS --- */}
-      <ReviewsSection />
+        <ReviewsSection />
 
-      {/* --- MAP --- */}
-      <MapSection />
+        <MapSection />
+      </div>
 
-      {/* --- TECH SPECS & BOOKING (Original Footer Area) --- */}
-      <section className="py-20 border-y border-white/5 bg-black relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-teal-900/10 to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-xs font-bold uppercase">
-                    <Zap className="w-3 h-3" /> Ultra Performance
-                </div>
-                <h3 className="text-3xl font-bold text-white">¿Notaste la velocidad?</h3>
-                <p className="text-zinc-400">
-                    Mientras lees esto, tu competencia sigue cargando. Esta página carga en <strong>0.4 segundos</strong>. 
-                    <br />En estética, la velocidad es sinónimo de tecnología y confianza.
-                </p>
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="p-4 bg-zinc-900 rounded-lg border border-zinc-800">
-                        <span className="block text-2xl font-bold text-white">100/100</span>
-                        <span className="text-xs text-zinc-500 uppercase">Google SEO Score</span>
-                    </div>
-                    <div className="p-4 bg-zinc-900 rounded-lg border border-zinc-800">
-                        <span className="block text-2xl font-bold text-teal-400">0.0s</span>
-                        <span className="text-xs text-zinc-500 uppercase">Blocking Time</span>
-                    </div>
-                </div>
-            </div>
+      {/* --- SEPARATOR --- */}
+      <div className="h-24 bg-gradient-to-b from-stone-50 to-black w-full" />
+
+      {/* --- NITRO ECOM SECTION --- */}
+      <section ref={nitroSectionRef} className="py-24 bg-black relative overflow-hidden">
+        
+        {/* Clean background - removed gradients/lines as requested */}
+        <div className="container mx-auto px-6 relative z-10">
             
-            {/* --- CALENDAR INTEGRATION (CTA) --- */}
-            <div id="booking" className="flex-1 w-full relative z-10">
-                <div className="bg-zinc-900/80 backdrop-blur-md p-1 rounded-2xl border border-teal-500/30 shadow-2xl">
-                     <div className="bg-black rounded-xl overflow-hidden">
-                        <div className="p-6 text-center border-b border-white/10">
-                            <h4 className="text-xl font-bold text-white">Agenda tu Cita Online</h4>
-                            <p className="text-sm text-zinc-400 mt-1">Sin llamadas. Sin esperas. Confirmación inmediata.</p>
-                        </div>
-                        {/* Booking Component */}
-                        <BookingSection />
-                     </div>
+            {/* TECH SPECS */}
+            <div className="flex flex-col items-center text-center gap-8 mb-20">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold uppercase mb-4">
+                    <MonitorPlay className="w-3 h-3" /> Nitro Performance
+                </div>
+                
+                <h3 className="text-3xl md:text-5xl font-bold text-white max-w-4xl leading-tight">
+                    La velocidad convierte visitantes en pacientes.
+                </h3>
+                
+                <p className="text-zinc-400 max-w-2xl text-lg">
+                    Esta demo carga en menos de 0.5 segundos. En la industria estética, la primera impresión es la única que cuenta.
+                    ¿Tu sitio actual es así de rápido?
+                </p>
+
+                <div className="flex gap-8 justify-center mt-6">
+                    <div className="text-center">
+                        <span className="block text-4xl font-bold text-white mb-1">100</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest">SEO Score</span>
+                    </div>
+                    <div className="w-px h-12 bg-white/10" />
+                    <div className="text-center">
+                        <span className="block text-4xl font-bold text-teal-400 mb-1">98</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest">Performance</span>
+                    </div>
+                    <div className="w-px h-12 bg-white/10" />
+                    <div className="text-center">
+                        <span className="block text-4xl font-bold text-emerald-500 mb-1">0s</span>
+                        <span className="text-xs text-zinc-500 uppercase tracking-widest">Downtime</span>
+                    </div>
                 </div>
             </div>
-        </div>
-      </section>
 
-      {/* --- THE SALES PITCH (Rompiendo la cuarta pared) --- */}
-      <section className="py-16 bg-gradient-to-b from-black to-zinc-900 text-center">
-        <div className="container mx-auto px-6">
-            <p className="text-zinc-500 text-sm uppercase tracking-widest mb-4">Fin de la demostración</p>
-            <h2 className="text-2xl md:text-4xl font-bold mb-6 text-white">¿Quieres una web así para tu negocio?</h2>
-            <p className="text-zinc-400 max-w-xl mx-auto mb-8">
-                Esta tecnología está lista para implementarse en tu clínica. Aumenta tus pacientes y automatiza tu agenda.
-            </p>
-            <div className="flex justify-center gap-4">
-                <Link href="/" className="px-6 py-3 rounded-full border border-white/10 hover:bg-white/10 transition-colors text-sm text-white">
-                    Volver al inicio
-                </Link>
-                <a href="https://wa.me/tu-numero" className="px-6 py-3 rounded-full bg-white text-black font-bold hover:bg-zinc-200 transition-colors text-sm flex items-center gap-2">
-                    Quiero este sistema
-                </a>
+            {/* CALL TO ACTION */}
+            <div className="max-w-3xl mx-auto text-center border-t border-white/10 pt-20">
+                <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight mb-8">
+                    ¿Listo para escalar tu negocio?
+                </h2>
+                <p className="text-xl text-zinc-400 mb-10 leading-relaxed">
+                    No solo diseñamos webs bonitas. Construimos ecosistemas digitales que llenan tu agenda automáticamente.
+                </p>
+                
+                <div className="flex flex-col md:flex-row justify-center gap-4">
+                    <Link href="/" className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/5 text-white transition-colors font-medium">
+                        Volver al inicio
+                    </Link>
+                    <button 
+                        onClick={() => setIsNitroModalOpen(true)}
+                        className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                    >
+                        Quiero este sistema
+                    </button>
+                </div>
             </div>
+
         </div>
       </section>
 
-      <footer className="py-8 text-center text-zinc-700 text-xs border-t border-white/5 bg-black">
-        <div className="flex items-center justify-center gap-2 opacity-50 mb-2">
-            <MapPin className="w-3 h-3" />
-            <span>Zona Rosa, Bogotá - Edificio Medical Center</span>
-        </div>
-        © 2026 Aura Stetic Demo. Powered by Nitro.
+      <footer className="py-8 text-center text-zinc-800 text-xs bg-black border-t border-zinc-900">
+        <p className="opacity-40">© 2026 Nitro Ecom. Todos los derechos reservados.</p>
       </footer>
       
-      <ChatWidget isOpen={isChatOpen} onOpen={() => setIsChatOpen(true)} onClose={closeChat} />
+      {showDemoChat && (
+        <ChatWidget isOpen={isChatOpen} onOpen={() => setIsChatOpen(true)} onClose={closeChat} />
+      )}
+      
       <ServiceModal treatment={selectedTreatment} onClose={closeServiceModal} />
+      <NitroBookingModal isOpen={isNitroModalOpen} onClose={() => setIsNitroModalOpen(false)} />
       
     </main>
   );
