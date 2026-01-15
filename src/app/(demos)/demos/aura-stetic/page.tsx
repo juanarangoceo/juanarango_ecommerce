@@ -13,6 +13,7 @@ import Link from "next/link";
 import type { Treatment } from "./_components/types";
 
 // Imported Components from DEMO
+import { Navbar } from "./_components/navbar";
 import { HeroSection } from "./_components/hero-section";
 import { TreatmentsGrid } from "./_components/treatments-grid";
 import { ReviewsSection } from "./_components/reviews-section";
@@ -108,44 +109,26 @@ export default function AuraSteticPage() {
     <main className="min-h-screen bg-stone-50 overflow-x-hidden font-sans">
       
       {/* --- LIVE DEMO HEADER --- */}
-      <nav className="fixed top-0 w-full z-50 bg-black text-white border-b border-white/10 shadow-2xl">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-           <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full animate-pulse">
-                 <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
-                 <span className="text-red-500 text-xs font-bold tracking-widest uppercase">Nitro Live Demo</span>
-              </div>
-              <span className="text-zinc-500 text-sm hidden md:inline-block">Estás viendo una demostración interactiva</span>
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-14 md:h-16 flex items-center justify-center">
+        
+           {/* Center Badge */}
+           <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-6 py-2 rounded-full animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                 <div className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
+                 <span className="text-red-500 text-sm md:text-base font-black tracking-widest uppercase">Nitro Live Demo</span>
            </div>
            
-           <Link href="/" className="text-xs font-medium text-zinc-400 hover:text-white transition-colors flex items-center gap-2 group">
-              Salir de la demo <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-           </Link>
-        </div>
+           {/* Exit Link (Absolute Right) */}
+           <div className="absolute right-4 md:right-8">
+                <Link href="/" className="text-xs font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
+                    <span className="hidden md:inline">Salir de la demo</span> 
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+           </div>
       </nav>
 
-      {/* --- FAKE CLIENT NAVBAR (Shifted down) --- */}
-      <nav className="absolute top-14 w-full z-40 bg-black/50 backdrop-blur-md border-b border-white/5">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-tr from-teal-400 to-emerald-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="text-black w-5 h-5" />
-            </div>
-            <span className="text-xl font-bold tracking-widest text-white">AURA<span className="text-teal-400">STETIC</span></span>
-          </div>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
-            <span className="cursor-pointer hover:text-white transition-colors">Tratamientos</span>
-            <span className="cursor-pointer hover:text-white transition-colors">Tecnología</span>
-            <span className="cursor-pointer hover:text-white transition-colors">Doctores</span>
-          </div>
-          <button 
-            onClick={scrollToBooking}
-            className="bg-white text-black px-6 py-2 rounded-full font-semibold text-sm hover:bg-teal-400 hover:text-black transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-          >
-            Agendar Cita
-          </button>
-        </div>
-      </nav>
+      {/* --- REAL DEMO NAVBAR (Shifted down) --- */}
+      <Navbar onContactClick={openChat} />
+
 
       {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
       <div className="pt-32">
