@@ -109,15 +109,13 @@ export default function AuraSteticPage() {
     <main className="min-h-screen bg-stone-50 overflow-x-hidden font-sans">
       
       {/* --- LIVE DEMO HEADER --- */}
-      {/* --- LIVE DEMO HEADER --- */}
       <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-20 flex items-center justify-between px-6">
-           {/* Empty div for flex balance if needed, but we use absolute centering */}
-           <div className="w-10 md:w-0" /> {/* Spacer */}
+           <div className="w-10 md:w-0" /> {/* Spacer to balance flex for absolute centering safety */}
 
-           {/* Center Badge - Absolute Center */}
-           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-8 py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.25)]">
-                 <div className="w-3 h-3 bg-red-500 rounded-full animate-ping" />
-                 <span className="text-red-500 text-base md:text-lg font-black tracking-[0.2em] uppercase">Nitro Live Demo</span>
+           {/* Center Badge - Absolute Center - GREEN */}
+           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 px-8 py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.25)]">
+                 <div className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" />
+                 <span className="text-emerald-500 text-base md:text-lg font-black tracking-[0.2em] uppercase">Nitro Live Demo</span>
            </div>
            
            {/* Exit Link */}
@@ -130,24 +128,13 @@ export default function AuraSteticPage() {
       </nav>
 
       {/* --- REAL DEMO NAVBAR (Shifted down) --- */}
-      {/* We pass a custom prop or style to the Navbar to sit lower? 
-          Or we wrap it. The Navbar component uses `fixed top-14`. 
-          We need to update the Navbar component too, OR we can override with a wrapper if it wasn't fixed within the component.
-          The Navbar component HAS internal fixed positioning. 
-          We'll need to update the Navbar component file separately if we can't override. 
-          Actually, I can just render it here, but I need to update its file to `top-20`.
-          Wait, I can't edit two files in one step? Yes I can but I prefer to edit page.tsx here.
-          I'll assume I update Navbar in the next step or if possible now.
-          Actually, I'll update the Navbar file FIRST or NEXT. 
-          Let's adjust the padding here assuming Navbar will be fixed.
-      */}
       <div className="relative z-40">
         <Navbar onContactClick={openChat} />
       </div>
 
 
       {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
-      <div className="pt-40"> {/* Increased padding for h-20 header + navbar heights */}
+      <div className="pt-40"> 
         <HeroSection />
 
         <BeautyQuiz onBookingClick={scrollToBooking} />
@@ -161,17 +148,17 @@ export default function AuraSteticPage() {
         <MapSection />
       </div>
 
+      {/* --- SMOOTH TRANSITION SEPARATOR --- */}
+      <div className="w-full h-40 bg-gradient-to-b from-stone-50 via-neutral-900 to-black pointer-events-none" />
+
       {/* --- NITRO ECOM SECTION (Footer Area) --- */}
-      {/* "Rise faster" effect: Negative margin top to overlap the map/content */}
-      <section ref={nitroSectionRef} className="py-32 bg-black relative z-10 -mt-20 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+      <section ref={nitroSectionRef} className="py-24 bg-black relative z-10">
         
         <div className="container mx-auto px-6 relative z-10">
             
             {/* TECH SPECS */}
             <div className="flex flex-col items-center text-center gap-8 mb-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold uppercase mb-4">
-                    <MonitorPlay className="w-3 h-3" /> Nitro Performance
-                </div>
+                {/* Removed Nitro Badge */}
                 
                 <h3 className="text-4xl md:text-6xl font-black text-white max-w-5xl leading-tight tracking-tight">
                     La velocidad convierte visitantes en pacientes.
