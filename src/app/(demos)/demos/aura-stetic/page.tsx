@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
@@ -15,14 +16,16 @@ import type { Treatment } from "./_components/types";
 // Imported Components from DEMO
 import { Navbar } from "./_components/navbar";
 import { HeroSection } from "./_components/hero-section";
-import { TreatmentsGrid } from "./_components/treatments-grid";
-import { ReviewsSection } from "./_components/reviews-section";
-import { VideoTestimonialSection } from "./_components/video-testimonial-section";
-import { MapSection } from "./_components/map-section";
-import { ChatWidget } from "./_components/chat-widget";
-import { ServiceModal } from "./_components/service-modal";
-import { BeautyQuiz } from "./_components/beauty-quiz";
-import { NitroBookingModal } from "./_components/nitro-booking-modal";
+
+// Dynamic Imports for Performance
+const TreatmentsGrid = dynamic(() => import("./_components/treatments-grid").then(mod => mod.TreatmentsGrid));
+const ReviewsSection = dynamic(() => import("./_components/reviews-section").then(mod => mod.ReviewsSection));
+const VideoTestimonialSection = dynamic(() => import("./_components/video-testimonial-section").then(mod => mod.VideoTestimonialSection));
+const MapSection = dynamic(() => import("./_components/map-section").then(mod => mod.MapSection));
+const ChatWidget = dynamic(() => import("./_components/chat-widget").then(mod => mod.ChatWidget), { ssr: false });
+const ServiceModal = dynamic(() => import("./_components/service-modal").then(mod => mod.ServiceModal));
+const BeautyQuiz = dynamic(() => import("./_components/beauty-quiz").then(mod => mod.BeautyQuiz));
+const NitroBookingModal = dynamic(() => import("./_components/nitro-booking-modal").then(mod => mod.NitroBookingModal));
 
 export const treatments: Treatment[] = [
   {
@@ -66,7 +69,7 @@ export const treatments: Treatment[] = [
 ]
 
 export default function AuraSteticPage() {
-  const [isChatOpen, setIsChatOpen] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [showDemoChat, setShowDemoChat] = useState(true);
   const [selectedTreatment, setSelectedTreatment] = useState<Treatment | null>(null);
   const [isNitroModalOpen, setIsNitroModalOpen] = useState(false);
@@ -109,18 +112,18 @@ export default function AuraSteticPage() {
     <main className="min-h-screen bg-stone-50 overflow-x-hidden font-sans">
       
       {/* --- LIVE DEMO HEADER --- */}
-      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-20 flex items-center justify-between px-6">
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-14 md:h-20 flex items-center justify-between px-4 md:px-6">
            <div className="w-10 md:w-0" /> {/* Spacer to balance flex for absolute centering safety */}
 
            {/* Center Badge - Absolute Center - GREEN */}
-           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 px-8 py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.25)]">
-                 <div className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" />
-                 <span className="text-emerald-500 text-base md:text-lg font-black tracking-[0.2em] uppercase">Nitro Live Demo</span>
+           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-3 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 md:px-8 md:py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.25)]">
+                 <div className="w-2 h-2 md:w-3 md:h-3 bg-emerald-500 rounded-full animate-ping" />
+                 <span className="text-emerald-500 text-[10px] md:text-lg font-black tracking-[0.1em] md:tracking-[0.2em] uppercase whitespace-nowrap">Nitro Live Demo</span>
            </div>
            
            {/* Exit Link */}
            <div className="flex items-center z-10">
-                <Link href="/" className="text-sm font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
+                <Link href="/" className="text-xs md:text-sm font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
                     <span className="hidden md:inline">Salir de la demo</span> 
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -134,7 +137,7 @@ export default function AuraSteticPage() {
 
 
       {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
-      <div className="pt-40"> 
+      <div className="pt-32 md:pt-40"> 
         <HeroSection />
 
         <BeautyQuiz onBookingClick={scrollToBooking} />
@@ -160,49 +163,49 @@ export default function AuraSteticPage() {
             <div className="flex flex-col items-center text-center gap-8 mb-20">
                 {/* Removed Nitro Badge */}
                 
-                <h3 className="text-4xl md:text-6xl font-black text-white max-w-5xl leading-tight tracking-tight">
+                <h3 className="text-3xl md:text-6xl font-black text-white max-w-5xl leading-tight tracking-tight">
                     La velocidad convierte visitantes en pacientes.
                 </h3>
                 
-                <p className="text-zinc-400 max-w-2xl text-xl leading-relaxed">
+                <p className="text-zinc-400 max-w-2xl text-lg md:text-xl leading-relaxed">
                     Esta demo carga en menos de 0.5 segundos. En la industria estética, la primera impresión es la única que cuenta.
                     ¿Tu sitio actual es así de rápido?
                 </p>
 
-                <div className="flex gap-8 justify-center mt-10">
+                <div className="flex gap-4 md:gap-8 justify-center mt-10">
                     <div className="text-center">
-                        <span className="block text-5xl font-black text-white mb-2">100</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">SEO Score</span>
+                        <span className="block text-4xl md:text-5xl font-black text-white mb-2">100</span>
+                        <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">SEO Score</span>
                     </div>
-                    <div className="w-px h-16 bg-white/10" />
+                    <div className="w-px h-12 md:h-16 bg-white/10" />
                     <div className="text-center">
-                        <span className="block text-5xl font-black text-teal-400 mb-2">98</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Performance</span>
+                        <span className="block text-4xl md:text-5xl font-black text-teal-400 mb-2">98</span>
+                        <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">Performance</span>
                     </div>
-                    <div className="w-px h-16 bg-white/10" />
+                    <div className="w-px h-12 md:h-16 bg-white/10" />
                     <div className="text-center">
-                        <span className="block text-5xl font-black text-emerald-500 mb-2">0s</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Downtime</span>
+                        <span className="block text-4xl md:text-5xl font-black text-emerald-500 mb-2">0s</span>
+                        <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">Downtime</span>
                     </div>
                 </div>
             </div>
 
             {/* CALL TO ACTION */}
             <div className="max-w-4xl mx-auto text-center border-t border-white/10 pt-24">
-                <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-10">
+                <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter mb-10">
                     ¿Listo para escalar?
                 </h2>
-                <p className="text-2xl text-zinc-400 mb-12 leading-relaxed max-w-2xl mx-auto">
+                <p className="text-xl md:text-2xl text-zinc-400 mb-12 leading-relaxed max-w-2xl mx-auto">
                     No solo diseñamos webs bonitas. Construimos ecosistemas digitales que llenan tu agenda automáticamente.
                 </p>
                 
                 <div className="flex flex-col md:flex-row justify-center gap-6">
-                    <Link href="/" className="px-10 py-5 rounded-full border border-white/10 hover:bg-white/5 text-white transition-colors font-medium text-lg">
+                    <Link href="/" className="px-8 md:px-10 py-4 md:py-5 rounded-full border border-white/10 hover:bg-white/5 text-white transition-colors font-medium text-base md:text-lg">
                         Volver al inicio
                     </Link>
                     <button 
                         onClick={() => setIsNitroModalOpen(true)}
-                        className="px-10 py-5 rounded-full bg-white text-black font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)]"
+                        className="px-8 md:px-10 py-4 md:py-5 rounded-full bg-white text-black font-bold text-base md:text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)]"
                     >
                         Quiero este sistema
                     </button>
