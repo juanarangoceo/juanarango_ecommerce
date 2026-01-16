@@ -24,23 +24,13 @@ export function HeroSection() {
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-        <motion.h1
-          className="font-serif font-light tracking-tight text-5xl md:text-7xl text-stone-900 mb-6 leading-tight text-balance"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <h1 className="font-serif font-light tracking-tight text-5xl md:text-7xl text-stone-900 mb-6 leading-tight text-balance">
           Revela Tu Belleza Natural
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          className="font-sans text-stone-600 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <p className="font-sans text-stone-600 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
           Tecnología Láser Avanzada & Cuidado Holístico
-        </motion.p>
+        </p>
 
         <motion.div
           className="relative inline-flex items-center gap-3"

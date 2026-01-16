@@ -5,8 +5,13 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Zap, X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+import { usePathname } from "next/navigation"
+
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+
+  if (pathname?.startsWith("/demos")) return null
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
