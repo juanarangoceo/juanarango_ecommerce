@@ -111,6 +111,14 @@ interface BeautyQuizProps {
 }
 
 export function BeautyQuiz({ onBookingClick }: BeautyQuizProps) {
+  const handleBookingClick = () => {
+    if (onBookingClick) {
+      onBookingClick()
+    } else {
+      document.getElementById("treatments")?.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<string[]>([])
   const [direction, setDirection] = useState(1)
@@ -307,7 +315,7 @@ export function BeautyQuiz({ onBookingClick }: BeautyQuizProps) {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4">
                       <motion.button
-                        onClick={onBookingClick}
+                        onClick={handleBookingClick}
                         className="flex-1 inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-300 to-amber-500 text-stone-900 font-semibold rounded-full shadow-lg shadow-amber-500/40 hover:shadow-xl hover:shadow-amber-500/50 hover:-translate-y-0.5 transition-all duration-300"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}

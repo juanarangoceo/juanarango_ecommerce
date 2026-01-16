@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { StrategyHotspot } from "./strategy-hotspot"
+import Image from "next/image"
 
 export function HeroSection() {
   const scrollToBooking = () => {
@@ -11,7 +12,15 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50">
-        <div className="absolute inset-0 bg-[url('/soft-luxury-spa-abstract-light-texture.jpg')] bg-cover bg-center opacity-30" />
+        <Image
+          src="/soft-luxury-spa-abstract-light-texture.jpg"
+          alt="Luxury Spa Texture"
+          fill
+          priority
+          quality={85}
+          className="object-cover opacity-30"
+          sizes="100vw"
+        />
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
