@@ -46,13 +46,10 @@ export function Navbar({ onContactClick }: NavbarProps) {
 
   return (
     <>
-      <motion.nav
+      <nav
         className={`fixed top-14 md:top-20 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? "bg-white/60 backdrop-blur-xl shadow-lg border-b border-white/20" : "bg-transparent"
         }`}
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <a href="#" className="font-serif text-2xl font-light tracking-tight text-stone-900">
@@ -107,7 +104,7 @@ export function Navbar({ onContactClick }: NavbarProps) {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Sticky Booking Button - Hidden when Nitro modal or chat triggers might overlap, handled by page */}
       <motion.button

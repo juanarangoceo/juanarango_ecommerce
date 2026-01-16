@@ -32,12 +32,7 @@ export function HeroSection() {
           Tecnología Láser Avanzada & Cuidado Holístico
         </p>
 
-        <motion.div
-          className="relative inline-flex items-center gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
+        <div className="relative inline-flex items-center gap-3">
           <button
             onClick={scrollToBooking}
             className="bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-400 hover:to-amber-600 text-stone-900 px-8 py-4 rounded-full text-lg font-medium transition-all shadow-lg shadow-amber-500/40 hover:shadow-xl hover:shadow-amber-500/50 hover:-translate-y-1"
@@ -49,7 +44,7 @@ export function HeroSection() {
             tip="Tip de Conversión: Usamos verbos de acción para aumentar clics en 20%."
             className="absolute -top-2 -right-2"
           />
-        </motion.div>
+        </div>
       </div>
 
       <motion.div
