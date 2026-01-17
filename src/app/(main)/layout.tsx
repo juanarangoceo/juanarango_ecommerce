@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
 };
 
+// Main Layout
 export default function RootLayout({
   children,
 }: Readonly<{
