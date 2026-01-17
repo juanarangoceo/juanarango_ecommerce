@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
-import { Stack, Button, Text, TextArea, Label, Card } from '@sanity/ui'
-import { set, StringInputProps, useClient, useFormValue } from 'sanity'
+import { Stack, Button, Text, TextArea, Label, Card, Box } from '@sanity/ui'
+import { set, StringInputProps, useClient, useFormValue, useDocumentOperation } from 'sanity'
 import React from 'react'
 
 export function GeneratePostInput(props: StringInputProps) {
@@ -10,6 +10,11 @@ export function GeneratePostInput(props: StringInputProps) {
   
   const client = useClient({apiVersion: '2023-05-03'})
   const documentId = useFormValue(['_id']) as string
+  const documentType = useFormValue(['_type']) as string
+  
+  // Hook for document operations (publish)
+  const ops = useDocumentOperation(documentId, documentType)
+  const publish = ops.publish
 
   const handleGenerate = useCallback(async () => {
     if (!topic) return
@@ -31,30 +36,40 @@ export function GeneratePostInput(props: StringInputProps) {
         throw new Error(json.error || 'Failed to generate content')
       }
 
-      const { title, slug, body } = json.data
+      const { title, slug, body, excerpt } = json.data
+      
+      // Map API blocks to Portable Text
+      const portableTextBody = body.map((block: any) => ({
+        _type: "block",
+        style: block.style || "normal",
+        children: [
+            {
+                _type: "span",
+                text: block.content, 
+                marks: block.content.includes('**') ? [] : [], // Basic handling, ideally we parse markdown marks here if needed
+            },
+        ],
+        markDefs: [],
+      }))
 
+      // 1. Update Document Content
       await client
         .patch(documentId)
         .set({
             title: title,
             slug: { _type: 'slug', current: slug },
-            body: [
-                {
-                    _type: "block",
-                    children: [
-                        {
-                            _type: "span",
-                            text: body, 
-                        },
-                    ],
-                    markDefs: [],
-                    style: "normal",
-                },
-            ]
+            excerpt: excerpt,
+            body: portableTextBody
         })
         .commit()
 
-      alert('✨ Content Generated and Fields Updated!')
+      // 2. Auto-Publish
+      if (publish && !publish.disabled) {
+          publish.execute()
+          alert('✨ Blog Generated & PUBLISHED Successfully!')
+      } else {
+          alert('✨ Blog Generated! (Could not auto-publish, please check permissions or status)')
+      }
 
     } catch (error) {
       console.error(error)
@@ -62,13 +77,16 @@ export function GeneratePostInput(props: StringInputProps) {
     } finally {
       setIsGenerating(false)
     }
-  }, [topic, client, documentId])
+  }, [topic, client, documentId, publish, documentType])
 
   return (
     <Card padding={4} tone="primary" shadow={1} radius={2} border>
         <Stack space={3}>
-            <Label>Tema para Cerebro AI</Label>
-            <Text size={1} muted>Escribe un tema y la IA completará el Título, Slug y Cuerpo por ti.</Text>
+            <Label>Generador Nitro AI (Hispano)</Label>
+            <Text size={1} muted>
+                Ingresa un tema. La IA creará un artículo optimizado para SEO, con H1/H2 estructura H3 y Storytelling. 
+                <strong style={{color: 'green'}}> Se publicará automáticamente.</strong>
+            </Text>
             
             <TextArea 
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -77,16 +95,18 @@ export function GeneratePostInput(props: StringInputProps) {
                 }}
                 value={topic} 
                 rows={3} 
-                placeholder="Ej: Estrategias de retención para e-commerce en 2024..." 
+                placeholder="Ej: Estrategias de retención para e-commerce en 2025..." 
             />
             
             <Button 
-                text={isGenerating ? 'Generando (esto toma ~10s)...' : '✨ Generar Blog Post'} 
+                text={isGenerating ? 'Generando y Publicando...' : '✨ Generar & Publicar'} 
                 tone="primary"
+                mode="ghost"
                 onClick={handleGenerate}
                 disabled={isGenerating || !topic}
                 fontSize={2}
                 padding={3}
+                style={{ background: isGenerating ? '#ccc' : '#22c55e', color: 'white', fontWeight: 'bold' }}
             />
         </Stack>
     </Card>

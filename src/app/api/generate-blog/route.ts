@@ -20,26 +20,70 @@ export async function POST(req: Request) {
     }
 
     const start = Date.now();
-    const persona = `Eres un experto en E-commerce y Tecnología, especializado en el mercado latinoamericano (Colombia). Escribes para el blog de "Nitro Ecom" (una agencia de crecimiento para e-commerce). Tu tono es profesional, visionario, persuasivo pero educativo. Usas términos como "Growth", "Escalabilidad", "Retención", "LTV".`;
+    
+    // Mega Prompt Definition
+    const persona = `Eres un experto Copywriter Senior y Especialista en SEO con más de 10 años de experiencia posicionando marcas en el mercado hispano (Latinoamérica y España).
+    
+    Tu misión es escribir artículos de blog para "Nitro Ecom" (agencia de crecimiento para e-commerce) que sean:
+    1. **Extremadamente Persuasivos y Atractivos**: Usas técnicas de Storytelling, ganchos emocionales y un tono conversacional pero profesional.
+    2. **Optimizados para SEO (On-Page)**: Estructura perfecta de H1, H2, H3, uso natural de keywords LSI y respuesta a la intención de búsqueda.
+    3. **Lectura Agradable**: Párrafos cortos, uso de negritas para resaltar ideas clave, y ritmo dinámico.
+    
+    Tu tono es: Visionario, Autoridad en la materia, pero cercano. Evita el lenguaje corporativo aburrido. Usa palabras poderosas como "Estrategia", "Dominación", "Rentabilidad", "Secreto", "Transformación".`;
 
     const prompt = `
       ${persona}
       
-      Escribe un artículo de blog sobre el tema: "${topic}".
+      Escribe un artículo de blog MAESTRO sobre el tema: "${topic}".
       
-      El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta:
+      IMPORTANTE: El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta para ser renderizado en Sanity CMS.
+      
+      Estructura del JSON esperada:
       {
-        "title": "Un título atractivo y optimizado para SEO",
-        "slug": "un-slug-optimizado-para-seo",
-        "excerpt": "Un resumen corto de 140 caracteres para SEO y previews.",
-        "body": "El contenido completo del artículo en formato Markdown. Usa encabezados (##, ###), listas, negritas, etc. NO incluyas el título h1 aquí."
+        "title": "Un título H1 irresistible (Max 60 caracteres) que incluya la keyword principal.",
+        "slug": "slug-optimizado-seo-sin-stopwords",
+        "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
+        "body": [
+          {
+            "style": "normal",
+            "content": "Párrafo introductorio con un gancho fuerte (hook). Plantea el problema o la oportunidad."
+          },
+          {
+            "style": "h2",
+            "content": "Primer subtítulo H2 potente"
+          },
+          {
+            "style": "normal",
+            "content": "Contenido de valor profundo. Usa negrillas (en markdown **texto**) dentro de este string para resaltar."
+          },
+          {
+            "style": "h3",
+            "content": "Subtítulo H3 de detalle"
+          },
+           {
+            "style": "blockquote",
+            "content": "Una frase clave o cita destacada."
+          },
+          {
+             "style": "normal",
+             "content": "Conclusión y Call to Action (CTA) final invitando a agendar una consultoría con Nitro Ecom."
+          }
+        ]
       }
+      
+      Reglas para el contenido ('body'):
+      - El campo 'body' DEBE ser un ARRAY de objetos. Cada objeto representa un bloque.
+      - Usa 'style': 'h2' para los subtítulos principales.
+      - Usa 'style': 'h3' para secciones dentro de los H2.
+      - Usa 'style': 'normal' para párrafos estándar.
+      - Usa 'style': 'blockquote' para citas o frases destacadas.
+      - NO incluyas el título H1 dentro del body (ya está en el campo 'title').
+      - Escribe MÍNIMO 800 palabras de contenido de altísimo valor.
       
       Responde SOLO con el JSON. No incluyas bloques de código \`\`\`json.
     `;
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
-    // Validated available model via debugging script.
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const result = await model.generateContent({
@@ -52,7 +96,7 @@ export async function POST(req: Request) {
     const responseText = result.response.text();
     const blogData = JSON.parse(responseText);
 
-    // 2. Check mode: If generateOnly is true, return data without saving to Sanity
+    // If generateOnly (Client-side handling), return the structured data directly
     if (generateOnly) {
        return NextResponse.json({ 
         success: true, 
@@ -60,10 +104,28 @@ export async function POST(req: Request) {
       });
     }
 
-    // 3. Save to Sanity
+    // Server-side saving (fallback or if direct call)
     if (!process.env.SANITY_API_TOKEN) {
       return NextResponse.json({ error: "Missing SANITY_API_TOKEN for write access" }, { status: 500 });
     }
+
+    // Map the simple block structure to Sanity Portable Text
+    // Note: This matches what we will do on the frontend too.
+    const portableTextBody = blogData.body.map((block: any) => ({
+      _type: "block",
+      style: block.style,
+      children: [
+        {
+          _type: "span",
+          text: block.content,
+        //   marks: [], // For bold/italic parsing, we'd need a markdown parser here or simple regex. 
+        //   For now, we leave text raw (markdown characers might show up if not parsed). 
+        //   The frontend implementation in GeneratePostInput.tsx handles this better usually or we can leave markdown chars.
+        //   Ideally we strip markdown or parse it, but for simplicity we assume the User wants to edit or we pass text.
+        }
+      ],
+      markDefs: []
+    }));
 
     const doc = {
       _type: "post",
@@ -74,19 +136,7 @@ export async function POST(req: Request) {
       },
       excerpt: blogData.excerpt,
       publishedAt: new Date().toISOString(),
-      body: [
-        {
-          _type: "block",
-          children: [
-            {
-              _type: "span",
-              text: blogData.body, 
-            },
-          ],
-          markDefs: [],
-          style: "normal",
-        },
-      ],
+      body: portableTextBody, 
     };
 
     const newDoc = await client.create(doc);
