@@ -1,8 +1,18 @@
+import { GeneratePostInput } from '../components/GeneratePostInput'
+
 export default {
   name: 'post',
   title: 'Post',
   type: 'document',
   fields: [
+    {
+      name: 'topic',
+      title: 'Topic (AI Generator)',
+      type: 'string',
+      components: {
+        input: GeneratePostInput
+      }
+    },
     {
       name: 'title',
       title: 'Title',

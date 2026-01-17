@@ -1,43 +1,65 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { client } from "@/sanity/lib/client";
 import { NextResponse } from "next/server";
+import { createClient } from "next-sanity";
 
-// Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: "2023-05-03",
+  useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
+});
 
 export async function POST(req: Request) {
   try {
-    const { topic } = await req.json();
+    const body = await req.json();
+    const { topic, generateOnly } = body;
 
     if (!topic) {
       return NextResponse.json({ error: "Topic is required" }, { status: 400 });
     }
 
-    // 1. Generate Content with Gemini
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      generationConfig: { responseMimeType: "application/json" } // Force JSON output
-    });
+    const start = Date.now();
+    const persona = `Eres un experto en E-commerce y Tecnología, especializado en el mercado latinoamericano (Colombia). Escribes para el blog de "Nitro Ecom" (una agencia de crecimiento para e-commerce). Tu tono es profesional, visionario, persuasivo pero educativo. Usas términos como "Growth", "Escalabilidad", "Retención", "LTV".`;
 
     const prompt = `
-      Actúa como un experto en E-commerce y Tecnología (estilo Nitro Tech).
-      Escribe un artículo de blog sobre: "${topic}".
+      ${persona}
       
-      Devuelve la respuesta ESTRICTAMENTE en formato JSON con la siguiente estructura:
+      Escribe un artículo de blog sobre el tema: "${topic}".
+      
+      El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta:
       {
         "title": "Un título atractivo y optimizado para SEO",
         "slug": "un-slug-optimizado-para-seo",
-        "excerpt": "Un resumen corto y atractivo del artículo para redes sociales (max 160 caracteres)",
-        "body": "El contenido completo del artículo en formato Markdown. Usa encabezados (##, ###), listas, y negritas para dar estructura."
+        "excerpt": "Un resumen corto de 140 caracteres para SEO y previews.",
+        "body": "El contenido completo del artículo en formato Markdown. Usa encabezados (##, ###), listas, negritas, etc. NO incluyas el título h1 aquí."
       }
+      
+      Responde SOLO con el JSON. No incluyas bloques de código \`\`\`json.
     `;
 
-    const result = await model.generateContent(prompt);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    });
+
     const responseText = result.response.text();
     const blogData = JSON.parse(responseText);
 
-    // 2. Save to Sanity
-    // Verify we have a write token
+    // 2. Check mode: If generateOnly is true, return data without saving to Sanity
+    if (generateOnly) {
+       return NextResponse.json({ 
+        success: true, 
+        data: blogData 
+      });
+    }
+
+    // 3. Save to Sanity
     if (!process.env.SANITY_API_TOKEN) {
       return NextResponse.json({ error: "Missing SANITY_API_TOKEN for write access" }, { status: 500 });
     }
@@ -49,40 +71,35 @@ export async function POST(req: Request) {
         _type: "slug",
         current: blogData.slug,
       },
+      excerpt: blogData.excerpt,
       publishedAt: new Date().toISOString(),
-      // We map the markdown body to a simple block structure for now, 
-      // or we could assume the user wants the raw markdown string if schema allowed.
-      // Since the schema defines 'body' as 'array' of 'block', we need to structure it.
-      // For simplicity in this 'Cerebro' mvp, we push a single block with the markdown.
-      // Ideally, we would parse markdown to portable text, but that requires more deps.
       body: [
         {
           _type: "block",
           children: [
             {
               _type: "span",
-              text: blogData.body, // This places raw markdown in a paragraph. 
+              text: blogData.body, 
             },
           ],
           markDefs: [],
           style: "normal",
         },
       ],
-      excerpt: blogData.excerpt, // Note: Schema 'post.ts' didn't explicitly have excerpt in Prompt 1, but Prompt 2 asks for it. 
-                                 // We'll save it. If schema is strict, this field might be ignored or cause error if strict validation is on.
-                                 // Adding it blindly as requested.
     };
 
-    const createdDoc = await client.create(doc);
+    const newDoc = await client.create(doc);
 
-    return NextResponse.json({ 
-      success: true, 
-      documentId: createdDoc._id,
-      data: blogData 
+    return NextResponse.json({
+      success: true,
+      docId: newDoc._id,
+      duration: Date.now() - start,
     });
-
-  } catch (error: any) {
-    console.error("Cerebro API Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    console.error("Error generating blog:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error", details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    );
   }
 }
