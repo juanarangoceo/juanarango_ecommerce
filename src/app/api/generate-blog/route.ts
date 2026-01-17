@@ -39,9 +39,8 @@ export async function POST(req: Request) {
     `;
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
-    // Note: User requested "gemini 3.5 flash" but standard model is "gemini-1.5-flash". 
-    // Keeping 1.5-flash for speed/reliability.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Validated available model via debugging script.
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
