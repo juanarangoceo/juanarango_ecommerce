@@ -33,6 +33,9 @@ export function Navbar() {
             <Link href="#contacto" className="text-muted-foreground hover:text-foreground transition-colors">
               Contacto
             </Link>
+            <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+              Blog
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">
@@ -79,6 +82,13 @@ export function Navbar() {
               onClick={closeMenu}
             >
               Contacto
+            </Link>
+            <Link 
+              href="/blog" 
+              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
+              onClick={closeMenu}
+            >
+              Blog
             </Link>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4" onClick={closeMenu}>
               Consulta Gratuita
