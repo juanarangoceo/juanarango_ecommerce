@@ -13,7 +13,9 @@ export function GeneratePostInput(props: StringInputProps) {
   const documentType = useFormValue(['_type']) as string
   
   // Hook for document operations (publish)
-  const ops = useDocumentOperation(documentId, documentType)
+  // We must pass the published ID (without drafts.) for the publish operation to work correctly
+  const publishedId = documentId?.replace(/^drafts\./, '')
+  const ops = useDocumentOperation(publishedId, documentType)
   const publish = ops.publish
 
   const handleGenerate = useCallback(async () => {
