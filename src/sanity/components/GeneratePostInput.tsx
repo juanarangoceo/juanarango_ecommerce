@@ -40,19 +40,36 @@ export function GeneratePostInput(props: StringInputProps) {
 
       const { title, slug, body, excerpt } = json.data
       
-      // Map API blocks to Portable Text
-      const portableTextBody = body.map((block: any) => ({
-        _type: "block",
-        style: block.style || "normal",
-        children: [
-            {
+      // Map API blocks to Portable Text with basic Markdown parsing for Bold (**)
+      const portableTextBody = body.map((block: any) => {
+        const text = block.content || "";
+        const parts = text.split(/(\*\*.*?\*\*)/g); // Split by **...** capturing the delimiters
+        
+        const children = parts.map((part: string, index: number) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return {
+                    _type: "span",
+                    text: part.slice(2, -2), // Remove **
+                    marks: ["strong"],
+                    _key: `chunk-${index}`
+                };
+            }
+            if (!part) return null; // Skip empty strings from split
+            return {
                 _type: "span",
-                text: block.content, 
-                marks: block.content.includes('**') ? [] : [], // Basic handling, ideally we parse markdown marks here if needed
-            },
-        ],
-        markDefs: [],
-      }))
+                text: part,
+                marks: [],
+                _key: `chunk-${index}`
+            }
+        }).filter(Boolean); // Remove nulls
+
+        return {
+            _type: "block",
+            style: block.style || "normal",
+            children: children.length > 0 ? children : [{_type: "span", text: "", marks: []}],
+            markDefs: [],
+        }
+      })
 
       // 1. Update Document Content
       await client

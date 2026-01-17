@@ -55,7 +55,14 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
         )}
       </div>
 
-      <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-zinc-300 prose-a:text-blue-400">
+      <div className="prose prose-invert prose-lg max-w-none 
+        prose-headings:text-white 
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:font-bold
+        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
+        prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-6
+        prose-strong:text-green-400 prose-strong:font-bold
+        prose-blockquote:border-l-green-500 prose-blockquote:text-zinc-400 prose-blockquote:italic
+        prose-a:text-blue-400 hover:prose-a:text-blue-300 transition-colors">
         <PortableText value={post.body} />
       </div>
     </article>
