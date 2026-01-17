@@ -1,9 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { urlForImage } from "@/sanity/lib/image"; // We need to create this helper or use standard builder
+import { urlForImage } from "@/sanity/lib/image";
 
 // GROQ Query
 const POSTS_QUERY = `*[
@@ -14,6 +13,7 @@ const POSTS_QUERY = `*[
   title,
   slug,
   publishedAt,
+  _createdAt,
   mainImage,
   excerpt
 }`;
@@ -37,22 +37,10 @@ export default async function BlogPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post: any) => (
           <Card key={post._id} className="flex flex-col h-full hover:shadow-lg transition-shadow bg-zinc-900/50 border-zinc-800">
-            {post.mainImage && (
+            {post.mainImage?.asset?._ref && (
               <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
-                 {/* Note: In a real app we'd use a robust image builder like urlFor(post.mainImage).url() 
-                     For now we might not have the helper utility created. 
-                     I'll assume we can create a quick inline helper or the user has one. 
-                     Actually, looking at previous steps, I didn't create 'src/sanity/lib/image.ts'.
-                     I will handle image rendering safely or create the utility in the next step.
-                 */}
-                 {/* For this MVP step, I'll temporarily comment out the image or use a placeholder if the helper is missing. 
-                     BUT the user requested "Manten la estética Nitro". 
-                     I will proceed to create the image utility right after this file. 
-                 */}
-                 {/* Placeholder for now to avoid build error if utility is missing, 
-                     but logic implies I should have it. I will create it. */}
                 <img 
-                  src={post.mainImage?.asset?._ref ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'}/${post.mainImage.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}` : '/placeholder.jpg'} 
+                  src={urlForImage(post.mainImage).url()} 
                   alt={post.title}
                   className="object-cover w-full h-full"
                 />
@@ -61,7 +49,7 @@ export default async function BlogPage() {
             <CardHeader>
               <CardTitle className="leading-tight text-xl text-white">{post.title}</CardTitle>
               <CardDescription suppressHydrationWarning>
-                {new Date(post.publishedAt).toLocaleDateString("es-ES", {
+                {new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
                   day: "numeric",
                   month: "long",
                   year: "numeric",

@@ -3,18 +3,21 @@ import { client } from "@/sanity/lib/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { urlForImage } from "@/sanity/lib/image";
 
 // GROQ Query for Single Post
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
   mainImage,
   body,
-  publishedAt
+  publishedAt,
+  _createdAt
 }`;
 
 export const revalidate = 60;
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const post = await client.fetch(POST_QUERY, { slug: params.slug });
 
   if (!post) {
@@ -33,7 +36,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         </h1>
         
         <p className="text-muted-foreground mb-8">
-          {new Date(post.publishedAt).toLocaleDateString("es-ES", {
+          {new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
              weekday: "long",
              year: "numeric",
              month: "long",
@@ -41,11 +44,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           })}
         </p>
 
-        {post.mainImage && (
+        {post.mainImage?.asset?._ref && (
            <div className="relative w-full h-[400px] mb-10 overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800">
-             {/* Simple manual URL builder for speed/robustness in this instruction scope */}
              <img 
-               src={post.mainImage?.asset?._ref ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'}/${post.mainImage.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}` : '/placeholder.jpg'} 
+               src={urlForImage(post.mainImage).url()} 
                alt={post.title}
                className="object-cover w-full h-full"
              />
