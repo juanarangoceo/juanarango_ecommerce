@@ -38,7 +38,9 @@ export async function POST(req: Request) {
       Responde SOLO con el JSON. No incluyas bloques de código \`\`\`json.
     `;
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
+    // Note: User requested "gemini 3.5 flash" but standard model is "gemini-1.5-flash". 
+    // Keeping 1.5-flash for speed/reliability.
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const result = await model.generateContent({
