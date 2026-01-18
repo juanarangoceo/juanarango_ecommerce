@@ -98,7 +98,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
         <div className="container mx-auto px-4 pb-24 max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
-                {/* Left: Article Content */}
                 <article className="lg:col-span-8">
                     {post.mainImage?.asset?._ref && (
                         <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm relative aspect-video">
@@ -112,6 +111,15 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                             />
                         </div>
                     )}
+
+                    {/* DEBUG: VERIFICAR SI HAY CONTENIDO */}
+                    <div className="bg-red-100 p-4 mb-4 text-xs font-mono text-red-800 rounded border border-red-300">
+                        <strong>DATA DEBUG:</strong><br/>
+                        Has Content: {post.content ? "YES" : "NO"}<br/>
+                        Content Length: {post.content?.length || 0}<br/>
+                        Has Body: {post.body ? "YES" : "NO"}<br/>
+                        Slug: {post.slug}
+                    </div>
 
                     <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
                         prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-zinc-900 dark:prose-headings:text-white
@@ -158,7 +166,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                                 {post.content}
                             </ReactMarkdown>
                         ) : (
-                            <PortableText value={post.body} />
+                            <div className="text-gray-500 italic">No content found (Markdown empty). Checking Portable Text... <PortableText value={post.body} /></div>
                         )}
                     </div>
                 </article>
