@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
 
@@ -92,6 +93,45 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing SANITY_API_TOKEN for write access" }, { status: 500 });
     }
 
+    // 2. Generate Image with DALL-E 3 (Server Side Only)
+    let mainImageRef = null;
+    try {
+        if (process.env.OPENAI_API_KEY) {
+            const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+            
+            // Create a specific prompt for the image
+            const imagePrompt = `Una imagen editorial moderna y minimalista para un blog de e-commerce sobre: "${blogData.title}". Estilo fotografía de alta calidad, iluminación de estudio, sin texto, profesional, colores corporativos sutiles (verde neón y negro).`;
+
+            const imageResponse = await openai.images.generate({
+                model: "dall-e-3",
+                prompt: imagePrompt,
+                n: 1,
+                size: "1024x1024",
+            });
+
+            const imageUrl = imageResponse.data?.[0]?.url;
+
+            if (imageUrl) {
+                // Fetch the image to buffer
+                const imgRes = await fetch(imageUrl);
+                const arrayBuffer = await imgRes.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+
+                // Upload to Sanity
+                const asset = await client.assets.upload('image', buffer, {
+                    filename: `blog-image-${Date.now()}.png`
+                });
+                
+                mainImageRef = asset._id;
+            }
+        } else {
+             console.warn("Skipping Image Generation: OPENAI_API_KEY not found");
+        }
+    } catch (imgError) {
+        console.error("Error generating/uploading image:", imgError);
+        // Continue without image if fails
+    }
+
     const doc = {
       _type: "post",
       title: blogData.title,
@@ -100,9 +140,14 @@ export async function POST(req: Request) {
         current: blogData.slug,
       },
       excerpt: blogData.excerpt,
+      mainImage: mainImageRef ? {
+        _type: 'image',
+        asset: {
+            _ref: mainImageRef
+        }
+      } : undefined,
       publishedAt: new Date().toISOString(),
-      content: blogData.content, // Save the markdown content directly
-      // body is now optional or secondary, we rely on content for AI posts
+      content: blogData.content, 
     };
 
     const newDoc = await client.create(doc);

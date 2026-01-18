@@ -1,6 +1,7 @@
 import { PortableText } from "next-sanity";
 import ReactMarkdown from 'react-markdown';
 import { client } from "@/sanity/lib/client";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -100,11 +101,14 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                 {/* Left: Article Content */}
                 <article className="lg:col-span-8">
                     {post.mainImage?.asset?._ref && (
-                        <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm">
-                            <img 
+                        <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm relative aspect-video">
+                            <Image 
                                 src={urlForImage(post.mainImage).url()} 
                                 alt={post.title}
-                                className="object-cover w-full h-auto max-h-[500px]"
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
+                                className="object-cover"
                             />
                         </div>
                     )}
