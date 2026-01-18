@@ -37,6 +37,8 @@ export async function POST(req: Request) {
       
       Escribe un artículo de blog MAESTRO sobre el tema: "${topic}".
       
+      INVESTIGACIÓN: Antes de escribir, INVESTIGA ACTIVAMENTE sobre este tema en la web para obtener datos, tendencias y ejemplos ACTUALIZADOS (2024/2025). No inventes datos. Cita estadísticas reales si las encuentras.
+      
       IMPORTANTE: El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta.
       
       Estructura del JSON esperada:
@@ -58,7 +60,12 @@ export async function POST(req: Request) {
     `;
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.0-flash", 
+        tools: [{
+            googleSearch: {}
+        }], 
+    });
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
