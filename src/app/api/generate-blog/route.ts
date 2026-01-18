@@ -78,7 +78,7 @@ export async function POST(req: Request) {
               quality: "standard",
             });
 
-            const imageUrl = imageResponse.data[0].url;
+            const imageUrl = imageResponse.data?.[0]?.url;
             if (!imageUrl) throw new Error("Fallo al generar imagen");
 
             // 3. SUBIR IMAGEN A SANITY
