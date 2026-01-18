@@ -1,42 +1,52 @@
-import { Stack, Button, Card, Text, TextArea, Label, Flex, Spinner } from '@sanity/ui'
+import { Stack, Button, Card, Text, TextArea, Label, Spinner } from '@sanity/ui'
 import { useCallback, useState } from 'react'
-import { set, useDocumentOperation, useFormValue } from 'sanity'
+import { set, useDocumentOperation, useFormValue, useClient } from 'sanity'
 
 export const GeneratePostInput = (props: any) => {
-  const { elementProps, onChange, value } = props
+  const { onChange, value } = props // 'value' is the actual data in Sanity for this field (Topic)
   
-  const [topic, setTopic] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
 
-  // Retrieve Document ID (handling drafts)
+  // Retrieve Document ID
   const docId = useFormValue(['_id']) as string
   const docType = useFormValue(['_type']) as string
   
-  // Ensure hook gets valid strings
+  // Sanity Client for root-level patches
+  const client = useClient({ apiVersion: '2024-01-01' })
+
+  // Operation Hook
   const opId = (docId || '').replace('drafts.', '')
   const opType = docType || 'post'
   const { publish } = useDocumentOperation(opId, opType)
 
   const handleGenerate = useCallback(async () => {
-    if (!topic) return
+    // Use the value from props (the field value) or fallback
+    // If value is an object (corrupted), we try to recover or just send it as string
+    const currentTopic = typeof value === 'string' ? value : (typeof value === 'object' ? JSON.stringify(value) : '')
+    
+    if (!currentTopic) {
+        alert("Escribe un tema primero.")
+        return
+    }
+
     setIsGenerating(true)
     
     try {
-      // 1. GENERATE CONTENT
+      // 1. GENERATE CONTENT (TEXT ONLY - FAST)
       const res = await fetch('/api/generate-blog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic }),
+        body: JSON.stringify({ topic: currentTopic }),
       })
       
-      if (res.status === 504) throw new Error("⏳ Timeout: Reduce la complejidad del tema.")
+      if (res.status === 504) throw new Error("⏳ Timeout: Tema muy complejo. Simplifícalo.")
 
-      let json
       const textBody = await res.text()
+      let json
       try {
           json = JSON.parse(textBody)
       } catch (e) {
-          throw new Error(`Error Servidor (HTML): ${textBody.substring(0, 50)}...`)
+          throw new Error(`Error Formato (HTML): ${textBody.substring(0, 50)}...`)
       }
 
       if (!res.ok || json.error) throw new Error(JSON.stringify(json.error || 'Error desconocido'))
@@ -44,13 +54,24 @@ export const GeneratePostInput = (props: any) => {
 
       const { title, slug, content } = json.data
 
-      // 2. POPULATE FIELDS
-      const finalTitle = typeof title === 'string' ? title : topic
-      const slugString = typeof slug === 'string' ? slug : (slug?.current || topic.toLowerCase().replace(/\s+/g, '-').slice(0, 96))
+      // 2. APPLY UPDATES
+      // A) Update current field (Topic) to ensure it stays a string (fixes corruption)
+      onChange(set(currentTopic)) 
 
-      if (finalTitle) onChange(set(finalTitle, ['title']))
-      if (slugString) onChange(set({ _type: 'slug', current: slugString }, ['slug']))
-      if (content && typeof content === 'string') onChange(set(content, ['content']))
+      // B) Update Root fields (Title, Slug, Content) using Client Patch
+      // onChange is scoped to THIS field, so we cannot use it for parent fields.
+      const finalTitle = typeof title === 'string' ? title : currentTopic
+      const slugString = typeof slug === 'string' ? slug : (slug?.current || currentTopic.toLowerCase().replace(/\s+/g, '-').slice(0, 96))
+      
+      const patch = client.patch(docId)
+          .set({ title: finalTitle })
+          .set({ slug: { _type: 'slug', current: slugString } })
+      
+      if (content && typeof content === 'string') {
+          patch.set({ content: content })
+      }
+      
+      await patch.commit() // Commit changes to DB directly
 
       // 3. AUTO PUBLISH
       setTimeout(() => {
@@ -60,7 +81,7 @@ export const GeneratePostInput = (props: any) => {
         } else {
             alert('✨ Post Generado. (Publica manualmente)')
         }
-      }, 500)
+      }, 800)
 
     } catch (err: any) {
       console.error("Gen Error:", err)
@@ -69,18 +90,23 @@ export const GeneratePostInput = (props: any) => {
     } finally {
       setIsGenerating(false)
     }
-  }, [topic, onChange, publish])
+  }, [value, onChange, client, docId, publish])
+
+  // Handle local typing -> Sync to Sanity immediately
+  const handleTopicChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      onChange(set(e.currentTarget.value))
+  }, [onChange])
 
   return (
     <Stack space={3}>
       <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
             <Label>Generador AI (Texto Express)</Label>
-            <Text size={1} muted>Generación ultrarrápida (Gemini Flash). Sin imágenes.</Text>
+            <Text size={1} muted>Generación ultrarrápida (Gemini Flash). Escribe el tema y dale al botón.</Text>
             
             <TextArea 
-                value={topic}
-                onChange={(e) => setTopic(e.currentTarget.value)}
+                value={typeof value === 'string' ? value : ''} // Bind to Sanity Value
+                onChange={handleTopicChange}
                 placeholder="Tema del post..."
                 rows={2}
                 disabled={isGenerating}
@@ -91,11 +117,11 @@ export const GeneratePostInput = (props: any) => {
                 tone="primary"
                 onClick={handleGenerate}
                 loading={isGenerating}
-                disabled={!topic || isGenerating}
+                disabled={!value || isGenerating}
             />
         </Stack>
       </Card>
-      {props.renderDefault(props)}
+      {/* Remove default render to avoid double inputs, since we are controlling the field */}
     </Stack>
   )
 }
