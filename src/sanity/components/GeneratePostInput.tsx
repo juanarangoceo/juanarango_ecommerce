@@ -59,10 +59,9 @@ export const GeneratePostInput = (props: any) => {
       onChange(set(currentTopic)) 
 
       // B) Update Root fields (Title, Slug, Content) using Client Patch
-      // onChange is scoped to THIS field, so we cannot use it for parent fields.
       const finalTitle = typeof title === 'string' ? title : currentTopic
       
-      // FORCE SANITIZATION OF SLUG (Lowercase + Kebab Case + No Special Chars)
+      // FORCE SANITIZATION OF SLUG
       const rawSlug = typeof slug === 'string' ? slug : (slug?.current || currentTopic);
       const slugString = rawSlug
           .toLowerCase()
@@ -70,15 +69,18 @@ export const GeneratePostInput = (props: any) => {
           .replace(/(^-|-$)/g, '')
           .slice(0, 96);
       
-      const patch = client.patch(docId)
-          .set({ title: finalTitle })
-          .set({ slug: { _type: 'slug', current: slugString } })
-      
+      // BUILD UPDATES OBJECT (Fixes Immutability Bug)
+      const attributes: any = {
+          title: finalTitle,
+          slug: { _type: 'slug', current: slugString }
+      };
+
       if (content && typeof content === 'string') {
-          patch.set({ content: content })
+          attributes.content = content;
       }
-      
-      await patch.commit() // Commit changes to DB directly
+
+      // Commit one single atomic patch
+      await client.patch(docId).set(attributes).commit();
 
       // 3. AUTO PUBLISH
       setTimeout(() => {

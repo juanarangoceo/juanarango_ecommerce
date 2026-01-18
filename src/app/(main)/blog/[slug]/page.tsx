@@ -112,15 +112,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         </div>
                     )}
 
-                    {/* DEBUG: VERIFICAR SI HAY CONTENIDO */}
-                    <div className="bg-red-100 p-4 mb-4 text-xs font-mono text-red-800 rounded border border-red-300">
-                        <strong>DATA DEBUG:</strong><br/>
-                        Has Content: {post.content ? "YES" : "NO"}<br/>
-                        Content Length: {post.content?.length || 0}<br/>
-                        Has Body: {post.body ? "YES" : "NO"}<br/>
-                        Slug: {post.slug}
-                    </div>
-
                     <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
                         prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-zinc-900 dark:prose-headings:text-white
                         prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-zinc-100 dark:prose-h2:border-zinc-900
