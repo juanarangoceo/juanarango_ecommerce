@@ -55,7 +55,11 @@ export function GeneratePostInput(props: StringInputProps) {
       // 2. Auto-Publish
       if (publish && !publish.disabled) {
           publish.execute()
-          alert('✨ Blog Generated & PUBLISHED Successfully!')
+          if (json.warning) {
+             alert(`✨ Blog Publicado (Con Advertencia): ${json.warning}`)
+          } else {
+             alert('✨ Blog Generated & PUBLISHED Successfully!')
+          }
       } else {
           alert('✨ Blog Generated! (Could not auto-publish, please check permissions or status)')
       }

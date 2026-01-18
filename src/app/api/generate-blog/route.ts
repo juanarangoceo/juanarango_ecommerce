@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       
       Escribe un artículo de blog MAESTRO sobre el tema: "${topic}".
       
-      INVESTIGACIÓN: Antes de escribir, INVESTIGA ACTIVAMENTE sobre este tema en la web para obtener datos, tendencias y ejemplos ACTUALIZADOS (2024/2025). No inventes datos. Cita estadísticas reales si las encuentras.
+      INVESTIGACIÓN (CRÍTICA): Usa la herramienta 'googleSearch' para buscar información ACTUALIZADA (2024-2025). NO uses conocimientos generales antiguos. Cita fechas y datos recientes.
       
       IMPORTANTE: El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta.
       
@@ -102,6 +102,8 @@ export async function POST(req: Request) {
 
     // 2. Generate Image with DALL-E 3 (Server Side Only)
     let mainImageRef = null;
+    let imageWarning = null;
+
     try {
         if (process.env.OPENAI_API_KEY) {
             const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -109,11 +111,14 @@ export async function POST(req: Request) {
             // Create a specific prompt for the image
             const imagePrompt = `Una imagen editorial moderna y minimalista para un blog de e-commerce sobre: "${blogData.title}". Estilo fotografía de alta calidad, iluminación de estudio, sin texto, profesional, colores corporativos sutiles (verde neón y negro).`;
 
+            console.log("Generando imagen DALL-E...");
+
             const imageResponse = await openai.images.generate({
                 model: "dall-e-3",
                 prompt: imagePrompt,
                 n: 1,
                 size: "1024x1024",
+                quality: "standard", // Faster
             });
 
             const imageUrl = imageResponse.data?.[0]?.url;
@@ -130,13 +135,16 @@ export async function POST(req: Request) {
                 });
                 
                 mainImageRef = asset._id;
+            } else {
+                imageWarning = "OpenAI devolvió una respuesta vacía.";
             }
         } else {
-             console.warn("Skipping Image Generation: OPENAI_API_KEY not found");
+             imageWarning = "OPENAI_API_KEY no encontrada en variables de entorno.";
+             console.warn(imageWarning);
         }
-    } catch (imgError) {
+    } catch (imgError: any) {
         console.error("Error generating/uploading image:", imgError);
-        // Continue without image if fails
+        imageWarning = `Error generando imagen: ${imgError.message || imgError}`;
     }
 
     const doc = {
@@ -162,6 +170,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       docId: newDoc._id,
+      warning: imageWarning,
       duration: Date.now() - start,
     });
   } catch (error) {
