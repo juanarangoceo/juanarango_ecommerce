@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
+import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
+import { BlogProgressBar } from "./_components/BlogProgressBar";
+import { ShareButtons } from "./_components/ShareButtons";
+import { TableOfContents } from "./_components/TableOfContents";
 
 // GROQ Query for Single Post
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -13,10 +17,25 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   body,
   content,
   publishedAt,
-  _createdAt
+  _createdAt,
+  "slug": slug.current
 }`;
 
 export const revalidate = 60;
+
+function calculateReadingTime(text: string): number {
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
 
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
@@ -26,51 +45,123 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     notFound();
   }
 
+  // Determine content source and reading time
+  const rawContent = post.content || ""; 
+  // For PortableText we'd need a more complex calc, taking a rough estimate if content is missing
+  const readingTime = rawContent ? calculateReadingTime(rawContent) : 5; 
+
+  const date = new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <article className="container mx-auto px-4 py-20 min-h-screen max-w-3xl">
-      <div className="mb-8">
-        <Button asChild variant="ghost" className="mb-6 pl-0 hover:bg-transparent hover:text-primary">
-          <Link href="/blog">← Volver al Blog</Link>
-        </Button>
-        
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
-          {post.title}
-        </h1>
-        
-        <p className="text-muted-foreground mb-8">
-          {new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
-             weekday: "long",
-             year: "numeric",
-             month: "long",
-             day: "numeric",
-          })}
-        </p>
+    <>
+      <BlogProgressBar />
+      
+      <div className="bg-white dark:bg-zinc-950 min-h-screen">
+        {/* Minimalist Hero Section */}
+        <header className="container mx-auto px-4 pt-32 pb-12 max-w-5xl">
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-8"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Volver al Blog
+            </Link>
 
-        {post.mainImage?.asset?._ref && (
-           <div className="relative w-full h-[400px] mb-10 overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800">
-             <img 
-               src={urlForImage(post.mainImage).url()} 
-               alt={post.title}
-               className="object-cover w-full h-full"
-             />
-           </div>
-        )}
-      </div>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-8 leading-[1.1]">
+              {post.title}
+            </h1>
 
-      <div className="prose prose-invert prose-lg max-w-none 
-        prose-headings:text-white 
-        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:font-bold
-        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-        prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-6
-        prose-strong:text-green-400 prose-strong:font-bold
-        prose-blockquote:border-l-green-500 prose-blockquote:text-zinc-400 prose-blockquote:italic
-        prose-a:text-blue-400 hover:prose-a:text-blue-300 transition-colors">
-        {post.content ? (
-           <ReactMarkdown>{post.content}</ReactMarkdown>
-        ) : (
-           <PortableText value={post.body} />
-        )}
+            <div className="flex flex-wrap gap-6 items-center text-sm text-zinc-500 dark:text-zinc-400 border-t border-b border-zinc-100 dark:border-zinc-900 py-6">
+                <div className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-200">Equipo Nitro</span>
+                </div>
+                <div className="w-px h-4 bg-zinc-200 dark:bg-zinc-800" />
+                <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>{date}</span>
+                </div>
+                <div className="w-px h-4 bg-zinc-200 dark:bg-zinc-800" />
+                <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    <span>{readingTime} min de lectura</span>
+                </div>
+            </div>
+        </header>
+
+        {/* Main Content Layout */}
+        <div className="container mx-auto px-4 pb-24 max-w-6xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                {/* Left: Article Content */}
+                <article className="lg:col-span-8">
+                    {post.mainImage?.asset?._ref && (
+                        <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                            <img 
+                                src={urlForImage(post.mainImage).url()} 
+                                alt={post.title}
+                                className="object-cover w-full h-auto max-h-[500px]"
+                            />
+                        </div>
+                    )}
+
+                    <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
+                        prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-zinc-900 dark:prose-headings:text-white
+                        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-zinc-100 dark:prose-h2:border-zinc-900
+                        prose-p:leading-relaxed prose-p:text-zinc-600 dark:prose-p:text-zinc-300
+                        prose-strong:text-zinc-900 dark:prose-strong:text-white prose-strong:font-semibold
+                        prose-blockquote:border-l-4 prose-blockquote:border-green-500 prose-blockquote:bg-zinc-50 dark:prose-blockquote:bg-zinc-900 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:rounded-r-lg
+                        prose-ul:list-disc prose-ul:pl-6
+                        prose-li:marker:text-green-500
+                    ">
+                        {post.content ? (
+                            <ReactMarkdown
+                                components={{
+                                    h2: ({node, ...props}) => {
+                                        const text = String(props.children);
+                                        const id = slugify(text);
+                                        return <h2 id={id} {...props}>{props.children}</h2>;
+                                    },
+                                    h3: ({node, ...props}) => {
+                                        const text = String(props.children);
+                                        const id = slugify(text);
+                                        return <h3 id={id} {...props}>{props.children}</h3>;
+                                    }
+                                }}
+                            >
+                                {post.content}
+                            </ReactMarkdown>
+                        ) : (
+                            <PortableText value={post.body} />
+                        )}
+                    </div>
+                </article>
+
+                {/* Right: Sidebar (Desktop) */}
+                <aside className="hidden lg:block lg:col-span-4 space-y-8">
+                    <div className="sticky top-24 space-y-8">
+                        {/* Table of Contents Box */}
+                         {post.content && (
+                            <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
+                                <TableOfContents content={post.content} />
+                            </div>
+                         )}
+
+                         {/* Share Action */}
+                         <div>
+                            <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Compartir</h4>
+                            <ShareButtons title={post.title} slug={post.slug} />
+                         </div>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
       </div>
-    </article>
+    </>
   );
 }

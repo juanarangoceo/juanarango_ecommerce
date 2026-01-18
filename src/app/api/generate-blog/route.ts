@@ -43,13 +43,15 @@ export async function POST(req: Request) {
         "title": "Un título H1 irresistible (Max 60 caracteres) que incluya la keyword principal.",
         "slug": "slug-optimizado-seo-sin-stopwords",
         "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
-        "content": "AQUÍ VA EL ARTÍCULO COMPLETO EN FORMATO MARKDOWN. Usa encabezados ## para H2, ### para H3. Usa **negritas**, *cursivas*, > blockquotes y - listas. El contenido debe ser extenso, detallado y optimizado para SEO."
+        "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
+        "content": "AQUÍ VA EL ARTÍCULO COMPLETO EN FORMATO MARKDOWN. \n\nEructura obligatoria:\n1. **Key Takeaways**: Un bloque al inicio con los 3-5 puntos clave, formateado como una lista o blockquote.\n2. **Introducción**.\n3. **Cuerpo**: Usa encabezados ## para H2 y ### para H3.\n4. **Conclusión**.\n\nUsa **negritas**, *cursivas*, > blockquotes y - listas. El contenido debe ser extenso, detallado y optimizado para SEO."
       }
       
       Reglas para el campo 'content' (Markdown):
       - Escribe MÍNIMO 800 palabras.
       - Usa la estructura de Markdown correctamente.
-      - NO incluyas el título H1 al principio del markdown, ya que se renderiza por separado. Empieza directamente con la introducción o un H2.
+      - INCLUYE SIEMPRE una sección de 'Key Takeaways' al principio.
+      - NO incluyas el título H1 al principio del markdown, ya que se renderiza por separado. Empieza directamente con los Key Takeaways o la introducción.
       - Asegúrate de que el markdown sea válido.
       
       Responde SOLO con el JSON. No incluyas bloques de código \`\`\`json.
