@@ -54,6 +54,11 @@ export const GeneratePostInput = (props: any) => {
 
       const { title, slug, content } = json.data
 
+      // VALIDACIÓN ESTRICTA: Si no hay contenido, cancelamos TODO.
+      if (!content || content.length < 50) {
+          throw new Error(`CRÍTICO: La IA devolvió contenido vacío o muy corto (${content?.length || 0} chars). Intenta de nuevo.`);
+      }
+
       // 2. APPLY UPDATES
       // A) Update current field (Topic) to ensure it stays a string (fixes corruption)
       onChange(set(currentTopic)) 

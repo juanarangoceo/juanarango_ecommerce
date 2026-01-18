@@ -55,9 +55,22 @@ export async function POST(req: Request) {
 
     if (!generatedText) throw new Error("Gemini no devolvió datos");
 
-    // Limpieza
+    // Limpieza y Normalización
     const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
-    const blogData = JSON.parse(cleanJson);
+    const rawData = JSON.parse(cleanJson);
+    
+    // Normalizar datos (Gemini a veces usa 'body' o 'article' en lugar de 'content')
+    const blogData = {
+        title: rawData.title || rawData.header || topic,
+        slug: rawData.slug,
+        // Fallback robusto para encontrar el contenido
+        content: rawData.content || rawData.body || rawData.text || rawData.article || ""
+    };
+
+    if (!blogData.content) {
+        console.error("❌ Gemini devolvió JSON sin contenido:", JSON.stringify(rawData));
+        throw new Error("La IA no generó contenido (JSON incompleto). Intenta de nuevo.");
+    }
     
     return NextResponse.json({ success: true, data: blogData });
 
