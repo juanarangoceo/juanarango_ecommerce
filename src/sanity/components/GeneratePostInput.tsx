@@ -23,19 +23,20 @@ export function GeneratePostInput(props: StringInputProps) {
     setIsGenerating(true)
 
     try {
-      const response = await fetch('/api/generate-blog', {
+      const res = await fetch('/api/generate-blog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            topic,
-            generateOnly: true 
-        }),
-      })
+        body: JSON.stringify({ topic }),
+      });
 
-      const json = await response.json()
+      if (res.status === 504) {
+        throw new Error("El servidor tardó demasiado (Timeout). Es posible que el post se haya creado en segundo plano. Refresca la lista en unos instantes.");
+      }
 
-      if (!json.success || !json.data) {
-        throw new Error(json.error || 'Failed to generate content')
+      const json = await res.json();
+      
+      if (!res.ok || json.error) {
+        throw new Error(json.error || json.details || 'Error desconocido');
       }
 
       const { title, slug, content, excerpt } = json.data

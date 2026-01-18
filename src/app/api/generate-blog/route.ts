@@ -24,6 +24,9 @@ export async function POST(req: Request) {
     }
 
     const start = Date.now();
+    let blogData: any = null;
+    let mainImageRef: string | null = null;
+    let imageWarning: string | null = null;
     
     // Mega Prompt Definition
     const persona = `Eres un experto Copywriter Senior y Especialista en SEO con más de 10 años de experiencia posicionando marcas en el mercado hispano (Latinoamérica y España).
@@ -70,84 +73,72 @@ export async function POST(req: Request) {
         } as any], 
     });
 
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
-    });
+    // --- PARALLEL EXECUTION START ---
+    
+    // 1. Define Text Generation Task
+    const textGenPromise = (async () => {
+        const result = await model.generateContent({
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: "application/json" },
+        });
+        const text = result.response.text();
+        const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(cleaned);
+    })();
 
-    const responseText = result.response.text();
-    
-    // Clean up potential markdown code blocks (```json ... ```)
-    const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-    
-    let blogData;
-    try {
-        blogData = JSON.parse(cleanedText);
-    } catch (e) {
-        console.error("JSON Parse Error:", e, "Raw Text:", responseText);
-        return NextResponse.json({ error: "Failed to parse AI response", raw: responseText }, { status: 500 });
+    // 2. Define Image Generation Task (Independent of Text Result)
+    const imageGenPromise = (async () => {
+        if (!process.env.OPENAI_API_KEY) throw new Error("Missing OPENAI_API_KEY");
+        if (generateOnly) return null; // Skip if draft mode
+
+        console.log("Iniciando generación de imagen paralela...");
+        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        const imagePrompt = `Una imagen editorial moderna y minimalista para un blog de e-commerce sobre: "${topic}". Estilo fotografía de alta calidad, iluminación de estudio, sin texto, profesional, colores corporativos sutiles (verde neón y negro).`;
+        
+        const response = await openai.images.generate({
+            model: "dall-e-3", 
+            prompt: imagePrompt, 
+            n: 1, 
+            size: "1024x1024", 
+            quality: "standard" 
+        });
+        
+        const url = response.data?.[0]?.url;
+        if (!url) throw new Error("No image URL returned");
+
+        const imgRes = await fetch(url);
+        const buffer = Buffer.from(await imgRes.arrayBuffer());
+        
+        return client.assets.upload('image', buffer, { filename: `blog-${Date.now()}.png` });
+    })();
+
+    // 3. Execute Both concurrently
+    const [textResult, imageResult] = await Promise.allSettled([textGenPromise, imageGenPromise]);
+
+    // 4. Process Text Result
+    if (textResult.status === 'rejected') {
+        throw new Error(`Fallo en generación de texto: ${textResult.reason}`);
+    }
+    blogData = textResult.value;
+
+    // 5. Process Image Result
+    if (imageResult.status === 'fulfilled' && imageResult.value) {
+        mainImageRef = imageResult.value._id;
+    } else if (imageResult.status === 'rejected') {
+        console.error("Fallo imagen:", imageResult.reason);
+        imageWarning = `No se pudo generar imagen: ${imageResult.reason.message || 'Error desconocido'}`;
     }
 
-    // If generateOnly (Client-side handling), return the structured data directly
+    // --- PARALLEL EXECUTION END ---
+
+    // Return Draft if requested
     if (generateOnly) {
-       return NextResponse.json({ 
-        success: true, 
-        data: blogData 
-      });
+       return NextResponse.json({ success: true, data: blogData });
     }
 
     // Server-side saving (fallback or if direct call)
     if (!process.env.SANITY_API_TOKEN) {
       return NextResponse.json({ error: "Missing SANITY_API_TOKEN for write access" }, { status: 500 });
-    }
-
-    // 2. Generate Image with DALL-E 3 (Server Side Only)
-    let mainImageRef = null;
-    let imageWarning = null;
-
-    try {
-        if (process.env.OPENAI_API_KEY) {
-            const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-            
-            // Create a specific prompt for the image
-            const imagePrompt = `Una imagen editorial moderna y minimalista para un blog de e-commerce sobre: "${blogData.title}". Estilo fotografía de alta calidad, iluminación de estudio, sin texto, profesional, colores corporativos sutiles (verde neón y negro).`;
-
-            console.log("Generando imagen DALL-E...");
-
-            const imageResponse = await openai.images.generate({
-                model: "dall-e-3",
-                prompt: imagePrompt,
-                n: 1,
-                size: "1024x1024",
-                quality: "standard", // Faster
-            });
-
-            const imageUrl = imageResponse.data?.[0]?.url;
-
-            if (imageUrl) {
-                // Fetch the image to buffer
-                const imgRes = await fetch(imageUrl);
-                const arrayBuffer = await imgRes.arrayBuffer();
-                const buffer = Buffer.from(arrayBuffer);
-
-                // Upload to Sanity
-                const asset = await client.assets.upload('image', buffer, {
-                    filename: `blog-image-${Date.now()}.png`
-                });
-                
-                mainImageRef = asset._id;
-            } else {
-                imageWarning = "OpenAI devolvió una respuesta vacía.";
-            }
-        } else {
-             imageWarning = "OPENAI_API_KEY no encontrada en variables de entorno.";
-             console.warn(imageWarning);
-        }
-    } catch (imgError: any) {
-        console.error("Error generating/uploading image:", imgError);
-        imageWarning = `Error generando imagen: ${imgError.message || imgError}`;
     }
 
     const doc = {
