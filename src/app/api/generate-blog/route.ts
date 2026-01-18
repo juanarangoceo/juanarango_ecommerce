@@ -43,7 +43,6 @@ export async function POST(req: Request) {
         "title": "Un título H1 irresistible (Max 60 caracteres) que incluya la keyword principal.",
         "slug": "slug-optimizado-seo-sin-stopwords",
         "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
-        "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
         "content": "AQUÍ VA EL ARTÍCULO COMPLETO EN FORMATO MARKDOWN. \n\nEructura obligatoria:\n1. **Key Takeaways**: Un bloque al inicio con los 3-5 puntos clave, formateado como una lista o blockquote.\n2. **Introducción**.\n3. **Cuerpo**: Usa encabezados ## para H2 y ### para H3.\n4. **Conclusión**.\n\nUsa **negritas**, *cursivas*, > blockquotes y - listas. El contenido debe ser extenso, detallado y optimizado para SEO."
       }
       
@@ -68,7 +67,17 @@ export async function POST(req: Request) {
     });
 
     const responseText = result.response.text();
-    const blogData = JSON.parse(responseText);
+    
+    // Clean up potential markdown code blocks (```json ... ```)
+    const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    
+    let blogData;
+    try {
+        blogData = JSON.parse(cleanedText);
+    } catch (e) {
+        console.error("JSON Parse Error:", e, "Raw Text:", responseText);
+        return NextResponse.json({ error: "Failed to parse AI response", raw: responseText }, { status: 500 });
+    }
 
     // If generateOnly (Client-side handling), return the structured data directly
     if (generateOnly) {
