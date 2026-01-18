@@ -1,6 +1,6 @@
 import { Stack, Button, Card, Text, TextArea, Label, Flex, Spinner } from '@sanity/ui'
 import { useCallback, useState } from 'react'
-import { set, unset } from 'sanity'
+import { set, unset, useDocumentOperation } from 'sanity'
 
 export const GeneratePostInput = (props: any) => {
   const { elementProps, onChange, value } = props
@@ -9,6 +9,9 @@ export const GeneratePostInput = (props: any) => {
   const [isGeneratingText, setIsGeneratingText] = useState(false)
   const [isGeneratingImage, setIsGeneratingImage] = useState(false)
   const [generatedData, setGeneratedData] = useState<any>(null)
+
+  // Access publish action
+  const { publish } = useDocumentOperation(props.schemaType.name, props.renderPreview)
 
   // 1. GENERATE TEXT (Gemini)
   const handleGenerateText = useCallback(async () => {
@@ -27,18 +30,18 @@ export const GeneratePostInput = (props: any) => {
       if (!json.data) throw new Error("No data returned from API")
 
       const { title, slug, content, imagePrompt } = json.data
-      
       setGeneratedData(json.data) 
 
-      // Safely update Sanity fields
-      if (title) onChange(set(title, ['title']))
-      if (slug) onChange(set({ _type: 'slug', current: slug }, ['slug']))
-      if (content) onChange(set(content, ['content']))
-      
-      // Optional: Save the prompt to a hidden field if needed, or just keep in state
-      // if (imagePrompt) onChange(set(imagePrompt, ['imagePrompt'])) 
+      // TYPE CORRECTION: Ensure slug is string
+      const finalSlug = typeof slug === 'string' ? slug : (slug?.current || topic.toLowerCase().replace(/\s+/g, '-').slice(0, 96));
+      const finalTitle = typeof title === 'string' ? title : topic;
 
-      alert('✨ Texto Generado! Pasando a fase 2...')
+      // Safely update Sanity fields
+      onChange(set(finalTitle, ['title']))
+      onChange(set({ _type: 'slug', current: finalSlug }, ['slug']))
+      if (typeof content === 'string') onChange(set(content, ['content']))
+
+      alert('✨ Paso 1 Completo: Texto Generado. Ahora genera la imagen.')
 
     } catch (err: any) {
       console.error(err)
@@ -48,7 +51,7 @@ export const GeneratePostInput = (props: any) => {
     }
   }, [topic, onChange])
 
-  // 2. GENERATE IMAGE (DALL-E)
+  // 2. GENERATE IMAGE (DALL-E) + AUTO PUBLISH
   const handleGenerateImage = useCallback(async () => {
     setIsGeneratingImage(true)
     try {
@@ -78,7 +81,14 @@ export const GeneratePostInput = (props: any) => {
             }
         }, ['mainImage']))
         
-        alert('🎨 Imagen Generada y Asignada!')
+        // AUTO PUBLISH
+        if (publish && !publish.disabled) {
+            publish.execute()
+            alert('🎨 Imagen Generada y... ¡POST PUBLICADO AUTOMÁTICAMENTE! 🚀')
+        } else {
+            alert('🎨 Imagen Generada. (No se pudo publicar automático, revisa permisos)')
+        }
+
       } else {
         throw new Error("No asset ID returned")
       }
@@ -89,14 +99,14 @@ export const GeneratePostInput = (props: any) => {
     } finally {
       setIsGeneratingImage(false)
     }
-  }, [topic, generatedData, onChange])
+  }, [topic, generatedData, onChange, publish])
 
   return (
     <Stack space={3}>
       <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
             <Label>Generador AI (Paso a Paso)</Label>
-            <Text size={1} muted>Evita bloqueos generando en dos fases.</Text>
+            <Text size={1} muted>Evita bloqueos generando en dos fases. Al finalizar la imagen, se publicará solo.</Text>
             
             <TextArea 
                 value={topic}
@@ -116,7 +126,7 @@ export const GeneratePostInput = (props: any) => {
                 />
                 
                 <Button 
-                    text={isGeneratingImage ? "Pintando..." : "2. Generar Imagen"}
+                    text={isGeneratingImage ? "Pintando..." : "2. Generar Imagen y Publicar"}
                     tone="positive"
                     onClick={handleGenerateImage}
                     loading={isGeneratingImage}
