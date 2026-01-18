@@ -1,4 +1,5 @@
 import { PortableText } from "next-sanity";
+import ReactMarkdown from 'react-markdown';
 import { client } from "@/sanity/lib/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -10,6 +11,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
   mainImage,
   body,
+  content,
   publishedAt,
   _createdAt
 }`;
@@ -63,7 +65,11 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
         prose-strong:text-green-400 prose-strong:font-bold
         prose-blockquote:border-l-green-500 prose-blockquote:text-zinc-400 prose-blockquote:italic
         prose-a:text-blue-400 hover:prose-a:text-blue-300 transition-colors">
-        <PortableText value={post.body} />
+        {post.content ? (
+           <ReactMarkdown>{post.content}</ReactMarkdown>
+        ) : (
+           <PortableText value={post.body} />
+        )}
       </div>
     </article>
   );

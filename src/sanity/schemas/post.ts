@@ -57,5 +57,11 @@ export default {
         },
       ],
     },
+    {
+      name: 'content',
+      title: 'Contenido IA (Markdown)',
+      type: 'text', 
+      description: 'Contenido generado por IA en formato Markdown. Si existe, tiene prioridad sobre Body.'
+    },
   ],
 }

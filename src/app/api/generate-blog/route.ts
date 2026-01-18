@@ -36,49 +36,21 @@ export async function POST(req: Request) {
       
       Escribe un artículo de blog MAESTRO sobre el tema: "${topic}".
       
-      IMPORTANTE: El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta para ser renderizado en Sanity CMS.
+      IMPORTANTE: El formato DEBE ser un objeto JSON válido con la siguiente estructura exacta.
       
       Estructura del JSON esperada:
       {
         "title": "Un título H1 irresistible (Max 60 caracteres) que incluya la keyword principal.",
         "slug": "slug-optimizado-seo-sin-stopwords",
         "excerpt": "Meta descripción persuasiva de 150-160 caracteres que invite al clic.",
-        "body": [
-          {
-            "style": "normal",
-            "content": "Párrafo introductorio con un gancho fuerte (hook). Plantea el problema o la oportunidad."
-          },
-          {
-            "style": "h2",
-            "content": "Primer subtítulo H2 potente"
-          },
-          {
-            "style": "normal",
-            "content": "Contenido de valor profundo. Usa negrillas (en markdown **texto**) dentro de este string para resaltar."
-          },
-          {
-            "style": "h3",
-            "content": "Subtítulo H3 de detalle"
-          },
-           {
-            "style": "blockquote",
-            "content": "Una frase clave o cita destacada."
-          },
-          {
-             "style": "normal",
-             "content": "Conclusión y Call to Action (CTA) final invitando a agendar una consultoría con Nitro Ecom."
-          }
-        ]
+        "content": "AQUÍ VA EL ARTÍCULO COMPLETO EN FORMATO MARKDOWN. Usa encabezados ## para H2, ### para H3. Usa **negritas**, *cursivas*, > blockquotes y - listas. El contenido debe ser extenso, detallado y optimizado para SEO."
       }
       
-      Reglas para el contenido ('body'):
-      - El campo 'body' DEBE ser un ARRAY de objetos. Cada objeto representa un bloque.
-      - Usa 'style': 'h2' para los subtítulos principales.
-      - Usa 'style': 'h3' para secciones dentro de los H2.
-      - Usa 'style': 'normal' para párrafos estándar.
-      - Usa 'style': 'blockquote' para citas o frases destacadas.
-      - NO incluyas el título H1 dentro del body (ya está en el campo 'title').
-      - Escribe MÍNIMO 800 palabras de contenido de altísimo valor.
+      Reglas para el campo 'content' (Markdown):
+      - Escribe MÍNIMO 800 palabras.
+      - Usa la estructura de Markdown correctamente.
+      - NO incluyas el título H1 al principio del markdown, ya que se renderiza por separado. Empieza directamente con la introducción o un H2.
+      - Asegúrate de que el markdown sea válido.
       
       Responde SOLO con el JSON. No incluyas bloques de código \`\`\`json.
     `;
@@ -109,24 +81,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing SANITY_API_TOKEN for write access" }, { status: 500 });
     }
 
-    // Map the simple block structure to Sanity Portable Text
-    // Note: This matches what we will do on the frontend too.
-    const portableTextBody = blogData.body.map((block: any) => ({
-      _type: "block",
-      style: block.style,
-      children: [
-        {
-          _type: "span",
-          text: block.content,
-        //   marks: [], // For bold/italic parsing, we'd need a markdown parser here or simple regex. 
-        //   For now, we leave text raw (markdown characers might show up if not parsed). 
-        //   The frontend implementation in GeneratePostInput.tsx handles this better usually or we can leave markdown chars.
-        //   Ideally we strip markdown or parse it, but for simplicity we assume the User wants to edit or we pass text.
-        }
-      ],
-      markDefs: []
-    }));
-
     const doc = {
       _type: "post",
       title: blogData.title,
@@ -136,7 +90,8 @@ export async function POST(req: Request) {
       },
       excerpt: blogData.excerpt,
       publishedAt: new Date().toISOString(),
-      body: portableTextBody, 
+      content: blogData.content, // Save the markdown content directly
+      // body is now optional or secondary, we rely on content for AI posts
     };
 
     const newDoc = await client.create(doc);
