@@ -14,12 +14,10 @@ export const GeneratePostInput = (props: any) => {
   const docId = useFormValue(['_id']) as string
   const docType = useFormValue(['_type']) as string
   
-  // Use correct ID for ops (id usually starts with drafts. if draft)
-  // useDocumentOperation automatically handles the draft prefix logic if we pass the raw ID?
-  // Actually, useDocumentOperation(id, type) expects the "published" ID or the ID currently in URL.
-  // The hook documentation says it takes (id, type).
-  // Safest is to pass the docId we have and let Sanity resolve.
-  const { publish } = useDocumentOperation(docId?.replace('drafts.', ''), docType)
+  // FIXED: Ensure hooks always get strings, even if undefined initially
+  const opId = (docId || '').replace('drafts.', '')
+  const opType = docType || 'post'
+  const { publish } = useDocumentOperation(opId, opType)
 
   // 1. GENERATE TEXT (Gemini)
   const handleGenerateText = useCallback(async () => {
@@ -33,7 +31,19 @@ export const GeneratePostInput = (props: any) => {
         body: JSON.stringify({ topic, action: 'generate-text' }),
       })
       
-      const json = await res.json()
+      // FIXED: Handle 504 Timeout explicitly
+      if (res.status === 504) {
+          throw new Error("⏳ Timeout: La investigación tomó demasiado tiempo (>10s). Intenta un tema más simple o reintenta.")
+      }
+
+      const textBody = await res.text() // Read text first to debug if needed
+      let json
+      try {
+          json = JSON.parse(textBody)
+      } catch (e) {
+          throw new Error(`Respuesta inválida del servidor: ${textBody.substring(0, 50)}...`)
+      }
+
       if (!res.ok || json.error) throw new Error(typeof json.error === 'object' ? JSON.stringify(json.error) : (json.error || 'Error desconocido'))
       if (!json.data) throw new Error("No data returned from API")
 
@@ -42,21 +52,19 @@ export const GeneratePostInput = (props: any) => {
 
       // TYPE CORRECTION
       const finalTitle = typeof title === 'string' ? title : topic;
-      // Extract just the string for the slug current value
       const slugString = typeof slug === 'string' ? slug : (slug?.current || topic.toLowerCase().replace(/\s+/g, '-').slice(0, 96));
 
       // Safely update Sanity fields
       if (finalTitle) onChange(set(finalTitle, ['title']))
-      // Set the slug object
       if (slugString) onChange(set({ _type: 'slug', current: slugString }, ['slug']))
       if (content && typeof content === 'string') onChange(set(content, ['content']))
 
       alert('✨ Paso 1 Completo: Texto Generado. Ahora genera la imagen.')
 
     } catch (err: any) {
-      console.error(err)
-      const msg = typeof err.message === 'object' ? JSON.stringify(err.message) : err.message
-      alert(`Error Texto: ${msg}`)
+      console.error("Text Gen Error:", err)
+      const msg = err.message || JSON.stringify(err)
+      alert(`⚠️ Error Texto: ${msg}`)
     } finally {
       setIsGeneratingText(false)
     }
@@ -78,6 +86,11 @@ export const GeneratePostInput = (props: any) => {
             imagePrompt: promptToUse 
         }),
       })
+      
+      // FIXED: Handle 504 Timeout explicitly
+      if (res.status === 504) {
+        throw new Error("⏳ Timeout generando Imagen. Intenta de nuevo.")
+      }
 
       const json = await res.json()
       if (!res.ok || json.error) {
@@ -101,18 +114,18 @@ export const GeneratePostInput = (props: any) => {
                 alert('🎨 Imagen Generada y... ¡POST PUBLICADO AUTOMÁTICAMENTE! 🚀')
             } else {
                 console.warn("Publish action disabled or missing", publish)
-                alert('🎨 Imagen Generada. (No se pudo publicar automático - Acción no disponible)')
+                alert('🎨 Imagen Generada. (Nota: No se pudo auto-publicar, hazlo manual)')
             }
-        }, 1000) // Small delay to ensure patch is applied
+        }, 1500) 
 
       } else {
         throw new Error("No asset ID returned")
       }
 
     } catch (err: any) {
-      console.error(err)
-      const msg = typeof err.message === 'object' ? JSON.stringify(err.message) : err.message
-      alert(`Error Imagen: ${msg}`)
+      console.error("Image Gen Error:", err)
+      const msg = err.message || JSON.stringify(err)
+      alert(`⚠️ Error Imagen: ${msg}`)
     } finally {
       setIsGeneratingImage(false)
     }
@@ -122,7 +135,7 @@ export const GeneratePostInput = (props: any) => {
     <Stack space={3}>
       <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
-            <Label>Generador AI (Paso a Paso)</Label>
+            <Label>Generador AI (Paso a Paso - Anti Timeout)</Label>
             <Text size={1} muted>Evita bloqueos generando en dos fases. Al finalizar la imagen, se publicará solo.</Text>
             
             <TextArea 
