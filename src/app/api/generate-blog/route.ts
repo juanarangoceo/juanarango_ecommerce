@@ -47,11 +47,27 @@ export async function POST(req: Request) {
           config: { responseMimeType: "application/json" },
         } as any);
 
-        // @ts-ignore
-        const text = geminiResponse.text ? geminiResponse.text() : (geminiResponse.response ? geminiResponse.response.text() : JSON.stringify(geminiResponse));
-        if (!text) throw new Error("Gemini no devolvió texto");
+        // Parseo seguro del contenido (Compatibilidad SDK @google/genai vs @google/generative-ai)
+        let generatedText = "";
         
-        const blogData = JSON.parse(text);
+        // @ts-ignore
+        if (typeof geminiResponse.text === 'function') {
+             // @ts-ignore
+             generatedText = geminiResponse.text();
+        } else if (typeof geminiResponse.text === 'string') {
+             generatedText = geminiResponse.text;
+        } else if (geminiResponse.candidates?.[0]?.content?.parts?.[0]?.text) {
+             generatedText = geminiResponse.candidates[0].content.parts[0].text;
+        } else {
+             generatedText = JSON.stringify(geminiResponse);
+        }
+
+        if (!generatedText) throw new Error("Gemini no devolvió texto");
+
+        // Limpieza de Markdown (```json ... ```)
+        const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
+        
+        const blogData = JSON.parse(cleanJson);
         return NextResponse.json({ success: true, type: 'text', data: blogData });
     }
 
