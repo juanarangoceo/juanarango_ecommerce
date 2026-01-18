@@ -1,108 +1,119 @@
-import { useState, useCallback } from 'react'
-import { Stack, Button, Text, TextArea, Label, Card, Box } from '@sanity/ui'
-import { set, StringInputProps, useClient, useFormValue, useDocumentOperation } from 'sanity'
-import React from 'react'
+import { Stack, Button, Card, Text, TextArea, Label, Flex } from '@sanity/ui'
+import { useCallback, useState } from 'react'
+import { set, unset, useFormValue } from 'sanity'
 
-export function GeneratePostInput(props: StringInputProps) {
-  const { onChange, value } = props
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [topic, setTopic] = useState(value || '')
+export const GeneratePostInput = (props: any) => {
+  const { elementProps, onChange, value } = props
   
-  const client = useClient({apiVersion: '2023-05-03'})
-  const documentId = useFormValue(['_id']) as string
-  const documentType = useFormValue(['_type']) as string
-  
-  // Hook for document operations (publish)
-  // We must pass the published ID (without drafts.) for the publish operation to work correctly
-  const publishedId = documentId?.replace(/^drafts\./, '')
-  const ops = useDocumentOperation(publishedId, documentType)
-  const publish = ops.publish
+  const [topic, setTopic] = useState('')
+  const [isGeneratingText, setIsGeneratingText] = useState(false)
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false)
+  const [generatedData, setGeneratedData] = useState<any>(null)
 
-  const handleGenerate = useCallback(async () => {
+  // 1. GENERATE TEXT (Gemini)
+  const handleGenerateText = useCallback(async () => {
     if (!topic) return
-    setIsGenerating(true)
-
+    setIsGeneratingText(true)
+    
     try {
       const res = await fetch('/api/generate-blog', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic }),
-      });
-
-      if (res.status === 504) {
-        throw new Error("El servidor tardó demasiado (Timeout). Es posible que el post se haya creado en segundo plano. Refresca la lista en unos instantes.");
-      }
-
-      const json = await res.json();
+        body: JSON.stringify({ topic, action: 'generate-text' }),
+      })
       
-      if (!res.ok || json.error) {
-        throw new Error(json.error || json.details || 'Error desconocido');
-      }
+      const json = await res.json()
+      if (!res.ok || json.error) throw new Error(json.error || 'Error desconocido')
 
-      const { title, slug, content, excerpt } = json.data
-      
-      // 1. Update Document Content
-      await client
-        .patch(documentId)
-        .set({
-            title: title,
-            slug: { _type: 'slug', current: slug },
-            excerpt: excerpt,
-            content: content,
-            // body: [] // Optional: clear body or leave it. Prefer leaving it if mixing.
-        })
-        .commit()
+      const { title, slug, content, imagePrompt } = json.data
+      setGeneratedData(json.data) // Guardamos para la imagen
 
-      // 2. Auto-Publish
-      if (publish && !publish.disabled) {
-          publish.execute()
-          if (json.warning) {
-             alert(`✨ Blog Publicado (Con Advertencia): ${json.warning}`)
-          } else {
-             alert('✨ Blog Generated & PUBLISHED Successfully!')
-          }
-      } else {
-          alert('✨ Blog Generated! (Could not auto-publish, please check permissions or status)')
-      }
+      // Update Sanity fields
+      onChange(set(title, ['title']))
+      onChange(set({ _type: 'slug', current: slug }, ['slug']))
+      onChange(set(content, ['content']))
+      // Optional: if you had a field for the prompt, you could save it: 
+      // onChange(set(imagePrompt, ['imagePrompt'])) 
 
-    } catch (error) {
-      console.error(error)
-      alert('Error generating content. Check console for details.')
+      alert('✨ Texto Generado! Ahora puedes generar la imagen.')
+
+    } catch (err: any) {
+      console.error(err)
+      alert(`Error Texto: ${err.message}`)
     } finally {
-      setIsGenerating(false)
+      setIsGeneratingText(false)
     }
-  }, [topic, client, documentId, publish, documentType])
+  }, [topic, onChange])
+
+  // 2. GENERATE IMAGE (DALL-E)
+  const handleGenerateImage = useCallback(async () => {
+    setIsGeneratingImage(true)
+    try {
+      const res = await fetch('/api/generate-blog', {
+        method: 'POST',
+        body: JSON.stringify({ 
+            topic: generatedData?.title || topic, 
+            action: 'generate-image',
+            imagePrompt: generatedData?.imagePrompt 
+        }),
+      })
+
+      const json = await res.json()
+      if (!res.ok || json.error) throw new Error(json.error || 'Error imagen')
+
+      // Patch the mainImage with the new asset
+      onChange(set({
+        _type: 'image',
+        asset: {
+            _type: 'reference',
+            _ref: json.imageAssetId
+        }
+      }, ['mainImage']))
+
+      alert('🎨 Imagen Generada y Asignada!')
+
+    } catch (err: any) {
+      console.error(err)
+      alert(`Error Imagen: ${err.message}`)
+    } finally {
+      setIsGeneratingImage(false)
+    }
+  }, [topic, generatedData, onChange])
 
   return (
-    <Card padding={4} tone="primary" shadow={1} radius={2} border>
+    <Stack space={3}>
+      <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
-            <Label>Generador Nitro AI (Hispano)</Label>
-            <Text size={1} muted>
-                Ingresa un tema. La IA creará un artículo optimizado para SEO, con H1/H2 estructura H3 y Storytelling. 
-                <strong style={{color: 'green'}}> Se publicará automáticamente.</strong>
-            </Text>
+            <Label>Generador AI (Paso a Paso)</Label>
+            <Text size={1} muted>1. Escribe el tema. 2. Genera Texto. 3. Genera Imagen. (Evita Timeouts)</Text>
             
             <TextArea 
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    setTopic(e.currentTarget.value)
-                    onChange(set(e.currentTarget.value))
-                }}
-                value={topic} 
-                rows={3} 
-                placeholder="Ej: Estrategias de retención para e-commerce en 2025..." 
+                value={topic}
+                onChange={(e) => setTopic(e.currentTarget.value)}
+                placeholder="Tema: Ej. Estrategias de retención para e-commerce 2025"
+                rows={3}
             />
-            
-            <Button 
-                text={isGenerating ? 'Generando y Publicando...' : '✨ Generar & Publicar'} 
-                tone="primary"
-                mode="ghost"
-                onClick={handleGenerate}
-                disabled={isGenerating || !topic}
-                fontSize={2}
-                padding={3}
-                style={{ background: isGenerating ? '#ccc' : '#22c55e', color: 'white', fontWeight: 'bold' }}
-            />
+
+            <Flex gap={2}>
+                <Button 
+                    text={isGeneratingText ? "Escribiendo..." : "1. Generar Contenido 📝"}
+                    tone="primary"
+                    onClick={handleGenerateText}
+                    loading={isGeneratingText}
+                    disabled={!topic || isGeneratingText}
+                />
+                
+                {/* Solo mostramos el botón de imagen si ya hay texto generado o si el usuario quiere forzarlo */}
+                <Button 
+                    text={isGeneratingImage ? "Pintando..." : "2. Generar Imagen 🎨"}
+                    tone="positive"
+                    onClick={handleGenerateImage}
+                    loading={isGeneratingImage}
+                    disabled={isGeneratingImage || !generatedData} 
+                />
+            </Flex>
         </Stack>
-    </Card>
+      </Card>
+      {props.renderDefault(props)}
+    </Stack>
   )
 }
