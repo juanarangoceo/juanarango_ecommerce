@@ -38,39 +38,8 @@ export function GeneratePostInput(props: StringInputProps) {
         throw new Error(json.error || 'Failed to generate content')
       }
 
-      const { title, slug, body, excerpt } = json.data
+      const { title, slug, content, excerpt } = json.data
       
-      // Map API blocks to Portable Text with basic Markdown parsing for Bold (**)
-      const portableTextBody = body.map((block: any) => {
-        const text = block.content || "";
-        const parts = text.split(/(\*\*.*?\*\*)/g); // Split by **...** capturing the delimiters
-        
-        const children = parts.map((part: string, index: number) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return {
-                    _type: "span",
-                    text: part.slice(2, -2), // Remove **
-                    marks: ["strong"],
-                    _key: `chunk-${index}`
-                };
-            }
-            if (!part) return null; // Skip empty strings from split
-            return {
-                _type: "span",
-                text: part,
-                marks: [],
-                _key: `chunk-${index}`
-            }
-        }).filter(Boolean); // Remove nulls
-
-        return {
-            _type: "block",
-            style: block.style || "normal",
-            children: children.length > 0 ? children : [{_type: "span", text: "", marks: []}],
-            markDefs: [],
-        }
-      })
-
       // 1. Update Document Content
       await client
         .patch(documentId)
@@ -78,7 +47,8 @@ export function GeneratePostInput(props: StringInputProps) {
             title: title,
             slug: { _type: 'slug', current: slug },
             excerpt: excerpt,
-            body: portableTextBody
+            content: content,
+            // body: [] // Optional: clear body or leave it. Prefer leaving it if mixing.
         })
         .commit()
 
