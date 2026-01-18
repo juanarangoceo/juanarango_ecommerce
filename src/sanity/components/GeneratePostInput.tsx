@@ -1,6 +1,6 @@
 import { Stack, Button, Card, Text, TextArea, Label, Flex, Spinner } from '@sanity/ui'
 import { useCallback, useState } from 'react'
-import { set, unset, useDocumentOperation } from 'sanity'
+import { set, unset, useDocumentOperation, useFormValue } from 'sanity'
 
 export const GeneratePostInput = (props: any) => {
   const { elementProps, onChange, value } = props
@@ -10,8 +10,16 @@ export const GeneratePostInput = (props: any) => {
   const [isGeneratingImage, setIsGeneratingImage] = useState(false)
   const [generatedData, setGeneratedData] = useState<any>(null)
 
-  // Access publish action
-  const { publish } = useDocumentOperation(props.schemaType.name, props.renderPreview)
+  // Retrieve Document ID (handling drafts)
+  const docId = useFormValue(['_id']) as string
+  const docType = useFormValue(['_type']) as string
+  
+  // Use correct ID for ops (id usually starts with drafts. if draft)
+  // useDocumentOperation automatically handles the draft prefix logic if we pass the raw ID?
+  // Actually, useDocumentOperation(id, type) expects the "published" ID or the ID currently in URL.
+  // The hook documentation says it takes (id, type).
+  // Safest is to pass the docId we have and let Sanity resolve.
+  const { publish } = useDocumentOperation(docId?.replace('drafts.', ''), docType)
 
   // 1. GENERATE TEXT (Gemini)
   const handleGenerateText = useCallback(async () => {
@@ -26,26 +34,29 @@ export const GeneratePostInput = (props: any) => {
       })
       
       const json = await res.json()
-      if (!res.ok || json.error) throw new Error(json.error || 'Error desconocido')
+      if (!res.ok || json.error) throw new Error(typeof json.error === 'object' ? JSON.stringify(json.error) : (json.error || 'Error desconocido'))
       if (!json.data) throw new Error("No data returned from API")
 
       const { title, slug, content, imagePrompt } = json.data
       setGeneratedData(json.data) 
 
-      // TYPE CORRECTION: Ensure slug is string
-      const finalSlug = typeof slug === 'string' ? slug : (slug?.current || topic.toLowerCase().replace(/\s+/g, '-').slice(0, 96));
+      // TYPE CORRECTION
       const finalTitle = typeof title === 'string' ? title : topic;
+      // Extract just the string for the slug current value
+      const slugString = typeof slug === 'string' ? slug : (slug?.current || topic.toLowerCase().replace(/\s+/g, '-').slice(0, 96));
 
       // Safely update Sanity fields
-      onChange(set(finalTitle, ['title']))
-      onChange(set({ _type: 'slug', current: finalSlug }, ['slug']))
-      if (typeof content === 'string') onChange(set(content, ['content']))
+      if (finalTitle) onChange(set(finalTitle, ['title']))
+      // Set the slug object
+      if (slugString) onChange(set({ _type: 'slug', current: slugString }, ['slug']))
+      if (content && typeof content === 'string') onChange(set(content, ['content']))
 
       alert('✨ Paso 1 Completo: Texto Generado. Ahora genera la imagen.')
 
     } catch (err: any) {
       console.error(err)
-      alert(`Error Texto: ${err.message}`)
+      const msg = typeof err.message === 'object' ? JSON.stringify(err.message) : err.message
+      alert(`Error Texto: ${msg}`)
     } finally {
       setIsGeneratingText(false)
     }
@@ -69,7 +80,9 @@ export const GeneratePostInput = (props: any) => {
       })
 
       const json = await res.json()
-      if (!res.ok || json.error) throw new Error(json.error || 'Error imagen')
+      if (!res.ok || json.error) {
+          throw new Error(typeof json.error === 'object' ? JSON.stringify(json.error) : (json.error || 'Error imagen'))
+      }
       
       if (json.imageAssetId) {
         // Patch the mainImage
@@ -82,12 +95,15 @@ export const GeneratePostInput = (props: any) => {
         }, ['mainImage']))
         
         // AUTO PUBLISH
-        if (publish && !publish.disabled) {
-            publish.execute()
-            alert('🎨 Imagen Generada y... ¡POST PUBLICADO AUTOMÁTICAMENTE! 🚀')
-        } else {
-            alert('🎨 Imagen Generada. (No se pudo publicar automático, revisa permisos)')
-        }
+        setTimeout(() => {
+            if (publish && !publish.disabled) {
+                publish.execute()
+                alert('🎨 Imagen Generada y... ¡POST PUBLICADO AUTOMÁTICAMENTE! 🚀')
+            } else {
+                console.warn("Publish action disabled or missing", publish)
+                alert('🎨 Imagen Generada. (No se pudo publicar automático - Acción no disponible)')
+            }
+        }, 1000) // Small delay to ensure patch is applied
 
       } else {
         throw new Error("No asset ID returned")
@@ -95,7 +111,8 @@ export const GeneratePostInput = (props: any) => {
 
     } catch (err: any) {
       console.error(err)
-      alert(`Error Imagen: ${err.message}`)
+      const msg = typeof err.message === 'object' ? JSON.stringify(err.message) : err.message
+      alert(`Error Imagen: ${msg}`)
     } finally {
       setIsGeneratingImage(false)
     }
