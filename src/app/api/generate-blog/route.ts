@@ -21,17 +21,14 @@ export async function POST(req: Request) {
       contents: [{
         role: "user",
         parts: [{
-          text: `Actúa como un experto en SEO y Copywriting. Escribe un artículo de blog sobre "${topic}".
+          text: `Eres un escritor de blogs experto. Escribe un artículo sobre "${topic}".
           
-          Estructura requerida (JSON):
-          - title: Título atractivo y optimizado para SEO.
-          - slug: URL amigable (kebab-case).
-          - content: Contenido completo en Markdown. 
-            * Usa H2 (##) para secciones.
-            * Usa párrafos cortos.
-            * Incluye una lista de "Key Takeaways" al inicio.
+          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 3 claves:
+          1. "title": Título del post.
+          2. "slug": URL amigable (ej: titulo-del-post).
+          3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc).
           
-          Devuelve SOLO el JSON válido.`
+          NO uses claves anidadas. NO uses 'body'. La clave 'content' es OBLIGATORIA.`
         }]
       }],
       config: { 
@@ -64,7 +61,7 @@ export async function POST(req: Request) {
         title: rawData.title || rawData.header || topic,
         slug: rawData.slug,
         // Fallback robusto para encontrar el contenido
-        content: rawData.content || rawData.body || rawData.text || rawData.article || ""
+        content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || ""
     };
 
     if (!blogData.content) {
