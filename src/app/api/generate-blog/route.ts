@@ -16,22 +16,21 @@ export async function POST(req: Request) {
     
     if (!topic && action === 'generate-text') return NextResponse.json({ error: "Falta el tema" }, { status: 400 });
 
-    // --- ACCIÓN 1: GENERAR TEXTO (Gemini 2.0 Flash) ---
+    // --- ACCIÓN 1: GENERAR TEXTO (Gemini 2.0 Flash - SIN BÚSQUEDA PARA VELOCIDAD) ---
     if (action === 'generate-text') {
-        console.log(`🚀 Generando TEXTO sobre: ${topic}`);
+        console.log(`🚀 Generando TEXTO (Rápido) sobre: ${topic}`);
         if (!process.env.GOOGLE_API_KEY) throw new Error("Falta GOOGLE_API_KEY");
 
         const geminiResponse = await googleAI.models.generateContent({
           model: "gemini-2.0-flash-exp",
-          tools: [{ googleSearch: {} } as any],
+          // tools: [{ googleSearch: {} } as any], // REMOVIDO: Causa Timeouts en Vercel Hobby (>10s)
           contents: [{
             role: "user",
             parts: [{
-              text: `Investiga en internet sobre "${topic}" para obtener datos actuales (2025-2026).
-              Luego, escribe un artículo de blog experto.
+              text: `Escribe un artículo de blog experto sobre "${topic}".
               
               Requisitos:
-              - Usa la información encontrada (cita fuentes si es relevante).
+              - Datos generales y consejos expertos.
               - Formato Markdown profesional.
               - Usa saltos de línea dobles entre párrafos.
               
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
           config: { responseMimeType: "application/json" },
         } as any);
 
-        // Parseo seguro del contenido (Compatibilidad SDK @google/genai vs @google/generative-ai)
+        // Parseo seguro del contenido
         let generatedText = "";
         
         // @ts-ignore
@@ -64,27 +63,25 @@ export async function POST(req: Request) {
 
         if (!generatedText) throw new Error("Gemini no devolvió texto");
 
-        // Limpieza de Markdown (```json ... ```)
         const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
-        
         const blogData = JSON.parse(cleanJson);
         return NextResponse.json({ success: true, type: 'text', data: blogData });
     }
 
-    // --- ACCIÓN 2: GENERAR IMAGEN (DALL-E 3) ---
+    // --- ACCIÓN 2: GENERAR IMAGEN (DALL-E 2 - MÁS RÁPIDO) ---
     if (action === 'generate-image') {
-        console.log(`🎨 Generando IMAGEN para: ${topic}`);
+        console.log(`🎨 Generando IMAGEN (DALL-E 2) para: ${topic}`);
         if (!process.env.OPENAI_API_KEY) throw new Error("Falta OPENAI_API_KEY");
         
-        // Usamos el prompt que nos pasó el frontend (generado por Gemini) o uno fallback
-        const finalPrompt = imagePrompt || `Editorial photography, 8k, highly detailed, minimalist, modern e-commerce concept about: "${topic}". Professional studio lighting, sleek, corporate colors (neon green and black accents).`;
+        const finalPrompt = imagePrompt || `Review about ${topic}, editorial style, minimal.`;
 
+        // DALL-E 2 es mucho más rápido (<5s) que DALL-E 3 (>12s)
         const imageResponse = await openai.images.generate({
-          model: "dall-e-3",
-          prompt: finalPrompt,
+          model: "dall-e-2",
+          prompt: finalPrompt.slice(0, 900), // Limit prompt length for DALL-E 2
           n: 1,
           size: "1024x1024",
-          quality: "standard",
+          // DALL-E 2 doesn't support 'quality' or 'style'
         });
 
         const imageUrl = imageResponse.data?.[0]?.url;
