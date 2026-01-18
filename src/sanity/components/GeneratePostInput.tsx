@@ -61,7 +61,14 @@ export const GeneratePostInput = (props: any) => {
       // B) Update Root fields (Title, Slug, Content) using Client Patch
       // onChange is scoped to THIS field, so we cannot use it for parent fields.
       const finalTitle = typeof title === 'string' ? title : currentTopic
-      const slugString = typeof slug === 'string' ? slug : (slug?.current || currentTopic.toLowerCase().replace(/\s+/g, '-').slice(0, 96))
+      
+      // FORCE SANITIZATION OF SLUG (Lowercase + Kebab Case + No Special Chars)
+      const rawSlug = typeof slug === 'string' ? slug : (slug?.current || currentTopic);
+      const slugString = rawSlug
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
+          .slice(0, 96);
       
       const patch = client.patch(docId)
           .set({ title: finalTitle })
