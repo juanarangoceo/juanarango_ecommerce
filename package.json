@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@google/genai": "^1.37.0",
     "@google/generative-ai": "^0.24.1",
     "@radix-ui/react-slot": "^1.2.4",
     "@sanity/image-url": "^2.0.3",
