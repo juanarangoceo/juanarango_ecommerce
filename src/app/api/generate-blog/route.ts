@@ -52,7 +52,7 @@ export async function POST(req: Request) {
       config: {
         responseMimeType: "application/json", 
       },
-    });
+    } as any);
 
     // Parseo seguro del contenido
     // @ts-ignore - Handle potential SDK type mismatch
