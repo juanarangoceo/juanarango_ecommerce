@@ -11,6 +11,9 @@ const client = createClient({
   token: process.env.SANITY_API_TOKEN,
 });
 
+export const maxDuration = 60; // Allow 60 seconds for AI operations
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
