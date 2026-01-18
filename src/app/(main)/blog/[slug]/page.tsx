@@ -124,12 +124,30 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                                     h2: ({node, ...props}) => {
                                         const text = String(props.children);
                                         const id = slugify(text);
-                                        return <h2 id={id} {...props}>{props.children}</h2>;
+                                        return <h2 id={id} className="text-3xl font-bold mt-12 mb-6 pb-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white" {...props}>{props.children}</h2>;
                                     },
                                     h3: ({node, ...props}) => {
                                         const text = String(props.children);
                                         const id = slugify(text);
-                                        return <h3 id={id} {...props}>{props.children}</h3>;
+                                        return <h3 id={id} className="text-2xl font-bold mt-8 mb-4 text-zinc-900 dark:text-zinc-100" {...props}>{props.children}</h3>;
+                                    },
+                                    p: ({node, ...props}) => {
+                                        return <p className="mb-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</p>;
+                                    },
+                                    ul: ({node, ...props}) => {
+                                        return <ul className="my-6 space-y-2 pl-6 list-disc text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</ul>;
+                                    },
+                                    ol: ({node, ...props}) => {
+                                        return <ol className="my-6 space-y-2 pl-6 list-decimal text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</ol>;
+                                    },
+                                    li: ({node, ...props}) => {
+                                        return <li className="mb-2" {...props}>{props.children}</li>;
+                                    },
+                                    strong: ({node, ...props}) => {
+                                        return <strong className="font-bold text-zinc-900 dark:text-white" {...props}>{props.children}</strong>;
+                                    },
+                                    blockquote: ({node, ...props}) => {
+                                        return <blockquote className="border-l-4 border-green-500 bg-zinc-50 dark:bg-zinc-900 py-3 px-6 my-8 rounded-r-lg italic text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</blockquote>;
                                     }
                                 }}
                             >
