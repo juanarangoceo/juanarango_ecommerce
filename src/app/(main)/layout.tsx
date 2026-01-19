@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { ChatWidget } from "@/components/chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -18,6 +19,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Juan Arango - Ingeniería de Escalamiento",
   description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
+  metadataBase: new URL("https://juanarango.com"), // Placeholder
+  verification: {
+    google: "verification_code_here", // Placeholder
+  },
 };
 
 // Main Layout
@@ -37,6 +42,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ChatWidget />
+        <GoogleAnalytics gaId="G-XXXXXXXXXX" /> {/* Placeholder */}
       </body>
     </html>
   );
