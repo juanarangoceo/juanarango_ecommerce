@@ -18,22 +18,22 @@ export function Footer() {
             <h4 className="font-bold mb-4">Servicios</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#servicios" className="hover:text-primary transition-colors">
                   NitroBot
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#servicios" className="hover:text-primary transition-colors">
                   NitroSearch
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#servicios" className="hover:text-primary transition-colors">
                   NitroCommerce
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#servicios" className="hover:text-primary transition-colors">
                   NitroStrategy
                 </Link>
               </li>
@@ -43,17 +43,17 @@ export function Footer() {
             <h4 className="font-bold mb-4">Empresa</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#resultados" className="hover:text-primary transition-colors">
                   Casos de Éxito
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/blog" className="hover:text-primary transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#contacto" className="hover:text-primary transition-colors">
                   Contacto
                 </Link>
               </li>

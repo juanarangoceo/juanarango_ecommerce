@@ -24,13 +24,13 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="#servicios" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#servicios" className="text-muted-foreground hover:text-foreground transition-colors">
               Servicios
             </Link>
-            <Link href="#metricas" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#resultados" className="text-muted-foreground hover:text-foreground transition-colors">
               Resultados
             </Link>
-            <Link href="#contacto" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#contacto" className="text-muted-foreground hover:text-foreground transition-colors">
               Contacto
             </Link>
             <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -39,8 +39,8 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-             {/* CTA Button (Desktop) */}
-            <Link href="#contacto" className="hidden sm:inline-flex">
+            {/* CTA Button (Desktop) */}
+            <Link href="/#contacto" className="hidden sm:inline-flex">
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
                 Consulta Gratuita
               </Button>
@@ -63,21 +63,21 @@ export function Navbar() {
         <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border/50 shadow-2xl animate-in slide-in-from-top-5">
           <div className="flex flex-col p-6 space-y-4">
             <Link 
-              href="#servicios" 
+              href="/#servicios" 
               className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
               onClick={closeMenu}
             >
               Servicios
             </Link>
             <Link 
-              href="#resultados" 
+              href="/#resultados" 
               className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
               onClick={closeMenu}
             >
               Resultados
             </Link>
             <Link 
-              href="#contacto" 
+              href="/#contacto" 
               className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
               onClick={closeMenu}
             >
