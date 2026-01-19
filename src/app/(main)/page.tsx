@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { MetricsIsland } from "@/components/metrics-island"
+import { AboutSection } from "@/components/about-section"
 import { ContactForm } from "@/components/ui/contact-form"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
 
@@ -86,6 +87,9 @@ export default function Page() {
         
         {/* Metrics Bar - Client Component Island */}
         <MetricsIsland metrics={metrics} />
+
+        {/* About Section - Server Component */}
+        <AboutSection />
 
         {/* ISLA 2: Services Grid (Interactive) */}
         <ServicesGrid />

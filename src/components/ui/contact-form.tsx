@@ -53,7 +53,6 @@ export function ContactForm() {
             onChange={handleChange}
             placeholder="Tu nombre"
             className="w-full bg-transparent border-b-2 border-zinc-700 text-3xl font-light text-white focus:border-primary focus:outline-none py-2 transition-colors placeholder:text-zinc-700"
-            autoFocus
           />
         </div>
         <div>
@@ -88,7 +87,6 @@ export function ContactForm() {
           onChange={handleChange}
           placeholder="tu@email.com"
           className="w-full bg-transparent border-b-2 border-zinc-700 text-3xl font-light text-white focus:border-primary focus:outline-none py-2 transition-colors placeholder:text-zinc-700"
-          autoFocus
         />
       </div>
       <button
