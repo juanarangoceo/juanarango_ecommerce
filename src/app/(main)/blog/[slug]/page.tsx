@@ -161,6 +161,11 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                             <div className="text-gray-500 italic">No content found (Markdown empty). Checking Portable Text... <PortableText value={post.body} /></div>
                         )}
                     </div>
+
+                    {/* Mobile CTA (Bottom of Post) */}
+                    <div className="mt-12 lg:hidden">
+                        <NitroCtaCard />
+                    </div>
                 </article>
 
                 {/* Right: Sidebar (Desktop) */}
