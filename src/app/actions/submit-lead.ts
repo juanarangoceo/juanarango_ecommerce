@@ -3,14 +3,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
-// Initialize Clients
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // Secure server-side key
-);
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function submitLead(formData: FormData) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
@@ -21,8 +13,23 @@ export async function submitLead(formData: FormData) {
     return { error: "Faltan campos requeridos" };
   }
 
+  // Debug: Log environment check (will show in server logs)
+  console.log("Submitting lead:", { name, email, hasSupabase: !!process.env.SUPABASE_SERVICE_ROLE_KEY, hasResend: !!process.env.RESEND_API_KEY });
+
+  // 1. Validate Environment
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Missing Supabase Configuration");
+    return { error: "Error de configuración del servidor (Supabase Keys missing)." };
+  }
+
   try {
-    // 1. Save to Supabase
+    // Initialize Clients dynamically to catch config errors
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+    
+    // 2. Save to Supabase
     const { error: dbError } = await supabase.from("leads").insert({
       name,
       email,
@@ -32,12 +39,12 @@ export async function submitLead(formData: FormData) {
 
     if (dbError) {
       console.error("Supabase Error:", dbError);
-      throw new Error("Error guardando en base de datos");
+      return { error: "Error guardando en base de datos. ¿Creaste la tabla 'leads'?" };
     }
 
-    // 2. Send Email via Resend
-    // We only try to send if we have a key, otherwise we log/skip (for dev safety)
+    // 3. Send Email via Resend
     if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
         from: "Nitro Ecom <onboarding@resend.dev>", // Or your verified domain
         to: [email],
@@ -52,14 +59,11 @@ export async function submitLead(formData: FormData) {
           <p>El equipo de Juan Arango</p>
         `,
       });
-      
-      // Notify Admin (You)
-      // await resend.emails.send({ ... }) 
     }
 
     return { success: true };
   } catch (error) {
-    console.error("Submit Error:", error);
-    return { error: "Hubo un error procesando tu solicitud. Intenta nuevamente." };
+    console.error("Submit Exception:", error);
+    return { error: "Error inesperado procesando tu solicitud." };
   }
 }

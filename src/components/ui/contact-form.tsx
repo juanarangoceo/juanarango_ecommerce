@@ -34,7 +34,8 @@ export function ContactForm() {
     if (result.success) {
       setStep(4); // Success Step
     } else {
-      alert("Hubo un error. Por favor intenta de nuevo.");
+      // Show specific error from server
+      alert(result.error || "Hubo un error. Por favor intenta de nuevo.");
     }
   };
 
