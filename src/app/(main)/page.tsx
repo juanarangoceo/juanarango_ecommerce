@@ -4,8 +4,8 @@ import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
-import { BookingSection } from "@/components/booking-section"
 import { MetricsIsland } from "@/components/metrics-island"
+import { ContactForm } from "@/components/ui/contact-form"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
 
 // OPTIMIZACIÓN NITRO: Carga dinámica (Lazy Load)
@@ -147,9 +147,17 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ISLA 3: Booking Section (Interactive) */}
-        <div id="contacto">
-            <BookingSection />
+        {/* ISLA 3: Contact Form (Replazo de Booking) */}
+        <div id="contacto" className="py-24 px-6">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">Hablemos de Escalar</h2>
+              <p className="text-xl text-muted-foreground">
+                Déjanos tus datos. Te contactaremos para una auditoría inicial.
+              </p>
+            </div>
+            <ContactForm />
+          </div>
         </div>
 
       </main>
