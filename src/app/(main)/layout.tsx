@@ -42,7 +42,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ChatWidget />
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" /> {/* Placeholder */}
+        <GoogleAnalytics gaId="G-J2RT4C9YPR" />
       </body>
     </html>
   );
