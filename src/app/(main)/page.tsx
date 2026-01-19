@@ -1,8 +1,11 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { Navbar } from "@/components/layout/Navbar"
+import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { BookingSection } from "@/components/booking-section"
+import { MetricsIsland } from "@/components/metrics-island"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
 
 // OPTIMIZACIÓN NITRO: Carga dinámica (Lazy Load)
@@ -26,10 +29,10 @@ const AnimatedBanner = dynamic(
 
 export default function Page() {
   const metrics = [
-    { value: "150%", label: "Aumento de Eficiencia", suffix: "" },
-    { value: "<200", label: "Infraestructura de Grado Militar", suffix: "ms" },
-    { value: "99.9%", label: "Uptime de Sistemas", suffix: "" },
-    { value: "50+", label: "Sistemas Automatizados", suffix: "" },
+    { value: 150, suffix: "%", label: "Aumento de Eficiencia" },
+    { value: 200, prefix: "<", suffix: "ms", label: "Infraestructura de Grado Militar" },
+    { value: 99.9, suffix: "%", label: "Uptime de Sistemas", decimals: 1 },
+    { value: 50, suffix: "+", label: "Sistemas Automatizados" },
   ]
 
   const whyItems = [
@@ -47,8 +50,11 @@ export default function Page() {
   ]
 
   return (
-    <>
-      {/* 1. SHELL: Notification Bar */}
+    <div className="flex flex-col min-h-screen font-sans selection:bg-primary selection:text-primary-foreground">
+      {/* 1. SHELL: Navbar de Servidor (Carga Instantánea) */}
+      <Navbar />
+
+      {/* Notification Bar */}
       <div className="w-full bg-teal-950/30 border-b border-teal-500/20 py-1.5 text-center relative z-40 backdrop-blur-sm">
         <Link 
           href="/soluciones/clinicas" 
@@ -72,92 +78,84 @@ export default function Page() {
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
       </div>
       
-      {/* 2. ISLA: Banner Interactivo (Carga Diferida) */}
-      <NitroBanner />
+      <main className="flex-1 flex flex-col">
+        {/* 2. ISLA: Banner Interactivo (Carga Diferida) */}
+        <NitroBanner />
 
-      {/* 3. CONTENIDO: Espacio preparado para secciones estáticas (SEO) */}
-      
-      {/* Metrics Bar - Server Component Content */}
-      <section id="resultados" className="py-12 md:py-24 px-6 relative z-10 border-y border-white/5 bg-white/[0.02]">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-            {metrics.map((metric, index) => (
-              <div key={index} className="text-center group">
-                <div className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-primary to-emerald-600 mb-3 tracking-tight">
-                  {metric.value}
-                  <span className="text-3xl text-primary/50 ml-1 align-top">{metric.suffix}</span>
-                </div>
-                <div className="text-xs uppercase tracking-widest text-slate-500 font-medium">{metric.label}</div>
-              </div>
-            ))}
-          </div>
+        {/* 3. CONTENIDO: Espacio preparado para secciones estáticas (SEO) */}
+        
+        {/* Metrics Bar - Client Component Island */}
+        <MetricsIsland metrics={metrics} />
+
+        {/* ISLA 2: Services Grid (Interactive) */}
+        <ServicesGrid />
+
+        {/* ISLA 2.5: Nitro Negocios (Verticals) */}
+        <NitroBusinessGrid />
+
+        {/* Animated Banner from External Source - Desktop Only */}
+        <div className="hidden md:block">
+          <AnimatedBanner />
         </div>
-      </section>
 
-      {/* ISLA 2: Services Grid (Interactive) */}
-      <ServicesGrid />
-
-      {/* ISLA 2.5: Nitro Negocios (Verticals) */}
-      <NitroBusinessGrid />
-
-      {/* Animated Banner from External Source - Desktop Only */}
-      <div className="hidden md:block">
-        <AnimatedBanner />
-      </div>
-
-      {/* Why Section - Server Component Content */}
-      <section className="py-16 md:py-24 px-6 bg-secondary/30">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-balance">
-                Por qué las empresas que escalan nos eligen
-              </h2>
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Somos tus socios estratégicos de infraestructura. Integramos estrategia de negocio con ingeniería avanzada para automatizar tu éxito.
-              </p>
-              <div className="space-y-6">
-                {whyItems.map((item, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg h-fit">
-                      <item.icon className="w-6 h-6 text-primary" />
+        {/* Why Section - Server Component Content */}
+        <section className="py-16 md:py-24 px-6 bg-secondary/30">
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-balance">
+                  Por qué las empresas que escalan nos eligen
+                </h2>
+                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                  Somos tus socios estratégicos de infraestructura. Integramos estrategia de negocio con ingeniería avanzada para automatizar tu éxito.
+                </p>
+                <div className="space-y-6">
+                  {whyItems.map((item, index) => (
+                    <div key={index} className="flex gap-4">
+                      <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg h-fit">
+                        <item.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-card border border-border rounded-lg p-8">
+                <div className="space-y-6">
+                  <div className="border-l-4 border-primary pl-6">
+                    <p className="text-lg italic text-muted-foreground mb-4">
+                      "Pasamos de facturar $50K mensuales a $500K en 8 meses. La infraestructura que construyeron aguantó
+                      el Black Friday sin un solo problema."
+                    </p>
+                    <div className="font-bold">— CEO, Ecommerce de Moda</div>
+                    <div className="text-sm text-muted-foreground">500% crecimiento en 8 meses</div>
                   </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-8">
-              <div className="space-y-6">
-                <div className="border-l-4 border-primary pl-6">
-                  <p className="text-lg italic text-muted-foreground mb-4">
-                    "Pasamos de facturar $50K mensuales a $500K en 8 meses. La infraestructura que construyeron aguantó
-                    el Black Friday sin un solo problema."
-                  </p>
-                  <div className="font-bold">— CEO, Ecommerce de Moda</div>
-                  <div className="text-sm text-muted-foreground">500% crecimiento en 8 meses</div>
-                </div>
-                <div className="border-l-4 border-primary pl-6">
-                  <p className="text-lg italic text-muted-foreground mb-4">
-                    "No son developers, son arquitectos. Entendieron nuestro modelo de negocio y construyeron algo que
-                    escala con nosotros."
-                  </p>
-                  <div className="font-bold">— Fundador, Tech Startup</div>
-                  <div className="text-sm text-muted-foreground">De MVP a Serie A en 12 meses</div>
+                  <div className="border-l-4 border-primary pl-6">
+                    <p className="text-lg italic text-muted-foreground mb-4">
+                      "No son developers, son arquitectos. Entendieron nuestro modelo de negocio y construyeron algo que
+                      escala con nosotros."
+                    </p>
+                    <div className="font-bold">— Fundador, Tech Startup</div>
+                    <div className="text-sm text-muted-foreground">De MVP a Serie A en 12 meses</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ISLA 3: Booking Section (Interactive) */}
-      <div id="contacto">
-          <BookingSection />
-      </div>
-    </>
+        {/* ISLA 3: Booking Section (Interactive) */}
+        <div id="contacto">
+            <BookingSection />
+        </div>
+
+      </main>
+
+      {/* 4. SHELL: Footer de Servidor */}
+      <Footer />
+    </div>
   )
 }
