@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     // Usamos el modelo más rápido y capaz actual: Gemini 2.0 Flash Exp
     const geminiResponse = await googleAI.models.generateContent({
-      model: "gemini-2.0-flash-exp",
+      model: "gemini-3-flash-preview",
       contents: [{
         role: "user",
         parts: [{

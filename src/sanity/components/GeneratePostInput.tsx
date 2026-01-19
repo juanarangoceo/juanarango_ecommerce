@@ -1,112 +1,119 @@
-import { Stack, Button, Card, Text, TextArea, Label, Spinner } from '@sanity/ui'
+import { Stack, Button, Card, Text, TextArea, Label, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { set, useDocumentOperation, useFormValue, useClient } from 'sanity'
 
 export const GeneratePostInput = (props: any) => {
-  const { onChange, value } = props // 'value' is the actual data in Sanity for this field (Topic)
+  const { onChange, value } = props
+  const toast = useToast()
   
   const [isGenerating, setIsGenerating] = useState(false)
 
-  // Retrieve Document ID
+  // Retrieve Document ID and Type
   const docId = useFormValue(['_id']) as string
   const docType = useFormValue(['_type']) as string
   
-  // Sanity Client for root-level patches
+  // Sanity Client
   const client = useClient({ apiVersion: '2024-01-01' })
 
-  // Operation Hook
-  const opId = (docId || '').replace('drafts.', '')
-  const opType = docType || 'post'
-  const { publish } = useDocumentOperation(opId, opType)
+  // Operation Hook - crucial: must use the "published" ID format (no 'drafts.' prefix) for useDocumentOperation
+  const publishedId = (docId || '').replace('drafts.', '')
+  const { publish } = useDocumentOperation(publishedId, docType || 'post')
 
   const handleGenerate = useCallback(async () => {
-    // Use the value from props (the field value) or fallback
-    // If value is an object (corrupted), we try to recover or just send it as string
+    // Robust value retrieval
     const currentTopic = typeof value === 'string' ? value : (typeof value === 'object' ? JSON.stringify(value) : '')
     
-    if (!currentTopic) {
-        alert("Escribe un tema primero.")
+    if (!currentTopic || currentTopic.length < 3) {
+        toast.push({ title: "Escribe un tema válido primero.", status: 'warning' })
         return
     }
 
     setIsGenerating(true)
     
     try {
-      // 1. GENERATE CONTENT (TEXT ONLY - FAST)
+      toast.push({ title: "Iniciando IA...", status: 'info' })
+
+      // 1. CALL API
       const res = await fetch('/api/generate-blog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic: currentTopic }),
       })
       
-      if (res.status === 504) throw new Error("⏳ Timeout: Tema muy complejo. Simplifícalo.")
-
-      const textBody = await res.text()
-      let json
-      try {
-          json = JSON.parse(textBody)
-      } catch (e) {
-          throw new Error(`Error Formato (HTML): ${textBody.substring(0, 50)}...`)
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}))
+        throw new Error(errJson.error || `Error ${res.status}: ${res.statusText}`)
       }
 
-      if (!res.ok || json.error) throw new Error(JSON.stringify(json.error || 'Error desconocido'))
-      if (!json.data) throw new Error("API vacía")
+      const json = await res.json()
+      if (!json.success || !json.data) {
+          throw new Error("Respuesta inválida de la API")
+      }
 
       const { title, slug, content } = json.data
 
-      // VALIDACIÓN ESTRICTA: Si no hay contenido, cancelamos TODO.
+      // 2. VALIDATION
       if (!content || content.length < 50) {
-          throw new Error(`CRÍTICO: La IA devolvió contenido vacío o muy corto (${content?.length || 0} chars). Intenta de nuevo.`);
+          throw new Error(`Contenido generado insuficiente (${content?.length || 0} chars).`)
       }
 
-      // 2. APPLY UPDATES
-      // A) Update current field (Topic) to ensure it stays a string (fixes corruption)
-      onChange(set(currentTopic)) 
+      // 3. UPDATE SANITY DOCUMENT
+      // Helper to sanitize slug
+      const sanitizeSlug = (text: string) => {
+          return text
+              .toString()
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with -
+              .replace(/(^-|-$)/g, '')     // Remove leading/trailing -
+              .slice(0, 96)                // Limit length
+      }
 
-      // B) Update Root fields (Title, Slug, Content) using Client Patch
-      const finalTitle = typeof title === 'string' ? title : currentTopic
-      
-      // FORCE SANITIZATION OF SLUG
-      const rawSlug = typeof slug === 'string' ? slug : (slug?.current || currentTopic);
-      const slugString = rawSlug
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '')
-          .slice(0, 96);
-      
-      // BUILD UPDATES OBJECT (Fixes Immutability Bug)
+      const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
+
+      // Patch the document (using docId which might be a draft)
       const attributes: any = {
-          title: finalTitle,
-          slug: { _type: 'slug', current: slugString }
-      };
-
-      if (content && typeof content === 'string') {
-          attributes.content = content;
+          title: title || currentTopic,
+          slug: { _type: 'slug', current: finalSlug },
+          content: content
       }
 
-      // Commit one single atomic patch
-      await client.patch(docId).set(attributes).commit();
+      // Also update the current field (Topic) in the form state
+      onChange(set(currentTopic))
 
-      // 3. AUTO PUBLISH
+      // Perform the patch
+      toast.push({ title: "Actualizando documento...", status: 'info' })
+      await client.patch(docId).set(attributes).commit()
+
+      // 4. PUBLISH (Optional but requested)
+      // Small delay to ensure patch is propagated before publish attempt
       setTimeout(() => {
         if (publish && !publish.disabled) {
             publish.execute()
-            alert('✨ Post Generado y PUBLICADO AUTOMÁTICAMENTE 🚀')
+            toast.push({ title: "¡Publicado exitosamente!", status: 'success' })
         } else {
-            alert('✨ Post Generado. (Publica manualmente)')
+            // Cannot publish mostly because of validation errors or permissions
+            toast.push({ 
+                title: "Post generado (Borrador)", 
+                description: "Revisa y publica manualmente.", 
+                status: 'success' 
+            })
         }
-      }, 800)
+      }, 1000)
 
     } catch (err: any) {
       console.error("Gen Error:", err)
-      const msg = err && typeof err === 'object' ? (err.message || JSON.stringify(err)) : String(err)
-      alert(`⚠️ Error: ${msg}`)
+      toast.push({ 
+          title: "Error en Generación", 
+          description: err.message || "Ocurrió un error inesperado", 
+          status: 'error',
+          duration: 5000
+      })
     } finally {
       setIsGenerating(false)
     }
-  }, [value, onChange, client, docId, publish])
+  }, [value, onChange, client, docId, publish, toast])
 
-  // Handle local typing -> Sync to Sanity immediately
+  // Handle local typing
   const handleTopicChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
       onChange(set(e.currentTarget.value))
   }, [onChange])
@@ -115,27 +122,28 @@ export const GeneratePostInput = (props: any) => {
     <Stack space={3}>
       <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
-            <Label>Generador AI (Texto Express)</Label>
-            <Text size={1} muted>Generación ultrarrápida (Gemini Flash). Escribe el tema y dale al botón.</Text>
+            <Label>Generador AI (Gemini 3 Flash)</Label>
+            <Text size={1} muted>Introduce el tema y la IA escribirá y estructurará el post por ti.</Text>
             
             <TextArea 
-                value={typeof value === 'string' ? value : ''} // Bind to Sanity Value
+                value={typeof value === 'string' ? value : ''}
                 onChange={handleTopicChange}
-                placeholder="Tema del post..."
-                rows={2}
+                placeholder="Ej: Beneficios del café para la salud..."
+                rows={3}
                 disabled={isGenerating}
             />
 
             <Button 
-                text={isGenerating ? "Generando..." : "Generar y Publicar"}
+                text={isGenerating ? "Generando contenido..." : "Generar Blog Post"}
                 tone="primary"
                 onClick={handleGenerate}
                 loading={isGenerating}
                 disabled={!value || isGenerating}
+                fontSize={2}
+                padding={3}
             />
         </Stack>
       </Card>
-      {/* Remove default render to avoid double inputs, since we are controlling the field */}
     </Stack>
   )
 }
