@@ -10,6 +10,7 @@ import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
+import { NitroCtaCard } from "./_components/NitroCtaCard";
 
 // GROQ Query for Single Post
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -165,6 +166,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                 {/* Right: Sidebar (Desktop) */}
                 <aside className="hidden lg:block lg:col-span-4 space-y-8">
                     <div className="sticky top-24 space-y-8">
+                        {/* High Converting CTA */}
+                        <NitroCtaCard />
+
                         {/* Table of Contents Box */}
                          {post.content && (
                             <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
