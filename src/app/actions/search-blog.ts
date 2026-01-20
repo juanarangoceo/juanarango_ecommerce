@@ -14,26 +14,36 @@ export interface SearchResult {
 export async function searchBlog(query: string): Promise<SearchResult[]> {
   if (!query || query.length < 3) return [];
 
+  console.log(`🔍 Searching for: "${query}"`);
+
+  // Explicit check for admin client
+  if (!supabaseAdmin) {
+    console.error("❌ Critical: SUPABASE_SERVICE_ROLE_KEY is missing or invalid. Search cannot proceed.");
+    return [];
+  }
+
   try {
     // 1. Generate Embedding for user query
     const embedding = await generateEmbedding(query);
 
     // 2. Search via RPC
-    const { data: results, error } = await supabaseAdmin!.rpc("match_posts", {
+    const { data: results, error } = await supabaseAdmin.rpc("match_posts", {
       query_embedding: embedding,
-      match_threshold: 0.5, // Adjust this threshold based on testing
+      match_threshold: 0.1, // Lowered threshold to ensure we get results if any connection works
       match_count: 5
     });
 
     if (error) {
-      console.error("Search RPC Error:", error);
+      console.error("❌ Search RPC Error:", error);
+      // Verify if function exists or if it's a params issue
       return [];
     }
 
+    console.log(`✅ Found ${results?.length || 0} matches for "${query}"`);
     return results as SearchResult[];
 
   } catch (err) {
-    console.error("Search Action Error:", err);
+    console.error("❌ Search Action Exception:", err);
     return [];
   }
 }

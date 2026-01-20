@@ -30,33 +30,11 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const posts = await client.fetch(POSTS_QUERY);
   const resolvedSearchParams = await searchParams;
 
-  // Handle Search Logic
-  if (resolvedSearchParams.q) {
-    const searchResults = await searchBlog(resolvedSearchParams.q);
-    
-    if (searchResults.length > 0) {
-      // Create a map of scores for sorting
-      // We match by slug since we sync slug to both
-      const scoreMap = new Map();
-      searchResults.forEach((res, index) => {
-        scoreMap.set(res.slug, { score: res.similarity, index });
-      });
+  // Handle Search Logic - REMOVED as per user request to not filter/sort main grid
+  // The search bar will handle navigation via suggestions only.
+  
+  // if (resolvedSearchParams.q) { ... } logic removed
 
-      // Sort posts: 
-      // 1. Matches first (ordered by similarity/index)
-      // 2. Non-matches after
-      posts.sort((a: any, b: any) => {
-        const scoreA = scoreMap.get(a.slug.current);
-        const scoreB = scoreMap.get(b.slug.current);
-
-        if (scoreA && scoreB) return scoreA.index - scoreB.index;
-        if (scoreA) return -1;
-        if (scoreB) return 1;
-        
-        return 0; // Keep original order for non-matches
-      });
-    }
-  }
 
   return (
     <main className="container mx-auto px-4 py-20 min-h-screen">
