@@ -26,12 +26,13 @@ const POSTS_QUERY = `*[
 
 export const revalidate = 60; // Revalidate every minute
 
-export default async function BlogPage({ searchParams }: { searchParams: { q?: string } }) {
+export default async function BlogPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const posts = await client.fetch(POSTS_QUERY);
+  const resolvedSearchParams = await searchParams;
 
   // Handle Search Logic
-  if (searchParams.q) {
-    const searchResults = await searchBlog(searchParams.q);
+  if (resolvedSearchParams.q) {
+    const searchResults = await searchBlog(resolvedSearchParams.q);
     
     if (searchResults.length > 0) {
       // Create a map of scores for sorting
