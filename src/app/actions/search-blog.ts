@@ -29,7 +29,7 @@ export async function searchBlog(query: string): Promise<SearchResult[]> {
     // 2. Search via RPC
     const { data: results, error } = await supabaseAdmin.rpc("match_blog_posts", {
       query_embedding: embedding,
-      match_threshold: 0.1, // Lowered threshold to ensure we get results if any connection works
+      match_threshold: 0.01, // Extremely low threshold to match debug tool
       match_count: 5
     });
 

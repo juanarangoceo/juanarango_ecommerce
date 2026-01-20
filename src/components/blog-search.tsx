@@ -37,7 +37,9 @@ export function BlogSearch() {
 
       setIsLoading(true);
       try {
+        console.log("🔍 Client requesting search for:", debouncedQuery);
         const results = await searchBlog(debouncedQuery);
+        console.log("✅ Client received results:", results);
         setSuggestions(results);
         setIsOpen(true);
       } catch (error) {
