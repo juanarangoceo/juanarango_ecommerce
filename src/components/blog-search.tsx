@@ -41,13 +41,13 @@ export function BlogSearch() {
         setResults([]);
         setOpen(false);
       }
-    }, 500); // 500ms debounce
+    }, 300); // 300ms debounce
 
     return () => clearTimeout(timer);
   }, [query]);
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto mb-16 z-30">
+    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto z-30">
       <div className="relative group">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           {loading ? (
@@ -63,11 +63,7 @@ export function BlogSearch() {
           placeholder="¿Qué quieres aprender hoy? (ej: estrategias de marketing, seo técnico...)"
           className="w-full pl-12 pr-4 py-4 bg-zinc-900/50 border border-zinc-800 rounded-2xl text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all shadow-lg backdrop-blur-sm"
         />
-        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-             <kbd className="hidden md:inline-flex h-6 items-center gap-1 rounded border border-zinc-800 bg-zinc-900 px-2 text-[10px] font-medium text-zinc-500 font-sans">
-                Ctrl K
-             </kbd>
-        </div>
+        {/* Ctrl K removed as requested */}
       </div>
 
       <AnimatePresence>

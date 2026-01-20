@@ -36,15 +36,15 @@ export default async function BlogPage() {
         <p className="text-xl text-muted-foreground">
           Perspectivas sobre E-commerce, Tecnología y Escalamiento.
         </p>
-
-        {/* Semantic Search */}
-        <div className="mt-8">
-           <BlogSearch />
-        </div>
       </div>
 
-      <div className="mb-16">
+      <div className="mb-8">
         <NewsletterForm />
+      </div>
+
+      {/* Semantic Search */}
+      <div className="mb-16">
+         <BlogSearch />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
