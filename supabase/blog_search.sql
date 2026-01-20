@@ -17,6 +17,7 @@ create table if not exists posts (
 alter table posts enable row level security;
 
 -- Policy: Allow read access to everyone
+drop policy if exists "Allow public read access" on posts;
 create policy "Allow public read access"
   on posts
   for select
@@ -24,6 +25,7 @@ create policy "Allow public read access"
   using (true);
 
 -- Policy: Allow service role to insert/update
+drop policy if exists "Allow service role to manage posts" on posts;
 create policy "Allow service role to manage posts"
   on posts
   for all
@@ -31,8 +33,11 @@ create policy "Allow service role to manage posts"
   using (true)
   with check (true);
 
+-- Cleanup old function if it exists
+drop function if exists match_posts;
+
 -- Create match_posts function for semantic search
-create or replace function match_posts (
+create or replace function match_blog_posts (
   query_embedding vector(1536),
   match_threshold float,
   match_count int

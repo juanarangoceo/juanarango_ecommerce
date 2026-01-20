@@ -27,7 +27,7 @@ export async function searchBlog(query: string): Promise<SearchResult[]> {
     const embedding = await generateEmbedding(query);
 
     // 2. Search via RPC
-    const { data: results, error } = await supabaseAdmin.rpc("match_posts", {
+    const { data: results, error } = await supabaseAdmin.rpc("match_blog_posts", {
       query_embedding: embedding,
       match_threshold: 0.1, // Lowered threshold to ensure we get results if any connection works
       match_count: 5
