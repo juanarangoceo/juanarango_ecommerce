@@ -11,6 +11,8 @@ import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
 import { NitroCtaCard } from "./_components/NitroCtaCard";
+import { NewsletterForm } from "@/components/newsletter-form";
+
 
 // GROQ Query for Single Post
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -160,6 +162,10 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         ) : (
                             <div className="text-gray-500 italic">No content found (Markdown empty). Checking Portable Text... <PortableText value={post.body} /></div>
                         )}
+                    </div>
+
+                    <div className="mt-12 mb-12">
+                      <NewsletterForm />
                     </div>
 
                     {/* Mobile CTA (Bottom of Post) */}

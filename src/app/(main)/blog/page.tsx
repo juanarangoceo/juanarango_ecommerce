@@ -3,6 +3,8 @@ import { client } from "@/sanity/lib/client";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { urlForImage } from "@/sanity/lib/image";
+import { NewsletterForm } from "@/components/newsletter-form";
+
 
 // GROQ Query
 const POSTS_QUERY = `*[
@@ -32,6 +34,10 @@ export default async function BlogPage() {
         <p className="text-xl text-muted-foreground">
           Perspectivas sobre E-commerce, Tecnología y Escalamiento.
         </p>
+      </div>
+
+      <div className="mb-16">
+        <NewsletterForm />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
