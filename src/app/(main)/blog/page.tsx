@@ -4,6 +4,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 import { Button } from "@/components/ui/button";
 import { urlForImage } from "@/sanity/lib/image";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { BlogSearch } from "@/components/blog-search";
+
 
 
 // GROQ Query
@@ -34,6 +36,11 @@ export default async function BlogPage() {
         <p className="text-xl text-muted-foreground">
           Perspectivas sobre E-commerce, Tecnología y Escalamiento.
         </p>
+
+        {/* Semantic Search */}
+        <div className="mt-8">
+           <BlogSearch />
+        </div>
       </div>
 
       <div className="mb-16">

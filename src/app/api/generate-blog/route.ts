@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { syncSanityPosts } from "@/app/actions/sync-posts";
+
 
 // Inicialización de cliente Gemini
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
@@ -69,6 +71,17 @@ export async function POST(req: Request) {
         throw new Error("La IA no generó contenido (JSON incompleto). Intenta de nuevo.");
     }
     
+    // Trigger Async Sync to Supabase
+    // We don't await this to keep the response fast for the UI
+    (async () => {
+        try {
+            console.log("⚡ Triggering background sync...");
+            await syncSanityPosts();
+        } catch (err) {
+            console.error("Background sync failed:", err);
+        }
+    })();
+
     return NextResponse.json({ success: true, data: blogData });
 
   } catch (error: any) {
