@@ -55,14 +55,14 @@ export default async function BlogPage() {
         </p>
       </div>
 
-      {/* 1. Recent Post Pills (Móvil: Carrusel / Desktop: Cloud) */}
-      <div className="w-full max-w-5xl mx-auto">
-         <RecentPostPills posts={recentPosts} />
+      {/* 2. Enhanced Search Bar (First) */}
+      <div className="mb-8">
+         <BlogSearch />
       </div>
 
-      {/* 2. Enhanced Search Bar */}
-      <div className="mb-20">
-         <BlogSearch />
+      {/* 1. Recent Post Pills (Below Search) */}
+      <div className="w-full max-w-5xl mx-auto mb-16">
+         <RecentPostPills posts={recentPosts} />
       </div>
 
       {/* 3. Main Post Grid */}

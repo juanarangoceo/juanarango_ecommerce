@@ -36,18 +36,16 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
       </div>
 
       {/* Desktop: Scattered / Full Width */}
-      <div className="hidden md:flex flex-wrap justify-center gap-4 w-full px-8">
+      <div className="hidden md:flex flex-wrap justify-center gap-3 w-full px-8">
         {posts.map((post, index) => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
             className={cn(
-              "inline-flex items-center justify-center rounded-full px-6 py-2.5 text-base font-medium transition-all duration-300 shadow-sm hover:scale-105",
+              "inline-flex items-center justify-center rounded-full px-4 h-8 text-sm font-medium transition-all duration-300 shadow-sm hover:scale-105",
               "bg-emerald-500 text-black border border-emerald-400 hover:bg-emerald-400 hover:shadow-emerald-500/20",
-              // Add some randomness to margins to create a "scattered" organic feel if desired, 
-              // or keep it clean. User asked for "algo asi como en desorden".
-              // We'll use nth-child logic via standard utility classes to stagger them slightly without complex JS
-              index % 2 === 0 ? "mt-2" : "-mt-2" 
+              // Minimal vertical offset for organic feel, but less chaotic
+              index % 2 === 0 ? "mt-1" : "-mt-1" 
             )}
           >
             {post.title}
