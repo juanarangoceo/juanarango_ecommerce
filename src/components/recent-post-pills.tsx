@@ -14,25 +14,20 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
 
   return (
     <div className="w-full mb-12">
-      {/* Mobile: Horizontal Scroll (Carousel) */}
-      <div className="md:hidden">
-        <ScrollArea className="w-full whitespace-nowrap pb-4">
-          <div className="flex w-max space-x-3 px-1">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className={cn(
-                  "inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-all shadow-md",
-                  "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500 hover:text-black hover:border-emerald-400"
-                )}
-              >
-                {post.title}
-              </Link>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" className="h-1.5" />
-        </ScrollArea>
+      {/* Mobile: Wrapped Chips (Small & Uniform) */}
+      <div className="md:hidden flex flex-wrap justify-center gap-2 px-4">
+        {posts.map((post) => (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className={cn(
+              "inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-semibold transition-all shadow-sm",
+              "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500 hover:text-black hover:border-emerald-400"
+            )}
+          >
+            {post.title}
+          </Link>
+        ))}
       </div>
 
       {/* Desktop: Scattered / Full Width */}
