@@ -84,7 +84,7 @@ export function ServicesGrid() {
   }
 
   return (
-    <section id="servicios" className="py-24 px-6 relative z-10">
+    <section id="servicios" className="py-12 md:py-24 px-6 relative z-10">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-20 text-center md:text-left">
           <h2 className="text-5xl font-bold mb-6 text-balance tracking-tight">Ecosistema de servicios</h2>

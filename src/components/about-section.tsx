@@ -23,7 +23,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="sobre-mi" className="py-24 px-6 mb-20 relative overflow-hidden">
+    <section id="sobre-mi" className="py-12 md:py-24 px-6 mb-20 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-purple-900/10 to-transparent pointer-events-none" />

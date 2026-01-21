@@ -39,7 +39,7 @@ export function NitroBusinessGrid() {
   ]
 
   return (
-    <section id="negocios" className="py-24 px-6 relative z-10 bg-zinc-950/50">
+    <section id="negocios" className="py-12 md:py-24 px-6 relative z-10 bg-zinc-950/50">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-16">
             <span className="text-teal-400 font-mono tracking-widest text-sm uppercase mb-2 block">Sectores Especializados</span>

@@ -1,7 +1,5 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { Navbar } from "@/components/layout/Navbar"
-import { Footer } from "@/components/layout/Footer"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { MetricsIsland } from "@/components/metrics-island"
@@ -52,9 +50,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col min-h-screen font-sans selection:bg-primary selection:text-primary-foreground">
-      {/* 1. SHELL: Navbar de Servidor (Carga Instantánea) */}
-      <Navbar />
-
+      
       {/* Notification Bar */}
       <div className="w-full bg-teal-950/30 border-b border-teal-500/20 py-1.5 text-center relative z-40 backdrop-blur-sm">
         <Link 
@@ -103,7 +99,7 @@ export default function Page() {
         </div>
 
         {/* Why Section - Server Component Content */}
-        <section className="py-16 md:py-24 px-6 bg-secondary/30">
+        <section className="py-12 md:py-24 px-6 bg-secondary/30">
           <div className="container mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -152,7 +148,7 @@ export default function Page() {
         </section>
 
         {/* ISLA 3: Contact Form (Replazo de Booking) */}
-        <div id="contacto" className="py-24 px-6">
+        <div id="contacto" className="py-12 md:py-24 px-6">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">Hablemos de Escalar</h2>
@@ -165,9 +161,6 @@ export default function Page() {
         </div>
 
       </main>
-
-      {/* 4. SHELL: Footer de Servidor */}
-      <Footer />
     </div>
   )
 }
