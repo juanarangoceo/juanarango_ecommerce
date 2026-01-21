@@ -22,16 +22,26 @@ const POSTS_QUERY = `*[
   topic
 }`;
 
-export const revalidate = 60; 
+export const dynamic = 'force-dynamic'; 
 
 export default async function BlogPage() {
-  const posts = await client.fetch(POSTS_QUERY);
+  let posts: any[] = [];
+  
+  try {
+    posts = await client.fetch(POSTS_QUERY);
+  } catch (error) {
+    console.error("❌ Error fetching posts for blog page:", error);
+    // Continue with empty posts array to avoid build failure
+  }
+
+  // Ensure posts is an array before slicing
+  const safelyFilesPosts = Array.isArray(posts) ? posts : [];
 
   // Prepare data for "Recent Pills" (Top 5 latest)
   // Mapping just title and slug
-  const recentPosts = posts.slice(0, 5).map((p: any) => ({
+  const recentPosts = safelyFilesPosts.slice(0, 5).map((p: any) => ({
     title: p.title,
-    slug: p.slug.current
+    slug: p?.slug?.current || ""
   }));
 
   return (
