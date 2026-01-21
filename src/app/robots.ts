@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://juanarango.com/sitemap.xml', // Placeholder URL
+    sitemap: 'https://www.juanarangoecommerce.com/sitemap.xml',
   }
 }

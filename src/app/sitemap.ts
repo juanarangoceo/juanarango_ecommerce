@@ -2,13 +2,14 @@ import { MetadataRoute } from 'next'
 import { client } from "@/sanity/lib/client"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://juanarango.com' // Placeholder, ideally from env
+  const baseUrl = 'https://www.juanarangoecommerce.com'
 
   // 1. Static Routes
   const staticRoutes = [
     '',
     '/blog',
     '/soluciones/clinicas',
+    '/demos/aura-stetic',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
