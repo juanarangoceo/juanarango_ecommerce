@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { urlForImage } from "@/sanity/lib/image";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { BlogSearch } from "@/components/blog-search";
-import { BlogTopics } from "@/components/blog-topics";
+import { RecentPostPills } from "@/components/recent-post-pills";
 
-// GROQ Query - Now fetching 'topic'
+// GROQ Query - Standard
 const POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
@@ -24,26 +24,15 @@ const POSTS_QUERY = `*[
 
 export const revalidate = 60; 
 
-export default async function BlogPage({ searchParams }: { searchParams: Promise<{ q?: string; topic?: string }> }) {
+export default async function BlogPage() {
   const posts = await client.fetch(POSTS_QUERY);
-  const resolvedSearchParams = await searchParams;
-  const activeTopic = resolvedSearchParams.topic;
 
-  // 1. Extract unique topics from posts
-  // Filter out null/undefined topics, get unique values, and sort alphabetically
-  const topics = Array.from(
-    new Set(
-      posts
-        .map((p: any) => p.topic)
-        .filter((t: string) => t && t.trim() !== "")
-    )
-  ).sort() as string[];
-
-
-  // 2. Filter posts if a topic is selected
-  const displayedPosts = activeTopic 
-    ? posts.filter((post: any) => post.topic === activeTopic)
-    : posts;
+  // Prepare data for "Recent Pills" (Top 5 latest)
+  // Mapping just title and slug
+  const recentPosts = posts.slice(0, 5).map((p: any) => ({
+    title: p.title,
+    slug: p.slug.current
+  }));
 
   return (
     <main className="container mx-auto px-4 py-20 min-h-screen">
@@ -56,31 +45,29 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
         </p>
       </div>
 
-      <div className="mb-8">
-        <NewsletterForm />
+      {/* 1. Recent Post Pills (Móvil: Carrusel / Desktop: Cloud) */}
+      <div className="w-full max-w-5xl mx-auto">
+         <RecentPostPills posts={recentPosts} />
       </div>
 
-      {/* Topics Navigation */}
-      <div className="mb-8 max-w-4xl mx-auto">
-         <BlogTopics topics={topics} />
-      </div>
-
-      {/* Semantic Search */}
-      <div className="mb-16">
+      {/* 2. Enhanced Search Bar */}
+      <div className="mb-20">
          <BlogSearch />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {displayedPosts.length > 0 ? (
-          displayedPosts.map((post: any) => (
+      {/* 3. Main Post Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        {posts.length > 0 ? (
+          posts.map((post: any) => (
             <Card key={post._id} className="flex flex-col h-full hover:shadow-lg transition-shadow bg-zinc-900/50 border-zinc-800">
               {post.mainImage?.asset?._ref && (
-                <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
+                <div className="relative w-full h-48 overflow-hidden rounded-t-xl group">
                   <img 
                     src={urlForImage(post.mainImage).url()} 
                     alt={post.title}
-                    className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                   />
+                  {/* Reuse topic field as a visual badge if it exists */}
                   {post.topic && (
                     <span className="absolute top-2 right-2 px-2 py-1 text-xs font-bold bg-black/60 backdrop-blur-md text-white rounded-md border border-white/10">
                       {post.topic}
@@ -114,13 +101,16 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           ))
         ) : (
           <div className="col-span-full text-center py-12">
-            <p className="text-xl text-muted-foreground">No se encontraron artículos para este tema.</p>
-            <Button asChild variant="link" className="mt-4 text-primary">
-              <Link href="/blog">Ver todos los artículos</Link>
-            </Button>
+            <p className="text-xl text-muted-foreground">Cargando artículos...</p>
           </div>
         )}
       </div>
+      
+      {/* 4. Newsletter at the bottom */}
+      <div className="mt-16 border-t border-white/5 pt-16">
+        <NewsletterForm />
+      </div>
+
     </main>
   );
 }
