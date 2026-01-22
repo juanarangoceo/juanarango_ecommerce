@@ -102,12 +102,10 @@ export default async function BlogPage() {
                     })}
                   </span>
                   
-                  {post.estimatedReadingTime && (
-                    <span className="flex items-center gap-1.5 bg-zinc-800/50 px-2 py-1 rounded text-emerald-500/80">
-                      <Clock className="w-3.5 h-3.5" />
-                      {post.estimatedReadingTime} min de lectura
-                    </span>
-                  )}
+                  <span className="flex items-center gap-1.5 bg-zinc-800/50 px-2 py-1 rounded text-emerald-500/80">
+                    <Clock className="w-3.5 h-3.5" />
+                    {post.estimatedReadingTime || 5} min de lectura
+                  </span>
                 </div>
               </CardHeader>
               <CardContent className="flex-grow">

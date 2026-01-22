@@ -84,6 +84,8 @@ export default function AuraSteticPage() {
         <VideoTestimonialSection />
 
         <ReviewsSection />
+        
+        <FaqSection />
 
         <MapSection />
       </div>
