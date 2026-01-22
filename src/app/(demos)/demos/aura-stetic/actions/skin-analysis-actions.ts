@@ -26,12 +26,14 @@ export interface AnalysisResult {
 
 export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> {
   if (!process.env.API_KEY) {
-    throw new Error("API Key not configured");
+    console.error("API Key is missing in the environment variables.");
+    throw new Error("Server configuration error: API Key missing.");
   }
 
-  const model = 'gemini-2.0-flash'; // Using a stable model
+  // Use a stable model version
+  const model = 'gemini-1.5-flash';
 
-  console.log("Starting skin analysis...");
+  console.log(`Starting skin analysis with model: ${model}`);
 
   try {
     const response = await ai.models.generateContent({
@@ -45,7 +47,7 @@ export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> 
             },
           },
           {
-            text: "Eres un esteticista profesional de clase mundial. Analiza esta imagen facial para evaluar la salud de la piel. Identifica el tipo de piel (seca, grasa, mixta, sensible, normal), preocupaciones específicas (como deshidratación, daño solar, líneas finas, rojeces o acné) y sugiere 3 tratamientos de spa de alta gama. Sé empático y profesional. IMPORTANTE: Toda la respuesta (nombres de tratamientos, descripciones y consejos) debe estar en ESPAÑOL. Devuelve los resultados en formato JSON.",
+            text: "Eres un esteticista profesional de clase mundial. Analiza esta imagen facial para evaluar la salud de la piel. Identifica el tipo de piel (seca, grasa, mixta, sensible, normal), preocupaciones específicas (como deshidratación, daño solar, líneas finas, rojeces o acné) y sugiere 3 tratamientos de spa de alta gama. Sé empático y profesional. IMPORTANTE: Toda la respuesta (nombres de tratamientos, descripciones y consejos) debe estar en ESPAÑOL. Devuelve los resultados en formato JSON plano, sin bloques de código markdown.",
           },
         ],
       },
@@ -88,11 +90,17 @@ export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> 
     });
 
     const textResponse = response.text || "{}";
-    const result = JSON.parse(textResponse);
+    // Sanitize response in case it contains markdown code blocks
+    const cleanJson = textResponse.replace(/^```json\n/, '').replace(/\n```$/, '');
+    
+    console.log("Analysis successful.");
+    const result = JSON.parse(cleanJson);
     return result as AnalysisResult;
 
   } catch (error) {
     console.error("Error analyzing skin:", error);
-    throw new Error("Failed to analyze skin.");
+    // In production, the generic error "An error occurred in the Server Components render" is shown.
+    // We log the real error on the server for debugging.
+    throw new Error("Failed to analyze skin. Check server logs.");
   }
 }
