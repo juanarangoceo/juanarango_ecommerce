@@ -10,6 +10,8 @@ import { VideoTestimonialSection } from "./_components/video-testimonial-section
 import { ReviewsSection } from "./_components/reviews-section";
 import { MapSection } from "./_components/map-section";
 
+import { SkinAnalysisIsland } from "./_components/skin-analysis-island";
+
 export const treatments: Treatment[] = [
   {
     id: "botox",
@@ -64,6 +66,13 @@ export default function AuraSteticPage() {
         <HeroSection />
 
         <BeautyQuiz />
+
+        {/* --- SKIN ANALYSIS SECTION --- */}
+        <section className="bg-stone-50 md:py-12">
+           <div className="container mx-auto px-4">
+              <SkinAnalysisIsland />
+           </div>
+        </section>
 
         <TreatmentsSectionIsland treatments={treatments} />
 
