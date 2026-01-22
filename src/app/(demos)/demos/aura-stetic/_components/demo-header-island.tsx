@@ -36,13 +36,14 @@ export function DemoHeaderIsland() {
   return (
     <>
       {/* --- LIVE DEMO HEADER --- */}
-      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-14 md:h-20 flex items-center justify-between px-4 md:px-6">
-           <div className="w-10 md:w-0" /> {/* Spacer to balance flex for absolute centering safety */}
-
-           {/* Center Badge - Absolute Center - GREEN */}
-           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-3 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 md:px-8 md:py-3 rounded-full animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.25)]">
-                 <div className="w-2 h-2 md:w-3 md:h-3 bg-emerald-500 rounded-full animate-ping" />
-                 <span className="text-emerald-500 text-[10px] md:text-lg font-black tracking-[0.1em] md:tracking-[0.2em] uppercase whitespace-nowrap">Nitro Live Demo</span>
+           <div className="w-10" />
+           
+           {/* Center Badge - Absolute Center */}
+           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-3 px-6 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl group transition-all hover:bg-white/10">
+                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-[pulse_2s_ease-in-out_infinite]" />
+                 <span className="text-zinc-200 text-[10px] md:text-sm font-medium tracking-wide">
+                    Ingeniería de Ventas <span className="hidden md:inline text-zinc-500 mx-1">|</span> <span className="text-white font-bold">Ecosistema Construido para tu Empresa</span>
+                 </span>
            </div>
            
            {/* Exit Link */}

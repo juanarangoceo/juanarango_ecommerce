@@ -17,11 +17,11 @@ export function HeroContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="font-serif font-light tracking-tight text-5xl md:text-7xl text-stone-900 mb-6 leading-tight text-balance">
+          <h1 className="font-serif font-light tracking-tight text-5xl md:text-7xl text-white mb-6 leading-tight text-balance drop-shadow-xl">
             Revela Tu Belleza Natural
           </h1>
 
-          <p className="font-sans text-stone-600 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-sans text-zinc-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light">
             Tecnología Láser Avanzada & Cuidado Holístico
           </p>
 

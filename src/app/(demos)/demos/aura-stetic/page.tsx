@@ -12,6 +12,7 @@ import { HeroSection } from "./_components/hero-section";
 import { BeautyQuiz } from "./_components/beauty-quiz";
 import { VideoTestimonialSection } from "./_components/video-testimonial-section";
 import { ReviewsSection } from "./_components/reviews-section";
+import { FaqSection } from "./_components/faq-section";
 import { MapSection } from "./_components/map-section";
 
 import { SkinAnalysisIsland } from "./_components/skin-analysis-island";
