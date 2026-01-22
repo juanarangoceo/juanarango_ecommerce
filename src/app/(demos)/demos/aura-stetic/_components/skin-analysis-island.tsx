@@ -41,7 +41,6 @@ export function SkinAnalysisIsland() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (state === AppState.SCANNING) {
@@ -56,17 +55,64 @@ export function SkinAnalysisIsland() {
     }
   }, [progress, state]);
 
+  // Utility to compress image on client side
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Resize to max 800px (sufficient for AI analysis)
+          const MAX_SIZE = 800;
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          
+          // Compress to JPEG with 0.7 quality
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          resolve(compressedBase64);
+        };
+        img.onerror = reject;
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const base64 = event.target?.result as string;
-      setImage(base64);
-      startAnalysis(base64);
-    };
-    reader.readAsDataURL(file);
+    try {
+      // Show upload state (visual feedback if needed, currently reusing idle but could show spinner)
+      // Compress BEFORE setting state to avoid UI freeze with huge base64
+      const compressedBase64 = await compressImage(file);
+      setImage(compressedBase64);
+      startAnalysis(compressedBase64);
+    } catch (err) {
+      console.error("Compression error:", err);
+      setError("Error al procesar la imagen. Intenta con otra foto.");
+      setState(AppState.ERROR);
+    }
   };
 
   const startAnalysis = async (imgBase64: string) => {
@@ -113,7 +159,8 @@ export function SkinAnalysisIsland() {
     } catch (err) {
       clearInterval(progressTimer);
       console.error(err);
-      setError("No pudimos procesar tu imagen. Asegúrate de que tu rostro esté despejado y con buena iluminación.");
+      // More specific error message for default cases
+      setError("No pudimos conectar con la IA. Verifica tu conexión o intenta una foto con menos brillo/reflejos.");
       setState(AppState.ERROR);
     }
   };
@@ -127,6 +174,10 @@ export function SkinAnalysisIsland() {
     setVisibleHotspots([]);
     setError(null);
   };
+  
+  // Separate refs for different inputs to handle mobile behavior better
+  const uploadInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="w-full relative z-10">
@@ -149,7 +200,7 @@ export function SkinAnalysisIsland() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto px-4">
             <button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => uploadInputRef.current?.click()}
               className="group p-12 bg-white border border-stone-200 rounded-[2.5rem] hover:border-[#b4a496] hover:shadow-xl transition-all flex flex-col items-center gap-6"
             >
               <div className="w-20 h-20 bg-stone-50 rounded-3xl flex items-center justify-center group-hover:bg-[#b4a496] transition-all transform group-hover:rotate-6">
@@ -162,7 +213,7 @@ export function SkinAnalysisIsland() {
             </button>
 
             <button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => cameraInputRef.current?.click()}
               className="group p-12 bg-white border border-stone-200 rounded-[2.5rem] hover:border-[#b4a496] hover:shadow-xl transition-all flex flex-col items-center gap-6"
             >
               <div className="w-20 h-20 bg-stone-50 rounded-3xl flex items-center justify-center group-hover:bg-[#b4a496] transition-all transform group-hover:-rotate-6">
@@ -175,13 +226,23 @@ export function SkinAnalysisIsland() {
             </button>
           </div>
 
+          {/* Standard Upload Input */}
           <input
             type="file"
-            ref={fileInputRef}
+            ref={uploadInputRef}
             onChange={handleImageUpload}
             accept="image/*"
             className="hidden"
+          />
+          
+          {/* Camera Input with capture attribute */}
+          <input
+            type="file"
+            ref={cameraInputRef}
+            onChange={handleImageUpload}
+            accept="image/*"
             capture="user"
+            className="hidden"
           />
         </div>
       )}
