@@ -36,6 +36,7 @@ export function DemoHeaderIsland() {
   return (
     <>
       {/* --- LIVE DEMO HEADER --- */}
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950 text-white border-b border-white/10 shadow-2xl h-14 md:h-20 flex items-center justify-between px-4 md:px-6">
            <div className="w-10" />
            
            {/* Center Badge - Absolute Center */}
