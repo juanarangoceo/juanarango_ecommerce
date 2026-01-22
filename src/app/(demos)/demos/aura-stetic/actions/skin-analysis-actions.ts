@@ -24,19 +24,28 @@ export interface AnalysisResult {
   expertAdvice: string;
 }
 
+// Vercel Hobby limit is usually 10s-15s, but setting this might help if on Pro or if limits change.
+// For Hobby, 'gemini-2.0-flash-exp' is recommended for speed.
+export const maxDuration = 30;
+
 export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> {
-  if (!process.env.API_KEY) {
-    console.error("API Key is missing in the environment variables.");
+  const apiKey = process.env.API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error("API Key is missing. Checked: API_KEY, GOOGLE_API_KEY, GEMINI_API_KEY");
     throw new Error("Server configuration error: API Key missing.");
   }
+  
+  // Re-initialize with the found key
+  const localAi = new GoogleGenAI({ apiKey });
 
-  // Use a stable model version
-  const model = 'gemini-1.5-flash';
+  // User requested "newest flash", assuming gemini-2.0-flash-exp
+  const model = 'gemini-2.0-flash-exp';
 
   console.log(`Starting skin analysis with model: ${model}`);
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await localAi.models.generateContent({
       model,
       contents: {
         parts: [
