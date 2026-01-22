@@ -19,10 +19,13 @@ const POSTS_QUERY = `*[
   _createdAt,
   mainImage,
   excerpt,
-  topic
+  topic,
+  estimatedReadingTime
 }`;
 
 export const dynamic = 'force-dynamic'; 
+
+import { Clock, Calendar } from "lucide-react";
 
 export default async function BlogPage() {
   let posts: any[] = [];
@@ -37,7 +40,7 @@ export default async function BlogPage() {
   // Ensure posts is an array before slicing
   const safelyFilesPosts = Array.isArray(posts) ? posts : [];
 
-  // Prepare data for "Recent Pills" (Top 5 latest)
+  // Prepare data for "Recent Pills" (Top 5 latest - sorting is handled by GROQ)
   // Mapping just title and slug
   const recentPosts = safelyFilesPosts.slice(0, 5).map((p: any) => ({
     title: p.title,
@@ -67,39 +70,49 @@ export default async function BlogPage() {
 
       {/* 3. Main Post Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-        {posts.length > 0 ? (
-          posts.map((post: any) => (
-            <Card key={post._id} className="flex flex-col h-full hover:shadow-lg transition-shadow bg-zinc-900/50 border-zinc-800">
+        {safelyFilesPosts.length > 0 ? (
+          safelyFilesPosts.map((post: any) => (
+            <Card key={post._id} className="flex flex-col h-full hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 bg-zinc-900/50 border-zinc-800 hover:border-emerald-500/30 group">
               {post.mainImage?.asset?._ref && (
-                <div className="relative w-full h-48 overflow-hidden rounded-t-xl group">
+                <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
                   <img 
                     src={urlForImage(post.mainImage).url()} 
                     alt={post.title}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   {/* Reuse topic field as a visual badge if it exists */}
                   {post.topic && (
-                    <span className="absolute top-2 right-2 px-2 py-1 text-xs font-bold bg-black/60 backdrop-blur-md text-white rounded-md border border-white/10">
+                    <span className="absolute top-2 right-2 px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black/60 backdrop-blur-md text-white rounded-md border border-white/10 shadow-lg">
                       {post.topic}
                     </span>
                   )}
                 </div>
               )}
-              <CardHeader>
-                <CardTitle className="leading-tight text-xl text-white">{post.title}</CardTitle>
-                <CardDescription suppressHydrationWarning className="flex items-center gap-2">
-                  <span>
+              <CardHeader className="space-y-3">
+                <CardTitle className="leading-tight text-xl text-white group-hover:text-emerald-400 transition-colors line-clamp-2">
+                  {post.title}
+                </CardTitle>
+                <div className="flex items-center gap-4 text-xs font-medium text-zinc-500">
+                  <span className="flex items-center gap-1.5 bg-zinc-800/50 px-2 py-1 rounded">
+                    <Calendar className="w-3.5 h-3.5" />
                     {new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
                       day: "numeric",
-                      month: "long",
+                      month: "short",
                       year: "numeric",
                     })}
                   </span>
-                </CardDescription>
+                  
+                  {post.estimatedReadingTime && (
+                    <span className="flex items-center gap-1.5 bg-zinc-800/50 px-2 py-1 rounded text-emerald-500/80">
+                      <Clock className="w-3.5 h-3.5" />
+                      {post.estimatedReadingTime} min de lectura
+                    </span>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="flex-grow">
-                <p className="text-zinc-400 line-clamp-3">
-                  {post.excerpt || "Lee el artículo completo para descubrir más..."}
+                <p className="text-zinc-400 line-clamp-3 text-sm leading-relaxed">
+                  {post.excerpt || "Lee el artículo completo para descubrir más detalles sobre este tema..."}
                 </p>
               </CardContent>
               <CardFooter>
