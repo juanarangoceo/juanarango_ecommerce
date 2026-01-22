@@ -24,9 +24,8 @@ export interface AnalysisResult {
   expertAdvice: string;
 }
 
-// Vercel Hobby limit is usually 10s-15s, but setting this might help if on Pro or if limits change.
-// For Hobby, 'gemini-2.0-flash-exp' is recommended for speed.
-export const maxDuration = 30;
+// For Hobby plan compatibility, we configure timeout in page.tsx
+
 
 export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> {
   const apiKey = process.env.API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;

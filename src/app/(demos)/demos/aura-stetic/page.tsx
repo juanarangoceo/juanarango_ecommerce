@@ -1,4 +1,8 @@
 import type { Treatment } from "./_components/types";
+
+// Vercel execution timeout (in seconds)
+export const maxDuration = 30;
+
 import { DemoHeaderIsland } from "./_components/demo-header-island";
 import { TreatmentsSectionIsland } from "./_components/treatments-section-island";
 import { NitroFooterIsland } from "./_components/nitro-footer-island";
