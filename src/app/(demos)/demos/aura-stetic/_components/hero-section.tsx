@@ -14,7 +14,6 @@ export function HeroSection() {
 
       <div className="absolute inset-0 z-0 bg-black/20" /> {/* Subtle overlay for image before video loads */}
 
-      {/* Background Video - Optimized for Mobile LCP */}
       <video
         autoPlay
         loop
@@ -23,14 +22,14 @@ export function HeroSection() {
         poster="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        {/* Mobile Source (Max 768px) - 720p & 3mbps limit */}
+        {/* Mobile Source: 720p optimizado para 4G */}
         <source
           media="(max-width: 768px)"
           src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:best,w_720,br_3m/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
           type="video/mp4"
         />
         
-        {/* Desktop Source (Min 769px) - 1080p & 5mbps limit */}
+        {/* Desktop Source: 1080p alta fidelidad */}
         <source
           media="(min-width: 769px)"
           src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:best,w_1920,br_5m/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
