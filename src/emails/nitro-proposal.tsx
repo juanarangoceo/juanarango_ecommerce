@@ -15,20 +15,20 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
+// 1. Aquí agregamos 'companyName' para que TypeScript no se queje
 interface NitroProposalEmailProps {
   prospectName: string;
+  companyName?: string; 
 }
 
 export const NitroProposalEmail = ({
   prospectName = "Futuro Cliente",
+  companyName = "tu empresa", // Valor por defecto
 }: NitroProposalEmailProps) => {
   const previewText = `Propuesta exclusiva para ${prospectName} - Nitro Ecom`;
 
   return (
     <Html>
-      {/* IMPORTANTE: <Tailwind> debe envolver al <Head> y al <Body> 
-         para poder inyectar los estilos del hover en el head.
-      */}
       <Tailwind
         config={{
           theme: {
@@ -56,7 +56,7 @@ export const NitroProposalEmail = ({
             </Section>
             
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
-              Transformamos tu negocio digital
+              Transformamos {companyName}
             </Heading>
             
             <Text className="text-black text-[14px] leading-[24px]">
@@ -64,14 +64,11 @@ export const NitroProposalEmail = ({
             </Text>
             
             <Text className="text-black text-[14px] leading-[24px]">
-              Hemos analizado tu presencia actual y vemos un potencial increíble. 
+              Hemos analizado la presencia digital de <strong>{companyName}</strong> y vemos un potencial increíble. 
               En <strong>Nitro Ecom</strong>, no solo hacemos webs, creamos ecosistemas de venta automatizados.
             </Text>
 
             <Section className="text-center mt-[32px] mb-[32px]">
-              {/* AQUÍ estaba el error. Ahora el hover funcionará 
-                  porque Tailwind puede inyectar estilos en el Head.
-              */}
               <Button
                 className="bg-[#001F3F] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3 hover:bg-emerald-400 transition-colors"
                 href="https://juanarangoecommerce.com/demos/aura-stetic"
@@ -83,7 +80,7 @@ export const NitroProposalEmail = ({
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             
             <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Si tienes dudas, responde a este correo. Estamos listos para escalar tu negocio.
+              Si tienes dudas, responde a este correo. Estamos listos para escalar {companyName}.
             </Text>
           </Container>
         </Body>
