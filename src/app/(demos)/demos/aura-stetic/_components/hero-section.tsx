@@ -3,7 +3,17 @@ import { HeroContent } from "./hero-content"
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image - Static & Prioritized for LCP */}
+      {/* LCP Optimization: High Priority Static Image */}
+      <img 
+        src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
+        alt="Aura Stetic Background"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        fetchPriority="high"
+        decoding="sync"
+      />
+
+      <div className="absolute inset-0 z-0 bg-black/20" /> {/* Subtle overlay for image before video loads */}
+
       {/* Background Video - Optimized for Mobile LCP */}
       <video
         autoPlay
