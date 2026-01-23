@@ -6,6 +6,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      console.error("Error: RESEND_API_KEY is missing");
+      return NextResponse.json(
+        { error: "Configuration Error: RESEND_API_KEY is missing in environment variables." },
+        { status: 500 }
+      );
+    }
+
     const body = await req.json();
 
     // Supabase Webhook payload structure: { type: 'INSERT', table: 'prospects', record: { ... }, old_record: null, ... }
