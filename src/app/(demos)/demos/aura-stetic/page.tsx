@@ -88,13 +88,10 @@ export default function AuraSteticPage() {
         
         <FaqSection />
 
+        <BookingSimulation />
+
         <MapSection />
       </div>
-
-      {/* --- SMOOTH TRANSITION SEPARATOR --- */}
-      <div className="w-full h-40 bg-gradient-to-b from-stone-50 via-neutral-900 to-black pointer-events-none" />
-
-      <BookingSimulation />
 
       {/* --- NITRO ECOM SECTION (Footer Area) & BOOKING MODAL --- */}
       <NitroFooterIsland />
