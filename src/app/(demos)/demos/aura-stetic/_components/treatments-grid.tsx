@@ -52,9 +52,6 @@ export function TreatmentsGrid({ treatments, onServiceClick }: TreatmentsGridPro
                 <div className="flex items-center justify-between">
                   <div className="relative flex items-center gap-2">
                     <span className="text-amber-600 font-medium">{treatment.price}</span>
-                    {treatment.id === "hydrafacial" && (
-                      <StrategyHotspot tip="Psicología: Mostrar precios 'Desde' filtra leads calificados." />
-                    )}
                   </div>
                   <button
                     className="text-stone-900 text-sm border border-amber-200 hover:border-amber-400 hover:bg-amber-50 hover:shadow-md hover:shadow-amber-200/30 px-4 py-2 rounded-full transition-all hover:-translate-y-0.5"

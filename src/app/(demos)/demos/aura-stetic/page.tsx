@@ -14,6 +14,7 @@ import { VideoTestimonialSection } from "./_components/video-testimonial-section
 import { ReviewsSection } from "./_components/reviews-section";
 import { FaqSection } from "./_components/faq-section";
 import { MapSection } from "./_components/map-section";
+import { BookingSimulation } from "./_components/booking-simulation";
 
 import { SkinAnalysisIsland } from "./_components/skin-analysis-island";
 
@@ -92,6 +93,8 @@ export default function AuraSteticPage() {
 
       {/* --- SMOOTH TRANSITION SEPARATOR --- */}
       <div className="w-full h-40 bg-gradient-to-b from-stone-50 via-neutral-900 to-black pointer-events-none" />
+
+      <BookingSimulation />
 
       {/* --- NITRO ECOM SECTION (Footer Area) & BOOKING MODAL --- */}
       <NitroFooterIsland />
