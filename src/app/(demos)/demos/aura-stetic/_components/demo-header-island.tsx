@@ -16,7 +16,7 @@ export function DemoHeaderIsland() {
   // Logic to hide chat when reaching Nitro section
   useEffect(() => {
     const handleScroll = () => {
-      const nitroSection = document.getElementById("nitro-footer");
+      const nitroSection = document.getElementById("booking");
       if (nitroSection) {
         const rect = nitroSection.getBoundingClientRect();
         // If the top of the Nitro section is near the bottom of the viewport
@@ -35,40 +35,30 @@ export function DemoHeaderIsland() {
 
   return (
     <>
-      {/* --- DEMO BANNER --- */}
-      {/* Mobile: Top Fixed Bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-10 bg-neutral-950 z-[60] flex items-center justify-between px-4 border-b border-white/10">
-          <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] items-center font-bold text-zinc-300 tracking-wide">
-                  Demo por <span className="text-white">Nitro Ecom</span>
-              </span>
+      {/* --- FLOATING COMMAND BAR (Unified) --- */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 pl-3 pr-1.5 py-1.5 rounded-full border border-white/10 bg-black/80 backdrop-blur-xl shadow-2xl transition-all hover:bg-black/90 group w-[90%] max-w-fit justify-between md:justify-start">
+          
+          <div className="flex items-center gap-3">
+            <div className="relative flex items-center justify-center w-2 h-2">
+                <div className="absolute w-full h-full rounded-full bg-emerald-500 animate-ping opacity-75" />
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+            </div>
+            
+            <span className="text-zinc-200 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap">
+                <span className="md:hidden">Nitro Demo</span>
+                <span className="hidden md:inline">Ingeniería de Ventas <span className="text-zinc-600 mx-2">|</span> <span className="text-white font-bold">Nitro Ecom</span></span>
+            </span>
           </div>
-          <Link href="/" className="text-[10px] font-medium text-zinc-400 hover:text-white transition-colors border border-white/10 px-3 py-1 rounded-full bg-white/5">
-              Salir
-          </Link>
-      </div>
 
-      {/* Desktop: Floating Capsule & Exit Button */}
-      <nav className="hidden md:flex fixed top-0 w-full z-50 pointer-events-none h-20 items-center justify-between px-6">
-           <div className="w-10 pointer-events-auto" /> {/* Spacer */}
-           
-           {/* Center Badge - Pointer Events Auto */}
-           <div className="pointer-events-auto flex items-center gap-3 px-6 py-2 rounded-full border border-white/10 bg-neutral-950/80 backdrop-blur-md shadow-2xl transition-all hover:bg-neutral-900">
-                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-[pulse_2s_ease-in-out_infinite]" />
-                 <span className="text-zinc-200 text-sm font-medium tracking-wide">
-                    Ingeniería de Ventas <span className="text-zinc-500 mx-1">|</span> <span className="text-white font-bold">Ecosistema Construido para tu Empresa</span>
-                 </span>
-           </div>
-           
-           {/* Exit Link - Pointer Events Auto */}
-           <div className="pointer-events-auto flex items-center z-10">
-                <Link href="/" className="text-sm font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5 hover:border-white/20">
-                    <span>Salir de la demo</span> 
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-           </div>
-      </nav>
+          <div className="flex items-center gap-2">
+            <div className="w-px h-4 bg-white/10 mx-1 hidden md:block" />
+
+            <Link href="/" className="flex items-center justify-center w-8 h-8 md:w-auto md:h-auto md:px-4 md:py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all group-hover/btn relative overflow-hidden">
+                <ArrowRight className="w-4 h-4 text-white md:hidden" />
+                <span className="hidden md:inline text-xs font-bold text-white tracking-wide">Salir</span>
+            </Link>
+          </div>
+      </div>
 
       {/* --- REAL DEMO NAVBAR (Shifted down) --- */}
       <div className="relative z-40">
