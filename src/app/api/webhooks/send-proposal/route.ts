@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     console.log(`Sending proposal email to ${email} (${company_name})...`);
 
     const data = await resend.emails.send({
-      from: "Nitro Ecom <onboarding@resend.dev>", // TODO: User needs to verify their domain or use resend.dev for testing
+      from: "Nitro Ecom <nitro@juanarangoecommerce.com>", // TODO: User needs to verify their domain or use resend.dev for testing
       to: [email],
       subject: `Propuesta de Infraestructura Digital para ${company_name || "su empresa"}`,
       react: NitroProposalEmail({
