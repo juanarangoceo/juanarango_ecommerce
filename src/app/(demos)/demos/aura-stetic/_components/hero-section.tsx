@@ -30,8 +30,7 @@ export function HeroSection() {
         loop
         muted
         playsInline
-        poster="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover bg-transparent"
       >
         {/* Mobile Source: 720p optimizado para 4G */}
         <source
