@@ -50,7 +50,7 @@ export function DemoHeaderIsland() {
            {/* Exit Link */}
            <div className="flex items-center z-10">
                 <Link href="/" className="text-xs md:text-sm font-medium text-zinc-500 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="hidden md:inline">Salir de la demo</span> 
+                    <span className="text-xs">Salir de la demo</span> 
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
            </div>

@@ -25,10 +25,16 @@ export function ServiceModal({ treatment, onClose }: ServiceModalProps) {
 
   const handleConfirm = () => {
     if (selectedDate && selectedTime) {
-      alert(
-        `Reserva confirmada para ${treatment.name} el día ${selectedDate} de ${months[currentMonth]} a las ${selectedTime}`,
-      )
+      // Close this modal
       onClose()
+      
+      // Scroll to booking section where the real conversion happens
+      setTimeout(() => {
+        const bookingSection = document.getElementById("booking")
+        if (bookingSection) {
+            bookingSection.scrollIntoView({ behavior: "smooth" })
+        }
+      }, 300)
     }
   }
 

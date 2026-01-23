@@ -10,8 +10,7 @@ export function NitroFooterIsland() {
 
   return (
     <>
-      {/* --- NITRO ECOM SECTION (Footer Area) --- */}
-      <section id="nitro-footer" className="py-24 bg-black relative z-10">
+      <section id="booking" className="py-24 bg-gradient-to-b from-black to-zinc-950 relative z-10">
         
         <div className="container mx-auto px-6 relative z-10">
             
@@ -28,19 +27,17 @@ export function NitroFooterIsland() {
                     ¿Tu sitio actual es así de rápido?
                 </p>
 
-                <div className="flex gap-4 md:gap-8 justify-center mt-10">
+                <div className="grid grid-cols-3 gap-4 md:gap-8 justify-center mt-10 w-full max-w-2xl">
                     <div className="text-center">
-                        <span className="block text-4xl md:text-5xl font-black text-white mb-2">100</span>
+                        <span className="block text-3xl md:text-5xl font-black text-white mb-2">100</span>
                         <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">SEO Score</span>
                     </div>
-                    <div className="w-px h-12 md:h-16 bg-white/10" />
-                    <div className="text-center">
-                        <span className="block text-4xl md:text-5xl font-black text-teal-400 mb-2">98</span>
+                    <div className="text-center border-l border-white/10">
+                        <span className="block text-3xl md:text-5xl font-black text-teal-400 mb-2">98</span>
                         <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">Performance</span>
                     </div>
-                    <div className="w-px h-12 md:h-16 bg-white/10" />
-                    <div className="text-center">
-                        <span className="block text-4xl md:text-5xl font-black text-emerald-500 mb-2">0s</span>
+                    <div className="text-center border-l border-white/10">
+                        <span className="block text-3xl md:text-5xl font-black text-emerald-500 mb-2">0s</span>
                         <span className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest font-bold">Downtime</span>
                     </div>
                 </div>
