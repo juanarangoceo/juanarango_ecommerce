@@ -4,8 +4,11 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* LCP Optimization: High Priority Static Image */}
+      {/* LCP Optimization: Responsive High Priority Static Image */}
       <img 
         src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
+        srcSet="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_600/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg 600w, https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg 1920w"
+        sizes="(max-width: 768px) 100vw, 100vw"
         alt="Aura Stetic Background"
         className="absolute inset-0 w-full h-full object-cover z-0"
         fetchPriority="high"
