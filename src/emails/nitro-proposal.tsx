@@ -16,88 +16,74 @@ import {
 import * as React from "react";
 
 interface NitroProposalEmailProps {
-  prospectName?: string;
-  companyName?: string;
-  previewText?: string;
+  prospectName: string;
 }
 
 export const NitroProposalEmail = ({
-  prospectName = "Visionario",
-  companyName = "tu empresa",
-  previewText = "Transforma tu infraestructura digital con Nitro Ecom",
+  prospectName = "Futuro Cliente",
 }: NitroProposalEmailProps) => {
+  const previewText = `Propuesta exclusiva para ${prospectName} - Nitro Ecom`;
+
   return (
     <Html>
-      <Head />
-      <Preview>{previewText}</Preview>
+      {/* IMPORTANTE: <Tailwind> debe envolver al <Head> y al <Body> 
+         para poder inyectar los estilos del hover en el head.
+      */}
       <Tailwind
         config={{
           theme: {
             extend: {
               colors: {
-                brand: "#10b981", // Emerald 500
-                dark: "#0a0a0a",
+                brand: "#001F3F", // Navy Blue
+                accent: "#FF8500", // Vibrant Orange
               },
             },
           },
         }}
       >
-        <Body className="bg-black my-auto mx-auto font-sans text-white">
-          <Container className="border border-white/10 rounded-lg p-8 my-8 mx-auto max-w-xl bg-neutral-950">
-            {/* Logo Section */}
-            <Section className="mb-8">
-               <Text className="text-2xl font-bold tracking-tighter text-white m-0">
-                  NITRO <span className="text-brand">ECOM</span>
-               </Text>
+        <Head />
+        <Preview>{previewText}</Preview>
+        <Body className="bg-white my-auto mx-auto font-sans">
+          <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
+            <Section className="mt-[32px]">
+              <Img
+                src="https://juanarangoecommerce.com/icon-dark-32x32.png" 
+                width="40"
+                height="40"
+                alt="Nitro Ecom"
+                className="my-0 mx-auto"
+              />
             </Section>
-
-            {/* Hero Text */}
-            <Heading className="text-white text-[24px] font-normal text-start p-0 my-8 mx-0">
-              Hola, <span className="font-bold">{prospectName}</span>.
+            
+            <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
+              Transformamos tu negocio digital
             </Heading>
             
-            <Text className="text-zinc-400 text-[16px] leading-[24px]">
-              Hemos analizado el potencial de <strong className="text-white">{companyName}</strong> y creemos que está listo para el siguiente nivel.
+            <Text className="text-black text-[14px] leading-[24px]">
+              Hola <strong>{prospectName}</strong>,
+            </Text>
+            
+            <Text className="text-black text-[14px] leading-[24px]">
+              Hemos analizado tu presencia actual y vemos un potencial increíble. 
+              En <strong>Nitro Ecom</strong>, no solo hacemos webs, creamos ecosistemas de venta automatizados.
             </Text>
 
-            <Text className="text-zinc-400 text-[16px] leading-[24px]">
-              Imagina tener una infraestructura tecnológica tan robusta y estética como la que construimos para <strong>Aura Stetic</strong> (nuestro caso de éxito más reciente).
-            </Text>
-
-            <Section className="my-8 p-0">
-              <Img
-                src="https://res.cloudinary.com/dohwyszdj/image/upload/v1707166000/aura-stetic-demo-preview_xyz.jpg" // Placeholder URL - user should replace or we use a generic one
-                width="100%"
-                height="auto"
-                alt="Aura Stetic Demo Preview"
-                className="rounded-lg border border-white/20 object-cover"
-              />
-              <Text className="text-zinc-500 text-xs text-center mt-2 italic">
-                Interfaz inmersiva de Aura Stetic desarrollada por Nitro Ecom.
-              </Text>
-            </Section>
-
-            <Text className="text-zinc-400 text-[16px] leading-[24px]">
-              No es solo "una página web". Es un ecosistema de ventas, agendamiento y retención con tiempos de carga instantáneos y diseño de clase mundial.
-            </Text>
-
-            {/* Call to Action */}
-            <Section className="text-center mt-8 mb-8">
+            <Section className="text-center mt-[32px] mb-[32px]">
+              {/* AQUÍ estaba el error. Ahora el hover funcionará 
+                  porque Tailwind puede inyectar estilos en el Head.
+              */}
               <Button
-                className="bg-brand rounded-full text-black px-8 py-3 font-bold text-[14px] no-underline hover:bg-emerald-400 transition-colors"
-                href="https://juanarango-ecommerce.vercel.app/demos/aura-stetic"
+                className="bg-[#001F3F] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3 hover:bg-emerald-400 transition-colors"
+                href="https://juanarangoecommerce.com/demos/aura-stetic"
               >
-                Ver Demo en Vivo
+                Ver Demo Personalizada
               </Button>
             </Section>
-
-            <Hr className="border-white/10 my-6" />
-
-            <Text className="text-zinc-600 text-[12px] leading-[20px] text-center">
-              ¿Listo para escalar {companyName}? <Link href="mailto:contacto@nitroecom.com" className="text-brand underline">Hablemos.</Link>
-            </Text>
-             <Text className="text-zinc-700 text-[10px] text-center mt-4">
-              © 2026 Nitro Ecom. Infraestructura para Ventas.
+            
+            <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+            
+            <Text className="text-[#666666] text-[12px] leading-[24px]">
+              Si tienes dudas, responde a este correo. Estamos listos para escalar tu negocio.
             </Text>
           </Container>
         </Body>
