@@ -10,18 +10,20 @@ export function HeroSection() {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        poster="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto,so_0/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
+        poster="https://res.cloudinary.com/dphw03goy/video/upload/f_auto,q_auto,w_1920/v1737471465/f712ac23-8370-4cc2-a083-d2d142079040_1_d7qisd.jpg"
+        className="absolute inset-0 w-full h-full object-cover"
       >
-        {/* Mobile Source (Max width 768px) - Serve lighter video */}
+        {/* Mobile Source (Max 768px) - 720p & 3mbps limit */}
         <source
           media="(max-width: 768px)"
-          src="https://res.cloudinary.com/dohwyszdj/video/upload/w_640,f_auto,q_auto/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
+          src="https://res.cloudinary.com/dphw03goy/video/upload/f_auto:video,q_auto:best,w_720,br_3m/v1737471465/f712ac23-8370-4cc2-a083-d2d142079040_1_d7qisd.mp4"
           type="video/mp4"
         />
-        {/* Desktop Source (Default) - Serve HD video */}
+        
+        {/* Desktop Source (Min 769px) - 1080p & 5mbps limit */}
         <source
-          src="https://res.cloudinary.com/dohwyszdj/video/upload/w_1280,f_auto,q_auto/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
+          media="(min-width: 769px)"
+          src="https://res.cloudinary.com/dphw03goy/video/upload/f_auto:video,q_auto:best,w_1920,br_5m/v1737471465/f712ac23-8370-4cc2-a083-d2d142079040_1_d7qisd.mp4"
           type="video/mp4"
         />
       </video>
