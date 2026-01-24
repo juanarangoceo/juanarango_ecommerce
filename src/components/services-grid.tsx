@@ -97,7 +97,6 @@ export function ServicesGrid() {
           {serviceDetails.map((service, index) => (
             <motion.div
               key={index}
-              layoutId={`card-${service.id}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -140,58 +139,62 @@ export function ServicesGrid() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               onClick={handleClose}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998] cursor-pointer"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] cursor-pointer"
             />
-            <div className="fixed inset-0 overflow-y-auto z-[9999] pointer-events-none flex items-center justify-center p-4">
+            <div className="fixed inset-0 overflow-y-auto z-[101] pointer-events-none flex items-start md:items-center justify-center p-4 md:p-8">
               <motion.div
-                layoutId={`card-${selectedService.id}`}
-                className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 md:p-12 relative pointer-events-auto shadow-2xl shadow-primary/10"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.15 }}
+                className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-3xl p-6 md:p-12 relative pointer-events-auto shadow-2xl shadow-primary/10 my-8"
               >
                 {/* Close Button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors z-10"
+                  className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors z-10"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
 
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="p-4 bg-primary/10 rounded-2xl">
-                    <selectedService.icon className="w-10 h-10 text-primary" />
+                <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                  <div className="p-3 md:p-4 bg-primary/10 rounded-2xl">
+                    <selectedService.icon className="w-8 h-8 md:w-10 md:h-10 text-primary" />
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-white">{selectedService.title}</h3>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">{selectedService.title}</h3>
                 </div>
 
-                <p className="text-xl text-zinc-300 leading-relaxed mb-10">
+                <p className="text-base md:text-xl text-zinc-300 leading-relaxed mb-8 md:mb-10">
                   {selectedService.desc}
                 </p>
 
-                <div className="mb-12">
-                  <h4 className="text-sm font-bold text-zinc-500 uppercase tracking-widest mb-6 border-b border-white/10 pb-2">
+                <div className="mb-8 md:mb-12">
+                  <h4 className="text-xs md:text-sm font-bold text-zinc-500 uppercase tracking-widest mb-4 md:mb-6 border-b border-white/10 pb-2">
                     Características Clave
                   </h4>
-                  <ul className="grid md:grid-cols-2 gap-4">
+                  <ul className="grid gap-3 md:gap-4">
                     {selectedService.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3 text-zinc-300">
-                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-3 text-zinc-300 text-sm md:text-base">
+                        <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-4 relative z-10">
+                <div className="flex flex-col gap-3 md:gap-4 relative z-10">
                   <Button
                     onClick={handleContact}
-                    className="flex-1 h-14 text-lg bg-primary text-black hover:bg-primary/90 rounded-full font-bold relative z-10"
+                    className="w-full h-12 md:h-14 text-base md:text-lg bg-primary text-black hover:bg-primary/90 rounded-full font-bold relative z-10"
                   >
                    Solicitar {selectedService.title}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={handleClose}
-                    className="md:w-auto h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-zinc-400 relative z-10"
+                    className="w-full md:w-auto h-12 md:h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-zinc-400 relative z-10"
                   >
                     Cerrar
                   </Button>
