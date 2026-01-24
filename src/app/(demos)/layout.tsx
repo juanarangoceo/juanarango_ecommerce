@@ -14,6 +14,10 @@ export default function DemoLayout({
 }) {
   return (
     <html lang="es" className="dark">
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body className="bg-black text-white antialiased selection:bg-teal-500/30">
         <Navbar />
         {children}

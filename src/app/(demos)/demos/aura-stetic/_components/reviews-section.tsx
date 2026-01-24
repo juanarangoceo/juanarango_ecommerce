@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import Image from "next/image"
 import { Star, Quote } from "lucide-react"
 
 const reviews = [
@@ -38,29 +38,20 @@ export function ReviewsSection() {
   return (
     <section id="reviews" className="py-24 px-6 bg-stone-100">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="text-center mb-16">
           <h2 className="font-serif font-light tracking-tight text-4xl md:text-5xl text-stone-900 mb-4">
             Lo Que Dicen Nuestras Clientas
           </h2>
           <p className="font-sans text-stone-600 max-w-xl mx-auto">
             Testimonios reales de quienes han experimentado nuestra atención
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reviews.map((review, index) => (
-            <motion.div
+          {reviews.map((review) => (
+            <div
               key={review.name}
               className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg shadow-stone-200/50 hover:shadow-xl hover:shadow-amber-200/30 hover:-translate-y-1 transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
             >
               <Quote className="w-8 h-8 text-amber-300 mb-4" />
 
@@ -73,27 +64,27 @@ export function ReviewsSection() {
               </div>
 
               <div className="flex items-center gap-3">
-                <img
-                  src={review.image || "/placeholder.svg"}
-                  alt={review.name}
-                  className="w-12 h-12 rounded-2xl object-cover ring-1 ring-inset ring-white/20"
-                />
+                <div className="relative w-12 h-12 rounded-2xl overflow-hidden ring-1 ring-inset ring-white/20">
+                  <Image
+                    src={review.image}
+                    alt={review.name}
+                    fill
+                    sizes="48px"
+                    quality={75}
+                    className="object-cover"
+                  />
+                </div>
                 <div>
                   <p className="font-medium text-stone-900 text-sm">{review.name}</p>
                   <p className="text-amber-600 text-xs">{review.treatment}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Rating promedio */}
-        <motion.div
-          className="mt-12 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
+        <div className="mt-12 text-center">
           <div className="inline-flex items-center gap-3 bg-white/60 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 shadow-md">
             <div className="flex items-center gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -104,7 +95,7 @@ export function ReviewsSection() {
             <span className="text-stone-400">|</span>
             <span className="text-stone-600 text-sm">+200 reseñas</span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import Image from "next/image"
 import { StrategyHotspot } from "./strategy-hotspot"
 import type { Treatment } from "./types"
 
@@ -13,36 +13,31 @@ export function TreatmentsGrid({ treatments, onServiceClick }: TreatmentsGridPro
   return (
     <section id="treatments" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="text-center mb-16">
           <h2 className="font-serif font-light tracking-tight text-4xl md:text-5xl text-stone-900 mb-4">
             Nuestros Tratamientos
           </h2>
           <p className="font-sans text-stone-600 max-w-xl mx-auto">
             Experimenta cuidado personalizado con nuestros servicios estéticos exclusivos
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {treatments.map((treatment, index) => (
-            <motion.div
+          {treatments.map((treatment) => (
+            <div
               key={treatment.id}
               className="group relative bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-lg shadow-stone-200/50 hover:shadow-xl hover:shadow-amber-200/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
               onClick={() => onServiceClick(treatment)}
             >
-              <div className="aspect-[3/4] overflow-hidden">
-                <img
-                  src={treatment.image || "/placeholder.svg"}
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={treatment.image}
                   alt={treatment.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-2xl ring-1 ring-inset ring-white/20"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={75}
+                  loading="lazy"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 rounded-2xl ring-1 ring-inset ring-white/20"
                 />
               </div>
 
@@ -64,7 +59,7 @@ export function TreatmentsGrid({ treatments, onServiceClick }: TreatmentsGridPro
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

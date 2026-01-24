@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import type { Treatment } from "./_components/types";
 import { PageContent } from "./_components/page-content";
 
 // Vercel execution timeout (in seconds)
 export const maxDuration = 30;
+
+export const metadata: Metadata = {
+  title: "Aura Stetic - Tratamientos Estéticos Profesionales",
+  description: "Descubre tratamientos de belleza profesionales: Botox, Hydrafacial, Masajes Terapéuticos. Resultados naturales con tecnología de vanguardia.",
+};
 
 export const treatments: Treatment[] = [
   {

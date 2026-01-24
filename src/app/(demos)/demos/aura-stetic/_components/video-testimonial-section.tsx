@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { motion } from "framer-motion"
+import Image from "next/image"
 import { Play, Pause, Volume2, VolumeX, Star, Quote } from "lucide-react"
 
 const videoTestimonials = [
@@ -82,12 +82,7 @@ export function VideoTestimonialSection() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="text-center mb-16">
           <span className="text-amber-400 text-sm tracking-widest uppercase mb-4 block font-sans">
             Testimonios en Video
           </span>
@@ -97,26 +92,26 @@ export function VideoTestimonialSection() {
           <p className="font-sans text-stone-400 max-w-xl mx-auto">
             Escucha directamente de nuestras clientas sobre su experiencia en Aura Stetic
           </p>
-        </motion.div>
+        </div>
 
         {/* Video Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {videoTestimonials.map((testimonial, index) => (
-            <motion.div
+          {videoTestimonials.map((testimonial) => (
+            <div
               key={testimonial.id}
               className="group cursor-pointer hover:-translate-y-1 transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
               onClick={() => handlePlayVideo(testimonial.id)}
             >
               {/* Video Thumbnail */}
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 ring-1 ring-inset ring-white/20 shadow-lg hover:shadow-xl hover:shadow-amber-500/20 transition-shadow">
-                <img
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 ring-1 ring-inset ring-white/20 shadow-lg hover:shadow-xl hover:shadow-amber-500/20 transition-shadow">
+                <Image
                   src={testimonial.thumbnail || "/placeholder.svg"}
                   alt={`Testimonial de ${testimonial.name}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={70}
+                  loading="lazy"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Overlay */}
@@ -124,13 +119,9 @@ export function VideoTestimonialSection() {
 
                 {/* Play Button - glassmorphism */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:bg-gradient-to-r group-hover:from-amber-300 group-hover:to-amber-500 group-hover:border-amber-400 group-hover:shadow-lg group-hover:shadow-amber-500/40 transition-all duration-300"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 group-hover:bg-gradient-to-r group-hover:from-amber-300 group-hover:to-amber-500 group-hover:border-amber-400 group-hover:shadow-lg group-hover:shadow-amber-500/40 transition-all duration-300 hover:scale-110 active:scale-95">
                     <Play className="w-6 h-6 text-white fill-white ml-1 group-hover:text-stone-900 group-hover:fill-stone-900" />
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Quote overlay */}
@@ -152,17 +143,12 @@ export function VideoTestimonialSection() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Featured Quote - glassmorphism */}
-        <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
+        <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-4 bg-white/10 backdrop-blur-xl rounded-full px-8 py-4 border border-white/20">
             <div className="flex -space-x-3">
               {videoTestimonials.map((t) => (
@@ -179,23 +165,18 @@ export function VideoTestimonialSection() {
               <p className="text-stone-400 text-sm">Comparten su experiencia</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Video Modal */}
       {activeVideo && activeTestimonial && (
-        <motion.div
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           onClick={handleCloseVideo}
         >
-          <motion.div
+          <div
             className="relative w-full max-w-4xl aspect-video bg-stone-900 rounded-2xl overflow-hidden ring-1 ring-inset ring-white/20"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <video
               ref={videoRef}
@@ -242,8 +223,8 @@ export function VideoTestimonialSection() {
             >
               <span className="text-white text-xl">&times;</span>
             </button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
     </section>
   )
