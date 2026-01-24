@@ -26,10 +26,10 @@ export function HeroSection() {
         preload="none"
         className="absolute inset-0 w-full h-full object-cover bg-transparent"
       >
-        {/* Mobile Source: 500k bitrate for fast loading */}
+        {/* Mobile Source: 800k bitrate for better quality */}
         <source
           media="(max-width: 768px)"
-          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:low,w_720,br_500k/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
+          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:good,w_720,br_800k/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
           type="video/mp4"
         />
         
