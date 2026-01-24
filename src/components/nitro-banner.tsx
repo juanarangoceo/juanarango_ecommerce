@@ -24,7 +24,7 @@ export function NitroBanner() {
             No solo creamos webs. Diseñamos la estrategia, automatizaciones e infraestructura necesarias para eliminar tus cuellos de botella y acelerar tu crecimiento.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
             <Link href="#contacto" className="w-full sm:w-auto" aria-label="Solicitar un diagnóstico gratuito">
               <Button
                 size="lg"
@@ -32,15 +32,6 @@ export function NitroBanner() {
               >
                 Solicitar Diagnóstico
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="#resultados" className="w-full sm:w-auto" aria-label="Ver nuestros casos de éxito">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full text-lg px-8 py-6 h-14 border-white/10 hover:bg-white/5 hover:text-white text-slate-200"
-              >
-                Ver Casos de Éxito
               </Button>
             </Link>
           </div>

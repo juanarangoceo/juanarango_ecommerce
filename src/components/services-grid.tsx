@@ -120,7 +120,7 @@ export function ServicesGrid() {
                 <Button
                   variant="ghost"
                   onClick={() => handleOpen(service)}
-                  className="text-primary hover:text-white hover:bg-primary p-0 h-auto hover:bg-transparent hover:text-primary justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit cursor-pointer"
+                  className="text-primary hover:text-white hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/10 p-3 px-5 h-auto rounded-lg justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit cursor-pointer border border-primary/20 hover:border-primary/40"
                   aria-label={`Ver más detalles sobre ${service.title}`}
                 >
                   <span className="mr-2 font-semibold">{service.cta}</span>
@@ -141,9 +141,9 @@ export function ServicesGrid() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleClose}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 cursor-pointer"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998] cursor-pointer"
             />
-            <div className="fixed inset-0 overflow-y-auto z-50 pointer-events-none flex items-center justify-center p-4">
+            <div className="fixed inset-0 overflow-y-auto z-[9999] pointer-events-none flex items-center justify-center p-4">
               <motion.div
                 layoutId={`card-${selectedService.id}`}
                 className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 md:p-12 relative pointer-events-auto shadow-2xl shadow-primary/10"

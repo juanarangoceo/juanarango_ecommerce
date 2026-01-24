@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import { DemoHeaderIsland } from "./demo-header-island";
 import { TreatmentsSectionIsland } from "./treatments-section-island";
+import { ContactForm } from "@/components/ui/contact-form";
+import { Footer } from "@/components/layout/Footer";
 import type { Treatment } from "./types";
 
 // Client Components loaded dynamically
@@ -50,7 +52,23 @@ export function PageContent({ treatments }: PageContentProps) {
         <BookingSimulation />
 
         <MapSection />
+
+        {/* --- NITRO CONTACT SECTION --- */}
+        <div id="contacto" className="py-12 md:py-24 px-6 bg-black text-white">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">Hablemos de Escalar</h2>
+              <p className="text-xl text-muted-foreground">
+                ¿Listo para llevar tu negocio al siguiente nivel? Déjanos tus datos.
+              </p>
+            </div>
+            <ContactForm />
+          </div>
+        </div>
       </div>
+
+      {/* --- NITRO FOOTER --- */}
+      <Footer />
 
     </main>
   );

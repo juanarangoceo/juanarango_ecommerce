@@ -27,8 +27,8 @@ export function Navbar() {
             <Link href="/#servicios" className="text-white hover:text-primary transition-colors">
               Servicios
             </Link>
-            <Link href="/#resultados" className="text-white hover:text-primary transition-colors">
-              Resultados
+            <Link href="/#negocios" className="text-white hover:text-primary transition-colors">
+              Nitro Negocios
             </Link>
             <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
@@ -70,11 +70,11 @@ export function Navbar() {
               Servicios
             </Link>
             <Link 
-              href="/#resultados" 
+              href="/#negocios" 
               className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
               onClick={closeMenu}
             >
-              Resultados
+              Nitro Negocios
             </Link>
             <Link 
               href="/#contacto" 
