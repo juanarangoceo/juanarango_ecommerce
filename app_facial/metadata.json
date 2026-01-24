@@ -1,0 +1,7 @@
+{
+  "name": "AuraScan AI - Spa Esthetic Analysis",
+  "description": "An advanced AI-powered face scanning tool for esthetic clinics and spas that analyzes skin conditions and recommends personalized treatments.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

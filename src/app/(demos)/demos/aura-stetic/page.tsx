@@ -5,7 +5,7 @@ export const maxDuration = 30;
 
 import { DemoHeaderIsland } from "./_components/demo-header-island";
 import { TreatmentsSectionIsland } from "./_components/treatments-section-island";
-import { NitroFooterIsland } from "./_components/nitro-footer-island";
+
 
 // Client Components loaded directly (they are already islands or interactive leaves)
 import { HeroSection } from "./_components/hero-section";
@@ -93,11 +93,7 @@ export default function AuraSteticPage() {
         <MapSection />
       </div>
 
-      {/* --- NITRO ECOM SECTION (Footer Area) & BOOKING MODAL --- */}
-      <NitroFooterIsland />
-      <footer className="py-12 text-center text-zinc-800 text-xs bg-black">
-        <p className="opacity-40 tracking-widest">© 2026 NITRO ECOM. TODOS LOS DERECHOS RESERVADOS.</p>
-      </footer>
+
     </main>
   );
 }

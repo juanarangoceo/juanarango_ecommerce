@@ -5,7 +5,7 @@ export function HeroContent() {
       {/* Content - Static for LCP */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <div>
-          <h1 className="font-serif font-light tracking-tight text-5xl md:text-7xl text-white mb-6 leading-tight text-balance drop-shadow-xl animate-fade-in-up">
+          <h1 className="font-serif font-light tracking-tight text-5xl md:text-7xl text-white mb-6 leading-tight text-balance drop-shadow-xl">
             Revela Tu Belleza Natural
           </h1>
 
@@ -24,7 +24,7 @@ export function HeroContent() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
         <div className="w-6 h-10 border-2 border-stone-400 rounded-full flex justify-center pt-2">
           <div className="w-1.5 h-3 bg-stone-400 rounded-full" />
         </div>

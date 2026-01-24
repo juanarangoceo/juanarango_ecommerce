@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "../globals.css"; 
+import "../globals.css";
+import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
   title: "Aura Stetic | Demo Premium",
@@ -14,6 +15,7 @@ export default function DemoLayout({
   return (
     <html lang="es" className="dark">
       <body className="bg-black text-white antialiased selection:bg-teal-500/30">
+        <Navbar />
         {children}
       </body>
     </html>

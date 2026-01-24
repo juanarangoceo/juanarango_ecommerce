@@ -47,7 +47,7 @@ export function Navbar({ onContactClick }: NavbarProps) {
   return (
     <>
       <nav
-        className={`fixed top-14 md:top-20 left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-16 md:top-[88px] left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? "bg-white/60 backdrop-blur-xl shadow-lg border-b border-white/20" : "bg-transparent"
         }`}
       >
