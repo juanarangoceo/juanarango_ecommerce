@@ -6,6 +6,7 @@ create table if not exists leads (
   email text not null,
   company text,
   interest text,
+  message text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -16,3 +17,4 @@ alter table leads enable row level security;
 create policy "Enable insert for service role only" on leads
   for insert
   with check (true);
+
