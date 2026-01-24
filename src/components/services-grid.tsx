@@ -151,7 +151,7 @@ export function ServicesGrid() {
                 {/* Close Button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+                  className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors z-10"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -174,24 +174,24 @@ export function ServicesGrid() {
                   <ul className="grid md:grid-cols-2 gap-4">
                     {selectedService.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3 text-zinc-300">
-                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-col md:flex-row gap-4 relative z-10">
                   <Button
                     onClick={handleContact}
-                    className="flex-1 h-14 text-lg bg-primary text-black hover:bg-primary/90 rounded-full font-bold"
+                    className="flex-1 h-14 text-lg bg-primary text-black hover:bg-primary/90 rounded-full font-bold relative z-10"
                   >
                    Solicitar {selectedService.title}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={handleClose}
-                    className="md:w-auto h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-zinc-400"
+                    className="md:w-auto h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-zinc-400 relative z-10"
                   >
                     Cerrar
                   </Button>
