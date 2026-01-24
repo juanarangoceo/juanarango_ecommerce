@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
 import { Menu, X } from "lucide-react"
 
 const navLinks = [
@@ -20,14 +19,28 @@ interface NavbarProps {
 export function Navbar({ onContactClick }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Adjust scroll threshold to account for the Nitro Header
+  // Throttled scroll handler for better performance
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      if (scrollTimeoutRef.current) {
+        return
+      }
+      
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolled(window.scrollY > 50)
+        scrollTimeoutRef.current = null
+      }, 100)
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
   }, [])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: (typeof navLinks)[0]) => {
@@ -47,7 +60,7 @@ export function Navbar({ onContactClick }: NavbarProps) {
   return (
     <>
       <nav
-        className={`fixed top-16 md:top-[88px] left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-16 md:top-[72px] left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? "bg-white/60 backdrop-blur-xl shadow-lg border-b border-white/20" : "bg-transparent"
         }`}
       >
@@ -81,41 +94,31 @@ export function Navbar({ onContactClick }: NavbarProps) {
           </button>
         </div>
 
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white/60 backdrop-blur-xl border-t border-white/20 overflow-hidden"
-            >
-              <div className="px-6 py-4 flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className="text-stone-700 hover:text-amber-600 transition-colors py-2"
-                    onClick={(e) => handleNavClick(e, link)}
-                  >
-                    {link.name}
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white/60 backdrop-blur-xl border-t border-white/20 overflow-hidden">
+            <div className="px-6 py-4 flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-stone-700 hover:text-amber-600 transition-colors py-2"
+                  onClick={(e) => handleNavClick(e, link)}
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* Mobile Sticky Booking Button - Hidden when Nitro modal or chat triggers might overlap, handled by page */}
-      <motion.button
+      {/* Mobile Sticky Booking Button */}
+      <button
         onClick={scrollToBooking}
         className="md:hidden fixed bottom-6 right-6 z-30 bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-400 hover:to-amber-600 text-stone-900 px-6 py-3 rounded-full text-sm font-medium shadow-xl shadow-amber-500/40"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.5, type: "spring" }}
       >
         Reservar
-      </motion.button>
+      </button>
     </>
   )
 }

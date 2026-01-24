@@ -27,7 +27,7 @@ export function PageContent({ treatments }: PageContentProps) {
       <DemoHeaderIsland />
 
       {/* --- PAGE CONTENT (Added padding-top for the fixed headers) --- */}
-      <div className="pt-32 md:pt-40"> 
+      <div className="pt-[120px] md:pt-[136px]"> 
         <HeroSection />
 
         <BeautyQuiz />

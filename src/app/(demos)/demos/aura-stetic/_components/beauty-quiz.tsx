@@ -203,7 +203,7 @@ export function BeautyQuiz({ onBookingClick }: BeautyQuizProps) {
                   transition={{ duration: 0.5 }}
                   className="absolute inset-0"
                 >
-                  <Image src={currentImage || ""} alt="Beauty Quiz" fill className="object-cover" />
+                  <Image src={currentImage || ""} alt="Beauty Quiz" fill className="object-cover" loading="lazy" priority={false} />
                   <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-white/80 via-white/20 to-transparent" />
                 </motion.div>
               </AnimatePresence>

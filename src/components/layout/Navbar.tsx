@@ -24,16 +24,16 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/#servicios" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#servicios" className="text-white hover:text-primary transition-colors">
               Servicios
             </Link>
-            <Link href="/#resultados" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#resultados" className="text-white hover:text-primary transition-colors">
               Resultados
             </Link>
-            <Link href="/#contacto" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
             </Link>
-            <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/blog" className="text-white hover:text-primary transition-colors">
               Blog
             </Link>
           </div>
@@ -48,7 +48,7 @@ export function Navbar() {
 
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden text-muted-foreground hover:text-foreground p-1"
+              className="md:hidden text-white hover:text-primary p-1"
               onClick={toggleMenu}
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
