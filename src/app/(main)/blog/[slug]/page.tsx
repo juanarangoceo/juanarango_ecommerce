@@ -64,7 +64,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
   // Schema Markup: BlogPosting
   const imageUrl = post.mainImage?.asset?._ref 
     ? urlForImage(post.mainImage).url() 
-    : "https://juanarango.com/default-blog-image.jpg";
+    : "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg";
 
   const excerpt = rawContent 
     ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
@@ -80,20 +80,20 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     author: {
       "@type": "Organization",
       name: "Nitro Ecom",
-      url: "https://juanarango.com"
+      url: "https://www.juanarangoecommerce.com"
     },
     publisher: {
       "@type": "Organization",
       name: "Nitro Ecom",
       logo: {
         "@type": "ImageObject",
-        url: "https://juanarango.com/logo.png"
+        url: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg"
       }
     },
     description: excerpt,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://juanarango.com/blog/${post.slug}`
+      "@id": `https://www.juanarangoecommerce.com/blog/${post.slug}`
     },
     wordCount: rawContent.split(/\s+/).length,
     timeRequired: `PT${readingTime}M`,

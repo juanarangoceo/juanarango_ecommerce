@@ -20,9 +20,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Juan Arango - Ingeniería de Escalamiento",
   description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
-  metadataBase: new URL("https://juanarango.com"),
+  metadataBase: new URL("https://www.juanarangoecommerce.com"),
   verification: {
     google: "verification_code_here",
+  },
+  icons: {
+    icon: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
+    shortcut: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
+    apple: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
   },
 };
 
@@ -32,19 +37,19 @@ const organizationSchema = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://juanarango.com/#organization",
+      "@id": "https://www.juanarangoecommerce.com/#organization",
       name: "Nitro Ecom",
-      url: "https://juanarango.com",
+      url: "https://www.juanarangoecommerce.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://juanarango.com/logo.png",
+        url: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg",
         width: 512,
         height: 512
       },
       description: "Ingeniería de escalamiento acelerado para negocios digitales",
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+57-300-000-0000",
+        telephone: "+573146681896",
         contactType: "customer service",
         areaServed: "CO",
         availableLanguage: ["es", "en"]
@@ -60,18 +65,18 @@ const organizationSchema = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://juanarango.com/#website",
-      url: "https://juanarango.com",
+      "@id": "https://www.juanarangoecommerce.com/#website",
+      url: "https://www.juanarangoecommerce.com",
       name: "Nitro Ecom - Ingeniería de Escalamiento",
       description: "Acelera tu crecimiento digital con infraestructura de alta velocidad",
       publisher: {
-        "@id": "https://juanarango.com/#organization"
+        "@id": "https://www.juanarangoecommerce.com/#organization"
       },
       potentialAction: {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
-          urlTemplate: "https://juanarango.com/blog?q={search_term_string}"
+          urlTemplate: "https://www.juanarangoecommerce.com/blog?q={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
