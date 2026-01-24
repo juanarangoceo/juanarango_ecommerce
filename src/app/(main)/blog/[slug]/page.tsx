@@ -12,6 +12,7 @@ import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
 import { NitroCtaCard } from "./_components/NitroCtaCard";
 import { NewsletterForm } from "@/components/newsletter-form";
+import Script from "next/script";
 
 
 // GROQ Query for Single Post
@@ -60,8 +61,54 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     day: "numeric",
   });
 
+  // Schema Markup: BlogPosting
+  const imageUrl = post.mainImage?.asset?._ref 
+    ? urlForImage(post.mainImage).url() 
+    : "https://juanarango.com/default-blog-image.jpg";
+
+  const excerpt = rawContent 
+    ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
+    : post.title;
+
+  const blogPostSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    image: imageUrl,
+    datePublished: post.publishedAt || post._createdAt,
+    dateModified: post.publishedAt || post._createdAt,
+    author: {
+      "@type": "Organization",
+      name: "Nitro Ecom",
+      url: "https://juanarango.com"
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Nitro Ecom",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://juanarango.com/logo.png"
+      }
+    },
+    description: excerpt,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://juanarango.com/blog/${post.slug}`
+    },
+    wordCount: rawContent.split(/\s+/).length,
+    timeRequired: `PT${readingTime}M`,
+    inLanguage: "es-ES"
+  };
+
   return (
     <>
+      {/* Schema Markup: BlogPosting */}
+      <Script
+        id="blog-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema) }}
+      />
+
       <BlogProgressBar />
       
       <div className="bg-white dark:bg-zinc-950 min-h-screen">

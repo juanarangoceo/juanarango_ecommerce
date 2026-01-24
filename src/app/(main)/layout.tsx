@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { ChatWidget } from "@/components/chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import Script from "next/script";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -19,10 +20,63 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Juan Arango - Ingeniería de Escalamiento",
   description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
-  metadataBase: new URL("https://juanarango.com"), // Placeholder
+  metadataBase: new URL("https://juanarango.com"),
   verification: {
-    google: "verification_code_here", // Placeholder
+    google: "verification_code_here",
   },
+};
+
+// Schema Markup: Organization + WebSite
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://juanarango.com/#organization",
+      name: "Nitro Ecom",
+      url: "https://juanarango.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://juanarango.com/logo.png",
+        width: 512,
+        height: 512
+      },
+      description: "Ingeniería de escalamiento acelerado para negocios digitales",
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+57-300-000-0000",
+        contactType: "customer service",
+        areaServed: "CO",
+        availableLanguage: ["es", "en"]
+      },
+      sameAs: [
+        "https://instagram.com/juanarangoecommerce"
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "CO",
+        addressLocality: "Colombia"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://juanarango.com/#website",
+      url: "https://juanarango.com",
+      name: "Nitro Ecom - Ingeniería de Escalamiento",
+      description: "Acelera tu crecimiento digital con infraestructura de alta velocidad",
+      publisher: {
+        "@id": "https://juanarango.com/#organization"
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://juanarango.com/blog?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
 };
 
 // Main Layout
@@ -32,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="es" className="dark scroll-smooth">
       <head>
         {/* Performance: Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,6 +96,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
       >
+        {/* Schema Markup: Organization + WebSite */}
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        
         <Navbar />
         <main className="flex-1 flex flex-col">
           {children}
