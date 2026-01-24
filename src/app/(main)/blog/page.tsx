@@ -7,11 +7,12 @@ import { BlogCard } from "./_components/blog-card";
 import { NitroCtaCard } from "./[slug]/_components/NitroCtaCard";
 import { Pagination } from "@/components/ui/pagination";
 
-// GROQ Query - Sorted by date, with pagination
+// GROQ Query - Sorted by date (newest first), with pagination
+// Uses publishedAt if available, otherwise falls back to _createdAt
 const POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
-]|order(publishedAt desc) {
+]|order(coalesce(publishedAt, _createdAt) desc) {
   _id,
   title,
   slug,
