@@ -14,23 +14,24 @@ export function DemoHeaderIsland() {
   const closeChat = () => setIsChatOpen(false);
 
   // Logic to hide chat when reaching Nitro section
+  // Logic to hide chat when reaching Nitro section using IntersectionObserver
   useEffect(() => {
-    const handleScroll = () => {
-      const nitroSection = document.getElementById("booking");
-      if (nitroSection) {
-        const rect = nitroSection.getBoundingClientRect();
-        // If the top of the Nitro section is near the bottom of the viewport
-        const triggerPoint = window.innerHeight * 0.8;
-        if (rect.top <= triggerPoint) {
-            setShowDemoChat(false);
-        } else {
-            setShowDemoChat(true);
-        }
-      }
-    };
+    const nitroSection = document.getElementById("booking");
+    if (!nitroSection) return;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Hide chat if booking section is intersecting (visible)
+        setShowDemoChat(!entry.isIntersecting);
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the booking section is visible
+      }
+    );
+
+    observer.observe(nitroSection);
+
+    return () => observer.disconnect();
   }, []);
 
   return (

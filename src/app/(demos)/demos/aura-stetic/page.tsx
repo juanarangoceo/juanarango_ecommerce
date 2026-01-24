@@ -7,16 +7,17 @@ import { DemoHeaderIsland } from "./_components/demo-header-island";
 import { TreatmentsSectionIsland } from "./_components/treatments-section-island";
 
 
-// Client Components loaded directly (they are already islands or interactive leaves)
-import { HeroSection } from "./_components/hero-section";
-import { BeautyQuiz } from "./_components/beauty-quiz";
-import { VideoTestimonialSection } from "./_components/video-testimonial-section";
-import { ReviewsSection } from "./_components/reviews-section";
-import { FaqSection } from "./_components/faq-section";
-import { MapSection } from "./_components/map-section";
-import { BookingSimulation } from "./_components/booking-simulation";
+import dynamic from "next/dynamic";
 
-import { SkinAnalysisIsland } from "./_components/skin-analysis-island";
+// Client Components loaded dynamically
+const HeroSection = dynamic(() => import("./_components/hero-section").then(mod => mod.HeroSection));
+const BeautyQuiz = dynamic(() => import("./_components/beauty-quiz").then(mod => mod.BeautyQuiz));
+const VideoTestimonialSection = dynamic(() => import("./_components/video-testimonial-section").then(mod => mod.VideoTestimonialSection));
+const ReviewsSection = dynamic(() => import("./_components/reviews-section").then(mod => mod.ReviewsSection));
+const FaqSection = dynamic(() => import("./_components/faq-section").then(mod => mod.FaqSection));
+const MapSection = dynamic(() => import("./_components/map-section").then(mod => mod.MapSection), { ssr: false });
+const BookingSimulation = dynamic(() => import("./_components/booking-simulation").then(mod => mod.BookingSimulation));
+const SkinAnalysisIsland = dynamic(() => import("./_components/skin-analysis-island").then(mod => mod.SkinAnalysisIsland), { ssr: false });
 
 export const treatments: Treatment[] = [
   {

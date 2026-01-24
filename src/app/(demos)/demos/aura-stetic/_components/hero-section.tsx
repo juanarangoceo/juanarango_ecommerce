@@ -35,14 +35,14 @@ export function HeroSection() {
         {/* Mobile Source: 720p optimizado para 4G */}
         <source
           media="(max-width: 768px)"
-          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:best,w_720,br_3m/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
+          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:good,w_720,br_1m/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
           type="video/mp4"
         />
         
         {/* Desktop Source: 1080p alta fidelidad */}
         <source
           media="(min-width: 769px)"
-          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:best,w_1920,br_5m/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
+          src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto:video,q_auto:good,w_1920,br_1500k/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.mp4"
           type="video/mp4"
         />
       </video>
