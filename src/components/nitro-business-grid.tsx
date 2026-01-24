@@ -13,7 +13,7 @@ export function NitroBusinessGrid() {
       title: "Nitro Salud",
       desc: "Ecosistema digital completo para clínicas estéticas y dentales. Agendamiento automático y reputación online.",
       href: "/soluciones/clinicas",
-      color: "teal", // Custom logic for color styling if needed
+      color: "emerald", // Unified to emerald
       cta: "Ver Solución Médica"
     },
     {
@@ -42,7 +42,7 @@ export function NitroBusinessGrid() {
     <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-zinc-950/50">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-16">
-            <span className="text-teal-400 font-mono tracking-widest text-sm uppercase mb-2 block">Sectores Especializados</span>
+            <span className="text-emerald-400 font-mono tracking-widest text-sm uppercase mb-2 block">Sectores Especializados</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">Nitro Negocios</h2>
             <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
                 Tecnología adaptada a las necesidades específicas de tu industria. No vendemos generalidades.
@@ -61,11 +61,11 @@ export function NitroBusinessGrid() {
             >
               <Link href={biz.href} className={`block h-full ${biz.disabled ? 'pointer-events-none opacity-60' : ''}`}>
                 <SpotlightCard 
-                    spotlightColor={biz.color === 'teal' ? "rgba(20, 184, 166, 0.2)" : "rgba(255, 255, 255, 0.05)"}
-                    className="h-full p-8 flex flex-col group border-white/5 hover:border-teal-500/30 transition-colors"
+                    spotlightColor={biz.color === 'emerald' ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)"}
+                    className="h-full p-8 flex flex-col group border-white/5 hover:border-emerald-500/30 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-8">
-                    <div className={`p-4 rounded-xl ${biz.color === 'teal' ? 'bg-teal-500/10 text-teal-400' : 'bg-white/5 text-slate-400'}`}>
+                    <div className={`p-4 rounded-xl ${biz.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-white/5 text-slate-400'}`}>
                       <biz.icon className="w-8 h-8" />
                     </div>
                     {biz.disabled && (
@@ -75,7 +75,7 @@ export function NitroBusinessGrid() {
                     )}
                   </div>
                   
-                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-teal-400 transition-colors tracking-tight">
+                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors tracking-tight">
                     {biz.title}
                   </h3>
                   
@@ -84,7 +84,7 @@ export function NitroBusinessGrid() {
                   </p>
                   
                   {!biz.disabled && (
-                      <div className="flex items-center text-teal-400 font-semibold text-sm group-hover:translate-x-2 transition-transform">
+                      <div className="flex items-center text-emerald-400 font-semibold text-sm group-hover:translate-x-2 transition-transform">
                         {biz.cta} <ArrowRight className="w-4 h-4 ml-2" />
                       </div>
                   )}
