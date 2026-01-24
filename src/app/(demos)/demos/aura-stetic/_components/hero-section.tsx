@@ -6,13 +6,14 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* LCP Optimization: High Priority Poster Image */}
       <Image
-        src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto:good,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
+        src="https://res.cloudinary.com/dohwyszdj/video/upload/f_auto,q_auto:eco,w_1920/v1769051872/Creaci%C3%B3n_de_Video_para_Spa_ehp0lh.jpg"
         alt="Aura Stetic Spa"
         fill
         priority
-        quality={75}
+        quality={80}
         sizes="100vw"
         className="object-cover"
+        fetchPriority="high"
       />
 
       <div className="absolute inset-0 z-0 bg-black/20" />
