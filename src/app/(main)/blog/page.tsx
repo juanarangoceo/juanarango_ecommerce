@@ -87,20 +87,23 @@ export default async function BlogPage({
       {/* Main Content: 2 Column Layout (Desktop) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Blog Posts */}
-        <div className="lg:col-span-8 space-y-6">
-          {safelyFilesPosts.length > 0 ? (
-            <>
-              {safelyFilesPosts.map((post: any) => (
+        <div className="lg:col-span-8">
+          {/* Grid for 2 cards per row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {safelyFilesPosts.length > 0 ? (
+              safelyFilesPosts.map((post: any) => (
                 <BlogCard key={post._id} post={post} />
-              ))}
-              
-              {/* Pagination */}
-              <Pagination currentPage={currentPage} totalPages={totalPages} />
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-muted-foreground">Cargando artículos...</p>
-            </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-xl text-muted-foreground">Cargando artículos...</p>
+              </div>
+            )}
+          </div>
+          
+          {/* Pagination */}
+          {safelyFilesPosts.length > 0 && (
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
           )}
         </div>
 
