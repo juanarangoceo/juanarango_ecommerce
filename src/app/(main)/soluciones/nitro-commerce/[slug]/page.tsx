@@ -115,7 +115,21 @@ export default async function NitroCommercePage({
   const page = await getPSEOPage(params.slug)
 
   if (!page) {
-    notFound()
+    // TEMPORARY DEBUGGING: Show why it failed instead of 404
+    return (
+      <div className="min-h-screen pt-32 px-8">
+        <div className="max-w-xl mx-auto p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <h1 className="text-xl font-bold text-yellow-800 mb-4">Debug: Page Not Found</h1>
+          <div className="space-y-2 text-sm text-yellow-700">
+            <p><strong>Slug received:</strong> {params.slug}</p>
+            <p><strong>Supabase URL set:</strong> {!!process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Yes' : 'No'}</p>
+            <p><strong>Service Key set:</strong> {!!process.env.SUPABASE_SERVICE_ROLE_KEY ? 'Yes' : 'No'}</p>
+            <p><strong>Timestamp:</strong> {new Date().toISOString()}</p>
+          </div>
+        </div>
+      </div>
+    )
+    // notFound() 
   }
 
   // Map database fields to pSEO variables
