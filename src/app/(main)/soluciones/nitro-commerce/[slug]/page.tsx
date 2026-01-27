@@ -56,8 +56,8 @@ interface PSEOPage {
   config: Record<string, any>
 }
 
-// Fetch pSEO page data with diagnostics
-async function getPSEOPage(slug: string) {
+// Fetch pSEO page data
+async function getPSEOPage(slug: string): Promise<PSEOPage | null> {
   const supabase = getSupabaseClient()
   
   const { data, error } = await supabase
@@ -66,16 +66,21 @@ async function getPSEOPage(slug: string) {
     .eq('slug', slug)
     .single()
 
-  return { data: data as PSEOPage | null, error }
+  if (error || !data) {
+    return null
+  }
+
+  return data as PSEOPage
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { data: page } = await getPSEOPage(params.slug)
+  const { slug } = await params
+  const page = await getPSEOPage(slug)
 
   if (!page) {
     return {
@@ -106,33 +111,13 @@ export async function generateMetadata({
 export default async function NitroCommercePage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const { data: page, error } = await getPSEOPage(params.slug)
+  const { slug } = await params
+  const page = await getPSEOPage(slug)
 
   if (!page) {
-    // TEMPORARY DEBUGGING: Show why it failed instead of 404
-    return (
-      <div className="min-h-screen pt-32 px-8">
-        <div className="max-w-xl mx-auto p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <h1 className="text-xl font-bold text-yellow-800 mb-4">Debug: Page Not Found</h1>
-          <div className="space-y-2 text-sm text-yellow-700">
-            <p><strong>Slug received:</strong> {params.slug}</p>
-            <p><strong>Supabase URL set:</strong> {!!process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Yes' : 'No'}</p>
-            <p><strong>Service Key set:</strong> {!!process.env.SUPABASE_SERVICE_ROLE_KEY ? 'Yes' : 'No'}</p>
-            <p><strong>Timestamp:</strong> {new Date().toISOString()}</p>
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded text-red-800 font-mono text-xs overflow-auto">
-              <strong>Supabase Error:</strong>
-              <pre>{JSON.stringify(error, null, 2)}</pre>
-            </div>
-            {error?.message && <p className="font-bold text-red-600">Message: {error.message}</p>}
-            {error?.code && <p>Code: {error.code}</p>}
-            {error?.details && <p>Details: {error.details}</p>}
-            {error?.hint && <p>Hint: {error.hint}</p>}
-          </div>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   // Map database fields to pSEO variables
