@@ -30,6 +30,9 @@ export function Navbar() {
             <Link href="/#negocios" className="text-white hover:text-primary transition-colors">
               Nitro Negocios
             </Link>
+            <Link href="/soluciones/nitro-commerce/clinicas-esteticas-bogota" className="text-white hover:text-primary transition-colors">
+              Nitro Commerce
+            </Link>
             <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
             </Link>
@@ -75,6 +78,13 @@ export function Navbar() {
               onClick={closeMenu}
             >
               Nitro Negocios
+            </Link>
+            <Link 
+              href="/soluciones/nitro-commerce/clinicas-esteticas-bogota" 
+              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
+              onClick={closeMenu}
+            >
+              Nitro Commerce
             </Link>
             <Link 
               href="/#contacto" 

@@ -33,5 +33,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...postRoutes]
+  // 3. Fetch pSEO Pages from Supabase
+  const { createClient } = await import('@supabase/supabase-js')
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { data: pseoPages } = await supabase
+    .from('pseo_pages')
+    .select('slug, updated_at')
+
+  const pseoRoutes = (pseoPages || []).map((page: any) => ({
+    url: `${baseUrl}/soluciones/nitro-commerce/${page.slug}`,
+    lastModified: new Date(page.updated_at),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...postRoutes, ...pseoRoutes]
 }
