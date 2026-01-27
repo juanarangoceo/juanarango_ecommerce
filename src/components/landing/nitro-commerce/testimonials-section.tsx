@@ -1,5 +1,3 @@
-"use client"
-
 import { Quote, Star, MapPin } from "lucide-react"
 
 interface PSEOVariables {

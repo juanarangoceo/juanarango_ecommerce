@@ -1,5 +1,3 @@
-"use client"
-
 import { AlertTriangle, Clock, Users, Frown, TrendingDown } from "lucide-react"
 
 interface PSEOVariables {

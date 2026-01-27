@@ -1,5 +1,3 @@
-"use client"
-
 import { MapPin, TrendingUp, Users } from "lucide-react"
 
 interface PSEOVariables {

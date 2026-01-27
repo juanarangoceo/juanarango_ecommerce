@@ -1,5 +1,3 @@
-"use client"
-
 import { CheckCircle2, Sparkles, Clock, TrendingUp, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
