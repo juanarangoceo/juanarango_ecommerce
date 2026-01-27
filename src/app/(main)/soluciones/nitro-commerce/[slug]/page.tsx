@@ -144,7 +144,6 @@ export default async function NitroCommercePage({
       <TestimonialsSection pSEO={pSEOVariables} />
       <FAQSection />
       <CTASection pSEO={pSEOVariables} />
-      <NitroFooter />
     </main>
   )
 }
