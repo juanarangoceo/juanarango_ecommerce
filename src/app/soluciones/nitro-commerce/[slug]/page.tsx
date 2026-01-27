@@ -16,6 +16,28 @@ import { NitroFooter } from '@/components/landing/nitro-commerce/nitro-footer'
 // Configure ISR - revalidate every hour
 export const revalidate = 3600
 
+// Create Supabase client for server-side operations
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+  return createClient(supabaseUrl, supabaseKey)
+}
+
+// Generate static params for all pSEO pages at build time
+export async function generateStaticParams() {
+  const supabase = getSupabaseClient()
+  
+  const { data: pages } = await supabase
+    .from('pseo_pages')
+    .select('slug')
+
+  if (!pages) return []
+
+  return pages.map((page) => ({
+    slug: page.slug,
+  }))
+}
+
 interface PSEOPage {
   id: string
   slug: string
@@ -29,13 +51,6 @@ interface PSEOPage {
   parrafo_valor: string
   demo_url: string | null
   config: Record<string, any>
-}
-
-// Create Supabase client for server-side operations
-function getSupabaseClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-  return createClient(supabaseUrl, supabaseKey)
 }
 
 // Fetch pSEO page data
