@@ -56,8 +56,8 @@ interface PSEOPage {
   config: Record<string, any>
 }
 
-// Fetch pSEO page data
-async function getPSEOPage(slug: string): Promise<PSEOPage | null> {
+// Fetch pSEO page data with diagnostics
+async function getPSEOPage(slug: string) {
   const supabase = getSupabaseClient()
   
   const { data, error } = await supabase
@@ -66,11 +66,7 @@ async function getPSEOPage(slug: string): Promise<PSEOPage | null> {
     .eq('slug', slug)
     .single()
 
-  if (error || !data) {
-    return null
-  }
-
-  return data as PSEOPage
+  return { data: data as PSEOPage | null, error }
 }
 
 // Generate metadata for SEO
@@ -79,7 +75,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string }
 }): Promise<Metadata> {
-  const page = await getPSEOPage(params.slug)
+  const { data: page } = await getPSEOPage(params.slug)
 
   if (!page) {
     return {
@@ -112,7 +108,7 @@ export default async function NitroCommercePage({
 }: {
   params: { slug: string }
 }) {
-  const page = await getPSEOPage(params.slug)
+  const { data: page, error } = await getPSEOPage(params.slug)
 
   if (!page) {
     // TEMPORARY DEBUGGING: Show why it failed instead of 404
@@ -125,11 +121,18 @@ export default async function NitroCommercePage({
             <p><strong>Supabase URL set:</strong> {!!process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Yes' : 'No'}</p>
             <p><strong>Service Key set:</strong> {!!process.env.SUPABASE_SERVICE_ROLE_KEY ? 'Yes' : 'No'}</p>
             <p><strong>Timestamp:</strong> {new Date().toISOString()}</p>
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded text-red-800 font-mono text-xs overflow-auto">
+              <strong>Supabase Error:</strong>
+              <pre>{JSON.stringify(error, null, 2)}</pre>
+            </div>
+            {error?.message && <p className="font-bold text-red-600">Message: {error.message}</p>}
+            {error?.code && <p>Code: {error.code}</p>}
+            {error?.details && <p>Details: {error.details}</p>}
+            {error?.hint && <p>Hint: {error.hint}</p>}
           </div>
         </div>
       </div>
     )
-    // notFound() 
   }
 
   // Map database fields to pSEO variables
