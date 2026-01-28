@@ -7,6 +7,7 @@ import { MetricsIsland } from "@/components/metrics-island"
 import { AboutSection } from "@/components/about-section"
 import { ContactForm } from "@/components/ui/contact-form"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
+import { LatestPostsSection } from "@/components/landing/latest-posts-section"
 
 export const metadata: Metadata = {
   title: 'Nitro Ecom | Infraestructura Digital de Alto Rendimiento',
@@ -169,7 +170,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ISLA 3: Contact Form (Replazo de Booking) */}
+      {/* ISLA 3: Contact Form (Replazo de Booking) */}
         <div id="contacto" className="py-12 md:py-24 px-6">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-16">
@@ -182,6 +183,8 @@ export default function Page() {
           </div>
         </div>
 
+        {/* Latest Blog Posts */}
+        <LatestPostsSection />
       </main>
     </div>
   )
