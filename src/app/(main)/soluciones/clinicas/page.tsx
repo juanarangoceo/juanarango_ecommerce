@@ -16,6 +16,16 @@ import {
 export const metadata: Metadata = {
   title: "Nitro Health | Web y Agendamiento para Clínicas",
   description: "Soluciones digitales para centros médicos y estéticos. Webs rápidas y agendamiento automático.",
+  alternates: {
+    canonical: 'https://www.juanarangoecommerce.com/soluciones/clinicas'
+  },
+  openGraph: {
+    title: "Nitro Health | Web y Agendamiento para Clínicas",
+    description: "Soluciones digitales para centros médicos y estéticos. Webs rápidas y agendamiento automático.",
+    url: 'https://www.juanarangoecommerce.com/soluciones/clinicas',
+    type: 'website',
+    locale: 'es_CO',
+  }
 };
 
 export default function ClinicasPage() {

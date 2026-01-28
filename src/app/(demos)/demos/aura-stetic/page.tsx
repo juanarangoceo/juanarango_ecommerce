@@ -8,6 +8,16 @@ export const maxDuration = 30;
 export const metadata: Metadata = {
   title: "Aura Stetic - Tratamientos Estéticos Profesionales",
   description: "Descubre tratamientos de belleza profesionales: Botox, Hydrafacial, Masajes Terapéuticos. Resultados naturales con tecnología de vanguardia.",
+  alternates: {
+    canonical: 'https://www.juanarangoecommerce.com/demos/aura-stetic'
+  },
+  openGraph: {
+    title: "Aura Stetic - Tratamientos Estéticos Profesionales",
+    description: "Descubre tratamientos de belleza profesionales: Botox, Hydrafacial, Masajes Terapéuticos.",
+    url: 'https://www.juanarangoecommerce.com/demos/aura-stetic',
+    type: 'website',
+    locale: 'es_CO',
+  }
 };
 
 export const treatments: Treatment[] = [

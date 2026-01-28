@@ -58,8 +58,18 @@ async function getGenericPage(): Promise<PSEOPage | null> {
 }
 
 export const metadata: Metadata = {
-  title: 'NitroCommerce | Infraestructura para Clínicas Estéticas',
-  description: 'La infraestructura digital que escala tu clínica estética a niveles internacionales.',
+  title: 'NitroCommerce | Infraestructura Digital de Alto Rendimiento',
+  description: 'Infraestructura digital de velocidad obsesiva que impulsa negocios en todo el mundo. Tiempos de carga <200ms y automatización empresarial.',
+  alternates: {
+    canonical: 'https://www.juanarangoecommerce.com/soluciones/nitro-commerce'
+  },
+  openGraph: {
+    title: 'NitroCommerce | Infraestructura Digital de Alto Rendimiento',
+    description: 'Infraestructura digital de velocidad obsesiva que impulsa negocios en todo el mundo.',
+    url: 'https://www.juanarangoecommerce.com/soluciones/nitro-commerce',
+    type: 'website',
+    locale: 'es_CO',
+  }
 }
 
 export default async function NitroCommerceIndexPage() {

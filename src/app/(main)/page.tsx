@@ -1,11 +1,33 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { Metadata } from "next"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { MetricsIsland } from "@/components/metrics-island"
 import { AboutSection } from "@/components/about-section"
 import { ContactForm } from "@/components/ui/contact-form"
 import { Zap, TrendingUp, BarChart3 } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: 'Nitro Ecom | Infraestructura Digital de Alto Rendimiento',
+  description: 'Transformamos negocios con tecnología de velocidad obsesiva. E-commerce, automatización y consultoría estratégica.',
+  alternates: {
+    canonical: 'https://www.juanarangoecommerce.com'
+  },
+  openGraph: {
+    title: 'Nitro Ecom | Infraestructura Digital de Alto Rendimiento',
+    description: 'Transformamos negocios con tecnología de velocidad obsesiva. E-commerce, automatización y consultoría estratégica.',
+    url: 'https://www.juanarangoecommerce.com',
+    siteName: 'Nitro Ecom',
+    type: 'website',
+    locale: 'es_CO',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nitro Ecom | Infraestructura Digital de Alto Rendimiento',
+    description: 'Transformamos negocios con tecnología de velocidad obsesiva. E-commerce, automatización y consultoría estratégica.',
+  }
+}
 
 // OPTIMIZACIÓN NITRO: Carga dinámica (Lazy Load)
 // Esto aísla el código pesado de animaciones (Cliente) del renderizado inicial (Servidor).

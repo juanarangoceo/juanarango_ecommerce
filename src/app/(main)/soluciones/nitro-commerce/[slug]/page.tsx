@@ -94,6 +94,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://www.juanarangoecommerce.com/soluciones/nitro-commerce/${slug}`
+    },
     openGraph: {
       title,
       description,
