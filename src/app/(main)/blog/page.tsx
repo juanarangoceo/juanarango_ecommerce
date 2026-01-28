@@ -8,20 +8,13 @@ import { BlogCard } from "./_components/blog-card";
 import { NitroCtaCard } from "./[slug]/_components/NitroCtaCard";
 import { Pagination } from "@/components/ui/pagination";
 
-export const metadata: Metadata = {
+import { constructMetadata } from "@/lib/utils";
+
+export const metadata: Metadata = constructMetadata({
   title: 'Blog | Nitro Ecom - E-commerce y Tecnología',
   description: 'Perspectivas sobre E-commerce, Tecnología y Escalamiento. Aprende estrategias avanzadas para hacer crecer tu negocio digital.',
-  alternates: {
-    canonical: 'https://www.juanarangoecommerce.com/blog'
-  },
-  openGraph: {
-    title: 'Blog | Nitro Ecom - E-commerce y Tecnología',
-    description: 'Perspectivas sobre E-commerce, Tecnología y Escalamiento.',
-    url: 'https://www.juanarangoecommerce.com/blog',
-    type: 'website',
-    locale: 'es_CO',
-  }
-}
+  canonical: 'https://www.juanarangoecommerce.com/blog'
+})
 
 // GROQ Query - Sorted by date (newest first), with pagination
 // Uses publishedAt if available, otherwise falls back to _createdAt

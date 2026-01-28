@@ -13,6 +13,7 @@ import { TableOfContents } from "./_components/TableOfContents";
 import { NitroCtaCard } from "./_components/NitroCtaCard";
 import { NewsletterForm } from "@/components/newsletter-form";
 import Script from "next/script";
+import { constructMetadata } from "@/lib/utils";
 
 
 // GROQ Query for Single Post
@@ -58,25 +59,12 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
     : post.title;
 
-  return {
+  return constructMetadata({
     title: `${post.title} | Blog Nitro Ecom`,
     description: excerpt,
-    alternates: {
-      canonical: `https://www.juanarangoecommerce.com/blog/${post.slug}`
-    },
-    openGraph: {
-      title: post.title,
-      description: excerpt,
-      type: 'article',
-      locale: 'es_CO',
-      publishedTime: post.publishedAt || post._createdAt,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: excerpt,
-    },
-  };
+    image: post.mainImage?.asset?._ref ? urlForImage(post.mainImage).url() : undefined,
+    canonical: `https://www.juanarangoecommerce.com/blog/${post.slug}`,
+  });
 }
 
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
