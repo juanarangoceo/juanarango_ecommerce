@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, MessageSquare, ShoppingCart, BarChart3, Search, X, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SpotlightCard } from "@/components/ui/spotlight-card"
+import Link from "next/link"
 
 // Data Structure (could be separate file, but kept here for simplicity/integrity)
 const serviceDetails = [
@@ -40,6 +41,7 @@ const serviceDetails = [
     title: "NitroCommerce",
     desc: "Velocidad sin fricción. Arquitectura Headless (<200ms) diseñada para soportar tráfico masivo.",
     cta: "Ver Infraestructura",
+    href: "/soluciones/nitro-commerce",
     features: [
       "Headless Shopify / MedusaJS",
       "Cargas de página en < 200ms",
@@ -53,6 +55,7 @@ const serviceDetails = [
     title: "NitroStrategy",
     desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico.",
     cta: "Ver Consultoría",
+    href: null,
     features: [
       "Análisis de fugas en el funnel",
       "Roadmap de deuda técnica",
@@ -116,15 +119,27 @@ export function ServicesGrid() {
                 <p className="text-zinc-300 mb-8 leading-relaxed text-pretty text-sm flex-1">
                   {service.desc}
                 </p>
-                <Button
-                  variant="ghost"
-                  onClick={() => handleOpen(service)}
-                  className="text-primary hover:text-white hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/10 p-3 px-5 h-auto rounded-lg justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit cursor-pointer border border-primary/20 hover:border-primary/40"
-                  aria-label={`Ver más detalles sobre ${service.title}`}
-                >
-                  <span className="mr-2 font-semibold">{service.cta}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
+                
+                {/* Conditional Rendering: Link if href exists, otherwise Button for Modal */}
+                {service.href ? (
+                  <Link 
+                    href={service.href}
+                    className="text-primary hover:text-white hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/10 p-3 px-5 h-auto rounded-lg flex items-center justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit cursor-pointer border border-primary/20 hover:border-primary/40"
+                  >
+                    <span className="mr-2 font-semibold">{service.cta}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleOpen(service)}
+                    className="text-primary hover:text-white hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/10 p-3 px-5 h-auto rounded-lg justify-start mt-auto group-hover:translate-x-2 transition-all duration-300 w-fit cursor-pointer border border-primary/20 hover:border-primary/40"
+                    aria-label={`Ver más detalles sobre ${service.title}`}
+                  >
+                    <span className="mr-2 font-semibold">{service.cta}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                )}
               </SpotlightCard>
             </motion.div>
           ))}
