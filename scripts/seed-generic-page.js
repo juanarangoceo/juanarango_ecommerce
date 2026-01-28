@@ -13,14 +13,14 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const genericPage = {
   slug: 'clinicas-esteticas-global',
-  nicho: 'Clínicas Estéticas',
-  nicho_plural: 'Clínicas Estéticas y Centros de Bienestar',
-  ciudad: 'Latinoamérica',
-  departamento: 'Global',
-  subtitulo_contextual: 'La infraestructura digital que escala tu clínica estética a niveles internacionales.',
-  texto_autoridad: 'Líderes en transformación digital para el sector salud y estética.',
-  mencion_local: 'Sin importar tu ubicación, llevamos tu clínica al siguiente nivel.',
-  parrafo_valor: 'Desde Bogotá hasta Ciudad de México, nuestra tecnología Nitro Commerce elimina fronteras, permitiendo que tu clínica opere con la velocidad y eficiencia de una franquicia global.',
+  nicho: 'Negocios Digitales',
+  nicho_plural: 'Empresas de Alto Rendimiento',
+  ciudad: 'Global',
+  departamento: 'Mundial',
+  subtitulo_contextual: 'Infraestructura digital de velocidad obsesiva que impulsa negocios en todo el mundo.',
+  texto_autoridad: 'Pioneros en arquitectura web de alto rendimiento y automatización empresarial.',
+  mencion_local: 'Desde startups hasta empresas consolidadas, nuestra tecnología elimina fronteras.',
+  parrafo_valor: 'Con tiempos de carga <200ms y sistemas automatizados de última generación, transformamos la forma en que las empresas operan digitalmente. Nuestra infraestructura ha impulsado negocios en más de 15 países, desde América Latina hasta Europa, demostrando que la velocidad y la eficiencia no conocen límites geográficos.',
   demo_url: null,
   config: {}
 };
