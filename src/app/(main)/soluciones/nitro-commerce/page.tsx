@@ -40,8 +40,8 @@ interface PSEOPage {
 async function getGenericPage(): Promise<PSEOPage | null> {
   const supabase = getSupabaseClient()
   
-  // Hardcoded slug for the generic global page
-  const genericSlug = 'clinicas-esteticas-global'
+  // Hardcoded slug for the generic global page - Update: User manually changed this in Supabase
+  const genericSlug = 'alto-rendimiento-empresas-mundial'
 
   const { data, error } = await supabase
     .from('pseo_pages')

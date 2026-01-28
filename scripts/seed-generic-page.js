@@ -12,7 +12,7 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const genericPage = {
-  slug: 'clinicas-esteticas-global',
+  slug: 'alto-rendimiento-empresas-mundial',
   nicho: 'Negocios Digitales',
   nicho_plural: 'Empresas de Alto Rendimiento',
   ciudad: 'Global',
