@@ -12,8 +12,8 @@ import { TestimonialsSection } from '@/components/landing/nitro-commerce/testimo
 import { FAQSection } from '@/components/landing/nitro-commerce/faq-section'
 import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
 
-// Configure ISR
-export const revalidate = 3600
+// Configure ISR - revalidate every 60 seconds for faster updates
+export const revalidate = 60
 
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
