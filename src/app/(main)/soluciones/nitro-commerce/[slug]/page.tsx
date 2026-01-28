@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Script from 'next/script'
+import { constructMetadata } from '@/lib/utils'
 import { HeroSection } from '@/components/landing/nitro-commerce/hero-section'
 import { MetricsSection } from '@/components/landing/nitro-commerce/metrics-section'
 import { LocalValueSection } from '@/components/landing/nitro-commerce/local-value-section'
@@ -89,27 +91,15 @@ export async function generateMetadata({
     }
   }
 
-  const title = `${page.nicho_plural} en ${page.ciudad} | NitroCommerce`
-  const description = page.subtitulo_contextual
+  // SEO-optimized title and description for local search
+  const title = `Marketing para ${page.nicho_plural} en ${page.ciudad} | Nitro Commerce`
+  const description = `Impulsa tu ${page.nicho.toLowerCase()} en ${page.ciudad}, ${page.departamento} con NitroCommerce. ${page.subtitulo_contextual} Infraestructura digital de alto rendimiento para ${page.nicho_plural.toLowerCase()}.`
 
-  return {
+  return constructMetadata({
     title,
     description,
-    alternates: {
-      canonical: `https://www.juanarangoecommerce.com/soluciones/nitro-commerce/${slug}`
-    },
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      locale: 'es_CO',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  }
+    canonical: `https://www.juanarangoecommerce.com/soluciones/nitro-commerce/${slug}`,
+  })
 }
 
 export default async function NitroCommercePage({
@@ -136,19 +126,66 @@ export default async function NitroCommercePage({
     parrafoValor: page.parrafo_valor,
   }
 
+  // JSON-LD Structured Data for Local SEO
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": `Marketing Digital para ${page.nicho_plural}`,
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Nitro Commerce",
+      "description": `Servicios de marketing digital y desarrollo web para ${page.nicho_plural.toLowerCase()} en ${page.ciudad}`,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": page.ciudad,
+        "addressRegion": page.departamento,
+        "addressCountry": "CO"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": page.ciudad,
+        "containedIn": {
+          "@type": "State",
+          "name": page.departamento
+        }
+      },
+      "url": `https://www.juanarangoecommerce.com/soluciones/nitro-commerce/${slug}`,
+      "telephone": "+573146681896",
+      "priceRange": "$$",
+      "image": "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": page.ciudad
+    },
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": `https://www.juanarangoecommerce.com/soluciones/nitro-commerce/${slug}`
+    }
+  }
+
   return (
-    <main className="min-h-screen bg-background">
-      <HeroSection pSEO={pSEOVariables} />
-      <MetricsSection />
-      <LocalValueSection pSEO={pSEOVariables} />
-      <ProblemSection pSEO={pSEOVariables} />
-      <SolutionSection pSEO={pSEOVariables} />
-      <BenefitsSection pSEO={pSEOVariables} />
-      <ProcessSection />
-      <TestimonialsSection pSEO={pSEOVariables} />
-      <OtherCitiesSection currentSlug={slug} />
-      <FAQSection />
-      <CTASection pSEO={pSEOVariables} />
-    </main>
+    <>
+      {/* JSON-LD Structured Data for Local SEO */}
+      <Script
+        id="local-business-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      
+      <main className="min-h-screen bg-background">
+        <HeroSection pSEO={pSEOVariables} />
+        <MetricsSection />
+        <LocalValueSection pSEO={pSEOVariables} />
+        <ProblemSection pSEO={pSEOVariables} />
+        <SolutionSection pSEO={pSEOVariables} />
+        <BenefitsSection pSEO={pSEOVariables} />
+        <ProcessSection />
+        <TestimonialsSection pSEO={pSEOVariables} />
+        <OtherCitiesSection currentSlug={slug} />
+        <FAQSection />
+        <CTASection pSEO={pSEOVariables} />
+      </main>
+    </>
   )
 }

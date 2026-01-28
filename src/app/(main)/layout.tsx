@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { ChatWidget } from "@/components/chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { constructMetadata } from "@/lib/utils";
 import Script from "next/script";
 import "../globals.css";
 
@@ -18,9 +19,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Juan Arango - Ingeniería de Escalamiento",
-  description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
-  metadataBase: new URL("https://www.juanarangoecommerce.com"),
+  ...constructMetadata({
+    title: "Juan Arango - Ingeniería de Escalamiento",
+    description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
+    icons: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
+  }),
   verification: {
     google: "verification_code_here",
   },
