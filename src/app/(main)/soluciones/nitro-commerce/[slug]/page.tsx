@@ -12,6 +12,7 @@ import { TestimonialsSection } from '@/components/landing/nitro-commerce/testimo
 import { FAQSection } from '@/components/landing/nitro-commerce/faq-section'
 import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
 import { NitroFooter } from '@/components/landing/nitro-commerce/nitro-footer'
+import { OtherCitiesSection } from '@/components/landing/nitro-commerce/other-cities-section'
 
 // Configure ISR - revalidate every hour
 export const revalidate = 3600
@@ -145,6 +146,7 @@ export default async function NitroCommercePage({
       <BenefitsSection pSEO={pSEOVariables} />
       <ProcessSection />
       <TestimonialsSection pSEO={pSEOVariables} />
+      <OtherCitiesSection currentSlug={slug} />
       <FAQSection />
       <CTASection pSEO={pSEOVariables} />
     </main>

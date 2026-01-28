@@ -11,6 +11,7 @@ import { ProcessSection } from '@/components/landing/nitro-commerce/process-sect
 import { TestimonialsSection } from '@/components/landing/nitro-commerce/testimonials-section'
 import { FAQSection } from '@/components/landing/nitro-commerce/faq-section'
 import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
+import { CityExplorerSection } from '@/components/landing/nitro-commerce/city-explorer-section'
 
 // Configure ISR - revalidate every 60 seconds for faster updates
 export const revalidate = 60
@@ -100,6 +101,7 @@ export default async function NitroCommerceIndexPage() {
       <BenefitsSection pSEO={pSEOVariables} />
       <ProcessSection />
       <TestimonialsSection pSEO={pSEOVariables} />
+      <CityExplorerSection />
       <FAQSection />
       <CTASection pSEO={pSEOVariables} />
     </main>
