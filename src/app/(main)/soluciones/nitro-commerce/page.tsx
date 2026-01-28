@@ -1,9 +1,19 @@
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
+import { HeroSection } from '@/components/landing/nitro-commerce/hero-section'
+import { MetricsSection } from '@/components/landing/nitro-commerce/metrics-section'
+import { LocalValueSection } from '@/components/landing/nitro-commerce/local-value-section'
+import { ProblemSection } from '@/components/landing/nitro-commerce/problem-section'
+import { SolutionSection } from '@/components/landing/nitro-commerce/solution-section'
+import { BenefitsSection } from '@/components/landing/nitro-commerce/benefits-section'
+import { ProcessSection } from '@/components/landing/nitro-commerce/process-section'
+import { TestimonialsSection } from '@/components/landing/nitro-commerce/testimonials-section'
+import { FAQSection } from '@/components/landing/nitro-commerce/faq-section'
+import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
 
-// No caching for this page as it depends on headers
-export const dynamic = 'force-dynamic'
+// Configure ISR
+export const revalidate = 3600
 
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -11,48 +21,77 @@ function getSupabaseClient() {
   return createClient(supabaseUrl, supabaseKey)
 }
 
-export default async function NitroCommerceRedirect() {
-  const headersList = await headers()
+interface PSEOPage {
+  id: string
+  slug: string
+  nicho: string
+  nicho_plural: string
+  ciudad: string
+  departamento: string
+  subtitulo_contextual: string
+  texto_autoridad: string
+  mencion_local: string
+  parrafo_valor: string
+  demo_url: string | null
+  config: Record<string, any>
+}
+
+// Fetch generic page data
+async function getGenericPage(): Promise<PSEOPage | null> {
+  const supabase = getSupabaseClient()
   
-  // Get city from Vercel headers (or local dev header)
-  // x-vercel-ip-city is usually capitalized (e.g., "Bogota")
-  const city = headersList.get('x-vercel-ip-city')
-  
-  // Default fallback
-  const defaultSlug = 'clinicas-esteticas-bogota'
-  let destination = `/soluciones/nitro-commerce/${defaultSlug}`
+  // Hardcoded slug for the generic global page
+  const genericSlug = 'clinicas-esteticas-global'
 
-  if (city) {
-    // Normalize city for slug: lowercase, replace spaces with hyphens
-    // e.g. "New York" -> "new-york"
-    // Also remove accents just in case, though usually headers are ASCII? Vercel docs say it's city name.
-    // We'll simplisticly handle it.
-    const normalizedCity = city.toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove accents
-      .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric with hyphens
-      .replace(/^-+|-+$/g, '') // trim hyphens
+  const { data, error } = await supabase
+    .from('pseo_pages')
+    .select('*')
+    .eq('slug', genericSlug)
+    .single()
 
-    // Assumption: The niche is "clinicas-esteticas". 
-    // In a future v2, we could detect niche from referring URL or other signals.
-    const targetSlug = `clinicas-esteticas-${normalizedCity}`
-    
-    // Check if this specific page exists in Supabase
-    const supabase = getSupabaseClient()
-    const { data } = await supabase
-      .from('pseo_pages')
-      .select('slug')
-      .eq('slug', targetSlug)
-      .single()
-
-    if (data) {
-      destination = `/soluciones/nitro-commerce/${targetSlug}`
-    } else {
-        // Optional: We could try to find *any* page for this city?
-        // For now, if exact match fails, fallback to Bogota default.
-        // Or we could log this miss.
-    }
+  if (error || !data) {
+    console.error('Error fetching generic page:', error)
+    return null
   }
 
-  // Redirect to the resolved destination
-  redirect(destination)
+  return data as PSEOPage
+}
+
+export const metadata: Metadata = {
+  title: 'NitroCommerce | Infraestructura para Clínicas Estéticas',
+  description: 'La infraestructura digital que escala tu clínica estética a niveles internacionales.',
+}
+
+export default async function NitroCommerceIndexPage() {
+  const page = await getGenericPage()
+
+  if (!page) {
+    notFound()
+  }
+
+  const pSEOVariables = {
+    ciudad: page.ciudad,
+    departamento: page.departamento,
+    nicho: page.nicho,
+    nichoPlural: page.nicho_plural,
+    subtituloContextual: page.subtitulo_contextual,
+    textoAutoridad: page.texto_autoridad,
+    mencionLocal: page.mencion_local,
+    parrafoValor: page.parrafo_valor,
+  }
+
+  return (
+    <main className="min-h-screen bg-background">
+      <HeroSection pSEO={pSEOVariables} />
+      <MetricsSection />
+      <LocalValueSection pSEO={pSEOVariables} />
+      <ProblemSection pSEO={pSEOVariables} />
+      <SolutionSection pSEO={pSEOVariables} />
+      <BenefitsSection pSEO={pSEOVariables} />
+      <ProcessSection />
+      <TestimonialsSection pSEO={pSEOVariables} />
+      <FAQSection />
+      <CTASection pSEO={pSEOVariables} />
+    </main>
+  )
 }

@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '',
     '/blog',
     '/soluciones/clinicas',
+    '/soluciones/nitro-commerce',
     '/demos/aura-stetic',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
