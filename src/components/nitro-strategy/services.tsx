@@ -67,7 +67,7 @@ export function Services() {
   return (
     <section 
       id="servicios" 
-      className="py-20 lg:py-32 scroll-mt-20"
+      className="py-16 lg:py-24 scroll-mt-20"
       aria-labelledby="services-title"
     >
       <div className="container mx-auto px-4 lg:px-8">
@@ -129,17 +129,7 @@ export function Services() {
                   ))}
                 </ul>
 
-                {/* CTA */}
-                <Button 
-                  variant="ghost" 
-                  className="p-0 h-auto text-primary hover:text-primary/80 hover:bg-transparent"
-                  asChild
-                >
-                  <Link href="#consulta">
-                    Saber más
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </Button>
+
               </div>
             </article>
           ))}

@@ -31,7 +31,7 @@ export function About() {
   return (
     <section 
       id="sobre-mi" 
-      className="py-20 lg:py-32 bg-card scroll-mt-20"
+      className="py-16 lg:py-24 bg-card scroll-mt-20"
       aria-labelledby="about-title"
     >
       <div className="container mx-auto px-4 lg:px-8">

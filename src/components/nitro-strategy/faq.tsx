@@ -38,7 +38,7 @@ const faqs = [
 export function FAQ() {
   return (
     <section 
-      className="py-20 lg:py-32 bg-card"
+      className="py-16 lg:py-24 bg-card"
       aria-labelledby="faq-title"
     >
       <div className="container mx-auto px-4 lg:px-8">

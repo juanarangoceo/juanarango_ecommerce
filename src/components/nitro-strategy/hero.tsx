@@ -6,7 +6,7 @@ import Link from "next/link"
 export function Hero() {
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center pt-20 pb-16 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden"
       aria-labelledby="hero-title"
     >
       {/* Background gradient effect */}
@@ -21,7 +21,7 @@ export function Hero() {
       />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl lg:max-w-6xl mx-auto text-center">
           {/* Badge */}
           <Badge 
             variant="outline" 
@@ -37,7 +37,7 @@ export function Hero() {
           {/* Main Headline - H1 for SEO */}
           <h1 
             id="hero-title"
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 text-balance"
+            className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-8 text-balance"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Ingeniería de{" "}

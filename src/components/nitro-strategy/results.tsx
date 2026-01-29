@@ -44,7 +44,7 @@ export function Results() {
   return (
     <section 
       id="resultados" 
-      className="py-20 lg:py-32 bg-card scroll-mt-20"
+      className="py-16 lg:py-24 bg-card scroll-mt-20"
       aria-labelledby="results-title"
     >
       <div className="container mx-auto px-4 lg:px-8">

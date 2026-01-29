@@ -41,7 +41,7 @@ export function Methodology() {
   return (
     <section 
       id="metodologia" 
-      className="py-20 lg:py-32 scroll-mt-20"
+      className="py-16 lg:py-24 scroll-mt-20"
       aria-labelledby="methodology-title"
     >
       <div className="container mx-auto px-4 lg:px-8">
