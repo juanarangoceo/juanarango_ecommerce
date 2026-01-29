@@ -27,6 +27,9 @@ export function Navbar() {
             <Link href="/#servicios" className="text-white hover:text-primary transition-colors">
               Servicios
             </Link>
+            <Link href="/nitro-strategy" className="text-white hover:text-primary transition-colors">
+              Nitro Strategy
+            </Link>
             <Link href="/#negocios" className="text-white hover:text-primary transition-colors">
               Nitro Negocios
             </Link>
@@ -71,6 +74,13 @@ export function Navbar() {
               onClick={closeMenu}
             >
               Servicios
+            </Link>
+            <Link 
+              href="/nitro-strategy" 
+              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-2 border-b border-white/5"
+              onClick={closeMenu}
+            >
+              Nitro Strategy
             </Link>
             <Link 
               href="/#negocios" 

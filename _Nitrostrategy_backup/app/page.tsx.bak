@@ -1,0 +1,75 @@
+import { Header } from "@/components/nitro-strategy/header"
+import { Hero } from "@/components/nitro-strategy/hero"
+import { PainPoints } from "@/components/nitro-strategy/pain-points"
+import { Services } from "@/components/nitro-strategy/services"
+import { About } from "@/components/nitro-strategy/about"
+import { Methodology } from "@/components/nitro-strategy/methodology"
+import { Results } from "@/components/nitro-strategy/results"
+import { FAQ } from "@/components/nitro-strategy/faq"
+import { UrgencyBanner } from "@/components/nitro-strategy/urgency-banner"
+import { CTAForm } from "@/components/nitro-strategy/cta-form"
+import { Footer } from "@/components/nitro-strategy/footer"
+
+/**
+ * Nitro Strategy Landing Page
+ * 
+ * Consultoría especializada en:
+ * - Ingeniería de alto escalamiento para proyectos headless
+ * - Automatización de procesos empresariales con IA generativa
+ * - Arquitectura de software escalable para e-commerce
+ * 
+ * Keywords SEO long-tail:
+ * - consultoría arquitectura headless empresas
+ * - automatización procesos empresariales inteligencia artificial
+ * - ingeniero escalamiento infraestructura digital
+ * - consultor e-commerce B2B experiencia
+ * - transformación digital empresarial con IA
+ */
+
+export default function NitroStrategyPage() {
+  return (
+    <>
+      <Header />
+      <main id="main-content">
+        {/* 
+          Embudo de ventas B2B:
+          1. Hero - Captar atención con propuesta de valor clara
+          2. Pain Points - Agitar el problema (PAS framework)
+          3. Services - Presentar solución específica
+          4. About - Generar confianza con credenciales
+          5. Methodology - Mostrar proceso claro
+          6. Results - Prueba social y resultados
+          7. CTA Form - Conversión con formulario multi-paso
+        */}
+        
+        {/* Hero: Propuesta de valor principal */}
+        <Hero />
+        
+        {/* Pain Points: Problema-Agitación (PAS) */}
+        <PainPoints />
+        
+        {/* Services: Solución detallada */}
+        <Services />
+        
+        {/* About: Credenciales y confianza */}
+        <About />
+        
+        {/* Methodology: Proceso claro */}
+        <Methodology />
+        
+        {/* Results: Prueba social */}
+        <Results />
+        
+        {/* FAQ: Resolver objeciones y SEO */}
+        <FAQ />
+        
+        {/* Urgency: Crear sentido de urgencia */}
+        <UrgencyBanner />
+        
+        {/* CTA Form: Conversión */}
+        <CTAForm />
+      </main>
+      <Footer />
+    </>
+  )
+}
