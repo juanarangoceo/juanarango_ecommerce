@@ -74,7 +74,9 @@ export const GeneratePostInput = (props: any) => {
       const attributes: any = {
           title: title || currentTopic,
           slug: { _type: 'slug', current: finalSlug },
-          content: content
+          content: content,
+          faq: json.data.faq || [],
+          author: "Juan Arango"
       }
 
       // Also update the current field (Topic) in the form state

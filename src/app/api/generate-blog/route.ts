@@ -25,12 +25,13 @@ export async function POST(req: Request) {
         parts: [{
           text: `Eres un escritor de blogs experto. Escribe un artículo sobre "${topic}".
           
-          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 3 claves:
+          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 4 claves:
           1. "title": Título del post.
           2. "slug": URL amigable (ej: titulo-del-post).
-          3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc).
-          
-          NO uses claves anidadas. NO uses 'body'. La clave 'content' es OBLIGATORIA.`
+          3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc). NO incluyas FAQ aquí dentro.
+          4. "faq": Un array de objetos, donde cada objeto tiene "question" y "answer". Genera 3 preguntas frecuentes relevantes sobre el tema.
+
+          NO uses claves anidadas incorrectas. El JSON debe ser plano en el nivel superior (title, slug, content, faq).`
         }]
       }],
       config: { 
@@ -63,7 +64,8 @@ export async function POST(req: Request) {
         title: rawData.title || rawData.header || topic,
         slug: rawData.slug,
         // Fallback robusto para encontrar el contenido
-        content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || ""
+        content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || "",
+        faq: rawData.faq || []
     };
 
     if (!blogData.content) {

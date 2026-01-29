@@ -41,6 +41,27 @@ export default {
       type: 'datetime',
     },
     {
+      name: 'author',
+      title: 'Autor',
+      type: 'string',
+      readOnly: true,
+      initialValue: "Juan Arango",
+    },
+    {
+      name: 'faq',
+      title: 'FAQ (Preguntas Frecuentes)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'question', title: 'Pregunta', type: 'string' },
+            { name: 'answer', title: 'Respuesta', type: 'text' }
+          ]
+        }
+      ]
+    },
+    {
       name: 'body',
       title: 'Body',
       type: 'array',
@@ -55,6 +76,9 @@ export default {
           type: 'image',
           options: { hotspot: true },
         },
+        {
+          type: 'tiktokEmbed', 
+        }
       ],
     },
     {

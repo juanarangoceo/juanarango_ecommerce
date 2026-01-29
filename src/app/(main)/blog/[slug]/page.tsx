@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
-import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, ArrowRight } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
@@ -14,9 +14,16 @@ import { NitroCtaCard } from "./_components/NitroCtaCard";
 import { NewsletterForm } from "@/components/newsletter-form";
 import Script from "next/script";
 import { constructMetadata } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { TikTokEmbed } from "@/components/blog/tiktok-embed";
+import { Badge } from "@/components/ui/badge";
 
-
-// GROQ Query for Single Post
+// GROQ Query for Single Post (Updated)
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
   mainImage,
@@ -24,7 +31,15 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   content,
   publishedAt,
   _createdAt,
-  "slug": slug.current
+  "slug": slug.current,
+  author,
+  faq,
+  "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+    title,
+    "slug": slug.current,
+    mainImage,
+    publishedAt
+  }
 }`;
 
 export const revalidate = 60;
@@ -42,6 +57,28 @@ function slugify(text: string) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 }
+
+// Portable Text Components (with TikTok)
+const ptComponents = {
+  types: {
+    tiktokEmbed: ({ value }: any) => {
+      return <TikTokEmbed url={value.url} caption={value.caption} />;
+    },
+    image: ({ value }: any) => {
+        if (!value?.asset?._ref) return null;
+        return (
+          <div className="relative w-full aspect-video my-8 rounded-lg overflow-hidden">
+            <Image
+              src={urlForImage(value).url()}
+              alt={value.alt || 'Blog Image'}
+              fill
+              className="object-cover"
+            />
+          </div>
+        );
+      }
+  },
+};
 
 // Generate metadata for SEO
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
@@ -77,7 +114,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 
   // Determine content source and reading time
   const rawContent = post.content || ""; 
-  // For PortableText we'd need a more complex calc, taking a rough estimate if content is missing
   const readingTime = rawContent ? calculateReadingTime(rawContent) : 5; 
 
   const date = new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
@@ -86,7 +122,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     day: "numeric",
   });
 
-  // Schema Markup: BlogPosting
+  const authorName = post.author || "Juan Arango";
+
+  // Schema Markup: BlogPosting & FAQPage
   const imageUrl = post.mainImage?.asset?._ref 
     ? urlForImage(post.mainImage).url() 
     : "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg";
@@ -94,6 +132,18 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
   const excerpt = rawContent 
     ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
     : post.title;
+
+  const faqSchema = post.faq && post.faq.length > 0 ? {
+    "@type": "FAQPage",
+    "mainEntity": post.faq.map((f: any) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer
+      }
+    }))
+  } : null;
 
   const blogPostSchema = {
     "@context": "https://schema.org",
@@ -103,9 +153,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     datePublished: post.publishedAt || post._createdAt,
     dateModified: post.publishedAt || post._createdAt,
     author: {
-      "@type": "Organization",
-      name: "Nitro Ecom",
-      url: "https://www.juanarangoecommerce.com"
+      "@type": "Person",
+      name: authorName,
+      url: "https://www.juanarangoecommerce.com/sobre-mi"
     },
     publisher: {
       "@type": "Organization",
@@ -125,13 +175,18 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     inLanguage: "es-ES"
   };
 
+  const jsonLd: any[] = [blogPostSchema];
+  if (faqSchema) {
+    jsonLd.push(faqSchema);
+  }
+
   return (
     <>
-      {/* Schema Markup: BlogPosting */}
+      {/* Schema Markup */}
       <Script
         id="blog-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <BlogProgressBar />
@@ -154,7 +209,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
             <div className="flex flex-wrap gap-6 items-center text-sm text-zinc-500 dark:text-zinc-400 border-t border-b border-zinc-100 dark:border-zinc-900 py-6">
                 <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-200">Equipo Nitro</span>
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-200">{authorName}</span>
                 </div>
                 <div className="w-px h-4 bg-zinc-200 dark:bg-zinc-800" />
                 <div className="flex items-center gap-2">
@@ -187,6 +242,11 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         </div>
                     )}
 
+                    {/* TikToks or other PortableText Blocks (rendered BEFORE markdown if specified? No, usually after or mixed. 
+                        Since 'content' is markdown, we render that first. If the user wants TikToks, they might add them to 'body' in Studio.
+                        We render Body here as well to support embeds.)
+                    */}
+                    
                     <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
                         prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-zinc-900 dark:prose-headings:text-white
                         prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-zinc-100 dark:prose-h2:border-zinc-900
@@ -196,7 +256,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         prose-ul:list-disc prose-ul:pl-6
                         prose-li:marker:text-green-500
                     ">
-                        {post.content ? (
+                        {post.content && (
                             <ReactMarkdown
                                 components={{
                                     h2: ({node, ...props}) => {
@@ -231,14 +291,70 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                             >
                                 {post.content}
                             </ReactMarkdown>
-                        ) : (
-                            <div className="text-gray-500 italic">No content found (Markdown empty). Checking Portable Text... <PortableText value={post.body} /></div>
+                        )}
+                        
+                        {/* Render PortableText mainly for Embedding capability (like TikTok) */}
+                        {post.body && (
+                            <div className="mt-8">
+                                <PortableText value={post.body} components={ptComponents} />
+                            </div>
                         )}
                     </div>
+
+                     {/* FAQ Section */}
+                     {post.faq && post.faq.length > 0 && (
+                        <div className="mt-16 pt-12 border-t border-zinc-100 dark:border-zinc-800">
+                          <h2 className="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">Preguntas Frecuentes</h2>
+                          <Accordion type="single" collapsible className="w-full">
+                            {post.faq.map((item: any, index: number) => (
+                              <AccordionItem key={index} value={`item-${index}`} className="border-zinc-200 dark:border-zinc-800">
+                                <AccordionTrigger className="text-left text-zinc-900 dark:text-white hover:text-primary hover:no-underline">
+                                  {item.question}
+                                </AccordionTrigger>
+                                <AccordionContent className="text-zinc-600 dark:text-zinc-400">
+                                  {item.answer}
+                                </AccordionContent>
+                              </AccordionItem>
+                            ))}
+                          </Accordion>
+                        </div>
+                     )}
 
                     <div className="mt-12 mb-12">
                       <NewsletterForm />
                     </div>
+
+                    {/* Related Posts */}
+                     {post.relatedPosts && post.relatedPosts.length > 0 && (
+                        <div className="mt-16 pt-12 border-t border-zinc-100 dark:border-zinc-800">
+                          <h3 className="text-xl font-bold mb-6 text-zinc-900 dark:text-white flex items-center gap-2">
+                             También podría interesarte
+                          </h3>
+                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                             {post.relatedPosts.map((related: any) => (
+                                <Link key={related.slug} href={`/blog/${related.slug}`} className="group block">
+                                   <div className="aspect-video relative rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-3">
+                                      {related.mainImage ? (
+                                         <Image 
+                                            src={urlForImage(related.mainImage).url()} 
+                                            alt={related.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                         />
+                                      ) : (
+                                         <div className="flex items-center justify-center h-full text-zinc-400">
+                                            <span className="text-xs">Sin imagen</span>
+                                         </div>
+                                      )}
+                                   </div>
+                                   <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors text-sm line-clamp-2">
+                                      {related.title}
+                                   </h4>
+                                </Link>
+                             ))}
+                          </div>
+                        </div>
+                     )}
 
                     {/* Mobile CTA (Bottom of Post) */}
                     <div className="mt-12 lg:hidden">
