@@ -242,6 +242,23 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         </div>
                     )}
 
+                    {/* Mobile Table of Contents - Collapsible */}
+                    {post.content && (
+                        <div className="lg:hidden mb-8">
+                            <details className="group rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+                                <summary className="cursor-pointer p-4 font-semibold text-zinc-900 dark:text-white flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors rounded-lg">
+                                    <span className="text-sm">📋 Índice de Contenido</span>
+                                    <svg className="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </summary>
+                                <div className="px-4 pb-4 pt-2">
+                                    <TableOfContents content={post.content} />
+                                </div>
+                            </details>
+                        </div>
+                    )}
+
                     {/* TikToks or other PortableText Blocks (rendered BEFORE markdown if specified? No, usually after or mixed. 
                         Since 'content' is markdown, we render that first. If the user wants TikToks, they might add them to 'body' in Studio.
                         We render Body here as well to support embeds.)
@@ -374,15 +391,15 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                 {/* Right: Sidebar (Desktop) */}
                 <aside className="hidden lg:block lg:col-span-4 space-y-8">
                     <div className="sticky top-24 space-y-8">
-                        {/* High Converting CTA */}
-                        <NitroCtaCard />
-
-                        {/* Table of Contents Box */}
+                        {/* Table of Contents Box - First Priority */}
                          {post.content && (
                             <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
                                 <TableOfContents content={post.content} />
                             </div>
                          )}
+
+                        {/* High Converting CTA - Second */}
+                        <NitroCtaCard />
 
                          {/* Share Action */}
                          <div>
