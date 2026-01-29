@@ -225,7 +225,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
         </header>
 
         {/* Main Content Layout */}
-        <div className="container mx-auto px-4 pb-24 max-w-6xl">
+        <div className="container mx-auto px-4 pb-12 md:pb-24 max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
                 <article className="lg:col-span-8">
@@ -259,6 +259,12 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         {post.content && (
                             <ReactMarkdown
                                 components={{
+                                    h1: ({node, ...props}) => {
+                                        // Convert H1 to H2 to avoid duplicate H1 (page title is already H1)
+                                        const text = String(props.children);
+                                        const id = slugify(text);
+                                        return <h2 id={id} className="text-3xl font-bold mt-12 mb-6 pb-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white" {...props}>{props.children}</h2>;
+                                    },
                                     h2: ({node, ...props}) => {
                                         const text = String(props.children);
                                         const id = slugify(text);
@@ -303,8 +309,8 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 
                      {/* FAQ Section */}
                      {post.faq && post.faq.length > 0 && (
-                        <div className="mt-16 pt-12 border-t border-zinc-100 dark:border-zinc-800">
-                          <h2 className="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">Preguntas Frecuentes</h2>
+                        <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-zinc-100 dark:border-zinc-800">
+                          <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">Preguntas Frecuentes</h2>
                           <Accordion type="single" collapsible className="w-full">
                             {post.faq.map((item: any, index: number) => (
                               <AccordionItem key={index} value={`item-${index}`} className="border-zinc-200 dark:border-zinc-800">
@@ -324,32 +330,35 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                       <NewsletterForm />
                     </div>
 
-                    {/* Related Posts */}
+                    {/* Related Posts - Text Only */}
                      {post.relatedPosts && post.relatedPosts.length > 0 && (
-                        <div className="mt-16 pt-12 border-t border-zinc-100 dark:border-zinc-800">
-                          <h3 className="text-xl font-bold mb-6 text-zinc-900 dark:text-white flex items-center gap-2">
+                        <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-zinc-100 dark:border-zinc-800">
+                          <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">
                              También podría interesarte
                           </h3>
-                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                             {post.relatedPosts.map((related: any) => (
-                                <Link key={related.slug} href={`/blog/${related.slug}`} className="group block">
-                                   <div className="aspect-video relative rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-3">
-                                      {related.mainImage ? (
-                                         <Image 
-                                            src={urlForImage(related.mainImage).url()} 
-                                            alt={related.title}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                         />
-                                      ) : (
-                                         <div className="flex items-center justify-center h-full text-zinc-400">
-                                            <span className="text-xs">Sin imagen</span>
-                                         </div>
-                                      )}
+                          <div className="space-y-3 md:space-y-4">
+                             {post.relatedPosts.map((related: any, index: number) => (
+                                <Link 
+                                  key={related.slug} 
+                                  href={`/blog/${related.slug}`} 
+                                  className="group block p-4 md:p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-primary hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all duration-200"
+                                >
+                                   <div className="flex items-start gap-3">
+                                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                                         {index + 1}
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                         <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors text-sm md:text-base line-clamp-2 mb-1">
+                                            {related.title}
+                                         </h4>
+                                         {related.publishedAt && (
+                                            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                                               {new Date(related.publishedAt).toLocaleDateString("es-ES", { year: "numeric", month: "short", day: "numeric" })}
+                                            </p>
+                                         )}
+                                      </div>
+                                      <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0" />
                                    </div>
-                                   <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors text-sm line-clamp-2">
-                                      {related.title}
-                                   </h4>
                                 </Link>
                              ))}
                           </div>
