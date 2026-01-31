@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
-import { ArrowLeft, Clock, Calendar, User, ArrowRight } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
@@ -22,8 +22,10 @@ import {
 } from "@/components/ui/accordion";
 import { TikTokEmbed } from "@/components/blog/tiktok-embed";
 import { Badge } from "@/components/ui/badge";
+import { ComparisonTable } from "@/components/blog/ComparisonTable";
+import { CopyableCodeBlock } from "@/components/blog/CopyableCodeBlock";
 
-// GROQ Query for Single Post (Updated)
+// GROQ Query for Single Post (Updated with topic-based related posts)
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
   mainImage,
@@ -34,7 +36,15 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "slug": slug.current,
   author,
   faq,
-  "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+  topics,
+  "relatedPosts": *[_type == "post" && slug.current != $slug && count((topics[])[@ in ^.topics[]]) > 0] | order(publishedAt desc)[0...3] {
+    title,
+    "slug": slug.current,
+    mainImage,
+    publishedAt,
+    topics
+  },
+  "fallbackPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
@@ -58,11 +68,29 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, '');
 }
 
-// Portable Text Components (with TikTok)
+// Portable Text Components (with TikTok, Comparison Tables, Code Blocks)
 const ptComponents = {
   types: {
     tiktokEmbed: ({ value }: any) => {
       return <TikTokEmbed url={value.url} caption={value.caption} />;
+    },
+    comparisonTable: ({ value }: any) => {
+      return (
+        <ComparisonTable
+          title={value.title}
+          headers={value.headers || []}
+          rows={value.rows || []}
+        />
+      );
+    },
+    codeBlock: ({ value }: any) => {
+      return (
+        <CopyableCodeBlock
+          title={value.title}
+          language={value.language || 'text'}
+          code={value.code || ''}
+        />
+      );
     },
     image: ({ value }: any) => {
         if (!value?.asset?._ref) return null;
@@ -242,20 +270,16 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         </div>
                     )}
 
-                    {/* Mobile Table of Contents - Collapsible */}
+                    {/* Mobile Table of Contents - Fixed (Always Visible) */}
                     {post.content && (
                         <div className="lg:hidden mb-8">
-                            <details className="group rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
-                                <summary className="cursor-pointer p-4 font-semibold text-zinc-900 dark:text-white flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors rounded-lg">
-                                    <span className="text-sm">📋 Índice de Contenido</span>
-                                    <svg className="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </summary>
-                                <div className="px-4 pb-4 pt-2">
-                                    <TableOfContents content={post.content} />
+                            <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-4">
+                                <div className="font-semibold text-zinc-900 dark:text-white mb-3 text-sm flex items-center gap-2">
+                                    <span>📋</span>
+                                    <span>Índice de Contenido</span>
                                 </div>
-                            </details>
+                                <TableOfContents content={post.content} />
+                            </div>
                         </div>
                     )}
 
@@ -324,17 +348,24 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         )}
                     </div>
 
-                     {/* FAQ Section */}
+                     {/* FAQ Section - Enhanced Styling */}
                      {post.faq && post.faq.length > 0 && (
                         <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-zinc-100 dark:border-zinc-800">
-                          <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">Preguntas Frecuentes</h2>
-                          <Accordion type="single" collapsible className="w-full">
+                          <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-zinc-900 dark:text-white">Preguntas Frecuentes</h2>
+                          <Accordion type="single" collapsible className="w-full space-y-4">
                             {post.faq.map((item: any, index: number) => (
-                              <AccordionItem key={index} value={`item-${index}`} className="border-zinc-200 dark:border-zinc-800">
-                                <AccordionTrigger className="text-left text-zinc-900 dark:text-white hover:text-primary hover:no-underline">
-                                  {item.question}
+                              <AccordionItem 
+                                key={index} 
+                                value={`item-${index}`} 
+                                className="border border-zinc-200 dark:border-zinc-800 rounded-lg px-6 py-2 bg-white dark:bg-zinc-950 hover:border-green-500/50 transition-all duration-200 shadow-sm hover:shadow-md"
+                              >
+                                <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-zinc-900 dark:text-white hover:text-green-600 dark:hover:text-green-400 hover:no-underline py-4 [&[data-state=open]]:text-green-600 dark:[&[data-state=open]]:text-green-400">
+                                  <span className="flex items-start gap-3">
+                                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform duration-200 mt-0.5" />
+                                    <span className="flex-1">{item.question}</span>
+                                  </span>
                                 </AccordionTrigger>
-                                <AccordionContent className="text-zinc-600 dark:text-zinc-400">
+                                <AccordionContent className="text-zinc-600 dark:text-zinc-400 pt-2 pb-4 text-sm md:text-base leading-relaxed pl-8">
                                   {item.answer}
                                 </AccordionContent>
                               </AccordionItem>
@@ -347,14 +378,14 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                       <NewsletterForm />
                     </div>
 
-                    {/* Related Posts - Text Only */}
-                     {post.relatedPosts && post.relatedPosts.length > 0 && (
+                    {/* Related Posts - Topic-based with fallback */}
+                     {((post.relatedPosts && post.relatedPosts.length > 0) || (post.fallbackPosts && post.fallbackPosts.length > 0)) && (
                         <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-zinc-100 dark:border-zinc-800">
                           <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">
                              También podría interesarte
                           </h3>
                           <div className="space-y-3 md:space-y-4">
-                             {post.relatedPosts.map((related: any, index: number) => (
+                             {(post.relatedPosts && post.relatedPosts.length > 0 ? post.relatedPosts : post.fallbackPosts).map((related: any, index: number) => (
                                 <Link 
                                   key={related.slug} 
                                   href={`/blog/${related.slug}`} 
