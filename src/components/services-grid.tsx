@@ -55,7 +55,7 @@ const serviceDetails = [
     title: "NitroStrategy",
     desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico.",
     cta: "Ver Consultoría",
-    href: null,
+    href: "/nitro-strategy",
     features: [
       "Análisis de fugas en el funnel",
       "Roadmap de deuda técnica",

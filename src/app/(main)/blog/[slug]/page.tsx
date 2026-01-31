@@ -274,10 +274,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                     {post.content && (
                         <div className="lg:hidden mb-8">
                             <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-4">
-                                <div className="font-semibold text-zinc-900 dark:text-white mb-3 text-sm flex items-center gap-2">
-                                    <span>📋</span>
-                                    <span>Índice de Contenido</span>
-                                </div>
                                 <TableOfContents content={post.content} />
                             </div>
                         </div>
