@@ -15,6 +15,8 @@ import {
   TrendingUp,
   Clock
 } from "lucide-react";
+import { DemoConfigurator } from "./_components/demo-configurator";
+import { ConversionPopup } from "./_components/conversion-popup";
 
 export const metadata: Metadata = {
   title: "Nitro Inmobiliaria | Plataforma Web de Alto Rendimiento para Inmobiliarias",
@@ -455,6 +457,9 @@ export default function NitroInmobiliariaPage() {
           </div>
         </section>
 
+        {/* --- INTERACTIVE DEMO CONFIGURATOR --- */}
+        <DemoConfigurator />
+
         {/* --- STAGE 4: ACTION - CONTACT FORM --- */}
         <section id="contacto" className="py-24 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-950/10 to-black pointer-events-none" />
@@ -501,6 +506,9 @@ export default function NitroInmobiliariaPage() {
         </section>
 
         <Footer />
+
+        {/* Conversion Popup (Timed) */}
+        <ConversionPopup />
       </main>
     </>
   );
