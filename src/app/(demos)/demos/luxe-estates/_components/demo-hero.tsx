@@ -99,7 +99,7 @@ export function DemoHero({ brandName, city }: DemoHeroProps) {
           className="relative w-full h-full"
         >
           <Image
-            src="https://images.unsplash.com/photo-1600596542815-6ad4c728fdbe?q=80&w=2075&auto=format&fit=crop"
+            src="/imagenes-demo/hero-luxury.jpg"
             alt="Propiedad de lujo"
             fill
             className="object-cover"
