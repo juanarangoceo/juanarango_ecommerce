@@ -50,7 +50,7 @@ const MOCK_PROPERTIES = [
     beds: 2,
     baths: 2,
     area: 95,
-    image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?q=80&w=2070&auto=format&fit=crop"
+    image: "/imagenes-demo/property-1.jpg"
   },
   {
     id: 5,

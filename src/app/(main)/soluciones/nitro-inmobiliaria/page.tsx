@@ -77,8 +77,16 @@ export default function NitroInmobiliariaPage() {
         {/* --- STAGE 1: AWARENESS - HERO SECTION --- */}
         <section className="relative pt-32 pb-20 overflow-hidden border-b border-white/5">
           {/* Premium Gradient Background - Blue to Gold */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/30 via-black to-black pointer-events-none" />
-          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-blue-950/80 mix-blend-multiply z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-blue-950/90 to-black/80 z-20" />
+            <img 
+              src="/imagenes-demo/hero-luxury.jpg" 
+              alt="Background" 
+              className="w-full h-full object-cover opacity-60 mix-blend-overlay"
+            />
+          </div>
           
           <div className="container mx-auto px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
