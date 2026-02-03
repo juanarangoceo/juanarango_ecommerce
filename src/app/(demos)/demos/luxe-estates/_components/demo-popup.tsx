@@ -26,7 +26,7 @@ export function DemoPagePopup({ brandName }: { brandName: string }) {
 
   const handleCTA = () => {
     setIsVisible(false); // Close popup when clicking CTA
-    const section = document.getElementById("advanced-search");
+    const section = document.getElementById("demo-contact");
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }

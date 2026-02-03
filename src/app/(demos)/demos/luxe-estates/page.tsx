@@ -7,6 +7,7 @@ import { TestimonialsSection } from "./_components/testimonials-section";
 import { ConversionCTA } from "./_components/conversion-cta";
 import { DemoPagePopup } from "./_components/demo-popup";
 import { Footer } from "@/components/layout/Footer";
+import { ContactForm } from "@/components/ui/contact-form";
 
 // Theme Configuration (Centralized)
 // Theme Configuration (Centralized)
@@ -92,18 +93,62 @@ export default async function LuxeEstatesDemoPage(props: {
       {/* Features Section */}
       <FeaturesSection />
 
+
+
+// ... inside component
+
       {/* Testimonials Section */}
       <TestimonialsSection />
 
-      {/* Advanced Search & Contact (NEW) */}
+      {/* Advanced Search (Demo Feature) */}
       <AdvancedSearchSection />
+      
+      {/* Nitro Lead Capture Section (Real Business) */}
+      <section id="demo-contact" className="py-24 relative bg-black text-white overflow-hidden">
+        {/* Aesthetic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-black pointer-events-none" />
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-600/10 blur-[100px] pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                <span>Oferta Especial Demo</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                ¿Te gusta el diseño de <span className="text-blue-500">{brandName}</span>?
+              </h2>
+              <p className="text-xl text-zinc-400 mb-8 leading-relaxed">
+                Esta tecnología puede ser tuya. Obtén una web inmobiliaria de alto rendimiento, optimizada para SEO y con captación automática de leads.
+              </p>
+              <div className="flex gap-4 mb-8">
+                <div className="flex flex-col">
+                  <span className="text-3xl font-bold text-white">3x</span>
+                  <span className="text-sm text-zinc-500 uppercase">Más Leads</span>
+                </div>
+                <div className="w-px bg-white/10 mx-4"></div>
+                <div className="flex flex-col">
+                  <span className="text-3xl font-bold text-white">99%</span>
+                  <span className="text-sm text-zinc-500 uppercase">Automático</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-zinc-900/50 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+              <h3 className="text-xl font-semibold mb-6">Agenda tu Demo Personalizada</h3>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Conversion CTA (The Money Shot) */}
-      <ConversionCTA brandName={brandName} />
-
-      {/* Nitro Footer */}
+      {/* Footer */}
       <Footer />
-
+      
       {/* Conversion Popup */}
       <DemoPagePopup brandName={brandName} />
     </main>

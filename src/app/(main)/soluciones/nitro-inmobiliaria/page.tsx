@@ -81,58 +81,66 @@ export default function NitroInmobiliariaPage() {
           <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-amber-500/10 to-transparent blur-3xl pointer-events-none" />
           
           <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-4xl">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
-                <Building2 className="w-4 h-4" />
-                <span>Especializado en Sector Inmobiliario</span>
-              </div>
-              
-              {/* H1 - Primary SEO Target */}
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white leading-[1.1]">
-                Tu Sitio Web Inmobiliario{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-amber-500">
-                  Que Vende 24/7
-                </span>
-              </h1>
-              
-              {/* Value Proposition */}
-              <p className="text-xl text-zinc-400 max-w-2xl mb-10 leading-relaxed">
-                No más webs que solo muestran propiedades. Construimos{" "}
-                <strong className="text-blue-400">plataformas de alto rendimiento</strong> que captan, califican y convierten leads automáticamente.{" "}
-                <strong className="text-blue-400">Tu equipo vende, nosotros multiplicamos resultados.</strong>
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Left Column: Copy */}
+              <div className="max-w-4xl lg:max-w-none order-1">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
+                  <Building2 className="w-4 h-4" />
+                  <span>Especializado en Sector Inmobiliario</span>
+                </div>
+                
+                {/* H1 - Primary SEO Target */}
+                <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white leading-[1.1]">
+                  Tu Sitio Web Inmobiliario{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-amber-500">
+                    Que Vende 24/7
+                  </span>
+                </h1>
+                
+                {/* Value Proposition */}
+                <p className="text-xl text-zinc-400 max-w-2xl mb-10 leading-relaxed">
+                  No más webs que solo muestran propiedades. Construimos{" "}
+                  <strong className="text-blue-400">plataformas de alto rendimiento</strong> que captan, califican y convierten leads automáticamente.{" "}
+                  <strong className="text-blue-400">Tu equipo vende, nosotros multiplicamos resultados.</strong>
+                </p>
 
-              {/* Stats Row */}
-              <div className="grid grid-cols-3 gap-6 mb-10 max-w-2xl">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-1">3x</div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Más Leads Calificados</div>
+                {/* Stats Row */}
+                <div className="grid grid-cols-3 gap-6 mb-10 max-w-xl">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-400 mb-1">3x</div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider">Más Leads Calificados</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-amber-400 mb-1">90+</div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider">Performance Score</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-400 mb-1">50%</div>
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider">Ciclo de Venta Reducido</div>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-amber-400 mb-1">90+</div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Performance Score</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-1">50%</div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Ciclo de Venta Reducido</div>
+
+                {/* CTAs */}
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href="#contacto"
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20"
+                  >
+                    Solicitar Auditoría Gratuita <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="#soluciones"
+                    className="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-3 px-8 rounded-full transition-all"
+                  >
+                    Ver Soluciones
+                  </a>
                 </div>
               </div>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-4">
-                <a 
-                  href="#contacto"
-                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20"
-                >
-                  Solicitar Auditoría Gratuita <ArrowRight className="w-4 h-4" />
-                </a>
-                <a 
-                  href="#soluciones"
-                  className="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-3 px-8 rounded-full transition-all"
-                >
-                  Ver Soluciones
-                </a>
+              {/* Right Column: Configurator */}
+              <div className="order-2 w-full max-w-md mx-auto lg:max-w-none">
+                <DemoConfigurator />
               </div>
             </div>
           </div>
@@ -456,8 +464,7 @@ export default function NitroInmobiliariaPage() {
           </div>
         </section>
 
-        {/* --- INTERACTIVE DEMO CONFIGURATOR --- */}
-        <DemoConfigurator />
+
 
         {/* --- STAGE 4: ACTION - CONTACT FORM --- */}
         <section id="contacto" className="py-24 relative">
