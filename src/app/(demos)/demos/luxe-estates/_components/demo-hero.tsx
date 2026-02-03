@@ -40,7 +40,7 @@ function AnimatedCounter({
   );
 }
 
-import heroLuxuryImg from "../../../../../../public/imagenes-demo/hero-luxury.jpg";
+import heroLuxuryImg from "@/assets/images/hero-luxury.jpg";
 
 export function DemoHero({ brandName, city }: DemoHeroProps) {
   const [searchQuery, setSearchQuery] = useState("");
