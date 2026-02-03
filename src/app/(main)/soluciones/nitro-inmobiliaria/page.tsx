@@ -16,7 +16,6 @@ import {
   Clock
 } from "lucide-react";
 import { DemoConfigurator } from "./_components/demo-configurator";
-import { ConversionPopup } from "./_components/conversion-popup";
 
 export const metadata: Metadata = {
   title: "Nitro Inmobiliaria | Plataforma Web de Alto Rendimiento para Inmobiliarias",
@@ -506,9 +505,6 @@ export default function NitroInmobiliariaPage() {
         </section>
 
         <Footer />
-
-        {/* Conversion Popup (Timed) */}
-        <ConversionPopup />
       </main>
     </>
   );

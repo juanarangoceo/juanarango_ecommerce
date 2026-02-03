@@ -5,8 +5,10 @@ import { PropertiesSection } from "./_components/properties-section";
 import { FeaturesSection } from "./_components/features-section";
 import { TestimonialsSection } from "./_components/testimonials-section";
 import { ConversionCTA } from "./_components/conversion-cta";
+import { DemoPagePopup } from "./_components/demo-popup";
 import { Footer } from "@/components/layout/Footer";
 
+// Theme Configuration (Centralized)
 // Theme Configuration (Centralized)
 const THEMES: Record<string, { label: string; colors: { primary: string; accent: string; bg: string; text: string } }> = {
   trust: {
@@ -17,18 +19,17 @@ const THEMES: Record<string, { label: string; colors: { primary: string; accent:
     label: "Gold Luxury",
     colors: { primary: "#1c1917", accent: "#d4af37", bg: "#fffbf0", text: "#44403c" }
   },
-  urban: {
-    label: "Urban Nature",
-    colors: { primary: "#14532d", accent: "#ea580c", bg: "#f0fdf4", text: "#14532d" }
+  minimal: {
+    label: "Minimalist",
+    colors: { primary: "#000000", accent: "#525252", bg: "#ffffff", text: "#171717" }
   }
 };
 
 // SEO Protection (No indexing of generated demos)
-export async function generateMetadata({ 
-  searchParams 
-}: { 
-  searchParams: { brand?: string } 
+export async function generateMetadata(props: { 
+  searchParams: Promise<{ brand?: string }> 
 }): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const brand = searchParams.brand || "Tu Inmobiliaria";
   
   return {
@@ -45,15 +46,17 @@ export async function generateMetadata({
 }
 
 // Main Server Component (Maximum Performance)
-export default function LuxeEstatesDemoPage({
-  searchParams,
-}: {
-  searchParams: { brand?: string; theme?: string; city?: string }
+export default async function LuxeEstatesDemoPage(props: {
+  searchParams: Promise<{ brand?: string; theme?: string; city?: string }>
 }) {
+  const searchParams = await props.searchParams;
+
   // Extract params with safe fallbacks
   const brandName = searchParams.brand || "Tu Inmobiliaria";
   const city = searchParams.city || "Tu Ciudad";
-  const themeKey = searchParams.theme && THEMES[searchParams.theme] ? searchParams.theme : "trust";
+  // Default to minimal or trust, check against THEMES keys
+  const requestedTheme = searchParams.theme || "trust";
+  const themeKey = THEMES[requestedTheme] ? requestedTheme : "trust";
   const activeTheme = THEMES[themeKey];
 
   // Inject CSS Variables (Zero Runtime JS for theming)
@@ -89,6 +92,9 @@ export default function LuxeEstatesDemoPage({
 
       {/* Nitro Footer */}
       <Footer />
+
+      {/* Conversion Popup */}
+      <DemoPagePopup brandName={brandName} />
     </main>
   );
 }

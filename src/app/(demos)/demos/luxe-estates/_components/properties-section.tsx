@@ -1,8 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import { MapPin, BedDouble, Bath, Square, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 interface PropertiesSectionProps {
   city: string;
@@ -72,6 +75,28 @@ const MOCK_PROPERTIES = [
 ];
 
 export function PropertiesSection({ city }: PropertiesSectionProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" as const }
+    },
+  };
+
   return (
     <section id="propiedades" className="py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,18 +104,18 @@ export function PropertiesSection({ city }: PropertiesSectionProps) {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
             <h2 
-              className="text-3xl md:text-4xl font-bold mb-2"
+              className="text-3xl md:text-4xl font-bold mb-2 tracking-tight"
               style={{ color: 'var(--theme-primary)' }}
             >
               Oportunidades en {city}
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className="text-slate-500 text-lg font-light">
               Nuevas propiedades listadas en el mercado
             </p>
           </div>
           <Button 
             variant="link" 
-            className="font-bold flex items-center gap-2 p-0"
+            className="font-bold flex items-center gap-2 p-0 hover:opacity-70 transition-opacity"
             style={{ color: 'var(--theme-accent)' }}
           >
             Ver todo el catálogo <ArrowRight className="w-4 h-4"/>
@@ -98,88 +123,91 @@ export function PropertiesSection({ city }: PropertiesSectionProps) {
         </div>
 
         {/* Properties Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {MOCK_PROPERTIES.map((property) => (
-            <Card 
-              key={property.id} 
-              className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden bg-white cursor-pointer"
-            >
-              {/* Property Image */}
-              <div className="h-64 bg-slate-200 relative overflow-hidden">
-                <img 
-                  src={property.image}
-                  alt={property.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors"></div>
-                <div 
-                  className="absolute top-4 left-4 text-white px-3 py-1 text-xs font-bold rounded uppercase tracking-wide"
-                  style={{ backgroundColor: 'var(--theme-primary)' }}
-                >
-                  En Venta
-                </div>
-              </div>
-
-              {/* Property Info */}
-              <CardContent className="p-6">
-                <div 
-                  className="flex items-center gap-1 text-sm mb-2"
-                  style={{ color: 'var(--theme-accent)' }}
-                >
-                  <MapPin size={14} />
-                  <span>{property.zone}, {city}</span>
-                </div>
-                <h3 
-                  className="font-bold text-xl mb-4 transition-colors"
-                  style={{ color: 'var(--theme-text)' }}
-                >
-                  {property.title}
-                </h3>
-                
-                {/* Property Stats */}
-                <div className="flex gap-4 text-sm text-slate-500 mb-4">
-                  <span className="flex items-center gap-1">
-                    <BedDouble size={16} />
-                    {property.beds}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Bath size={16} />
-                    {property.baths}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Square size={16} />
-                    {property.area}m²
-                  </span>
-                </div>
-
-                <div className="w-full h-px bg-slate-100 mb-4"></div>
-
-                {/* Price and CTA */}
-                <div className="flex justify-between items-center">
-                  <span 
-                    className="text-2xl font-bold"
-                    style={{ color: 'var(--theme-primary)' }}
+            <motion.div key={property.id} variants={itemVariants}>
+              <Card 
+                className="group border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden bg-white cursor-pointer h-full"
+              >
+                {/* Property Image */}
+                <div className="h-64 bg-slate-100 relative overflow-hidden">
+                  <Image 
+                    src={property.image}
+                    alt={property.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                  <div 
+                    className="absolute top-4 left-4 text-white px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-black/50 backdrop-blur-sm"
                   >
-                    {property.price}
-                  </span>
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    className="hover:bg-slate-50 text-slate-600"
-                  >
-                    Ver Detalles
-                  </Button>
+                    En Venta
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+
+                {/* Property Info */}
+                <CardContent className="p-6">
+                  <div 
+                    className="flex items-center gap-1 text-xs font-medium uppercase tracking-wide mb-3 opacity-80"
+                    style={{ color: 'var(--theme-accent)' }}
+                  >
+                    <MapPin size={12} />
+                    <span>{property.zone}, {city}</span>
+                  </div>
+                  <h3 
+                    className="font-bold text-xl mb-4 transition-colors leading-tight"
+                    style={{ color: 'var(--theme-text)' }}
+                  >
+                    {property.title}
+                  </h3>
+                  
+                  {/* Property Stats */}
+                  <div className="flex gap-4 text-sm text-slate-500 mb-6 font-light">
+                    <span className="flex items-center gap-1.5">
+                      <BedDouble size={16} strokeWidth={1.5} />
+                      {property.beds}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Bath size={16} strokeWidth={1.5} />
+                      {property.baths}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Square size={16} strokeWidth={1.5} />
+                      {property.area}m²
+                    </span>
+                  </div>
+
+                  <div className="w-full h-px bg-slate-100 mb-4"></div>
+
+                  {/* Price and CTA */}
+                  <div className="flex justify-between items-center">
+                    <span 
+                      className="text-2xl font-bold tracking-tight"
+                      style={{ color: 'var(--theme-primary)' }}
+                    >
+                      {property.price}
+                    </span>
+                    <span className="text-sm font-medium text-slate-400 group-hover:text-slate-800 transition-colors">
+                      Ver Detalles
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Load More CTA */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Button 
             size="lg"
-            className="px-8 py-6 text-white font-semibold shadow-lg hover:opacity-90 transition-opacity"
+            className="px-10 py-6 text-white font-medium shadow-xl hover:shadow-2xl hover:translate-y-[-2px] transition-all"
             style={{ backgroundColor: 'var(--theme-primary)' }}
           >
             Cargar Más Propiedades

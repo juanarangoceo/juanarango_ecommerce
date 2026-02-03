@@ -23,11 +23,11 @@ const THEMES = [
     preview: "bg-gradient-to-br from-stone-900 to-amber-500"
   },
   {
-    id: "urban",
-    name: "Urban Nature",
-    description: "Moderno y ecológico",
-    colors: { primary: "#14532d", accent: "#ea580c" },
-    preview: "bg-gradient-to-br from-green-900 to-orange-600"
+    id: "minimal",
+    name: "Minimalist",
+    description: "Limpio y atemporal",
+    colors: { primary: "#000000", accent: "#525252" },
+    preview: "bg-gradient-to-br from-white to-zinc-200 border border-zinc-200"
   },
 ];
 
