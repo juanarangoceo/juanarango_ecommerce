@@ -29,12 +29,11 @@ export function NitroBusinessGrid() {
     {
       id: "INMOBILIARIA",
       icon: Building2,
-      title: "Nitro Estate",
+      title: "Nitro Inmobiliaria",
       desc: "Showrooms virtuales y captación de leads cualificados para desarrollos inmobiliarios.",
-      href: "#",
+      href: "/soluciones/nitro-inmobiliaria",
       color: "blue",
-      cta: "Próximamente",
-      disabled: true
+      cta: "Ver Solución Inmobiliaria"
     }
   ]
 
@@ -61,11 +60,11 @@ export function NitroBusinessGrid() {
             >
               <Link href={biz.href} className={`block h-full ${biz.disabled ? 'pointer-events-none opacity-60' : ''}`}>
                 <SpotlightCard 
-                    spotlightColor={biz.color === 'emerald' ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)"}
+                    spotlightColor={biz.color === 'emerald' ? "rgba(16, 185, 129, 0.2)" : biz.color === 'blue' ? "rgba(59, 130, 246, 0.2)" : "rgba(255, 255, 255, 0.05)"}
                     className="h-full p-8 flex flex-col group border-white/5 hover:border-emerald-500/30 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-8">
-                    <div className={`p-4 rounded-xl ${biz.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-white/5 text-slate-400'}`}>
+                    <div className={`p-4 rounded-xl ${biz.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : biz.color === 'blue' ? 'bg-blue-500/10 text-blue-400' : 'bg-white/5 text-slate-400'}`}>
                       <biz.icon className="w-8 h-8" />
                     </div>
                     {biz.disabled && (
@@ -75,7 +74,7 @@ export function NitroBusinessGrid() {
                     )}
                   </div>
                   
-                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors tracking-tight">
+                  <h3 className={`text-2xl font-bold mb-4 text-white transition-colors tracking-tight ${biz.color === 'blue' ? 'group-hover:text-blue-400' : 'group-hover:text-emerald-400'}`}>
                     {biz.title}
                   </h3>
                   
@@ -84,7 +83,7 @@ export function NitroBusinessGrid() {
                   </p>
                   
                   {!biz.disabled && (
-                      <div className="flex items-center text-emerald-400 font-semibold text-sm group-hover:translate-x-2 transition-transform">
+                      <div className={`flex items-center font-semibold text-sm group-hover:translate-x-2 transition-transform ${biz.color === 'blue' ? 'text-blue-400' : 'text-emerald-400'}`}>
                         {biz.cta} <ArrowRight className="w-4 h-4 ml-2" />
                       </div>
                   )}
