@@ -40,6 +40,8 @@ function AnimatedCounter({
   );
 }
 
+import heroLuxuryImg from "../../../../../../public/imagenes-demo/hero-luxury.jpg";
+
 export function DemoHero({ brandName, city }: DemoHeroProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -99,12 +101,13 @@ export function DemoHero({ brandName, city }: DemoHeroProps) {
           className="relative w-full h-full"
         >
           <Image
-            src="/imagenes-demo/hero-luxury.jpg"
+            src={heroLuxuryImg}
             alt="Propiedad de lujo"
             fill
             className="object-cover"
             priority
             quality={90}
+            placeholder="blur"
           />
           {/* Aesthetic Overlay - Using theme primary color but with refined gradients */}
           <div 
