@@ -12,9 +12,22 @@ const OPTIONS = [
   { icon: Building2, label: "Arrendamiento", value: "rent" },
 ];
 
-export function AdvancedSearchSection() {
+interface AdvancedSearchSectionProps {
+  brandName?: string;
+  city?: string;
+}
+
+export function AdvancedSearchSection({ brandName = "Luxe Estates", city = "Medellín" }: AdvancedSearchSectionProps) {
   const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  
+  // Dynamic contact info based on brand and city
+  const contactInfo = [
+    { icon: Phone, title: "Línea directa", text: "+57 300 123 4567" },
+    { icon: Mail, title: "Email", text: `asesores@${brandName.toLowerCase().replace(/\s+/g, '')}.com` },
+    { icon: MapPin, title: "Oficina principal", text: `Calle 10 #34-56, El Poblado, ${city}` },
+    { icon: Clock, title: "Horario de atención", text: "Lun - Vie: 8:00 AM - 6:00 PM" },
+  ];
 
   return (
     <section 
@@ -57,12 +70,7 @@ export function AdvancedSearchSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-6"
             >
-              {[
-                { icon: Phone, title: "Línea directa", text: "+57 300 123 4567" },
-                { icon: Mail, title: "Email", text: "asesores@luxeestates.com" },
-                { icon: MapPin, title: "Oficina principal", text: "Calle 10 #34-56, El Poblado, Medellín" },
-                { icon: Clock, title: "Horario de atención", text: "Lun - Vie: 8:00 AM - 6:00 PM" },
-              ].map((item, i) => (
+              {contactInfo.map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-white shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div 
                     className="p-3 rounded-lg shrink-0"

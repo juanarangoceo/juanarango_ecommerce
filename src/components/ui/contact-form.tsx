@@ -42,35 +42,35 @@ export function ContactForm() {
   const steps = [
     // Step 0: Intro / Name
     <div key="step0" className="space-y-6">
-      <h3 className="text-2xl font-bold text-white">Empecemos por conocernos.</h3>
+      <h3 className="text-2xl font-bold text-slate-900">Empecemos por conocernos.</h3>
       <div className="space-y-4">
         <div>
-          <label className="block text-sm text-zinc-400 mb-2">¿Cómo te llamas?</label>
+          <label className="block text-sm text-slate-600 mb-2 font-medium">¿Cómo te llamas?</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder="Tu nombre"
-            className="w-full bg-transparent border-b-2 border-zinc-700 text-3xl font-light text-white focus:border-primary focus:outline-none py-2 transition-colors placeholder:text-zinc-700"
+            className="w-full bg-white border-b-2 border-slate-200 text-2xl font-light text-slate-900 focus:border-blue-500 focus:outline-none py-3 transition-colors placeholder:text-slate-300"
           />
         </div>
         <div>
-          <label className="block text-sm text-zinc-400 mb-2">¿Y tu empresa?</label>
+          <label className="block text-sm text-slate-600 mb-2 font-medium">¿Y tu empresa?</label>
           <input
             type="text"
             name="company"
             value={formData.company}
             onChange={handleChange}
             placeholder="Nombre de tu negocio"
-            className="w-full bg-transparent border-b-2 border-zinc-700 text-3xl font-light text-white focus:border-primary focus:outline-none py-2 transition-colors placeholder:text-zinc-700"
+            className="w-full bg-white border-b-2 border-slate-200 text-2xl font-light text-slate-900 focus:border-blue-500 focus:outline-none py-3 transition-colors placeholder:text-slate-300"
           />
         </div>
       </div>
       <button
         onClick={handleNext}
         disabled={!formData.name}
-        className="group flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Siguiente <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </button>
@@ -78,7 +78,7 @@ export function ContactForm() {
 
     // Step 1: Email
     <div key="step1" className="space-y-6">
-      <h3 className="text-2xl font-bold text-white">Genial, {formData.name.split(" ")[0]}. <br/> ¿Dónde podemos contactarte?</h3>
+      <h3 className="text-2xl font-bold text-slate-900">Genial, {formData.name.split(" ")[0]}. <br/> ¿Dónde podemos contactarte?</h3>
       <div>
         <input
           type="email"
@@ -86,13 +86,13 @@ export function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           placeholder="tu@email.com"
-          className="w-full bg-transparent border-b-2 border-zinc-700 text-3xl font-light text-white focus:border-primary focus:outline-none py-2 transition-colors placeholder:text-zinc-700"
+          className="w-full bg-white border-b-2 border-slate-200 text-2xl font-light text-slate-900 focus:border-blue-500 focus:outline-none py-3 transition-colors placeholder:text-slate-300"
         />
       </div>
       <button
         onClick={handleNext}
         disabled={!formData.email.includes("@")}
-        className="group flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Siguiente <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </button>
@@ -100,15 +100,15 @@ export function ContactForm() {
 
     // Step 2: Interest
     <div key="step2" className="space-y-6">
-      <h3 className="text-2xl font-bold text-white">¿Qué estás buscando mejorar hoy?</h3>
+      <h3 className="text-2xl font-bold text-slate-900">¿Qué estás buscando mejorar hoy?</h3>
       <div className="grid gap-3">
         {["Infraestructura de Ecommerce", "Automatización de Negocio", "Consultoría de Escalamiento", "Otro"].map((option) => (
           <label
             key={option}
-            className={`flex items-center p-4 rounded-lg border cursor-pointer transition-all ${
+            className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all ${
               formData.interest === option
-                ? "border-primary bg-primary/10 text-white"
-                : "border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700"
+                ? "border-blue-500 bg-blue-50 text-slate-900"
+                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
             }`}
           >
             <input
@@ -119,15 +119,15 @@ export function ContactForm() {
               onChange={handleChange}
               className="hidden"
             />
-            <span className="text-lg">{option}</span>
-            {formData.interest === option && <Check className="ml-auto w-5 h-5 text-primary" />}
+            <span className="text-base font-medium">{option}</span>
+            {formData.interest === option && <Check className="ml-auto w-5 h-5 text-blue-600" />}
           </label>
         ))}
       </div>
       <button
         onClick={handleNext}
         disabled={!formData.interest}
-        className="group flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Revisar <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </button>
@@ -135,17 +135,17 @@ export function ContactForm() {
 
     // Step 3: Confirmation / Submit
     <div key="step3" className="space-y-6">
-      <h3 className="text-2xl font-bold text-white">¿Todo correcto?</h3>
-      <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800 space-y-4 text-zinc-300">
-        <p><strong className="text-zinc-500 block text-xs uppercase tracking-wider">Nombre</strong> {formData.name}</p>
-        <p><strong className="text-zinc-500 block text-xs uppercase tracking-wider">Empresa</strong> {formData.company || "No especificada"}</p>
-        <p><strong className="text-zinc-500 block text-xs uppercase tracking-wider">Email</strong> {formData.email}</p>
-        <p><strong className="text-zinc-500 block text-xs uppercase tracking-wider">Interés</strong> {formData.interest}</p>
+      <h3 className="text-2xl font-bold text-slate-900">¿Todo correcto?</h3>
+      <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 space-y-4 text-slate-700">
+        <p><strong className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Nombre</strong> {formData.name}</p>
+        <p><strong className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Empresa</strong> {formData.company || "No especificada"}</p>
+        <p><strong className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Email</strong> {formData.email}</p>
+        <p><strong className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Interés</strong> {formData.interest}</p>
       </div>
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="w-full bg-primary text-black font-bold text-lg py-4 rounded-full hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-blue-600 text-white font-bold text-lg py-4 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
       >
         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Enviar Solicitud"}
       </button>
@@ -153,14 +153,14 @@ export function ContactForm() {
 
     // Step 4: Success
     <div key="step4" className="text-center space-y-6 py-12">
-      <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-        <Check className="w-10 h-10 text-primary" />
+      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <Check className="w-10 h-10 text-green-600" />
       </div>
-      <h3 className="text-3xl font-bold text-white">¡Recibido!</h3>
-      <p className="text-zinc-400 text-lg max-w-md mx-auto">
+      <h3 className="text-3xl font-bold text-slate-900">¡Recibido!</h3>
+      <p className="text-slate-600 text-lg max-w-md mx-auto">
         Gracias por tu interés, {formData.name.split(" ")[0]}. Hemos enviado un correo de confirmación a <strong>{formData.email}</strong>.
       </p>
-      <p className="text-zinc-500">Nuestro equipo te contactará en breve.</p>
+      <p className="text-slate-500">Nuestro equipo te contactará en breve.</p>
     </div>
   ];
 
@@ -170,8 +170,8 @@ export function ContactForm() {
         {[0, 1, 2, 3].map((s) => (
           <div
             key={s}
-            className={`h-1 flex-1 rounded-full transition-colors duration-500 ${
-              s <= step ? "bg-primary" : "bg-zinc-800"
+            className={`h-1.5 flex-1 rounded-full transition-colors duration-500 ${
+              s <= step ? "bg-blue-600" : "bg-slate-200"
             }`}
           />
         ))}
