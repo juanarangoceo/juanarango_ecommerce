@@ -46,6 +46,11 @@ export async function generateMetadata(props: {
 }
 
 // Main Server Component (Maximum Performance)
+import { TrustSection } from "./_components/trust-section";
+import { AdvancedSearchSection } from "./_components/advanced-search-section";
+
+// ... existing imports
+
 export default async function LuxeEstatesDemoPage(props: {
   searchParams: Promise<{ brand?: string; theme?: string; city?: string }>
 }) {
@@ -81,11 +86,17 @@ export default async function LuxeEstatesDemoPage(props: {
       {/* Properties Section */}
       <PropertiesSection city={city} />
 
+      {/* Trust & Stats Section (NEW) */}
+      <TrustSection />
+
       {/* Features Section */}
       <FeaturesSection />
 
       {/* Testimonials Section */}
       <TestimonialsSection />
+
+      {/* Advanced Search & Contact (NEW) */}
+      <AdvancedSearchSection />
 
       {/* Conversion CTA (The Money Shot) */}
       <ConversionCTA brandName={brandName} />

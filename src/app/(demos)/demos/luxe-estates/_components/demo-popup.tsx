@@ -12,14 +12,9 @@ export function DemoPagePopup({ brandName }: { brandName: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if popup was already shown in this session
-    const wasShown = sessionStorage.getItem(STORAGE_KEY);
-    if (wasShown) return;
-
-    // Show popup after delay
+    // Logic updated: Show on every visit/refresh as per user request
     const timer = setTimeout(() => {
       setIsVisible(true);
-      sessionStorage.setItem(STORAGE_KEY, "true");
     }, POPUP_DELAY);
 
     return () => clearTimeout(timer);
@@ -30,7 +25,11 @@ export function DemoPagePopup({ brandName }: { brandName: string }) {
   };
 
   const handleCTA = () => {
-    window.location.href = "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria#contacto";
+    setIsVisible(false); // Close popup when clicking CTA
+    const section = document.getElementById("advanced-search");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
