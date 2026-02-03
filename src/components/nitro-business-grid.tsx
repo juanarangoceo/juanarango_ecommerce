@@ -30,7 +30,7 @@ export function NitroBusinessGrid() {
       id: "INMOBILIARIA",
       icon: Building2,
       title: "Nitro Inmobiliaria",
-      desc: "Showrooms virtuales y captación de leads cualificados para desarrollos inmobiliarios.",
+      desc: "Webs de alto rendimiento para inmobiliarias. Captación automática de leads y SEO optimizado para vender más.",
       href: "/soluciones/nitro-inmobiliaria",
       color: "blue",
       cta: "Ver Solución Inmobiliaria"

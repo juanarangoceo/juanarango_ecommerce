@@ -17,23 +17,23 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Nitro Inmobiliaria | Plataforma Digital para Desarrollos Inmobiliarios",
-  description: "Transforma la venta de propiedades con tours virtuales 360°, captación automática de leads cualificados y CRM inteligente. Tecnología de alto rendimiento para el sector inmobiliario en Colombia y Latinoamérica.",
+  title: "Nitro Inmobiliaria | Plataforma Web de Alto Rendimiento para Inmobiliarias",
+  description: "Convierte tu sitio web inmobiliario en una máquina de ventas. Captación inteligente de leads, automatización de seguimiento y tecnología que multiplica tus conversiones. Soluciones digitales para el sector inmobiliario.",
   keywords: [
-    "plataforma digital para inmobiliarias",
-    "tours virtuales 360 grados",
+    "plataforma web para inmobiliarias",
+    "sitio web inmobiliario alto rendimiento",
     "captación de leads inmobiliarios",
     "marketing digital inmobiliario",
-    "showroom virtual apartamentos",
-    "CRM inmobiliario inteligencia artificial",
-    "automatización ventas inmobiliarias Colombia"
+    "web para venta de propiedades",
+    "automatización inmobiliaria",
+    "conversión leads inmobiliarios Colombia"
   ],
   alternates: {
     canonical: 'https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria'
   },
   openGraph: {
     title: "Nitro Inmobiliaria | Plataforma Digital para Desarrollos Inmobiliarios",
-    description: "Transforma la venta de propiedades con tours virtuales 360°, captación automática de leads cualificados y CRM inteligente.",
+    description: "Convierte tu sitio web inmobiliario en una máquina de ventas con captación inteligente de leads y automatización que multiplica conversiones.",
     url: 'https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria',
     type: 'website',
     locale: 'es_CO',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Nitro Inmobiliaria | Plataforma Digital para Desarrollos Inmobiliarios",
-    description: "Transforma la venta de propiedades con tours virtuales 360°, captación automática de leads cualificados y CRM inteligente.",
+    description: "Convierte tu sitio web inmobiliario en una máquina de ventas con captación inteligente de leads y automatización que multiplica conversiones.",
   }
 };
 
@@ -65,7 +65,7 @@ export default function NitroInmobiliariaPage() {
               "@type": "Country",
               "name": "Colombia"
             },
-            "description": "Soluciones digitales de alto rendimiento para desarrollos inmobiliarios: tours virtuales 360°, captación de leads y CRM inteligente"
+            "description": "Soluciones digitales de alto rendimiento para desarrollos inmobiliarios: webs optimizadas, captación de leads y automatización de ventas"
           })
         }}
       />
@@ -89,17 +89,17 @@ export default function NitroInmobiliariaPage() {
               
               {/* H1 - Primary SEO Target */}
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white leading-[1.1]">
-                Vende Propiedades Más Rápido con{" "}
+                Tu Sitio Web Inmobiliario{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-amber-500">
-                  Showrooms Virtuales
+                  Que Vende 24/7
                 </span>
               </h1>
               
               {/* Value Proposition */}
               <p className="text-xl text-zinc-400 max-w-2xl mb-10 leading-relaxed">
-                Dejamos atrás los métodos tradicionales. Creamos experiencias digitales inmersivas con{" "}
-                <strong className="text-blue-400">tours virtuales 360°</strong>, captación automática de leads cualificados y{" "}
-                <strong className="text-blue-400">CRM inteligente</strong> que multiplica tus ventas.
+                No más webs que solo muestran propiedades. Construimos{" "}
+                <strong className="text-blue-400">plataformas de alto rendimiento</strong> que captan, califican y convierten leads automáticamente.{" "}
+                <strong className="text-blue-400">Tu equipo vende, nosotros multiplicamos resultados.</strong>
               </p>
 
               {/* Stats Row */}
@@ -109,8 +109,8 @@ export default function NitroInmobiliariaPage() {
                   <div className="text-xs text-zinc-500 uppercase tracking-wider">Más Leads Calificados</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-amber-400 mb-1">70%</div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Menos Visitas Físicas</div>
+                  <div className="text-3xl font-bold text-amber-400 mb-1">90+</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Performance Score</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-blue-400 mb-1">50%</div>
@@ -124,7 +124,7 @@ export default function NitroInmobiliariaPage() {
                   href="#contacto"
                   className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20"
                 >
-                  Solicitar Demo <ArrowRight className="w-4 h-4" />
+                  Solicitar Auditoría Gratuita <ArrowRight className="w-4 h-4" />
                 </a>
                 <a 
                   href="#soluciones"
@@ -153,26 +153,26 @@ export default function NitroInmobiliariaPage() {
 
             {/* Benefits Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Benefit 1: Tours Virtuales */}
+              {/* Benefit 1: Web Performance */}
               <SpotlightCard 
                 spotlightColor="rgba(59, 130, 246, 0.15)" 
                 className="p-8 bg-blue-950/10 border-blue-500/20 hover:border-blue-500/40 transition-all"
               >
                 <div className="p-3 bg-blue-500/10 rounded-xl w-fit mb-6">
-                  <Eye className="w-10 h-10 text-blue-400" />
+                  <Clock className="w-10 h-10 text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-white">Tours Virtuales 360°</h3>
+                <h3 className="text-2xl font-bold mb-3 text-white">Webs de Alto Rendimiento</h3>
                 <p className="text-zinc-400 leading-relaxed mb-4">
-                  Showrooms inmersivos que permiten a tus clientes recorrer propiedades desde cualquier lugar, 24/7. Reduce visitas físicas en un 70% y califica leads antes de la cita.
+                  Sitios web optimizados que cargan en menos de 1 segundo. Tus clientes no esperan, y Google premia la velocidad con mejor posicionamiento y más tráfico orgánico.
                 </p>
                 <ul className="space-y-2 text-sm text-zinc-500">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <span>Recorridos interactivos en alta definición</span>
+                    <span>Performance 90+ en Google Lighthouse</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <span>Integración con planos y especificaciones</span>
+                    <span>SEO optimizado para posicionamiento local</span>
                   </li>
                 </ul>
               </SpotlightCard>
@@ -249,30 +249,30 @@ export default function NitroInmobiliariaPage() {
                   <div>
                     <div className="flex items-center gap-3 mb-4">
                       <Sparkles className="w-6 h-6 text-blue-400" />
-                      <h3 className="text-3xl font-bold text-white">Experiencias Inmersivas</h3>
+                      <h3 className="text-3xl font-bold text-white">Presencia Digital Premium</h3>
                     </div>
                     <p className="text-zinc-400 leading-relaxed mb-6">
-                      Transforma renders estáticos en experiencias interactivas. Tus clientes pueden explorar cada rincón del proyecto, cambiar acabados, ver vistas desde diferentes pisos y sentir el espacio antes de construir.
+                      Webs inmobiliarias que impresionan y convierten. Galerías de propiedades optimizadas, filtros inteligentes, y experiencia de usuario diseñada para que tus clientes encuentren su propiedad ideal en segundos.
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Tours 360° con hotspots informativos</span>
+                        <span className="text-zinc-300">Diseño responsive optimizado para móviles</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Configurador de acabados en tiempo real</span>
+                        <span className="text-zinc-300">Galerías de imágenes de alta calidad</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Integración con realidad virtual (VR)</span>
+                        <span className="text-zinc-300">Búsqueda avanzada con filtros inteligentes</span>
                       </li>
                     </ul>
                   </div>
                   <div className="bg-gradient-to-br from-blue-950/30 to-amber-950/20 border border-blue-500/20 rounded-2xl p-8 h-64 flex items-center justify-center">
                     <div className="text-center">
-                      <Eye className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" />
-                      <p className="text-zinc-500 text-sm">Vista previa de tour virtual</p>
+                      <Building2 className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" />
+                      <p className="text-zinc-500 text-sm">Plataforma web inmobiliaria</p>
                     </div>
                   </div>
                 </div>
@@ -282,29 +282,29 @@ export default function NitroInmobiliariaPage() {
                   <div className="order-2 md:order-1 bg-gradient-to-br from-amber-950/20 to-blue-950/30 border border-amber-500/20 rounded-2xl p-8 h-64 flex items-center justify-center">
                     <div className="text-center">
                       <TrendingUp className="w-16 h-16 text-amber-400 mx-auto mb-4 opacity-50" />
-                      <p className="text-zinc-500 text-sm">Dashboard de conversión</p>
+                      <p className="text-zinc-500 text-sm">Automatización de leads</p>
                     </div>
                   </div>
                   <div className="order-1 md:order-2">
                     <div className="flex items-center gap-3 mb-4">
                       <TrendingUp className="w-6 h-6 text-amber-400" />
-                      <h3 className="text-3xl font-bold text-white">CRM Inmobiliario Inteligente</h3>
+                      <h3 className="text-3xl font-bold text-white">Automatización Inteligente</h3>
                     </div>
                     <p className="text-zinc-400 leading-relaxed mb-6">
-                      Sistema de gestión que automatiza seguimiento, califica leads por probabilidad de compra y te indica el momento exacto para contactar. Aumenta tu tasa de conversión hasta 3x.
+                      Sistema que captura, califica y nutre leads automáticamente. Integración con WhatsApp, email y CRM para que tu equipo solo hable con prospectos listos para comprar.
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Automatización de seguimiento por email y WhatsApp</span>
+                        <span className="text-zinc-300">Formularios inteligentes con validación</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Scoring predictivo con machine learning</span>
+                        <span className="text-zinc-300">Seguimiento automático por email y WhatsApp</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Integración con calendarios y videollamadas</span>
+                        <span className="text-zinc-300">Scoring de leads con machine learning</span>
                       </li>
                     </ul>
                   </div>
@@ -314,31 +314,31 @@ export default function NitroInmobiliariaPage() {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div>
                     <div className="flex items-center gap-3 mb-4">
-                      <Clock className="w-6 h-6 text-blue-400" />
-                      <h3 className="text-3xl font-bold text-white">Velocidad de Carga Obsesiva</h3>
+                      <BarChart3 className="w-6 h-6 text-blue-400" />
+                      <h3 className="text-3xl font-bold text-white">SEO y Posicionamiento</h3>
                     </div>
                     <p className="text-zinc-400 leading-relaxed mb-6">
-                      Tus clientes no esperan. Optimizamos cada milisegundo para que tu showroom virtual cargue en menos de 1 segundo, incluso con tours 360° en alta definición. Mejor experiencia = más ventas.
+                      Aparecer en Google cuando buscan propiedades es clave. Optimizamos tu web para posicionamiento local y keywords de alto valor. Más visibilidad = más leads orgánicos.
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">CDN global para carga instantánea</span>
+                        <span className="text-zinc-300">Optimización SEO técnica y de contenido</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Optimización automática de imágenes 360°</span>
+                        <span className="text-zinc-300">Posicionamiento local (Google My Business)</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-zinc-300">Performance 90+ en Google Lighthouse</span>
+                        <span className="text-zinc-300">Analytics y reportes de tráfico</span>
                       </li>
                     </ul>
                   </div>
                   <div className="bg-gradient-to-br from-blue-950/30 to-black border border-blue-500/20 rounded-2xl p-8 h-64 flex items-center justify-center">
                     <div className="text-center">
-                      <div className="text-5xl font-bold text-blue-400 mb-2">&lt;1s</div>
-                      <p className="text-zinc-500 text-sm">Tiempo de carga promedio</p>
+                      <div className="text-5xl font-bold text-blue-400 mb-2">#1</div>
+                      <p className="text-zinc-500 text-sm">Posición en Google</p>
                     </div>
                   </div>
                 </div>
@@ -367,7 +367,7 @@ export default function NitroInmobiliariaPage() {
                 },
                 { 
                   feature: "Experiencia de Visualización", 
-                  us: "Tours 360° interactivos", 
+                  us: "Galerías optimizadas HD", 
                   them: "Fotos estáticas / PDF" 
                 },
                 { 
@@ -421,10 +421,10 @@ export default function NitroInmobiliariaPage() {
                     </div>
                   </div>
                   <p className="text-zinc-400 italic leading-relaxed mb-4">
-                    "Vendimos el 60% de las unidades en preventa gracias al showroom virtual. Los clientes llegaban a la sala de ventas ya convencidos, solo faltaba cerrar detalles."
+                    "La nueva web nos posicionó en Google y empezamos a recibir leads cualificados sin pagar publicidad. El ROI fue inmediato y sostenible."
                   </p>
                   <div className="flex items-center gap-4 text-sm">
-                    <span className="text-blue-400 font-bold">+60% ventas en preventa</span>
+                    <span className="text-blue-400 font-bold">+200% leads orgánicos</span>
                     <span className="text-zinc-600">•</span>
                     <span className="text-zinc-500">3 meses</span>
                   </div>
@@ -442,7 +442,7 @@ export default function NitroInmobiliariaPage() {
                     </div>
                   </div>
                   <p className="text-zinc-400 italic leading-relaxed mb-4">
-                    "El CRM inteligente nos ahorró cientos de horas. Solo contactamos leads calificados y nuestra tasa de conversión se triplicó en 6 meses."
+                    "La automatización de leads nos permitió escalar sin contratar más vendedores. El sistema califica y nutre prospectos mientras dormimos."
                   </p>
                   <div className="flex items-center gap-4 text-sm">
                     <span className="text-amber-400 font-bold">3x conversión</span>
