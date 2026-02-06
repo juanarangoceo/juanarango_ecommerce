@@ -19,26 +19,29 @@ interface LocalValueSectionProps {
 
 export function LocalValueSection({ pSEO }: LocalValueSectionProps) {
   return (
-    <section className="py-16 md:py-24 relative bg-card/30">
+    <section className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Local Authority */}
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
+              <MapPin className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium text-accent">
                 Expertos en {pSEO.ciudad}
               </span>
             </div>
-            
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance">
-              Entendemos los desafíos de {pSEO.nichoPlural} en {pSEO.ciudad}
+
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance leading-tight">
+              Entendemos los desafios de las inmobiliarias en {pSEO.ciudad}
             </h2>
-            
-            {/* AI-Generated Value Paragraph - pSEO */}
-            <div className="prose prose-invert max-w-none">
-              {pSEO.parrafoValor.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="text-muted-foreground leading-relaxed mb-4">
+
+            {/* Value Paragraphs */}
+            <div className="space-y-4">
+              {pSEO.parrafoValor.split("\n\n").map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-muted-foreground leading-relaxed"
+                >
                   {paragraph}
                 </p>
               ))}
@@ -46,57 +49,64 @@ export function LocalValueSection({ pSEO }: LocalValueSectionProps) {
           </div>
 
           {/* Right: Local Stats */}
-          <div className="space-y-6">
-            <div className="p-6 rounded-xl border border-border bg-background/50">
+          <div className="space-y-5">
+            <div className="p-6 rounded-xl border border-border bg-card">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                <div className="p-3 rounded-lg bg-accent/10 text-accent flex-shrink-0">
                   <TrendingUp className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    El mercado está cambiando
+                    El mercado inmobiliario esta cambiando
                   </h3>
-                  <p className="text-muted-foreground">
-                    En {pSEO.departamento}, las empresas de {pSEO.nicho} que 
-                    invierten en presencia digital de calidad captan hasta 
-                    <span className="text-primary font-semibold"> 5 veces más clientes</span> que 
-                    aquellas con sitios web genéricos o desactualizados.
+                  <p className="text-muted-foreground leading-relaxed">
+                    En {pSEO.departamento}, las inmobiliarias que invierten en presencia
+                    digital de calidad captan hasta{" "}
+                    <span className="text-accent font-semibold">
+                      5 veces mas compradores
+                    </span>{" "}
+                    que aquellas con sitios web genericos o desactualizados.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-xl border border-border bg-background/50">
+            <div className="p-6 rounded-xl border border-border bg-card">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                <div className="p-3 rounded-lg bg-accent/10 text-accent flex-shrink-0">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Tus clientes te buscan online
+                    Tus compradores te buscan online
                   </h3>
-                  <p className="text-muted-foreground">
-                    El <span className="text-primary font-semibold">87% de las personas</span> en 
-                    {" "}{pSEO.ciudad} investigan online antes de elegir un proveedor de servicios. 
-                    Si no te encuentran fácilmente, eligen a tu competencia.
+                  <p className="text-muted-foreground leading-relaxed">
+                    El{" "}
+                    <span className="text-accent font-semibold">
+                      92% de los compradores
+                    </span>{" "}
+                    en {pSEO.ciudad} investigan propiedades online antes de contactar
+                    una inmobiliaria. Si no te encuentran facilmente, eligen a tu
+                    competencia.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-xl border border-primary/30 bg-primary/5">
+            <div className="p-6 rounded-xl border border-accent/30 bg-accent/5">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-primary text-primary-foreground">
+                <div className="p-3 rounded-lg bg-primary text-primary-foreground flex-shrink-0">
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Diseñado para {pSEO.ciudad}
+                    Disenado para {pSEO.ciudad}
                   </h3>
-                  <p className="text-muted-foreground">
-                    No usamos plantillas genéricas. Cada solución que creamos está 
-                    pensada específicamente para las necesidades y el comportamiento 
-                    del consumidor en <span className="text-primary font-semibold">{pSEO.ciudad}</span>.
+                  <p className="text-muted-foreground leading-relaxed">
+                    No usamos plantillas genericas. Cada solucion esta pensada
+                    especificamente para el comportamiento del comprador inmobiliario
+                    en{" "}
+                    <span className="text-accent font-semibold">{pSEO.ciudad}</span>.
                   </p>
                 </div>
               </div>
