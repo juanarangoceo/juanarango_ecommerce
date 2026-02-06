@@ -1,31 +1,37 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const dmSans = DM_Sans({ 
+const inter = Inter({ 
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
 })
 
-const playfairDisplay = Playfair_Display({ 
+const jetbrainsMono = JetBrains_Mono({ 
   subsets: ["latin"],
-  variable: "--font-serif",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-mono",
 })
+
+// pSEO Variables - These will be replaced programmatically
+const cityVar = "{{ciudad}}"
+const industryVar = "{{industria}}"
 
 export const metadata: Metadata = {
-  title: "NitroCommerce | Presencia Digital Premium para Inmobiliarias",
-  description: "Transformamos la presencia digital de tu inmobiliaria. Mas propiedades vendidas, mas clientes calificados, menos esfuerzo. Agenda tu consulta gratuita.",
+  title: `Desarrollo Ecommerce Headless en ${cityVar} | NitroCommerce - Arquitectura de Alto Rendimiento`,
+  description: `Transformamos tu tienda online en ${cityVar} con arquitectura headless. Carga en <200ms, 99.9% uptime, +150% conversiones. Especialistas en ${industryVar}. Diagnóstico gratuito.`,
   keywords: [
-    'inmobiliaria digital',
-    'pagina web inmobiliaria',
-    'marketing inmobiliario',
-    'captar clientes inmobiliaria',
-    'presencia digital bienes raices',
-    'ecommerce inmobiliario',
+    `ecommerce ${cityVar}`,
+    `desarrollo web ${cityVar}`,
+    `tienda online ${cityVar}`,
+    'arquitectura headless',
+    'ecommerce escalable',
+    'optimización conversiones',
+    `${industryVar} ecommerce`,
+    'Next.js ecommerce',
+    'velocidad web',
+    'Core Web Vitals',
   ],
   authors: [{ name: 'NitroCommerce' }],
   creator: 'NitroCommerce',
@@ -46,18 +52,19 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     url: 'https://nitrocommerce.com',
     siteName: 'NitroCommerce',
-    title: 'NitroCommerce | Presencia Digital Premium para Inmobiliarias',
-    description: 'Ayudamos a inmobiliarias a captar mas clientes con presencia digital de alto nivel.',
+    title: `Desarrollo Ecommerce Headless en ${cityVar} | NitroCommerce`,
+    description: `Arquitectura headless de alto rendimiento para ecommerce en ${cityVar}. Carga en <200ms, escalabilidad infinita.`,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NitroCommerce | Inmobiliarias Digitales',
-    description: 'Presencia digital premium que vende propiedades por ti.',
+    title: `Ecommerce Headless ${cityVar} | NitroCommerce`,
+    description: `Transformamos tu tienda online en ${cityVar}. Velocidad extrema, conversiones que explotan.`,
   },
+    generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a2744',
+  themeColor: '#22c55e',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -70,7 +77,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

@@ -3,47 +3,51 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* NitroCommerce Premium Real Estate Theme — Warm Light */
+/* NitroCommerce Dark Theme with Neon Green Accents */
 :root {
-  --background: oklch(0.97 0.005 80);
-  --foreground: oklch(0.15 0.02 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 250);
-  --primary: oklch(0.25 0.05 250);
-  --primary-foreground: oklch(0.98 0.005 80);
-  --secondary: oklch(0.94 0.01 80);
-  --secondary-foreground: oklch(0.25 0.05 250);
-  --muted: oklch(0.92 0.008 80);
-  --muted-foreground: oklch(0.45 0.02 250);
-  --accent: oklch(0.65 0.14 65);
-  --accent-foreground: oklch(0.15 0.02 250);
-  --destructive: oklch(0.55 0.22 25);
+  --background: oklch(0.08 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.1 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.85 0.25 142);
+  --primary-foreground: oklch(0.08 0 0);
+  --secondary: oklch(0.16 0 0);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.85 0.25 142);
+  --accent-foreground: oklch(0.08 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.88 0.01 80);
-  --input: oklch(0.92 0.008 80);
-  --ring: oklch(0.25 0.05 250);
-  --chart-1: oklch(0.25 0.05 250);
-  --chart-2: oklch(0.65 0.14 65);
-  --chart-3: oklch(0.45 0.08 250);
-  --chart-4: oklch(0.55 0.1 65);
-  --chart-5: oklch(0.35 0.05 250);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.2 0.04 250);
-  --sidebar-foreground: oklch(0.98 0.005 80);
-  --sidebar-primary: oklch(0.65 0.14 65);
-  --sidebar-primary-foreground: oklch(0.15 0.02 250);
-  --sidebar-accent: oklch(0.3 0.04 250);
-  --sidebar-accent-foreground: oklch(0.98 0.005 80);
-  --sidebar-border: oklch(0.35 0.04 250);
-  --sidebar-ring: oklch(0.65 0.14 65);
+  --border: oklch(0.22 0 0);
+  --input: oklch(0.16 0 0);
+  --ring: oklch(0.85 0.25 142);
+  --chart-1: oklch(0.85 0.25 142);
+  --chart-2: oklch(0.7 0.2 142);
+  --chart-3: oklch(0.55 0.15 142);
+  --chart-4: oklch(0.45 0.1 142);
+  --chart-5: oklch(0.35 0.05 142);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.1 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.85 0.25 142);
+  --sidebar-primary-foreground: oklch(0.08 0 0);
+  --sidebar-accent: oklch(0.16 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.22 0 0);
+  --sidebar-ring: oklch(0.85 0.25 142);
+  
+  /* Custom NitroCommerce tokens */
+  --nitro-glow: oklch(0.85 0.25 142 / 0.5);
+  --nitro-gradient-start: oklch(0.85 0.25 142);
+  --nitro-gradient-end: oklch(0.65 0.2 160);
 }
 
 @theme inline {
-  --font-sans: 'DM Sans', 'DM Sans Fallback', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
-  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
+  --font-sans: var(--font-sans, 'Inter', 'Inter Fallback', system-ui, sans-serif);
+  --font-mono: var(--font-mono, 'JetBrains Mono', 'JetBrains Mono Fallback', monospace);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

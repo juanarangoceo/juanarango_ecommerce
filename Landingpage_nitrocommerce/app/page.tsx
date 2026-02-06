@@ -12,53 +12,46 @@ import { Navbar } from "@/components/landing/navbar"
 import { LocalValueSection } from "@/components/landing/local-value-section"
 
 // ============================================
-// pSEO DYNAMIC VARIABLES - INMOBILIARIAS
+// pSEO DYNAMIC VARIABLES
 // ============================================
 // Replace these values programmatically for each city/niche page
+// Format: {{variable_name}} for automation systems
 // ============================================
 
 const pSEOVariables = {
   // Location Variables
-  ciudad: "Bogota",
-  departamento: "Colombia",
-
-  // Industry Variables
-  nicho: "inmobiliarias",
-  nichoPlural: "inmobiliarias",
-
+  ciudad: "Bogotá",           // {{ciudad}} - City name
+  departamento: "Colombia",    // {{departamento}} - State/Region
+  
+  // Industry Variables  
+  nicho: "clínicas estéticas", // {{nicho}} - Business niche
+  nichoPlural: "clínicas",     // {{nicho_plural}} - Plural form
+  
   // Dynamic Content
-  subtituloContextual:
-    "En Bogota, la competencia inmobiliaria ha crecido un 35% en el ultimo ano. Las inmobiliarias que no digitalizan su catalogo y procesos estan perdiendo compradores frente a competidores con presencia online superior.",
-
+  subtituloContextual: "En Bogotá, la competencia en el sector de clínicas estéticas ha crecido un 40% en el último año. Las empresas que no digitalizan sus procesos están perdiendo pacientes frente a competidores con presencia online superior.",
+  
   // Localized Social Proof
-  textoAutoridad:
-    "Especialistas en presencia digital para inmobiliarias en Colombia",
-  mencionLocal:
-    "Nuestra tecnologia esta disenada para las exigencias del mercado inmobiliario en Bogota",
-
+  textoAutoridad: "Especialistas en transformar negocios digitales en Colombia",
+  mencionLocal: "Nuestra tecnología está diseñada para las exigencias del mercado en Bogotá",
+  
   // AI-Generated Value Paragraph (200-300 words)
-  parrafoValor: `El mercado inmobiliario en Bogota enfrenta una transformacion sin precedentes. Con miles de propiedades compitiendo por la atencion de compradores cada vez mas exigentes, la diferenciacion ya no esta solo en la ubicacion o el precio, sino en como presentas tu inventario y que tan facil es para un comprador encontrarte.
+  parrafoValor: `El sector de clínicas estéticas en Bogotá enfrenta desafíos únicos que requieren soluciones digitales especializadas. Con más de 2,000 clínicas compitiendo en la capital colombiana, la diferenciación ya no está solo en los servicios que ofreces, sino en cómo los presentas y qué tan fácil es para tus pacientes encontrarte y agendar.
 
-Los compradores de hoy investigan online semanas antes de contactar a una inmobiliaria. Comparan fichas tecnicas, revisan fotos, exploran ubicaciones en Google Maps y leen resenas. Si tu presencia digital no transmite el profesionalismo que tu inmobiliaria representa, estas perdiendo compradores antes de que siquiera te consideren.
+Los pacientes de hoy investigan online antes de tomar cualquier decisión. Si tu página carga lento, si tu sistema de citas es confuso, o si tu presencia digital no transmite la confianza y profesionalismo que tu clínica representa, estás perdiendo pacientes antes de que siquiera te consideren.
 
-Las inmobiliarias que estan ganando en Bogota son aquellas que invierten en experiencias digitales impecables: catalogos que cargan instantaneamente, fichas de propiedades con toda la informacion relevante, y una presencia online que convierte visitantes curiosos en prospectos calificados que llaman listos para agendar visitas.`,
+Las clínicas que están ganando en Bogotá son aquellas que han invertido en experiencias digitales impecables: sitios web que cargan instantáneamente, sistemas de agendamiento que funcionan 24/7, y presencia online que convierte visitantes curiosos en pacientes agendados. No se trata de tener "un sitio web bonito" — se trata de tener una máquina de captación que trabaja para ti mientras duermes.`,
 }
 
 export default function NitroCommerceLanding() {
   return (
     <main className="min-h-screen bg-background">
-      {/* TOFU - Awareness */}
       <Navbar />
       <HeroSection pSEO={pSEOVariables} />
       <MetricsSection />
-
-      {/* MOFU - Consideration */}
       <LocalValueSection pSEO={pSEOVariables} />
       <ProblemSection pSEO={pSEOVariables} />
       <SolutionSection pSEO={pSEOVariables} />
       <BenefitsSection pSEO={pSEOVariables} />
-
-      {/* BOFU - Decision */}
       <ProcessSection />
       <TestimonialsSection pSEO={pSEOVariables} />
       <FAQSection />
