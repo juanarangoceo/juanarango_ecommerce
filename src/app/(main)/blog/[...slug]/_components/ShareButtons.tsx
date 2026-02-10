@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Twitter, Linkedin, Link2, Facebook } from "lucide-react"
 
-export function ShareButtons({ title, slug }: { title: string, slug: string }) {
-  const url = `https://juanarangoecommerce.com/blog/${slug}`
+export function ShareButtons({ title, slug, category }: { title: string, slug: string, category?: string }) {
+  const path = category ? `/blog/${category}/${slug}` : `/blog/${slug}`;
+  const url = `https://juanarangoecommerce.com${path}`
   const encodedTitle = encodeURIComponent(title)
   const encodedUrl = encodeURIComponent(url)
 

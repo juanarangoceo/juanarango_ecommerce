@@ -25,13 +25,15 @@ export async function POST(req: Request) {
         parts: [{
           text: `Eres un escritor de blogs experto. Escribe un artículo sobre "${topic}".
           
-          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 4 claves:
+          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 6 claves:
           1. "title": Título del post.
           2. "slug": URL amigable (ej: titulo-del-post).
           3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc). NO incluyas FAQ aquí dentro.
-          4. "faq": Un array de objetos, donde cada objeto tiene "question" y "answer". Genera 3 preguntas frecuentes relevantes sobre el tema.
+          4. "faq": Un array de objetos con "question" y "answer".
+          5. "category": UNA de estas categorías exactas: "ecommerce", "estrategia-marketing", "ia-automatizacion", "headless-commerce". Elige la más relevante.
+          6. "tags": Un array de 3-5 etiquetas relevantes en español (ej: ["shopify", "seo", "conversiones"]).
 
-          NO uses claves anidadas incorrectas. El JSON debe ser plano en el nivel superior (title, slug, content, faq).`
+          NO incluyas "markdown" al inicio ni al final. Solo el JSON puro.`
         }]
       }],
       config: { 

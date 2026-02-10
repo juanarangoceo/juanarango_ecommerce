@@ -4,9 +4,9 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
-import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
@@ -24,8 +24,33 @@ import { TikTokEmbed } from "@/components/blog/tiktok-embed";
 import { Badge } from "@/components/ui/badge";
 import { ComparisonTable } from "@/components/blog/ComparisonTable";
 import { CopyableCodeBlock } from "@/components/blog/CopyableCodeBlock";
+import { BlogCard } from "../_components/blog-card";
 
-// GROQ Query for Single Post (Updated with topic-based related posts)
+// ========== CONFIGURATION ==========
+
+const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
+
+const CATEGORY_META: Record<string, { title: string; description: string }> = {
+  'ecommerce': {
+    title: 'Ecommerce',
+    description: 'Artículos sobre comercio electrónico, estrategias de venta online, plataformas y optimización de tiendas digitales.',
+  },
+  'estrategia-marketing': {
+    title: 'Estrategia de Marketing',
+    description: 'Estrategias de marketing digital, growth hacking, SEO, publicidad y conversión para negocios online.',
+  },
+  'ia-automatizacion': {
+    title: 'IA y Automatización',
+    description: 'Inteligencia artificial, automatización de procesos, chatbots, machine learning y herramientas de IA para negocios.',
+  },
+  'headless-commerce': {
+    title: 'Headless Commerce',
+    description: 'Arquitectura headless, APIs, microservicios, JAMstack y comercio composable para tiendas de alto rendimiento.',
+  },
+};
+
+// ========== GROQ QUERIES ==========
+
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
   mainImage,
@@ -36,23 +61,31 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "slug": slug.current,
   author,
   faq,
-  topics,
-  "relatedPosts": *[_type == "post" && slug.current != $slug && count((topics[])[@ in ^.topics[]]) > 0] | order(publishedAt desc)[0...3] {
+  category,
+  tags,
+  "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
     publishedAt,
-    topics
+    category
   },
   "fallbackPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
-    publishedAt
+    publishedAt,
+    category
   }
 }`;
 
+const CATEGORY_POSTS_QUERY = `*[_type == "post" && category == $category && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
+  _id, title, slug, publishedAt, _createdAt, mainImage, excerpt, topic, category, tags, estimatedReadingTime
+}`;
+
 export const revalidate = 60;
+
+// ========== HELPERS ==========
 
 function calculateReadingTime(text: string): number {
   const wordsPerMinute = 200;
@@ -68,7 +101,21 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, '');
 }
 
-// Portable Text Components (with TikTok, Comparison Tables, Code Blocks)
+function parseSlugParts(slugParts: string[]): { mode: 'category' | 'categorized-post' | 'post'; category?: string; postSlug?: string } {
+  if (slugParts.length === 1) {
+    if (VALID_CATEGORIES.includes(slugParts[0])) {
+      return { mode: 'category', category: slugParts[0] };
+    }
+    return { mode: 'post', postSlug: slugParts[0] };
+  }
+  if (slugParts.length === 2 && VALID_CATEGORIES.includes(slugParts[0])) {
+    return { mode: 'categorized-post', category: slugParts[0], postSlug: slugParts[1] };
+  }
+  return { mode: 'post' }; // Will 404
+}
+
+// ========== PORTABLE TEXT COMPONENTS ==========
+
 const ptComponents = {
   types: {
     tiktokEmbed: ({ value }: any) => {
@@ -108,36 +155,110 @@ const ptComponents = {
   },
 };
 
-// Generate metadata for SEO
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
-  const post = await client.fetch(POST_QUERY, { slug: params.slug });
+// ========== METADATA ==========
 
-  if (!post) {
-    return {
-      title: 'Post no encontrado',
-    };
+export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params;
+  const parsed = parseSlugParts(params.slug);
+
+  // Category listing metadata
+  if (parsed.mode === 'category' && parsed.category) {
+    const meta = CATEGORY_META[parsed.category];
+    return constructMetadata({
+      title: `${meta.title} | Blog Nitro Ecom`,
+      description: meta.description,
+      canonical: `https://www.juanarangoecommerce.com/blog/${parsed.category}`,
+    });
   }
+
+  // Post metadata (both categorized and non-categorized)
+  const postSlug = parsed.postSlug;
+  if (!postSlug) return { title: 'Post no encontrado' };
+
+  const post = await client.fetch(POST_QUERY, { slug: postSlug });
+  if (!post) return { title: 'Post no encontrado' };
 
   const rawContent = post.content || "";
   const excerpt = rawContent 
     ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
     : post.title;
 
+  const canonical = post.category
+    ? `https://www.juanarangoecommerce.com/blog/${post.category}/${post.slug}`
+    : `https://www.juanarangoecommerce.com/blog/${post.slug}`;
+
   return constructMetadata({
     title: `${post.title} | Blog Nitro Ecom`,
     description: excerpt,
     image: post.mainImage?.asset?._ref ? urlForImage(post.mainImage).url() : undefined,
-    canonical: `https://www.juanarangoecommerce.com/blog/${post.slug}`,
+    canonical,
   });
 }
 
-export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
-  const post = await client.fetch(POST_QUERY, { slug: params.slug });
+// ========== CATEGORY LISTING COMPONENT ==========
 
-  if (!post) {
-    notFound();
+function CategoryPage({ categorySlug, meta, posts }: { categorySlug: string; meta: { title: string; description: string }; posts: any[] }) {
+  return (
+    <main className="container mx-auto px-4 py-20 min-h-screen">
+      <div className="mb-12">
+        <Link href="/blog" className="inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-6">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Blog
+        </Link>
+        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">{meta.title}</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl">{meta.description}</p>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-8">
+          {posts && posts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {posts.map((post: any) => (<BlogCard key={post._id} post={post} />))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-xl text-muted-foreground mb-4">Aún no hay artículos en esta categoría.</p>
+              <p className="text-zinc-500">Pronto publicaremos contenido sobre {meta.title.toLowerCase()}.</p>
+            </div>
+          )}
+        </div>
+        <aside className="lg:col-span-4 space-y-6">
+          <div className="lg:sticky lg:top-24 space-y-6">
+            <NitroCtaCard />
+            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6"><NewsletterForm /></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  );
+}
+
+// ========== MAIN PAGE COMPONENT ==========
+
+export default async function BlogCatchAllPage(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params;
+  const parsed = parseSlugParts(params.slug);
+
+  // ===== CATEGORY LISTING MODE =====
+  if (parsed.mode === 'category' && parsed.category) {
+    const meta = CATEGORY_META[parsed.category];
+    const categoryPosts = await client.fetch(CATEGORY_POSTS_QUERY, { category: parsed.category } as any);
+    return <CategoryPage categorySlug={parsed.category} meta={meta} posts={categoryPosts} />;
+  }
+
+  // ===== BLOG POST MODE =====
+  const postSlug = parsed.postSlug;
+  if (!postSlug) notFound();
+
+  const post = await client.fetch(POST_QUERY, { slug: postSlug });
+  if (!post) notFound();
+
+  // Redirect guard: if accessing /blog/[slug] but post has a category, redirect to /blog/[category]/[slug]
+  if (parsed.mode === 'post' && post.category) {
+    redirect(`/blog/${post.category}/${post.slug}`);
+  }
+
+  // If accessing /blog/[category]/[slug] but category doesn't match, redirect to correct URL
+  if (parsed.mode === 'categorized-post' && post.category && parsed.category !== post.category) {
+    redirect(`/blog/${post.category}/${post.slug}`);
   }
 
   // Determine content source and reading time
@@ -160,6 +281,10 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
   const excerpt = rawContent 
     ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
     : post.title;
+
+  const postUrl = post.category
+    ? `https://www.juanarangoecommerce.com/blog/${post.category}/${post.slug}`
+    : `https://www.juanarangoecommerce.com/blog/${post.slug}`;
 
   const faqSchema = post.faq && post.faq.length > 0 ? {
     "@type": "FAQPage",
@@ -196,7 +321,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     description: excerpt,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://www.juanarangoecommerce.com/blog/${post.slug}`
+      "@id": postUrl
     },
     wordCount: rawContent.split(/\s+/).length,
     timeRequired: `PT${readingTime}M`,
@@ -207,6 +332,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
   if (faqSchema) {
     jsonLd.push(faqSchema);
   }
+
+  // Breadcrumb for categorized posts
+  const breadcrumb = post.category ? CATEGORY_META[post.category] : null;
 
   return (
     <>
@@ -222,17 +350,37 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
       <div className="bg-white dark:bg-zinc-950 min-h-screen">
         {/* Minimalist Hero Section */}
         <header className="container mx-auto px-4 pt-32 pb-12 max-w-5xl">
-            <Link 
-              href="/blog" 
-              className="inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Volver al Blog
-            </Link>
+            {/* Breadcrumb Navigation */}
+            <nav className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
+              <Link href="/blog" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                Blog
+              </Link>
+              {breadcrumb && (
+                <>
+                  <span>/</span>
+                  <Link href={`/blog/${post.category}`} className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                    {breadcrumb.title}
+                  </Link>
+                </>
+              )}
+            </nav>
 
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-8 leading-[1.1]">
               {post.title}
             </h1>
+
+            {/* Tags display */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {post.tags.map((tag: string) => (
+                  <Link key={tag} href={`/blog/tags/${encodeURIComponent(tag)}`}>
+                    <Badge variant="secondary" className="hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors cursor-pointer">
+                      #{tag}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            )}
 
             <div className="flex flex-wrap gap-6 items-center text-sm text-zinc-500 dark:text-zinc-400 border-t border-b border-zinc-100 dark:border-zinc-900 py-6">
                 <div className="flex items-center gap-2">
@@ -279,11 +427,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                         </div>
                     )}
 
-                    {/* TikToks or other PortableText Blocks (rendered BEFORE markdown if specified? No, usually after or mixed. 
-                        Since 'content' is markdown, we render that first. If the user wants TikToks, they might add them to 'body' in Studio.
-                        We render Body here as well to support embeds.)
-                    */}
-                    
                     <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
                         prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-zinc-900 dark:prose-headings:text-white
                         prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-4 prose-h2:border-b prose-h2:border-zinc-100 dark:prose-h2:border-zinc-900
@@ -297,7 +440,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                             <ReactMarkdown
                                 components={{
                                     h1: ({node, ...props}) => {
-                                        // Convert H1 to H2 to avoid duplicate H1 (page title is already H1)
                                         const text = String(props.children);
                                         const id = slugify(text);
                                         return <h2 id={id} className="text-3xl font-bold mt-12 mb-6 pb-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white" {...props}>{props.children}</h2>;
@@ -374,7 +516,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                       <NewsletterForm />
                     </div>
 
-                    {/* Related Posts - Topic-based with fallback */}
+                    {/* Related Posts - Category-aware */}
                      {((post.relatedPosts && post.relatedPosts.length > 0) || (post.fallbackPosts && post.fallbackPosts.length > 0)) && (
                         <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-zinc-100 dark:border-zinc-800">
                           <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">
@@ -384,7 +526,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                              {(post.relatedPosts && post.relatedPosts.length > 0 ? post.relatedPosts : post.fallbackPosts).map((related: any, index: number) => (
                                 <Link 
                                   key={related.slug} 
-                                  href={`/blog/${related.slug}`} 
+                                  href={related.category ? `/blog/${related.category}/${related.slug}` : `/blog/${related.slug}`} 
                                   className="group block p-4 md:p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-primary hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all duration-200"
                                 >
                                    <div className="flex items-start gap-3">
@@ -431,7 +573,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                          {/* Share Action */}
                          <div>
                             <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Compartir</h4>
-                            <ShareButtons title={post.title} slug={post.slug} />
+                            <ShareButtons title={post.title} slug={post.slug} category={post.category} />
                          </div>
                     </div>
                 </aside>

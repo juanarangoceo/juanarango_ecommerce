@@ -5,7 +5,7 @@ import { NewsletterForm } from "@/components/newsletter-form";
 import { BlogSearch } from "@/components/blog-search";
 import { RecentPostPills } from "@/components/recent-post-pills";
 import { BlogCard } from "./_components/blog-card";
-import { NitroCtaCard } from "./[slug]/_components/NitroCtaCard";
+import { NitroCtaCard } from "./[...slug]/_components/NitroCtaCard";
 import { Pagination } from "@/components/ui/pagination";
 
 import { constructMetadata } from "@/lib/utils";
@@ -30,6 +30,8 @@ const POSTS_QUERY = `*[
   mainImage,
   excerpt,
   topic,
+  category,
+  tags,
   estimatedReadingTime
 }`;
 
@@ -69,7 +71,8 @@ export default async function BlogPage({
   // Prepare data for "Recent Pills" (Top 5 latest)
   const recentPosts = safelyFilesPosts.slice(0, 5).map((p: any) => ({
     title: p.title,
-    slug: p?.slug?.current || ""
+    slug: p?.slug?.current || "",
+    category: p?.category || undefined
   }));
 
   return (
@@ -87,6 +90,24 @@ export default async function BlogPage({
       {/* Search Bar */}
       <div className="mb-8">
          <BlogSearch />
+      </div>
+
+      {/* Category Navigation */}
+      <div className="flex flex-wrap justify-center gap-3 mb-8">
+        {[
+          { slug: 'ecommerce', label: 'Ecommerce' },
+          { slug: 'estrategia-marketing', label: 'Marketing' },
+          { slug: 'ia-automatizacion', label: 'IA y Automatización' },
+          { slug: 'headless-commerce', label: 'Headless Commerce' },
+        ].map((cat) => (
+          <Link
+            key={cat.slug}
+            href={`/blog/${cat.slug}`}
+            className="px-4 py-2 text-sm font-medium rounded-full bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30 transition-all duration-200"
+          >
+            {cat.label}
+          </Link>
+        ))}
       </div>
 
       {/* Recent Post Pills */}

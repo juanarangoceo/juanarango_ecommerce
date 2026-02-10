@@ -142,7 +142,7 @@ export function BlogSearch() {
                     {suggestions.map((post) => (
                         <Link 
                             key={post.id} 
-                            href={`/blog/${post.slug}`}
+                            href={post.category ? `/blog/${post.category}/${post.slug}` : `/blog/${post.slug}`}
                             className="block px-6 py-4 hover:bg-white/5 transition-all duration-200 group relative overflow-hidden"
                             onClick={() => setIsOpen(false)}
                         >

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { TrendingUp } from "lucide-react"
 
 interface RecentPostPillsProps {
-  posts: { title: string; slug: string }[]
+  posts: { title: string; slug: string; category?: string }[]
 }
 
 export function RecentPostPills({ posts }: RecentPostPillsProps) {
@@ -27,7 +27,7 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
         {posts.map((post) => (
           <Link
             key={post.slug}
-            href={`/blog/${post.slug}`}
+            href={post.category ? `/blog/${post.category}/${post.slug}` : `/blog/${post.slug}`}
             className={cn(
               "w-full flex items-center justify-start rounded-full px-4 py-2.5 text-sm font-medium transition-all",
               "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-black hover:border-emerald-400"
@@ -43,7 +43,7 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
         {posts.map((post) => (
           <Link
             key={post.slug}
-            href={`/blog/${post.slug}`}
+            href={post.category ? `/blog/${post.category}/${post.slug}` : `/blog/${post.slug}`}
             className={cn(
               "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 shadow-sm hover:scale-105",
               "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-black hover:border-emerald-400",

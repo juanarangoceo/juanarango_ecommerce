@@ -7,6 +7,7 @@ export interface SearchResult {
   id: string;
   title: string;
   slug: string;
+  category?: string; // Added category
   excerpt: string;
   similarity: number;
 }

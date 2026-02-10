@@ -20,17 +20,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }))
 
+  const categoryRoutes = [
+    'ecommerce',
+    'estrategia-marketing',
+    'ia-automatizacion',
+    'headless-commerce',
+  ].map((cat) => ({
+    url: `${baseUrl}/blog/${cat}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
+
   // 2. Fetch Blog Posts from Sanity
   // We query for all posts and their last updated date
   const posts = await client.fetch(`
     *[_type == "post"] {
       "slug": slug.current,
+      category,
       _updatedAt
     }
   `)
 
   const postRoutes = posts.map((post: any) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: post.category ? `${baseUrl}/blog/${post.category}/${post.slug}` : `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post._updatedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
@@ -54,5 +67,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...postRoutes, ...pseoRoutes]
+  return [
+    ...staticRoutes,
+    ...categoryRoutes,
+    ...postRoutes,
+    ...pseoRoutes,
+  ]
 }

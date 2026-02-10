@@ -13,15 +13,31 @@ export default {
         input: GeneratePostInput
       }
     },
+    // Categoría principal (define la URL: /blog/[category]/[slug])
     {
-      name: 'topics',
-      title: 'Temas/Categorías',
+      name: 'category',
+      title: 'Categoría Principal',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Ecommerce', value: 'ecommerce' },
+          { title: 'Estrategia de Marketing', value: 'estrategia-marketing' },
+          { title: 'IA y Automatización', value: 'ia-automatizacion' },
+          { title: 'Headless Commerce', value: 'headless-commerce' },
+        ],
+      },
+      description: 'Se asigna automáticamente por la IA. Define la URL del post.',
+    },
+    // Etiquetas (tags) para filtrado y SEO
+    {
+      name: 'tags',
+      title: 'Etiquetas (Tags)',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
         layout: 'tags'
       },
-      description: 'Etiquetas para relacionar posts similares (ej: Ecommerce, Marketing, Shopify)'
+      description: 'Se asignan automáticamente por la IA. Presiona Enter para agregar manualmente.',
     },
     {
       name: 'title',

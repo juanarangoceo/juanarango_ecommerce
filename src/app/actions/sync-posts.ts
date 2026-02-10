@@ -51,9 +51,12 @@ export async function syncSanityPosts() {
                 title: post.title,
                 slug: post.slug.current,
                 excerpt: post.excerpt || "",
-                content: post.content || "", // Storing full content might be heavy, but useful for RAG later
+                content: post.content || "", 
                 published_at: post.publishedAt || post._createdAt,
-                embedding: embedding
+                embedding: embedding,
+                category: post.category,
+                tags: post.tags,
+                updated_at: new Date().toISOString()
             }, { onConflict: 'sanity_id' });
 
             if (error) {

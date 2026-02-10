@@ -16,6 +16,7 @@ const LATEST_POSTS_QUERY = `*[
   mainImage,
   excerpt,
   topic,
+  category,
   estimatedReadingTime
 }`;
 
