@@ -1,8 +1,6 @@
 import { PortableText } from "next-sanity";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
