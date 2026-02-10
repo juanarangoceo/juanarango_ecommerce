@@ -116,6 +116,41 @@ function parseSlugParts(slugParts: string[]): { mode: 'category' | 'categorized-
   return { mode: 'post' }; // Will 404
 }
 
+
+// ========== STATIC PARAMS GENERATION (SSG) ==========
+
+export async function generateStaticParams() {
+  const posts = await client.fetch<any[]>(`
+    *[_type == "post" && defined(slug.current)]{ 
+      "slug": slug.current, 
+      category 
+    }
+  `);
+
+  const paths: { slug: string[] }[] = [];
+
+  // 1. Category Pages (/blog/[category])
+  for (const category of VALID_CATEGORIES) {
+     paths.push({ slug: [category] });
+  }
+
+  // 2. Blog Posts
+  for (const post of posts) {
+     const slug = post.slug;
+     const category = post.category;
+     
+     // Direct path: /blog/[slug]
+     paths.push({ slug: [slug] });
+     
+     // Categorized path: /blog/[category]/[slug]
+     if (category && VALID_CATEGORIES.includes(category)) {
+        paths.push({ slug: [category, slug] });
+     }
+  }
+
+  return paths;
+}
+
 // ========== PORTABLE TEXT COMPONENTS ==========
 
 const ptComponents = {
