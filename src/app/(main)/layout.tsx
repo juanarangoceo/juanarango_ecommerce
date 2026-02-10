@@ -119,6 +119,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <DynamicChatWidget />
+        {/* Trigger Redeploy */}
         <GoogleAnalytics gaId="G-J2RT4C9YPR" />
       </body>
     </html>
