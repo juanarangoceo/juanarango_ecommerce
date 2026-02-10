@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { Check, Copy } from "lucide-react"
 import Script from "next/script"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface CopyableCodeBlockProps {
   title?: string
@@ -76,14 +78,22 @@ export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockPr
 
         {/* Code Block */}
         <div className="relative bg-zinc-950 dark:bg-black rounded-b-lg border border-t-0 border-zinc-800 overflow-hidden">
-          <pre className="overflow-x-auto p-4 md:p-6 text-sm md:text-base">
-            <code className="text-zinc-100 font-mono leading-relaxed">
+           <SyntaxHighlighter
+              language={language.toLowerCase()}
+              style={vscDarkPlus}
+              customStyle={{
+                margin: 0,
+                padding: '1.5rem',
+                background: 'transparent',
+                fontSize: '0.875rem', // text-sm
+                lineHeight: '1.5',
+              }}
+              codeTagProps={{
+                style: { fontFamily: 'inherit' }
+              }}
+            >
               {code}
-            </code>
-          </pre>
-          
-          {/* Subtle gradient overlay on scroll */}
-          <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-zinc-950 dark:from-black to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+            </SyntaxHighlighter>
         </div>
       </div>
     </>

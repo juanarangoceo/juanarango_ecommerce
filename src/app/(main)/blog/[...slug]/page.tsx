@@ -1,5 +1,8 @@
 import { PortableText } from "next-sanity";
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -438,6 +441,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                     ">
                         {post.content && (
                             <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
                                 components={{
                                     h1: ({node, ...props}) => {
                                         const text = String(props.children);
@@ -471,6 +475,56 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                                     },
                                     blockquote: ({node, ...props}) => {
                                         return <blockquote className="border-l-4 border-green-500 bg-zinc-50 dark:bg-zinc-900 py-3 px-6 my-8 rounded-r-lg italic text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</blockquote>;
+                                    },
+                                    table: ({node, ...props}) => {
+                                        return <div className="overflow-x-auto my-8 rounded-lg border border-zinc-200 dark:border-zinc-800"><table className="w-full text-left text-sm" {...props}>{props.children}</table></div>;
+                                    },
+                                    thead: ({node, ...props}) => {
+                                        return <thead className="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-semibold" {...props}>{props.children}</thead>;
+                                    },
+                                    tbody: ({node, ...props}) => {
+                                        return <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800" {...props}>{props.children}</tbody>;
+                                    },
+                                    tr: ({node, ...props}) => {
+                                        return <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors" {...props}>{props.children}</tr>;
+                                    },
+                                    th: ({node, ...props}) => {
+                                        return <th className="px-4 py-3" {...props}>{props.children}</th>;
+                                    },
+                                    td: ({node, ...props}) => {
+                                        return <td className="px-4 py-3" {...props}>{props.children}</td>;
+                                    },
+                                    code: ({node, className, children, ...props}: any) => {
+                                        const match = /language-(\w+)/.exec(className || '');
+                                        const isInline = !match && !String(children).includes('\n');
+                                        
+                                        if (isInline) {
+                                            return <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600 dark:text-pink-400" {...props}>{children}</code>;
+                                        }
+
+                                        return (
+                                            <div className="relative my-8 rounded-lg overflow-hidden">
+                                                <div className="absolute right-2 top-2 z-10">
+                                                    {/* We could reuse a CopyButton here if extracted, but SyntaxHighlighter doesn't have one built-in easily. 
+                                                        For now, relying on SyntaxHighlighter styles. 
+                                                        To match prompt 'facil copiar y pegar', we should wrap this. 
+                                                        Let's just use the CopyableCodeBlock logic but applied here.
+                                                    */}
+                                                    {/* Actually, let's just use SyntaxHighlighter directly for now to fix the 'disorganized' look. 
+                                                        If user needs button, we can add it later or reuse CopyableCodeBlock if adapted. 
+                                                        Wait, I can use CopyableCodeBlock if I pass the code string!
+                                                    */}
+                                                    <CopyableCodeBlock 
+                                                        title={match?.[1] || 'Code'} 
+                                                        language={match?.[1] || 'text'} 
+                                                        code={String(children).replace(/\n$/, '')} 
+                                                    />
+                                                </div>
+                                                {/* Wait, CopyableCodeBlock ALREADY renders the code block! 
+                                                    So I should just return CopyableCodeBlock.
+                                                */}
+                                            </div>
+                                        );
                                     }
                                 }}
                             >

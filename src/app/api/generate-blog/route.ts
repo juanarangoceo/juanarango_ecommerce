@@ -67,7 +67,9 @@ export async function POST(req: Request) {
         slug: rawData.slug,
         // Fallback robusto para encontrar el contenido
         content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || "",
-        faq: rawData.faq || []
+        faq: rawData.faq || [],
+        category: rawData.category || "ecommerce",
+        tags: Array.isArray(rawData.tags) ? rawData.tags : [],
     };
 
     if (!blogData.content) {
