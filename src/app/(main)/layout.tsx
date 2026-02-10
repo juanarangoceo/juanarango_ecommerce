@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { ChatWidget } from "@/components/chat-widget";
+import dynamic from "next/dynamic";
+
+const ChatWidget = dynamic(
+  () => import("@/components/chat-widget").then((mod) => mod.ChatWidget),
+  { ssr: false }
+);
+
+// ... (Rest of imports logic is fine, but I need to replace the import line too)
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { constructMetadata } from "@/lib/utils";
