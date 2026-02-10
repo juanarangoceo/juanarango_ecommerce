@@ -4,8 +4,8 @@ import { client } from "@/sanity/lib/client";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { BlogSearch } from "@/components/blog-search";
 import { RecentPostPills } from "@/components/recent-post-pills";
-import { BlogCard } from "./_components/blog-card";
-import { NitroCtaCard } from "./[...slug]/_components/NitroCtaCard";
+import { BlogCard } from "@/components/blog/blog-card";
+import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { Pagination } from "@/components/ui/pagination";
 
 import { constructMetadata } from "@/lib/utils";

@@ -13,7 +13,7 @@ import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag } from "
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
-import { NitroCtaCard } from "./_components/NitroCtaCard";
+import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import Script from "next/script";
 import { constructMetadata } from "@/lib/utils";
@@ -27,7 +27,7 @@ import { TikTokEmbed } from "@/components/blog/tiktok-embed";
 import { Badge } from "@/components/ui/badge";
 import { ComparisonTable } from "@/components/blog/ComparisonTable";
 import { CopyableCodeBlock } from "@/components/blog/CopyableCodeBlock";
-import { BlogCard } from "../_components/blog-card";
+import { BlogCard } from "@/components/blog/blog-card";
 
 // ========== CONFIGURATION ==========
 

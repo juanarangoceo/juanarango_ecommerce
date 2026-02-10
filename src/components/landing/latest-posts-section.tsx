@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BlogCard } from "@/app/(main)/blog/_components/blog-card";
+import { BlogCard } from "@/components/blog/blog-card";
 import { client } from "@/sanity/lib/client";
 
 const LATEST_POSTS_QUERY = `*[
