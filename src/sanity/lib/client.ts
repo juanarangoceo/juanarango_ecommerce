@@ -9,6 +9,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // Set to false to ensure fresh data
+  useCdn: true, // Set to true for fast edge caching
   token, // Optional: for write access
 })
