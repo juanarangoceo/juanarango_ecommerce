@@ -17,9 +17,10 @@ interface BlogCardProps {
     topic?: string;
     estimatedReadingTime?: number;
   };
+  priority?: boolean;
 }
 
-export function BlogCard({ post }: BlogCardProps) {
+export function BlogCard({ post, priority = false }: BlogCardProps) {
   const imageUrl = post.mainImage?.asset?._ref 
     ? urlForImage(post.mainImage).url() 
     : null;
@@ -35,6 +36,7 @@ export function BlogCard({ post }: BlogCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
           />
           {post.topic && (
             <span className="absolute top-2 right-2 px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black/60 backdrop-blur-md text-white rounded-md border border-white/10 shadow-lg">

@@ -122,8 +122,8 @@ export default async function BlogPage({
           {/* Grid for 2 cards per row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {safelyFilesPosts.length > 0 ? (
-              safelyFilesPosts.map((post: any) => (
-                <BlogCard key={post._id} post={post} />
+              safelyFilesPosts.map((post: any, index: number) => (
+                <BlogCard key={post._id} post={post} priority={index < 2} />
               ))
             ) : (
               <div className="col-span-full text-center py-12">

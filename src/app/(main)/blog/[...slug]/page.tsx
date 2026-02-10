@@ -17,6 +17,7 @@ import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import Script from "next/script";
 import { constructMetadata } from "@/lib/utils";
+import { parseTOC } from "@/lib/toc";
 import {
   Accordion,
   AccordionContent,
@@ -214,7 +215,7 @@ function CategoryPage({ categorySlug, meta, posts }: { categorySlug: string; met
         <div className="lg:col-span-8">
           {posts && posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {posts.map((post: any) => (<BlogCard key={post._id} post={post} />))}
+              {posts.map((post: any, index: number) => (<BlogCard key={post._id} post={post} priority={index < 2} />))}
             </div>
           ) : (
             <div className="text-center py-20">
@@ -425,7 +426,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                     {post.content && (
                         <div className="lg:hidden mb-8">
                             <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-4">
-                                <TableOfContents content={post.content} />
+                                <TableOfContents toc={parseTOC(post.content)} />
                             </div>
                         </div>
                     )}
@@ -617,7 +618,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                         {/* Table of Contents Box - First Priority */}
                          {post.content && (
                             <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
-                                <TableOfContents content={post.content} />
+                                <TableOfContents toc={parseTOC(post.content)} />
                             </div>
                          )}
 

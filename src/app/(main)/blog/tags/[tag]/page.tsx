@@ -70,8 +70,8 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
         <div className="lg:col-span-8">
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {posts.map((post: any) => (
-                <BlogCard key={post._id} post={post} />
+              {posts.map((post: any, index: number) => (
+                <BlogCard key={post._id} post={post} priority={index < 2} />
               ))}
             </div>
           ) : (
