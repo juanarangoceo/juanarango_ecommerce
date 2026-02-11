@@ -46,13 +46,6 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
 
         {/* Content Section */}
         <div className="flex flex-col flex-1 p-5">
-          {/* Topic pill - outside the image */}
-          {post.topic && (
-            <span className="self-start px-2.5 py-0.5 text-[10px] font-bold tracking-widest uppercase text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/20 mb-3">
-              {post.topic}
-            </span>
-          )}
-
           <CardTitle className="leading-snug text-lg text-white group-hover:text-emerald-400 transition-colors line-clamp-2 mb-3">
             {post.title}
           </CardTitle>
