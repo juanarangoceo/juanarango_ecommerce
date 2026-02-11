@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { Metadata } from "next"
+import { NitroBanner } from "@/components/nitro-banner"
 import { ServicesGrid } from "@/components/services-grid"
 import { NitroBusinessGrid } from "@/components/nitro-business-grid"
 import { MetricsIsland } from "@/components/metrics-island"
@@ -30,20 +31,8 @@ export const metadata: Metadata = {
   }
 }
 
-// OPTIMIZACIÓN NITRO: Carga dinámica (Lazy Load)
-// Esto aísla el código pesado de animaciones (Cliente) del renderizado inicial (Servidor).
-const NitroBanner = dynamic(
-  () => import("@/components/nitro-banner").then((mod) => mod.NitroBanner),
-  {
-    ssr: true, // Mantenemos SSR para que el H1 sea legible por Google
-    loading: () => (
-      // Skeleton de carga para evitar CLS (Saltos de diseño)
-      <div className="h-[600px] w-full bg-background/50 flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground font-mono text-sm">Cargando experiencia Nitro...</div>
-      </div>
-    ),
-  }
-)
+// NitroBanner: Importado estáticamente para que el Hero (LCP element) esté en el HTML inicial.
+// Esto elimina el skeleton de carga que retrasaba el LCP en móviles.
 
 const AnimatedBanner = dynamic(
   () => import("@/components/ui/animated-banner").then((mod) => mod.AnimatedBanner)
@@ -91,11 +80,10 @@ export default function Page() {
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#050505]">
         
         {/* Blobs - opacity reduced for better text contrast */}
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px] animate-aurora-1 opacity-20" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[100px] animate-aurora-2 opacity-20" />
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[40px] md:blur-[100px] animate-aurora-1 opacity-20" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[40px] md:blur-[100px] animate-aurora-2 opacity-20" />
         
-        {/* Noise - kept for texture but very subtle */}
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay"></div>
+
       </div>
       
       <main className="flex-1 flex flex-col">

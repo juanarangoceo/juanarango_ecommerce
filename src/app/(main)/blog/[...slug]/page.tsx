@@ -13,7 +13,7 @@ import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
 import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { NewsletterForm } from "@/components/newsletter-form";
-import Script from "next/script";
+
 import { constructMetadata } from "@/lib/utils";
 import { parseTOC } from "@/lib/toc";
 import {
@@ -375,9 +375,8 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
 
   return (
     <>
-      {/* Schema Markup */}
-      <Script
-        id="blog-schema"
+      {/* Schema Markup - rendered server-side for Google crawlability */}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
