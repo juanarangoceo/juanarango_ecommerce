@@ -30,6 +30,8 @@ import { BlogCard } from "@/components/blog/blog-card";
 
 // ========== CONFIGURATION ==========
 
+export const revalidate = 86400; // Cache de 24 horas para ahorrar CPU
+
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -84,8 +86,6 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
 const CATEGORY_POSTS_QUERY = `*[_type == "post" && category == $category && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
   _id, title, slug, publishedAt, _createdAt, mainImage, excerpt, topic, category, tags, estimatedReadingTime
 }`;
-
-export const revalidate = 60;
 
 // ========== HELPERS ==========
 
