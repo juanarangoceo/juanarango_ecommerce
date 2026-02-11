@@ -79,9 +79,9 @@ export default function Page() {
       {/* Aurora Background & Virtual Mesh - Optimized */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#050505]">
         
-        {/* Blobs - opacity reduced for better text contrast */}
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[40px] md:blur-[100px] animate-aurora-1 opacity-20" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[40px] md:blur-[100px] animate-aurora-2 opacity-20" />
+        {/* Blobs - hidden on mobile for LCP performance, animated on desktop */}
+        <div className="hidden md:block absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px] animate-aurora-1 opacity-20" />
+        <div className="hidden md:block absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[100px] animate-aurora-2 opacity-20" />
         
 
       </div>

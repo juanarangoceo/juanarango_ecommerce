@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { constructMetadata } from "@/lib/utils";
-import Script from "next/script";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -101,14 +100,15 @@ export default function RootLayout({
         {/* Performance: Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
       >
-        {/* Schema Markup: Organization + WebSite */}
-        <Script
-          id="schema-org"
+        {/* Schema Markup: Organization + WebSite - native script for SSR */}
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
@@ -119,8 +119,19 @@ export default function RootLayout({
         </main>
         <Footer />
         <DynamicChatWidget />
-        {/* Trigger Redeploy */}
-        <GoogleAnalytics gaId="G-J2RT4C9YPR" />
+        {/* Google Analytics - lazyOnload to avoid render-blocking */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"
+          strategy="lazyOnload"
+        />
+        <Script id="gtag-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-J2RT4C9YPR');
+          `}
+        </Script>
       </body>
     </html>
   );
