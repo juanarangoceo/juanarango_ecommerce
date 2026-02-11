@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -128,6 +129,7 @@ export default function RootLayout({
             gtag('config', 'G-J2RT4C9YPR');
           `}
         </Script>
+        <Analytics />
       </body>
     </html>
   );

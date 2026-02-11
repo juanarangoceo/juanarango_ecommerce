@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 
@@ -21,6 +22,7 @@ export default function DemoLayout({
       <body className="bg-black text-white antialiased selection:bg-teal-500/30">
         <Navbar />
         {children}
+        <Analytics />
       </body>
     </html>
   );
