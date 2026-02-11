@@ -97,11 +97,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark scroll-smooth">
       <head>
-        {/* Performance: Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        {/* Performance: DNS prefetch for deferred scripts */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body
