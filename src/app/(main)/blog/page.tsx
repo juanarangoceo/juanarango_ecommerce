@@ -37,8 +37,8 @@ const POSTS_QUERY = `*[
 
 const POSTS_COUNT_QUERY = `count(*[_type == "post" && defined(slug.current)])`;
 
-// ISR: Revalidate every 60s — leverages Sanity CDN cache for fast responses
-export const revalidate = 60;
+// ISR: Revalidate every 1 hour — leverages Sanity CDN cache for fast responses
+export const revalidate = 3600;
 
 const POSTS_PER_PAGE = 10;
 
