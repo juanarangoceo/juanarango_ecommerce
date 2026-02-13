@@ -21,17 +21,22 @@ export async function POST(req: Request) {
       contents: [{
         role: "user",
         parts: [{
-          text: `Eres un experto en SEO y Marketing Digital para Ecommerce. 
-          Genera contenido rico para una landing page de categoría/etiqueta sobre el tema: "${tag}".
+          text: `Eres un experto en SEO y Marketing Digita para Ecommerce. 
+          Genera un artículo introductorio ESTRUCTURADO en Markdown para una landing page de categoría/etiqueta sobre: "${tag}".
           
-          OBJETIVO: Demostrar "Topical Authority" (Autoridad Temática) y atraer tráfico orgánico.
+          OBJETIVO: Demostrar "Topical Authority", responder qué es, por qué importa y qué encontrará el usuario.
 
           IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 3 claves:
-          1. "description": Un texto de 100-120 palabras explicando qué es este tema, su relevancia en ecommerce/tech hoy en día y qué tipo de contenido encontrará el usuario aquí. Tono profesional pero accesible.
+          1. "description": Un texto en MARKDOWN (NO HTML) de 300-400 palabras. DEBE incluir:
+             - Un H2 inicial (ej: "¿Qué es ${tag}?").
+             - Párrafos explicativos claros.
+             - Una lista con bullet points (ventajas, características o consejos).
+             - Un H2 final de conclusión o transición a los posts.
+             - NO uses H1 (el título ya es H1). Usa negritas para resaltar palabras clave.
           2. "seoTitle": Un título optimizado para SEO (max 60 chars). Ej: "Guía de [Tema] y Recursos para Ecommerce | Nitro Ecom".
-          3. "seoDescription": Meta descripción optimizada para CTR (max 155 chars). Incluye keyword principal y llamada a la acción implícita.
+          3. "seoDescription": Meta descripción optimizada para CTR (max 155 chars). Incluye keyword principal.
 
-          NO incluyas "markdown" al inicio ni al final. Solo el JSON puro.`
+          NO incluyas "markdown" al inicio ni al final del JSON. Solo el objeto JSON puro.`
         }]
       }],
       config: { 
