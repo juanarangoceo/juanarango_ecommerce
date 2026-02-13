@@ -74,6 +74,27 @@ export default {
       initialValue: "Juan Arango",
     },
     {
+      name: 'youtubeVideo',
+      title: 'Video de YouTube (Apoyo)',
+      type: 'object',
+      description: 'Video relacionado para mejorar el SEO y tiempo en página.',
+      fields: [
+        {
+          name: 'url',
+          title: 'URL del Video',
+          type: 'url',
+          description: 'Ej: https://www.youtube.com/watch?v=...'
+        },
+        {
+          name: 'summary',
+          title: 'Resumen del Video (SEO)',
+          type: 'text',
+          rows: 3,
+          description: 'Breve descripción de lo que se habla en el video para el Schema de Google.'
+        }
+      ]
+    },
+    {
       name: 'faq',
       title: 'FAQ (Preguntas Frecuentes)',
       type: 'array',

@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { ComparisonTable } from "@/components/blog/ComparisonTable";
 import { CopyableCodeBlock } from "@/components/blog/CopyableCodeBlock";
 import { BlogCard } from "@/components/blog/blog-card";
+import { YouTubeEmbed } from "@/components/blog/youtube-embed";
 
 // ========== CONFIGURATION ==========
 
@@ -65,6 +66,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "slug": slug.current,
   author,
   faq,
+  youtubeVideo,
   category,
   tags,
   "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
@@ -370,6 +372,31 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
     jsonLd.push(faqSchema);
   }
 
+  // Helper to get ID for Schema
+  const getVideoId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  if (post.youtubeVideo?.url) {
+    const videoId = getVideoId(post.youtubeVideo.url);
+    if (videoId) {
+      jsonLd.push({
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": post.title,
+        "description": post.youtubeVideo.summary || post.excerpt || `Video sobre ${post.title}`,
+        "thumbnailUrl": [
+          `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        ],
+        "uploadDate": post.publishedAt || post._createdAt,
+        "contentUrl": post.youtubeVideo.url,
+        "embedUrl": `https://www.youtube.com/embed/${videoId}`
+      });
+    }
+  }
+
   // Breadcrumb for categorized posts
   const breadcrumb = post.category ? CATEGORY_META[post.category] : null;
 
@@ -451,6 +478,19 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
                                 className="object-cover"
                             />
+                        </div>
+                    )}
+
+                    {/* YouTube Video Section */}
+                    {post.youtubeVideo?.url && (
+                        <div className="mb-12">
+                            <YouTubeEmbed url={post.youtubeVideo.url} title={post.title} />
+                            {post.youtubeVideo.summary && (
+                                <p className="text-base text-zinc-600 dark:text-zinc-400 mt-4 italic border-l-4 border-emerald-500 pl-4 py-1 bg-zinc-50 dark:bg-zinc-900/50 rounded-r-lg">
+                                    <span className="font-semibold block not-italic text-zinc-900 dark:text-zinc-200 mb-1">En este video:</span> 
+                                    {post.youtubeVideo.summary}
+                                </p>
+                            )}
                         </div>
                     )}
 
