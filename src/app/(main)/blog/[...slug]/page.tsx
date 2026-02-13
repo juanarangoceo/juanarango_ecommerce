@@ -32,7 +32,7 @@ import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 
 // ========== CONFIGURATION ==========
 
-export const revalidate = 60; // Cache de 60 segundos para pruebas (antes 24h)
+export const revalidate = 86400; // Cache de 24 horas (Producción)
 
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
 

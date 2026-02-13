@@ -40,7 +40,6 @@ export function YouTubeEmbed({ url, title = "Video de YouTube" }: YouTubeEmbedPr
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 800px"
-              priority
               quality={60}
             />
             {/* Play Button Overlay */}
