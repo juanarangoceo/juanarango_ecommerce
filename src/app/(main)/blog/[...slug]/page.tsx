@@ -430,7 +430,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
               )}
             </nav>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-8 leading-[1.1]">
+            <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6 md:mb-8 leading-[1.1]">
               {post.title}
             </h1>
 
@@ -485,7 +485,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
 
                     {/* YouTube Video Section */}
                     {post.youtubeVideo?.url && (
-                        <div className="mb-12">
+                        <div className="mb-8 md:mb-12">
                             <YouTubeEmbed url={post.youtubeVideo.url} title={post.title} />
                             {post.youtubeVideo.summary && (
                                 <p className="text-base text-zinc-600 dark:text-zinc-400 mt-4 italic border-l-4 border-emerald-500 pl-4 py-1 bg-zinc-50 dark:bg-zinc-900/50 rounded-r-lg">

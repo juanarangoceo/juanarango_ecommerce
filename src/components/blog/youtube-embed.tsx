@@ -26,7 +26,7 @@ export function YouTubeEmbed({ url, title = "Video de YouTube" }: YouTubeEmbedPr
   const posterUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
   return (
-    <div className="my-10 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black aspect-video relative group">
+    <div className="my-4 md:my-8 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black aspect-video relative group">
       {!isPlaying ? (
         <button
           onClick={() => setIsPlaying(true)}
@@ -41,6 +41,7 @@ export function YouTubeEmbed({ url, title = "Video de YouTube" }: YouTubeEmbedPr
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 800px"
               priority
+              quality={60}
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
