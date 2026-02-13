@@ -31,7 +31,7 @@ import { YouTubeEmbed } from "@/components/blog/youtube-embed";
 
 // ========== CONFIGURATION ==========
 
-export const revalidate = 86400; // Cache de 24 horas para ahorrar CPU
+export const revalidate = 60; // Cache de 60 segundos para pruebas (antes 24h)
 
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
 
