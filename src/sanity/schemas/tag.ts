@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { GenerateTagInput } from '../components/GenerateTagInput'
 
 export default defineType({
   name: 'tag',
@@ -10,6 +11,15 @@ export default defineType({
       title: 'Nombre',
       type: 'string',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+        name: 'aiGenerator',
+        title: 'Generador AI',
+        type: 'string', 
+        components: {
+            input: GenerateTagInput
+        },
+        description: 'Usa este botón para generar descripción y SEO automáticamente.'
     }),
     defineField({
       name: 'slug',
