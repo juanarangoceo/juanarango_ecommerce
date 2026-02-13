@@ -28,6 +28,7 @@ import { ComparisonTable } from "@/components/blog/ComparisonTable";
 import { CopyableCodeBlock } from "@/components/blog/CopyableCodeBlock";
 import { BlogCard } from "@/components/blog/blog-card";
 import { YouTubeEmbed } from "@/components/blog/youtube-embed";
+import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 
 // ========== CONFIGURATION ==========
 
@@ -67,6 +68,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   author,
   faq,
   youtubeVideo,
+  affiliateBanner,
   category,
   tags,
   "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
@@ -388,7 +390,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
         "name": post.title,
         "description": post.youtubeVideo.summary || post.excerpt || `Video sobre ${post.title}`,
         "thumbnailUrl": [
-          `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+          `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
         ],
         "uploadDate": post.publishedAt || post._createdAt,
         "contentUrl": post.youtubeVideo.url,
@@ -680,6 +682,15 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
 
                     {/* Mobile CTA (Bottom of Post) */}
                     <div className="mt-12 lg:hidden">
+                        {post.affiliateBanner && (
+                            <div className="mb-12">
+                                <AffiliateBanner 
+                                    title={post.affiliateBanner.title} 
+                                    image={post.affiliateBanner.image} 
+                                    url={post.affiliateBanner.url} 
+                                />
+                            </div>
+                        )}
                         <NitroCtaCard />
                     </div>
                 </article>
@@ -697,8 +708,18 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                         {/* High Converting CTA - Second */}
                         <NitroCtaCard />
 
-                         {/* Share Action */}
-                         <div>
+                        <div>
+                            {post.affiliateBanner && (
+                                <div className="mb-8">
+                                    <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Recomendado</h4>
+                                    <AffiliateBanner 
+                                        title={post.affiliateBanner.title} 
+                                        image={post.affiliateBanner.image} 
+                                        url={post.affiliateBanner.url} 
+                                    />
+                                </div>
+                            )}
+
                             <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Compartir</h4>
                             <ShareButtons title={post.title} slug={post.slug} category={post.category} />
                          </div>

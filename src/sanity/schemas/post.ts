@@ -95,6 +95,32 @@ export default {
       ]
     },
     {
+      name: 'affiliateBanner',
+      title: 'Banner de Afiliado (Sidebar/Final)',
+      type: 'object',
+      description: 'Banner publicitario que aparecerá en el Sidebar (PC) y al final del post (Móvil).',
+      fields: [
+        {
+          name: 'title',
+          title: 'Título (Alt Text)',
+          type: 'string',
+        },
+        {
+          name: 'image',
+          title: 'Imagen del Banner',
+          type: 'image',
+          options: { hotspot: true },
+          validation: (Rule: any) => Rule.required(),
+        },
+        {
+          name: 'url',
+          title: 'Link de Afiliado',
+          type: 'url',
+          validation: (Rule: any) => Rule.required(),
+        }
+      ]
+    },
+    {
       name: 'faq',
       title: 'FAQ (Preguntas Frecuentes)',
       type: 'array',

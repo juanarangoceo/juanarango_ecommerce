@@ -23,7 +23,7 @@ export function YouTubeEmbed({ url, title = "Video de YouTube" }: YouTubeEmbedPr
 
   if (!videoId) return null;
 
-  const posterUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  const posterUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
   return (
     <div className="my-10 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black aspect-video relative group">
