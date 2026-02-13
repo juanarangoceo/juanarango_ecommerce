@@ -64,7 +64,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   const validTagRoutes = Object.entries(tagCounts)
-    .filter(([_, count]) => count >= 3)
     .map(([slug]) => ({
       url: `${baseUrl}/blog/tags/${slug}`,
       lastModified: new Date(),

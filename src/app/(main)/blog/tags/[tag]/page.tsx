@@ -72,8 +72,8 @@ export async function generateMetadata(props: Props) {
     title: displayTitle,
     description: displayDesc,
     canonical: `https://www.juanarangoecommerce.com/blog/tags/${params.tag}`,
-    // Robost Logic: Noindex if less than 3 posts (Thin Content)
-    noIndex: postCount < 3
+    // Indexing all tags as they now have rich content
+    noIndex: false
   });
 }
 
