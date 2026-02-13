@@ -32,10 +32,31 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'h1',
+      title: 'H1 Personalizado (SEO)',
+      type: 'string',
+      description: 'Título principal de la página. Si se deja vacío, se usa el Nombre.',
+    }),
+    defineField({
       name: 'description',
-      title: 'Descripción (IA)',
+      title: 'Descripción Rica (Markdown)',
       type: 'text',
-      description: 'Breve descripción generada por IA para la landing page de la etiqueta.',
+      rows: 15, 
+      description: 'Texto introductorio con H2, listas, etc. (Soporta Markdown)',
+    }),
+    defineField({
+      name: 'faq',
+      title: 'Preguntas Frecuentes (FAQ Schema)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'question', type: 'string', title: 'Pregunta' },
+            { name: 'answer', type: 'text', title: 'Respuesta' }
+          ]
+        }
+      ]
     }),
     defineField({
       name: 'seoTitle',

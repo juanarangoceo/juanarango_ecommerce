@@ -22,21 +22,25 @@ export async function POST(req: Request) {
         role: "user",
         parts: [{
           text: `Eres un experto en SEO y Marketing Digita para Ecommerce. 
-          Genera un artículo introductorio ESTRUCTURADO en Markdown para una landing page de categoría/etiqueta sobre: "${tag}".
+          Genera una estructura de contenido "MegaPro" para la etiqueta: "${tag}".
+
+          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 5 claves:
           
-          OBJETIVO: Demostrar "Topical Authority", responder qué es, por qué importa y qué encontrará el usuario.
+          1. "h1": Un Título H1 optimizado (ej: "Guía Completa de ${tag} para Ecommerce").
+          2. "description": Un artículo en MARKDOWN (NO HTML) de 300-400 palabras. Estructura:
+             - H2 inicial (Intro)
+             - Párrafos de valor
+             - Lista con bullet points
+             - H2 secundario (Beneficios/Usos)
+             - Conclusión breve
+             - USA NEGRITAS para keywords.
+          3. "faq": Un array de 3 objetos exactamente: [{"question": "...", "answer": "..."}].
+             - Preguntas reales que la gente busca en Google sobre "${tag}".
+             - Respuestas directas y útiles (40-60 palabras).
+          4. "seoTitle": Título SEO (Title Tag) < 60 caracteres.
+          5. "seoDescription": Meta description < 155 caracteres.
 
-          IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 3 claves:
-          1. "description": Un texto en MARKDOWN (NO HTML) de 300-400 palabras. DEBE incluir:
-             - Un H2 inicial (ej: "¿Qué es ${tag}?").
-             - Párrafos explicativos claros.
-             - Una lista con bullet points (ventajas, características o consejos).
-             - Un H2 final de conclusión o transición a los posts.
-             - NO uses H1 (el título ya es H1). Usa negritas para resaltar palabras clave.
-          2. "seoTitle": Un título optimizado para SEO (max 60 chars). Ej: "Guía de [Tema] y Recursos para Ecommerce | Nitro Ecom".
-          3. "seoDescription": Meta descripción optimizada para CTR (max 155 chars). Incluye keyword principal.
-
-          NO incluyas "markdown" al inicio ni al final del JSON. Solo el objeto JSON puro.`
+          NO incluyas "markdown" u otros textos fuera del JSON. Solo el objeto puro.`
         }]
       }],
       config: { 

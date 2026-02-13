@@ -49,11 +49,13 @@ export const GenerateTagInput = (props: any) => {
           throw new Error("Respuesta inválida de la API")
       }
 
-      const { description, seoTitle, seoDescription } = json.data
+      const { h1, description, faq, seoTitle, seoDescription } = json.data
 
       // 2. UPDATE SANITY DOCUMENT (PATCH)
       const attributes: any = {
+          h1: h1,
           description: description,
+          faq: faq,
           seoTitle: seoTitle,
           seoDescription: seoDescription,
       }
