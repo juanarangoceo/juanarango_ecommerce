@@ -57,7 +57,36 @@ export const GeneratePostInput = (props: any) => {
           throw new Error(`Contenido generado insuficiente (${content?.length || 0} chars).`)
       }
 
-      // 3. UPDATE SANITY DOCUMENT
+      // 3. UPDATE SANITY DOCUMENT & CREATE TAGS
+      const tagsData = json.data.tags || []
+      const tagSlugs: string[] = []
+
+      // Create missing tags (Fire & Forget for user experience, but await for consistency)
+      // Since we are in Studio, we have write permissions via useClient
+      toast.push({ title: "Procesando etiquetas...", status: 'info' })
+      
+      for (const tag of tagsData) {
+          if (!tag.slug) continue
+          
+          tagSlugs.push(tag.slug)
+
+          // Try to create the tag document if it doesn't exist
+          try {
+              // Deterministic ID based on slug to avoid duplicates
+              const tagDocId = `tag-${tag.slug}`
+              await client.createIfNotExists({
+                  _id: tagDocId,
+                  _type: 'tag',
+                  name: tag.name, // "Next.js"
+                  slug: { _type: 'slug', current: tag.slug }, // "next-js"
+                  // description: Left empty for now as requested
+              })
+          } catch (err) {
+              console.error("Error creating tag:", tag.name, err)
+              // Continue even if tag creation fails, we still want to save the post
+          }
+      }
+
       // Helper to sanitize slug
       const sanitizeSlug = (text: string) => {
           return text
@@ -78,7 +107,7 @@ export const GeneratePostInput = (props: any) => {
           faq: json.data.faq || [],
           author: "Juan Arango",
           category: json.data.category || 'ecommerce',
-          tags: json.data.tags || [],
+          tags: tagSlugs, // Now saving normalized slugs ["next-js"]
       }
 
       // Also update the current field (Topic) in the form state

@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { client } from "@/sanity/lib/client"
+import { normalizeTagSlug } from "@/lib/normalize-tag"
 
 export const dynamic = 'force-dynamic'
 
@@ -32,13 +33,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  // 2. Fetch Blog Posts from Sanity
+  // 3. Fetch Blog Posts from Sanity
   // We query for all posts and their last updated date
   const posts = await client.fetch(`
     *[_type == "post"] {
       "slug": slug.current,
       category,
-      _updatedAt
+      _updatedAt,
+      tags
     }
   `)
 
@@ -48,6 +50,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }))
+
+  // 4. Generate Tag Routes (Only for tags with >= 3 posts)
+  const tagCounts: Record<string, number> = {};
+  
+  posts.forEach((post: any) => {
+    if (Array.isArray(post.tags)) {
+      post.tags.forEach((tag: string) => {
+        const slug = normalizeTagSlug(tag); // Normalize to group "Next.js" and "next-js"
+        tagCounts[slug] = (tagCounts[slug] || 0) + 1;
+      });
+    }
+  });
+
+  const validTagRoutes = Object.entries(tagCounts)
+    .filter(([_, count]) => count >= 3)
+    .map(([slug]) => ({
+      url: `${baseUrl}/blog/tags/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    }));
 
   // 3. Fetch pSEO Pages from Supabase
   const { createClient } = await import('@supabase/supabase-js')
@@ -71,6 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticRoutes,
     ...categoryRoutes,
     ...postRoutes,
+    ...validTagRoutes,
     ...pseoRoutes,
   ]
 }

@@ -7,40 +7,84 @@ import Link from "next/link";
 import { ArrowLeft, Tag } from "lucide-react";
 import { notFound } from "next/navigation";
 import { constructMetadata } from "@/lib/utils";
+import { normalizeTagSlug } from "@/lib/normalize-tag";
 
-// GROQ Query to fetch posts by tag
-const POSTS_BY_TAG_QUERY = `*[_type == "post" && $tag in tags[] && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
-  _id,
-  title,
-  slug,
-  publishedAt,
-  _createdAt,
-  mainImage,
-  excerpt,
-  category,
-  tags,
-  estimatedReadingTime
-}`;
+// GROQ Queries
+const TAG_DATA_QUERY = `
+  {
+    "tagDoc": *[_type == "tag" && slug.current == $slug][0] {
+      name,
+      description,
+      seoTitle,
+      seoDescription
+    },
+    "posts": *[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
+      _id,
+      title,
+      slug,
+      publishedAt,
+      _createdAt,
+      mainImage,
+      excerpt,
+      category,
+      tags,
+      estimatedReadingTime
+    }
+  }
+`;
 
-export async function generateMetadata(props: { params: Promise<{ tag: string }> }) {
+interface Props {
+  params: Promise<{ tag: string }>
+}
+
+export async function generateMetadata(props: Props) {
   const params = await props.params;
-  const tag = decodeURIComponent(params.tag);
+  const decodedTag = decodeURIComponent(params.tag);
+  const normalizedSlug = normalizeTagSlug(decodedTag);
   
+  // Fetch just enough data for metadata
+  const data = await client.fetch(`
+    {
+      "tagDoc": *[_type == "tag" && slug.current == $slug][0] {
+        name,
+        description,
+        seoTitle,
+        seoDescription
+      },
+      "postCount": count(*[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current)])
+    }
+  `, { slug: normalizedSlug, originalName: decodedTag });
+
+  const { tagDoc, postCount } = data;
+  const displayTitle = tagDoc?.seoTitle || `Posts sobre ${tagDoc?.name || decodedTag} | Blog Nitro Ecom`;
+  const displayDesc = tagDoc?.seoDescription || tagDoc?.description || `Descubre nuestros artículos y guías sobre ${decodedTag} en el blog de Nitro Ecom.`;
+
   return constructMetadata({
-    title: `Posts sobre ${tag} | Blog Nitro Ecom`,
-    description: `Descubre nuestros artículos y guías sobre ${tag} en el blog de Nitro Ecom.`,
+    title: displayTitle,
+    description: displayDesc,
     canonical: `https://www.juanarangoecommerce.com/blog/tags/${params.tag}`,
+    // Robost Logic: Noindex if less than 3 posts (Thin Content)
+    noIndex: postCount < 3
   });
 }
 
-export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
+export default async function TagPage(props: Props) {
   const params = await props.params;
-  const tag = decodeURIComponent(params.tag);
-    const posts = await client.fetch(POSTS_BY_TAG_QUERY, { tag } as any);
+  const decodedTag = decodeURIComponent(params.tag);
+  const normalizedSlug = normalizeTagSlug(decodedTag);
 
-  if (!posts) {
+  const { tagDoc, posts } = await client.fetch(TAG_DATA_QUERY, { 
+    slug: normalizedSlug, 
+    originalName: decodedTag 
+  });
+
+  // If no posts and no tag doc, 404
+  if ((!posts || posts.length === 0) && !tagDoc) {
      return notFound();
   }
+
+  const displayName = tagDoc?.name || decodedTag;
+  const displayDescription = tagDoc?.description || `Explorando ${posts.length} ${posts.length === 1 ? 'artículo' : 'artículos'} etiquetados con "${displayName}".`;
 
   return (
     <main className="container mx-auto px-4 py-20 min-h-screen">
@@ -58,11 +102,16 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
                 <Tag className="w-8 h-8" />
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl capitalize">
-                #{tag}
+                {displayName}
             </h1>
         </div>
-        <p className="text-xl text-muted-foreground max-w-2xl">
-            Explorando {posts.length} {posts.length === 1 ? 'artículo' : 'artículos'} etiquetados con <span className="font-semibold text-zinc-900 dark:text-white">"{tag}"</span>.
+        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            {displayDescription}
+            {!tagDoc?.description && (
+              <span>
+                 Explorando <span className="font-semibold text-zinc-900 dark:text-white">{posts.length}</span> {posts.length === 1 ? 'artículo' : 'artículos'}.
+              </span>
+            )}
         </p>
       </div>
 

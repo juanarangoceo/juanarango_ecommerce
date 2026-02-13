@@ -1,3 +1,4 @@
+import { normalizeTagSlug } from "@/lib/normalize-tag";
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { syncSanityPosts } from "@/app/actions/sync-posts";
@@ -69,7 +70,10 @@ export async function POST(req: Request) {
         content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || "",
         faq: rawData.faq || [],
         category: rawData.category || "ecommerce",
-        tags: Array.isArray(rawData.tags) ? rawData.tags : [],
+        tags: (Array.isArray(rawData.tags) ? rawData.tags : []).map((tag: string) => ({
+             name: tag,
+             slug: normalizeTagSlug(tag)
+        })),
     };
 
     if (!blogData.content) {
