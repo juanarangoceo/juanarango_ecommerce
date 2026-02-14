@@ -64,6 +64,8 @@ export default function Page() {
 
   return (
     <div className="flex flex-col min-h-screen font-sans selection:bg-primary selection:text-primary-foreground">
+      {/* Impact.com Site Verification */}
+      <p className="sr-only">Impact-Site-Verification: edd0ee3e-a913-4b07-8829-d13195efdd99</p>
       
       {/* Notification Bar */}
       <div className="w-full bg-teal-950/30 border-b border-teal-500/20 py-1.5 text-center relative z-40 backdrop-blur-sm">

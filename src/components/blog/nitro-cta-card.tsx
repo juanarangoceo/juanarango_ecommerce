@@ -17,26 +17,26 @@ export function NitroCtaCard() {
 
         {/* Text Content */}
         <h3 className="text-2xl font-bold text-white mb-3">
-          ¿Quieres una tienda que <span className="text-green-400">venda sola?</span>
+          ¿Listo para <span className="text-green-400">escalar sin límites?</span>
         </h3>
         
         <p className="text-zinc-400 mb-8 leading-relaxed">
-          Deja de perder clientes con una web lenta. En Nitro Ecom creamos experiencias de compra ultra-rápidas y persuasivas.
+          Infraestructura digital de alto rendimiento. Tiendas que convierten, sistemas que automatizan y estrategia que escala tu negocio.
         </p>
 
         {/* CTA Button */}
-        <Link href="/" className="w-full">
+        <Link href="/#contacto" className="w-full">
           <Button 
             className="w-full h-12 bg-green-500 hover:bg-green-400 text-black font-bold text-base shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] transition-all duration-300 group/btn"
           >
-            Ver Nitro Ecom
+            Agenda tu diagnóstico gratis
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
           </Button>
         </Link>
         
         {/* Social Proof / Tiny Footer */}
         <p className="mt-4 text-xs text-center text-zinc-500 w-full">
-          🚀 +100 Tiendas optimizadas
+          ⚡ +50 negocios escalados con infraestructura Nitro
         </p>
       </div>
     </div>
