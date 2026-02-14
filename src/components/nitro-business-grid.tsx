@@ -21,10 +21,9 @@ export function NitroBusinessGrid() {
       icon: Store,
       title: "Nitro Retail",
       desc: "Transforma tu tienda física o ecommerce con experiencias omnicanal de alta velocidad.",
-      href: "#",
+      href: "/soluciones/nitro-retail",
       color: "purple",
-      cta: "Próximamente",
-      disabled: true
+      cta: "Ver Solución Retail"
     },
     {
       id: "INMOBILIARIA",
@@ -58,7 +57,7 @@ export function NitroBusinessGrid() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="col-span-1 h-full"
             >
-              <Link href={biz.href} className={`block h-full ${biz.disabled ? 'pointer-events-none opacity-60' : ''}`}>
+              <Link href={biz.href} className="block h-full">
                 <SpotlightCard 
                     spotlightColor={biz.color === 'emerald' ? "rgba(16, 185, 129, 0.2)" : biz.color === 'blue' ? "rgba(59, 130, 246, 0.2)" : "rgba(255, 255, 255, 0.05)"}
                     className="h-full p-8 flex flex-col group border-white/5 hover:border-emerald-500/30 transition-colors"
@@ -67,11 +66,7 @@ export function NitroBusinessGrid() {
                     <div className={`p-4 rounded-xl ${biz.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : biz.color === 'blue' ? 'bg-blue-500/10 text-blue-400' : 'bg-white/5 text-slate-400'}`}>
                       <biz.icon className="w-8 h-8" />
                     </div>
-                    {biz.disabled && (
-                         <span className="px-2 py-1 rounded-full bg-white/5 text-[10px] uppercase tracking-wider font-bold text-slate-500">
-                             Coming Soon
-                         </span>
-                    )}
+
                   </div>
                   
                   <h3 className={`text-2xl font-bold mb-4 text-white transition-colors tracking-tight ${biz.color === 'blue' ? 'group-hover:text-blue-400' : 'group-hover:text-emerald-400'}`}>
@@ -82,11 +77,9 @@ export function NitroBusinessGrid() {
                     {biz.desc}
                   </p>
                   
-                  {!biz.disabled && (
-                      <div className={`flex items-center font-semibold text-sm group-hover:translate-x-2 transition-transform ${biz.color === 'blue' ? 'text-blue-400' : 'text-emerald-400'}`}>
-                        {biz.cta} <ArrowRight className="w-4 h-4 ml-2" />
-                      </div>
-                  )}
+                  <div className={`flex items-center font-semibold text-sm group-hover:translate-x-2 transition-transform ${biz.color === 'blue' ? 'text-blue-400' : biz.color === 'purple' ? 'text-violet-400' : 'text-emerald-400'}`}>
+                    {biz.cta} <ArrowRight className="w-4 h-4 ml-2" />
+                  </div>
                 </SpotlightCard>
               </Link>
             </motion.div>

@@ -13,6 +13,7 @@ const serviceLinks = [
 const negociosLinks = [
   { href: "/soluciones/clinicas", label: "Clínicas" },
   { href: "/soluciones/nitro-inmobiliaria", label: "Nitro Inmobiliaria" },
+  { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
 ]
 
 export function Navbar() {
