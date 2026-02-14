@@ -142,19 +142,19 @@ export default function NitroRetailPage() {
       <main className="min-h-screen">
         {/* ===== 1. HERO ===== */}
         <section className="relative overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
-          <div className="absolute inset-0 bg-gradient-to-b from-violet-500/5 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/8 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-500/8 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="container mx-auto max-w-5xl text-center relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm font-medium mb-8">
               <Store className="w-4 h-4" />
               Especialistas en Comercio Omnicanal
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
               Digitaliza tu Comercio —{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
                 Vende Más, en Todos los Canales
               </span>
             </h1>
@@ -167,28 +167,28 @@ export default function NitroRetailPage() {
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 max-w-lg mx-auto">
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-violet-400 mb-1">+40%</div>
+                <div className="text-2xl sm:text-3xl font-bold text-orange-400 mb-1">+40%</div>
                 <div className="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-wider">Ventas Incrementales</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">3x</div>
+                <div className="text-2xl sm:text-3xl font-bold text-amber-400 mb-1">3x</div>
                 <div className="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-wider">Clientes Recurrentes</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-violet-400 mb-1">-60%</div>
+                <div className="text-2xl sm:text-3xl font-bold text-orange-400 mb-1">-60%</div>
                 <div className="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-wider">Tiempo Operativo</div>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="#contacto-retail">
-                <Button className="h-14 px-8 bg-violet-500 hover:bg-violet-400 text-white font-bold text-lg shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(139,92,246,0.5)] transition-all">
+                <Button className="h-14 px-8 bg-orange-500 hover:bg-orange-400 text-white font-bold text-lg shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:shadow-[0_0_40px_rgba(249,115,22,0.5)] transition-all">
                   Solicita tu diagnóstico gratis
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
               <Link href="#servicios-retail">
-                <Button variant="outline" className="h-14 px-8 text-lg border-violet-500/30 hover:border-violet-500 hover:bg-violet-500/5">
+                <Button variant="outline" className="h-14 px-8 text-lg border-orange-500/30 hover:border-orange-500 hover:bg-orange-500/5">
                   Ver servicios
                 </Button>
               </Link>
@@ -201,7 +201,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                ¿Por qué <span className="text-violet-400">digitalizar</span> tu comercio?
+                ¿Por qué <span className="text-orange-400">digitalizar</span> tu comercio?
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 El 73% de los consumidores investigan online antes de comprar en tienda física. Si no estás en digital, estás perdiendo ventas todos los días.
@@ -243,9 +243,9 @@ export default function NitroRetailPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="group relative p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all duration-300 hover:bg-zinc-900"
+                  className="group relative p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-orange-500/30 transition-all duration-300 hover:bg-zinc-900"
                 >
-                  <div className="p-3 rounded-xl bg-violet-500/10 text-violet-400 w-fit mb-4 group-hover:bg-violet-500/20 transition-colors">
+                  <div className="p-3 rounded-xl bg-orange-500/10 text-orange-400 w-fit mb-4 group-hover:bg-orange-500/20 transition-colors">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
@@ -261,7 +261,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                ¿Nitro Retail es para ti? <span className="text-violet-400">Descúbrelo</span>
+                ¿Nitro Retail es para ti? <span className="text-orange-400">Descúbrelo</span>
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Trabajamos con negocios que quieren escalar sus ventas con tecnología. Identifica tu caso.
@@ -293,9 +293,9 @@ export default function NitroRetailPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-4 p-5 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/20 transition-all"
+                  className="flex items-start gap-4 p-5 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-orange-500/20 transition-all"
                 >
-                  <CheckCircle2 className="w-6 h-6 text-violet-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-6 h-6 text-orange-400 shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-bold text-white mb-1">{item.title}</h3>
                     <p className="text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
@@ -311,7 +311,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                Soluciones completas para <span className="text-violet-400">tu comercio</span>
+                Soluciones completas para <span className="text-orange-400">tu comercio</span>
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Desde la vitrina digital hasta la automatización de operaciones. Todo lo que necesitas para competir en la era digital.
@@ -323,7 +323,7 @@ export default function NitroRetailPage() {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <Globe className="w-6 h-6 text-violet-400" />
+                    <Globe className="w-6 h-6 text-orange-400" />
                     <h3 className="text-2xl sm:text-3xl font-bold text-white">Presencia Digital Profesional</h3>
                   </div>
                   <p className="text-zinc-400 leading-relaxed mb-6">
@@ -332,15 +332,15 @@ export default function NitroRetailPage() {
                   <ul className="space-y-3">
                     {["Web responsive con catálogo de productos", "Google Business Profile optimizado", "Integración con Instagram Shopping y Facebook"].map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-violet-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
                         <span className="text-zinc-300">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="bg-gradient-to-br from-violet-950/30 to-purple-950/20 border border-violet-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
+                <div className="bg-gradient-to-br from-orange-950/30 to-amber-950/20 border border-orange-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
                   <div className="text-center">
-                    <Globe className="w-16 h-16 text-violet-400 mx-auto mb-4 opacity-50" />
+                    <Globe className="w-16 h-16 text-orange-400 mx-auto mb-4 opacity-50" />
                     <p className="text-zinc-500 text-sm">Presencia digital omnicanal</p>
                   </div>
                 </div>
@@ -348,15 +348,15 @@ export default function NitroRetailPage() {
 
               {/* Solution 2 */}
               <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="order-2 md:order-1 bg-gradient-to-br from-purple-950/20 to-violet-950/30 border border-purple-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
+                <div className="order-2 md:order-1 bg-gradient-to-br from-amber-950/20 to-orange-950/30 border border-amber-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
                   <div className="text-center">
-                    <ShoppingBag className="w-16 h-16 text-purple-400 mx-auto mb-4 opacity-50" />
+                    <ShoppingBag className="w-16 h-16 text-amber-400 mx-auto mb-4 opacity-50" />
                     <p className="text-zinc-500 text-sm">Comercio unificado</p>
                   </div>
                 </div>
                 <div className="order-1 md:order-2">
                   <div className="flex items-center gap-3 mb-4">
-                    <ShoppingBag className="w-6 h-6 text-purple-400" />
+                    <ShoppingBag className="w-6 h-6 text-amber-400" />
                     <h3 className="text-2xl sm:text-3xl font-bold text-white">Omnicanalidad Real</h3>
                   </div>
                   <p className="text-zinc-400 leading-relaxed mb-6">
@@ -365,7 +365,7 @@ export default function NitroRetailPage() {
                   <ul className="space-y-3">
                     {["Inventario unificado multi-canal en tiempo real", "Click & Collect y Ship from Store", "Gestión centralizada de pedidos y devoluciones"].map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                         <span className="text-zinc-300">{item}</span>
                       </li>
                     ))}
@@ -377,7 +377,7 @@ export default function NitroRetailPage() {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <Zap className="w-6 h-6 text-violet-400" />
+                    <Zap className="w-6 h-6 text-orange-400" />
                     <h3 className="text-2xl sm:text-3xl font-bold text-white">Automatización Operativa</h3>
                   </div>
                   <p className="text-zinc-400 leading-relaxed mb-6">
@@ -386,15 +386,15 @@ export default function NitroRetailPage() {
                   <ul className="space-y-3">
                     {["Alertas automáticas de stock bajo", "Reportes semanales sin intervención manual", "Campañas de recompra y carritos abandonados"].map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-violet-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
                         <span className="text-zinc-300">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="bg-gradient-to-br from-violet-950/30 to-black border border-violet-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
+                <div className="bg-gradient-to-br from-orange-950/30 to-black border border-orange-500/20 rounded-2xl p-8 h-48 sm:h-64 flex items-center justify-center">
                   <div className="text-center">
-                    <Zap className="w-16 h-16 text-violet-400 mx-auto mb-4 opacity-50" />
+                    <Zap className="w-16 h-16 text-orange-400 mx-auto mb-4 opacity-50" />
                     <p className="text-zinc-500 text-sm">Automatización inteligente</p>
                   </div>
                 </div>
@@ -408,7 +408,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                Nuestros servicios <span className="text-violet-400">Nitro Retail</span>
+                Nuestros servicios <span className="text-orange-400">Nitro Retail</span>
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Cada servicio está diseñado para resolver un dolor específico de tu comercio. Combínalos según tus necesidades.
@@ -444,16 +444,16 @@ export default function NitroRetailPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="group relative p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all duration-300"
+                  className="group relative p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-orange-500/30 transition-all duration-300"
                 >
-                  <div className="p-3 rounded-xl bg-violet-500/10 text-violet-400 w-fit mb-5 group-hover:bg-violet-500/20 transition-colors">
+                  <div className="p-3 rounded-xl bg-orange-500/10 text-orange-400 w-fit mb-5 group-hover:bg-orange-500/20 transition-colors">
                     <item.icon className="w-7 h-7" />
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
                   <p className="text-zinc-400 leading-relaxed mb-4">{item.desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {item.tags.map((tag) => (
-                      <span key={tag} className="text-xs px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20">
+                      <span key={tag} className="text-xs px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">
                         {tag}
                       </span>
                     ))}
@@ -469,7 +469,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                Herramientas del <span className="text-violet-400">ecosistema Nitro Retail</span>
+                Herramientas del <span className="text-orange-400">ecosistema Nitro Retail</span>
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Integramos las mejores herramientas del mercado para crear una experiencia comercial sin fricciones.
@@ -511,9 +511,9 @@ export default function NitroRetailPage() {
               ].map((tool, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-4 p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
+                  className="flex items-start gap-4 p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-orange-500/20 transition-all"
                 >
-                  <div className="p-2.5 rounded-lg bg-violet-500/10 text-violet-400 shrink-0">
+                  <div className="p-2.5 rounded-lg bg-orange-500/10 text-orange-400 shrink-0">
                     <tool.icon className="w-5 h-5" />
                   </div>
                   <div>
@@ -531,7 +531,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                Resultados que nuestros clientes <span className="text-violet-400">ya están viendo</span>
+                Resultados que nuestros clientes <span className="text-orange-400">ya están viendo</span>
               </h2>
             </div>
 
@@ -543,7 +543,7 @@ export default function NitroRetailPage() {
                 { value: "-60%", label: "Tiempo en tareas manuales" },
               ].map((stat, i) => (
                 <div key={i} className="text-center p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800/50">
-                  <div className="text-2xl sm:text-4xl font-extrabold text-violet-400 mb-2">
+                  <div className="text-2xl sm:text-4xl font-extrabold text-orange-400 mb-2">
                     {stat.value}
                   </div>
                   <p className="text-sm text-zinc-400">{stat.label}</p>
@@ -558,7 +558,7 @@ export default function NitroRetailPage() {
           <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
-                Nitro Retail vs. <span className="text-violet-400">Métodos Tradicionales</span>
+                Nitro Retail vs. <span className="text-orange-400">Métodos Tradicionales</span>
               </h2>
             </div>
 
@@ -573,10 +573,10 @@ export default function NitroRetailPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-xl bg-zinc-900/40 border border-white/5 hover:border-violet-500/20 transition-all items-center"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-xl bg-zinc-900/40 border border-white/5 hover:border-orange-500/20 transition-all items-center"
                 >
                   <span className="font-semibold text-zinc-200">{item.feature}</span>
-                  <span className="text-violet-400 font-bold flex items-center gap-2">
+                  <span className="text-orange-400 font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 shrink-0" /> {item.us}
                   </span>
                   <span className="text-zinc-600 line-through text-sm">{item.them}</span>
@@ -590,12 +590,12 @@ export default function NitroRetailPage() {
         <section className="py-14 sm:py-20 px-4 sm:px-6 bg-zinc-950/50 border-y border-zinc-800/50">
           <div className="container mx-auto max-w-3xl">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 text-violet-400 mb-4">
+              <div className="inline-flex items-center gap-2 text-orange-400 mb-4">
                 <Info className="w-5 h-5" />
                 <span className="text-sm font-medium">Preguntas frecuentes</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-bold">
-                Todo sobre <span className="text-violet-400">Nitro Retail</span>
+                Todo sobre <span className="text-orange-400">Nitro Retail</span>
               </h2>
             </div>
 
@@ -604,9 +604,9 @@ export default function NitroRetailPage() {
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="border border-zinc-800 rounded-xl px-6 py-1 bg-zinc-900/50 hover:border-violet-500/30 transition-all data-[state=open]:border-violet-500/30"
+                  className="border border-zinc-800 rounded-xl px-6 py-1 bg-zinc-900/50 hover:border-orange-500/30 transition-all data-[state=open]:border-orange-500/30"
                 >
-                  <AccordionTrigger className="text-left text-base font-semibold text-white hover:text-violet-400 hover:no-underline py-4">
+                  <AccordionTrigger className="text-left text-base font-semibold text-white hover:text-orange-400 hover:no-underline py-4">
                     {item.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-zinc-400 pb-4 leading-relaxed">
@@ -620,14 +620,14 @@ export default function NitroRetailPage() {
 
         {/* ===== 10. FORMULARIO DE CONTACTO ===== */}
         <section id="contacto-retail" className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-violet-500/5 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-violet-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-500/5 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="container mx-auto max-w-4xl relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-2xl sm:text-4xl font-bold mb-4">
                 Hablemos de tu{" "}
-                <span className="text-violet-400">comercio</span>
+                <span className="text-orange-400">comercio</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Déjanos tus datos. Analizamos tu negocio y diseñamos la estrategia para digitalizar y escalar tus ventas.
@@ -636,15 +636,15 @@ export default function NitroRetailPage() {
             <ContactForm />
             <div className="mt-8 flex flex-wrap justify-center gap-6 sm:gap-8 text-sm text-zinc-500">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-violet-400" />
+                <CheckCircle2 className="w-4 h-4 text-orange-400" />
                 <span>Respuesta en menos de 24h</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-violet-400" />
+                <CheckCircle2 className="w-4 h-4 text-orange-400" />
                 <span>Sin compromiso</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-violet-400" />
+                <CheckCircle2 className="w-4 h-4 text-orange-400" />
                 <span>Diagnóstico gratuito</span>
               </div>
             </div>
