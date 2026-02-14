@@ -138,7 +138,7 @@ export function Navbar() {
             </Link>
 
             <DesktopDropdown
-              label="Servicios"
+              label="Servicios Headless"
               links={serviceLinks}
               isOpen={isServicesOpen}
               onEnter={handleServicesEnter}
@@ -154,6 +154,10 @@ export function Navbar() {
               onLeave={handleNegociosLeave}
               onToggle={() => setIsNegociosOpen(!isNegociosOpen)}
             />
+
+            <Link href="/shopify" className="text-white hover:text-primary transition-colors">
+              Shopify
+            </Link>
 
             <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
@@ -188,7 +192,7 @@ export function Navbar() {
         <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border/50 shadow-2xl animate-in slide-in-from-top-5 max-h-[85vh] overflow-y-auto">
           <div className="flex flex-col p-6 space-y-1">
             <MobileAccordion
-              label="Servicios"
+              label="Servicios Headless"
               links={serviceLinks}
               isOpen={isServicesOpen}
               onToggle={() => setIsServicesOpen(!isServicesOpen)}
@@ -199,6 +203,9 @@ export function Navbar() {
               isOpen={isNegociosOpen}
               onToggle={() => setIsNegociosOpen(!isNegociosOpen)}
             />
+            <Link href="/shopify" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+              Shopify
+            </Link>
             <Link href="/#contacto" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Contacto
             </Link>
