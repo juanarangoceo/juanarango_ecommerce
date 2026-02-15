@@ -27,6 +27,7 @@ export default function AudioGeneratorPage() {
         title,
         slug,
         body,
+        content,
         "existingAudio": *[_type == "audioResource" && post._ref == ^._id][0]
       }`
       const data = await client.fetch(query)
@@ -51,12 +52,25 @@ export default function AudioGeneratorPage() {
 
   const addLog = (msg: string) => setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${msg}`])
 
-  const extractTextFromBody = (body: any[]) => {
-    if (!body || !Array.isArray(body)) return ""
-    return body
-      .filter(block => block._type === 'block' && block.children)
-      .map(block => block.children.map((child: any) => child.text).join(""))
-      .join("\n\n")
+  const extractTextFromBody = (post: any) => {
+    // Priority 1: 'content' field (Markdown text)
+    if (post.content && typeof post.content === 'string') {
+      // Remove markdown syntax roughly to get cleaner text for TTS
+      return post.content
+        .replace(/[#*`_\[\]()]/g, '') // Remove basic markdown chars
+        .replace(/\n{3,}/g, '\n\n')   // Normalize newlines
+        .trim()
+    }
+
+    // Priority 2: 'body' field (Portable Text)
+    if (post.body && Array.isArray(post.body)) {
+      return post.body
+        .filter((block: any) => block._type === 'block' && block.children)
+        .map((block: any) => block.children.map((child: any) => child.text).join(""))
+        .join("\n\n")
+    }
+
+    return ""
   }
 
   const chunkText = (text: string, maxLength: number = 4000) => {
@@ -105,8 +119,8 @@ export default function AudioGeneratorPage() {
       addLog(`Documento ID: ${audioDoc._id}`)
 
       // 2. Extract and chunk text
-      const fullText = extractTextFromBody(selectedPost.body)
-      if (!fullText) throw new Error("El post no tiene contenido de texto")
+      const fullText = extractTextFromBody(selectedPost)
+      if (!fullText) throw new Error("El post no tiene contenido de texto (ni body ni content)")
       
       const chunks = chunkText(fullText)
       addLog(`Texto dividido en ${chunks.length} segmentos.`)
