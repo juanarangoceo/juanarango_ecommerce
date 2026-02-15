@@ -30,6 +30,8 @@ import { BlogCard } from "@/components/blog/blog-card";
 import { YouTubeEmbed } from "@/components/blog/youtube-embed";
 import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 
+import { BlogAudioPlayer } from "@/components/blog/blog-audio-player";
+
 // ========== CONFIGURATION ==========
 
 export const revalidate = 86400; // Cache de 24 horas (Producción)
@@ -71,6 +73,10 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   affiliateBanner,
   category,
   tags,
+  "audio": *[_type == "audioResource" && post._ref == ^._id][0] {
+    audioSegments,
+    status
+  },
   "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
@@ -464,6 +470,13 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                 </div>
             </div>
         </header>
+
+        {/* Audio Player Injection */}
+        {post.audio?.status === 'completed' && post.audio?.audioSegments?.length > 0 && (
+          <div className="container mx-auto px-4 mb-4 md:mb-12 max-w-4xl">
+             <BlogAudioPlayer playlist={post.audio.audioSegments} title={`Escuchar: ${post.title}`} />
+          </div>
+        )}
 
         {/* Main Content Layout */}
         <div className="container mx-auto px-4 pb-12 md:pb-24 max-w-6xl">
