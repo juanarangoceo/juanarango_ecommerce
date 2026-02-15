@@ -8,12 +8,12 @@ import { Menu, X, Home, ChevronDown } from "lucide-react"
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
   { href: "/soluciones/nitro-commerce", label: "Nitro Commerce" },
-  { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
 ]
 
 const negociosLinks = [
   { href: "/soluciones/clinicas", label: "Clínicas" },
   { href: "/soluciones/nitro-inmobiliaria", label: "Nitro Inmobiliaria" },
+  { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
 ]
 
 export function Navbar() {
