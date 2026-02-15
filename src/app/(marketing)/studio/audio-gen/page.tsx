@@ -144,8 +144,21 @@ export default function AudioGeneratorPage() {
           }
         })
 
-        if (error) throw new Error(`Error en Edge Function: ${error.message}`)
-        if (!data.url) throw new Error("No se recibió URL del audio")
+        if (error) {
+           // Try to parse the error body if available
+           let detailedError = error.message
+           try {
+             if (error instanceof Error) {
+                 detailedError = error.message
+             } else if (typeof error === 'object' && error !== null) {
+                 detailedError = JSON.stringify(error)
+             }
+           } catch (e) { console.error(e) }
+           
+           throw new Error(`Error en Edge Function: ${detailedError}`)
+        }
+        
+        if (!data || !data.url) throw new Error("No se recibió URL del audio")
 
         audioUrls.push(data.url)
         addLog(`Segmento ${i + 1} generado.`)
