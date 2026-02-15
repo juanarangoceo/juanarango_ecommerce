@@ -73,10 +73,11 @@ export default function AudioGeneratorPage() {
     return ""
   }
 
-  const chunkText = (text: string, maxLength: number = 4000) => {
+  const chunkText = (text: string, maxLength: number = 1500) => {
     const chunks = []
     let currentChunk = ""
     
+    // Split by paragraphs to keep context
     const paragraphs = text.split("\n\n")
     
     for (const para of paragraphs) {
