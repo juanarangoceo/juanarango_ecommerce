@@ -5,6 +5,7 @@ import { NewsletterForm } from "@/components/newsletter-form";
 import { BlogSearch } from "@/components/blog-search";
 import { RecentPostPills } from "@/components/recent-post-pills";
 import { BlogCard } from "@/components/blog/blog-card";
+import { TrendingCard } from "@/components/blog/trending-card";
 import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { Pagination } from "@/components/ui/pagination";
 
@@ -142,6 +143,9 @@ export default async function BlogPage({
         {/* Right: Sidebar (Desktop) / Bottom (Mobile) */}
         <aside className="lg:col-span-4 space-y-6">
           <div className="lg:sticky lg:top-24 space-y-6">
+            {/* Trending Topics */}
+            <TrendingCard />
+
             {/* CTA Card */}
             <NitroCtaCard />
             
