@@ -22,7 +22,7 @@ export default function AudioGeneratorPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       // Remove filters to show all posts, allowing regeneration
-      const query = `*[_type == "post"] | order(_createdAt desc)[0...100] {
+      const query = `*[_type == "post"] | order(_createdAt desc)[0...1000] {
         _id,
         title,
         slug,
@@ -86,20 +86,22 @@ export default function AudioGeneratorPage() {
     setStatus("Preparando texto...")
 
     try {
-      // 1. Create or replace audioResource document in Sanity
+      // 1. Create audioResource via API (Server-side to protect token)
       addLog("Creando/Actualizando recurso en Sanity...")
       
-      // Check if exists? For now we create a new one or ideally we should update existing.
-      // SImple approach: Create new, Sanity reference will just point to this new one eventually? 
-      // Actually, if we create a new one, we might leave orphans. 
-      // Let's just create one for now, logic can be refined to patch existing.
-      const audioDoc = await client.create({
-        _type: 'audioResource',
-        post: { _type: 'reference', _ref: selectedPost._id },
-        status: 'generating',
-        voice: 'onyx',
-        audioSegments: []
+      const createRes = await fetch('/api/audio/save-resources', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'create',
+          postId: selectedPost._id,
+          status: 'generating',
+          voice: 'onyx'
+        })
       })
+      
+      if (!createRes.ok) throw new Error("Error creando registro en Sanity via API")
+      const audioDoc = await createRes.json()
       addLog(`Documento ID: ${audioDoc._id}`)
 
       // 2. Extract and chunk text
@@ -135,15 +137,19 @@ export default function AudioGeneratorPage() {
         addLog(`Segmento ${i + 1} generado.`)
       }
 
-      // 4. Update Sanity with the URLs
+      // 4. Update Sanity with the URLs via API
       setStatus("Finalizando...")
-      await client
-        .patch(audioDoc._id)
-        .set({ 
-          audioSegments: audioUrls,
-          status: 'completed' 
+      
+      await fetch('/api/audio/save-resources', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'update',
+          _id: audioDoc._id,
+          status: 'completed',
+          audioSegments: audioUrls
         })
-        .commit()
+      })
 
       setProgress(100)
       setStatus("¡Completado!")
