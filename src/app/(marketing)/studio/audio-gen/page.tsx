@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { client } from "@/sanity/lib/client"
-import { supabaseClient } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
@@ -136,29 +135,23 @@ export default function AudioGeneratorPage() {
         setStatus(`Generando segmento ${i + 1}/${chunks.length}...`)
         addLog(`Procesando segmento ${i + 1} (${chunk.length} chars)...`)
 
-        const { data, error } = await supabaseClient.functions.invoke('generate-audio-chunk', {
-          body: {
+        const res = await fetch('/api/audio/generate-chunk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
             text: chunk,
             voice: 'onyx',
             segmentIndex: i,
             postId: selectedPost._id
-          }
+          })
         })
 
-        if (error) {
-           // Try to parse the error body if available
-           let detailedError = error.message
-           try {
-             if (error instanceof Error) {
-                 detailedError = error.message
-             } else if (typeof error === 'object' && error !== null) {
-                 detailedError = JSON.stringify(error)
-             }
-           } catch (e) { console.error(e) }
-           
-           throw new Error(`Error en Edge Function: ${detailedError}`)
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({ error: 'Unknown error' }))
+          throw new Error(`Error generando audio: ${errData.error || res.statusText}`)
         }
-        
+
+        const data = await res.json()
         if (!data || !data.url) throw new Error("No se recibió URL del audio")
 
         audioUrls.push(data.url)
