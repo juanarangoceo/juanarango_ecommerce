@@ -469,14 +469,14 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                     <span>{readingTime} min de lectura</span>
                 </div>
             </div>
-        </header>
 
-        {/* Audio Player Injection */}
-        {post.audio?.status === 'completed' && post.audio?.audioSegments?.length > 0 && (
-          <div className="container mx-auto px-4 mb-4 md:mb-12 max-w-4xl">
-             <BlogAudioPlayer playlist={post.audio.audioSegments} title={`Escuchar: ${post.title}`} />
-          </div>
-        )}
+            {/* Audio Player Injection - Prominent Placement */}
+            {post.audio?.status === 'completed' && post.audio?.audioSegments?.length > 0 && (
+               <div className="mt-8 md:mt-10">
+                  <BlogAudioPlayer playlist={post.audio.audioSegments} title={`Escuchar: ${post.title}`} />
+               </div>
+            )}
+        </header>
 
         {/* Main Content Layout */}
         <div className="container mx-auto px-4 pb-12 md:pb-24 max-w-6xl">
