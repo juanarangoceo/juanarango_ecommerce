@@ -4,5 +4,6 @@ import tag from './tag'
 import trending from './trending'
 import audioResource from './audio-resource'
 import advertising from './advertising'
+import advertisingShopify from './advertising-shopify'
 
-export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising]
+export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify]

@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { BlogCard } from "@/components/blog/blog-card";
+import { AdvertisingBanner } from "@/components/blog/advertising-banner";
 import { ContactForm } from "@/components/ui/contact-form";
 import Link from "next/link";
 import { constructMetadata } from "@/lib/utils";
@@ -41,7 +42,15 @@ const SHOPIFY_POSTS_QUERY = `
     tags,
     estimatedReadingTime
   }
+  }
 `;
+
+const AD_QUERY = `*[_type == "advertisingShopify"] | order(_createdAt desc)[0] {
+  title,
+  desktopImage,
+  mobileImage,
+  link
+}`;
 
 export const revalidate = 3600;
 
@@ -124,7 +133,10 @@ const webPageSchema = {
 
 // --- Page Component ---
 export default async function ShopifyPage() {
-  const posts = await client.fetch<any[]>(SHOPIFY_POSTS_QUERY);
+  const [posts, ad] = await Promise.all([
+    client.fetch<any[]>(SHOPIFY_POSTS_QUERY),
+    client.fetch<any>(AD_QUERY)
+  ]);
 
   return (
     <>
@@ -193,6 +205,13 @@ export default async function ShopifyPage() {
             </div>
           </div>
         </section>
+
+        {/* ===== ADVERTISING BANNER ===== */}
+        {ad && (
+          <div className="container mx-auto px-4 max-w-5xl -mt-8 mb-12 relative z-20">
+             <AdvertisingBanner ad={ad} />
+          </div>
+        )}
 
         {/* ===== 2. VENTAJAS DE SHOPIFY ===== */}
         <section className="py-14 sm:py-20 px-4 sm:px-6">
