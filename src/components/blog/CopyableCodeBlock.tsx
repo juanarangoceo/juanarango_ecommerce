@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Copy } from "lucide-react"
+import { Check, Copy, Zap } from "lucide-react"
 import Script from "next/script"
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -27,6 +27,7 @@ interface CopyableCodeBlockProps {
 
 export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockProps) {
   const [copied, setCopied] = useState(false)
+  const isPrompt = language.toLowerCase() === 'prompt';
 
   const handleCopy = async () => {
     try {
@@ -58,15 +59,24 @@ export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockPr
 
       <div className="my-8 md:my-10 group">
         {/* Header */}
-        <div className="flex items-center justify-between bg-zinc-900 dark:bg-zinc-950 px-4 md:px-6 py-3 rounded-t-lg border border-zinc-800">
+        <div className={`flex items-center justify-between px-4 md:px-6 py-3 rounded-t-lg border border-b-0 ${
+            isPrompt 
+              ? 'bg-purple-900/20 border-purple-500/30' 
+              : 'bg-zinc-900 dark:bg-zinc-950 border-zinc-800'
+          }`}>
           <div className="flex items-center gap-3">
             {title && (
-              <span className="text-sm font-medium text-zinc-300">
+              <span className={`text-sm font-medium ${isPrompt ? 'text-purple-200' : 'text-zinc-300'}`}>
                 {title}
               </span>
             )}
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">
-              {language}
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium border ${
+                isPrompt
+                  ? 'bg-purple-500/10 text-purple-300 border-purple-500/20'
+                  : 'bg-green-500/10 text-green-400 border-green-500/20'
+            }`}>
+              {isPrompt && <Zap className="w-3 h-3" />}
+              {isPrompt ? 'Prompt' : language}
             </span>
           </div>
           

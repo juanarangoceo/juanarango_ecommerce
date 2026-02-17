@@ -30,8 +30,13 @@ export async function POST(req: Request) {
           1. "title": Título del post.
           2. "slug": URL amigable (ej: titulo-del-post).
           3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc). NO incluyas FAQ aquí dentro.
+             - Si incluyes un Prompt de IA para que el usuario lo copie, ÚSALO DENTRO DE UN BLOQUE DE CÓDIGO con el lenguaje "prompt". 
+             Ejemplo:
+             \`\`\`prompt
+             Actúa como un experto en...
+             \`\`\`
           4. "faq": Un array de objetos con "question" y "answer".
-          5. "category": UNA de estas categorías exactas: "ecommerce", "estrategia-marketing", "ia-automatizacion", "headless-commerce". Elige la más relevante.
+          5. "category": UNA de estas categorías exactas: "ecommerce", "estrategia-marketing", "ia-automatizacion", "headless-commerce", "prompts". Elige la más relevante.
           6. "tags": Un array de 3-5 etiquetas relevantes en español (ej: ["shopify", "seo", "conversiones"]).
 
           NO incluyas "markdown" al inicio ni al final. Solo el JSON puro.`
