@@ -50,15 +50,16 @@ export function BlogAudioPlayer({ playlist, title = "Escuchar artículo" }: Blog
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 rounded-xl border border-zinc-200 dark:border-emerald-500/20 bg-white/10 dark:bg-zinc-900/50 backdrop-blur-md shadow-xl relative overflow-hidden group">
-      {/* Background Glow */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Glow - Hidden on mobile for performance */}
+      <div className="hidden sm:block absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Audio Element Hidden */}
       <audio
         ref={audioRef}
         src={playlist[currentTrackIndex]}
+        preload="none"
         onTimeUpdate={handleTimeUpdate}
-         onEnded={handleEnded}
+        onEnded={handleEnded}
       />
 
       <div className="flex items-center gap-4 relative z-10">
