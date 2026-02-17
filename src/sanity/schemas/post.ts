@@ -24,6 +24,7 @@ export default {
           { title: 'Estrategia de Marketing', value: 'estrategia-marketing' },
           { title: 'IA y Automatización', value: 'ia-automatizacion' },
           { title: 'Headless Commerce', value: 'headless-commerce' },
+          { title: 'Prompts', value: 'prompts' },
         ],
       },
       description: 'Se asigna automáticamente por la IA. Define la URL del post.',

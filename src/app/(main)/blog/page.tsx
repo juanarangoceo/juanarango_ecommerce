@@ -101,12 +101,20 @@ export default async function BlogPage({
           { slug: 'estrategia-marketing', label: 'Marketing' },
           { slug: 'ia-automatizacion', label: 'IA y Automatización' },
           { slug: 'headless-commerce', label: 'Headless Commerce' },
+          { slug: 'prompts', label: 'Prompts', icon: true },
         ].map((cat) => (
           <Link
             key={cat.slug}
             href={`/blog/${cat.slug}`}
-            className="px-4 py-2 text-sm font-medium rounded-full bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30 transition-all duration-200"
+            className={`px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 flex items-center gap-2
+              ${cat.slug === 'prompts' 
+                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40' 
+                : 'bg-zinc-800/50 text-zinc-400 border-zinc-700/50 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30'
+              }`}
           >
+            {cat.icon && (
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            )}
             {cat.label}
           </Link>
         ))}

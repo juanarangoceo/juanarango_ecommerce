@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
-import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag, Zap } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
@@ -37,7 +37,7 @@ import { AdvertisingBanner } from "@/components/blog/advertising-banner";
 
 export const revalidate = 60; // Cache de 60 segundos (Temporal para verificar audio)
 
-const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
+const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce', 'prompts'];
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   'ecommerce': {
@@ -55,6 +55,10 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
   'headless-commerce': {
     title: 'Headless Commerce',
     description: 'Arquitectura headless, APIs, microservicios, JAMstack y comercio composable para tiendas de alto rendimiento.',
+  },
+  'prompts': {
+    title: 'Prompts Engineering',
+    description: 'Domina el arte de los prompts. Optimiza tus interacciones con IA para marketing, desarrollo y creación de contenido.',
   },
 };
 
@@ -258,8 +262,11 @@ function CategoryPage({ categorySlug, meta, posts }: { categorySlug: string; met
         <Link href="/blog" className="inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Blog
         </Link>
-        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">{meta.title}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl">{meta.description}</p>
+        <h1 className={`text-4xl font-extrabold tracking-tight lg:text-5xl mb-4 ${categorySlug === 'prompts' ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600' : ''}`}>
+          {meta.title}
+          {categorySlug === 'prompts' && <Zap className="inline-block w-8 h-8 md:w-10 md:h-10 ml-3 text-purple-500 align-baseline" />}
+        </h1>
+        <p className={`text-xl max-w-2xl ${categorySlug === 'prompts' ? 'text-purple-200/80' : 'text-muted-foreground'}`}>{meta.description}</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8">
