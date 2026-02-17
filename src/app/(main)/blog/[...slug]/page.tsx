@@ -31,6 +31,7 @@ import { YouTubeEmbed } from "@/components/blog/youtube-embed";
 import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 
 import { BlogAudioPlayer } from "@/components/blog/blog-audio-player";
+import { AdvertisingBanner } from "@/components/blog/advertising-banner";
 
 // ========== CONFIGURATION ==========
 
@@ -76,6 +77,12 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "audio": *[_type == "audioResource" && post._ref == ^._id][0] {
     audioSegments,
     status
+  },
+  "advertising": *[_type == "advertising" && ^._id in targetPosts[]._ref][0] {
+    title,
+    desktopImage,
+    mobileImage,
+    link
   },
   "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
     title,
@@ -439,6 +446,9 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
             <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6 md:mb-8 leading-[1.1]">
               {post.title}
             </h1>
+
+            {/* Advertising Banner (Targeted) */}
+            {post.advertising && <AdvertisingBanner ad={post.advertising} />}
 
             {/* Tags display */}
             {post.tags && post.tags.length > 0 && (
