@@ -35,7 +35,7 @@ export function NewsletterForm() {
 
   return (
     <div className="w-full mx-auto p-1 relative overflow-hidden rounded-2xl bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-800 shadow-2xl">
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 filter contrast-125"></div>
+      <div className="absolute inset-0 opacity-20"></div>
       
       <div className="relative bg-zinc-950 rounded-[14px] px-6 py-8 flex flex-col items-center gap-6 overflow-hidden">
         
