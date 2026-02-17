@@ -74,8 +74,8 @@ export async function generateMetadata(props: Props) {
     title: displayTitle,
     description: displayDesc,
     canonical: `https://www.juanarangoecommerce.com/blog/tags/${params.tag}`,
-    // Indexing all tags as they now have rich content
-    noIndex: false
+    // Indexing only if more than 3 posts
+    noIndex: postCount <= 3
   });
 }
 
