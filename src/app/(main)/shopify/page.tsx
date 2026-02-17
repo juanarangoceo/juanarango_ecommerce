@@ -51,7 +51,7 @@ const AD_QUERY = `*[_type == "advertisingShopify"] | order(_createdAt desc)[0] {
   link
 }`;
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 // --- SEO Metadata ---
 export function generateMetadata() {
