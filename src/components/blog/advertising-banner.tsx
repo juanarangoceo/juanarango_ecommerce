@@ -30,8 +30,8 @@ export function AdvertisingBanner({ ad, className }: AdvertisingBannerProps) {
           rel="noopener noreferrer"
           className="block w-full relative rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:opacity-95 transition-opacity"
         >
-          {/* Mobile Image (< 768px) */}
-          <div className="block md:hidden relative w-full aspect-[4/5] sm:aspect-video">
+          {/* Mobile Image (< 768px) - 672x560 (approx 6:5) */}
+          <div className="block md:hidden relative w-full aspect-[6/5]">
             {ad.mobileImage && (
               <Image
                 src={urlForImage(ad.mobileImage).url()}
@@ -43,8 +43,8 @@ export function AdvertisingBanner({ ad, className }: AdvertisingBannerProps) {
             )}
           </div>
 
-          {/* Desktop Image (>= 768px) */}
-          <div className="hidden md:block relative w-full aspect-[5/2] lg:aspect-[3/1]">
+          {/* Desktop Image (>= 768px) - 1456x180 (approx 8:1) */}
+          <div className="hidden md:block relative w-full aspect-[8/1]">
             {ad.desktopImage && (
               <Image
                 src={urlForImage(ad.desktopImage).url()}

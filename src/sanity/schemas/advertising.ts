@@ -18,7 +18,7 @@ export default defineType({
       title: "Imagen Desktop",
       type: "image",
       options: { hotspot: true },
-      description: "Imagen para pantallas grandes (PC/Tablet). Recomendado: Horizontal ancho.",
+      description: "Imagen para pantallas grandes (PC/Tablet). Recomendado: 1456 x 180 px.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -26,7 +26,7 @@ export default defineType({
       title: "Imagen Móvil",
       type: "image",
       options: { hotspot: true },
-      description: "Imagen para celulares. Recomendado: Cuadrada o vertical.",
+      description: "Imagen para celulares. Recomendado: 672 x 560 px.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
