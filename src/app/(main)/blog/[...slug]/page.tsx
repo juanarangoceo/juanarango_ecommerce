@@ -34,7 +34,7 @@ import { BlogAudioPlayer } from "@/components/blog/blog-audio-player";
 
 // ========== CONFIGURATION ==========
 
-export const revalidate = 86400; // Cache de 24 horas (Producción)
+export const revalidate = 60; // Cache de 60 segundos (Temporal para verificar audio)
 
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce'];
 
