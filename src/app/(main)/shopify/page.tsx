@@ -42,7 +42,6 @@ const SHOPIFY_POSTS_QUERY = `
     tags,
     estimatedReadingTime
   }
-  }
 `;
 
 const AD_QUERY = `*[_type == "advertisingShopify"] | order(_createdAt desc)[0] {
