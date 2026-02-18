@@ -35,7 +35,7 @@ import { AdvertisingBanner } from "@/components/blog/advertising-banner";
 
 // ========== CONFIGURATION ==========
 
-export const revalidate = 86400; // Cache de 24 horas
+export const revalidate = 3600; // Cache de 1 hora (igual que el listado principal)
 
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce', 'prompts'];
 
