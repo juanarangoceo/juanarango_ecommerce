@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
     // Always revalidate app-tools listing via Path and Tag
     revalidatePath('/app-tools', 'page')
-    revalidateTag('app-tools')
+    // revalidateTag('app-tools')
     revalidated.push('/app-tools')
     revalidated.push('tag:app-tools')
 
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
 // Also support GET for easy manual testing
 export async function GET() {
   revalidatePath('/app-tools', 'page')
-  revalidateTag('app-tools')
+  // revalidateTag('app-tools')
   revalidatePath('/sitemap.xml', 'page')
   return NextResponse.json({ 
     revalidated: true, 
