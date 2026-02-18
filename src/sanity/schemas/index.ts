@@ -5,5 +5,7 @@ import trending from './trending'
 import audioResource from './audio-resource'
 import advertising from './advertising'
 import advertisingShopify from './advertising-shopify'
+import appToolCategory from './appToolCategory'
+import appTool from './appTool'
 
-export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify]
+export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool]

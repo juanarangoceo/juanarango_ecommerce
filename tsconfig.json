@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "nuevo_proyecto", "DEMO", "app_facial", "Landingpage_nitrocommerce", "_Nitrostrategy_backup", "luxe-estates", "_luxe-estates-reference", "supabase/functions"]
+  "exclude": ["node_modules", "nuevo_proyecto", "DEMO", "app_facial", "Landingpage_nitrocommerce", "_Nitrostrategy_backup", "luxe-estates", "_luxe-estates-reference", "supabase/functions", "Landing_apps"]
 }

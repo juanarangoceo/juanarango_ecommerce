@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '',
     '/blog',
+    '/app-tools',
     '/soluciones/clinicas',
     '/soluciones/nitro-commerce',
     '/demos/aura-stetic',
@@ -71,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-  // 3. Fetch pSEO Pages from Supabase
+  // 5. Fetch pSEO Pages from Supabase
   const { createClient } = await import('@supabase/supabase-js')
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -89,11 +90,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
+  // 6. Fetch App Tools from Sanity
+  const appTools = await client.fetch(`
+    *[_type == "appTool" && defined(slug.current)] {
+      "slug": slug.current,
+      _updatedAt
+    }
+  `)
+
+  const appToolRoutes = (appTools || []).map((app: any) => ({
+    url: `${baseUrl}/app-tools/${app.slug}`,
+    lastModified: new Date(app._updatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }))
+
   return [
     ...staticRoutes,
     ...categoryRoutes,
     ...postRoutes,
     ...validTagRoutes,
     ...pseoRoutes,
+    ...appToolRoutes,
   ]
 }
