@@ -11,7 +11,7 @@ import { TrendingSection } from "@/components/app-tools/trending-section"
 import { RankingTable } from "@/components/app-tools/ranking-table"
 import { Sparkles, Library } from "lucide-react"
 
-export const revalidate = 60 // TODO: subir a 3600 en producción
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "Mejores Apps y Herramientas de IA | Biblioteca Completa - Nitro Ecom",
