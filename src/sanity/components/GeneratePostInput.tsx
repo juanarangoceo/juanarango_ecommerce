@@ -117,21 +117,13 @@ export const GeneratePostInput = (props: any) => {
       toast.push({ title: "Actualizando documento...", status: 'info' })
       await client.patch(docId).set(attributes).commit()
 
-      // 4. PUBLISH (Optional but requested)
-      // Small delay to ensure patch is propagated before publish attempt
-      setTimeout(() => {
-        if (publish && !publish.disabled) {
-            publish.execute()
-            toast.push({ title: "¡Publicado exitosamente!", status: 'success' })
-        } else {
-            // Cannot publish mostly because of validation errors or permissions
-            toast.push({ 
-                title: "Post generado (Borrador)", 
-                description: "Revisa y publica manualmente.", 
-                status: 'success' 
-            })
-        }
-      }, 1000)
+      // 4. HECHO (No publicar automáticamente)
+      toast.push({ 
+          title: "Borrador Generado Exitosamente", 
+          description: "Revisa el contenido y publica cuando estés listo.", 
+          status: 'success',
+          duration: 5000
+      })
 
     } catch (err: any) {
       console.error("Gen Error:", err)

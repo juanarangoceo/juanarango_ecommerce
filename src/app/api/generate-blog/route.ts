@@ -31,14 +31,12 @@ export async function POST(req: Request) {
           2. "slug": URL amigable (ej: titulo-del-post).
           3. "content": El contenido COMPLETO del artículo en formato Markdown (extenso, estructurado con H2, listas, etc). NO incluyas FAQ aquí dentro.
           3. "content": El contenido COMPLETO del artículo en formato Markdown.
-             - CRÍTICO: Si incluyes un Prompt de IA (Midjourney, ChatGPT, etc), DEBES encerrarlo en un bloque de código "prompt".
-             - NO escribas el prompt como texto normal.
-             Ejemplo CORRECTO:
+             - SI (y solo si) el artículo trata sobre generar imágenes o usar IA, incluye el Prompt en un bloque de código "prompt" o "markdown" para que sea fácil de copiar.
+             - Si el tema NO requiere un prompt (ej: marketing, estrategia), NO inventes uno.
+             - Formato para el prompt:
              \`\`\`prompt
              Un perro espacial...
              \`\`\`
-             Ejemplo INCORRECTO:
-             prompt Un perro espacial...
           4. "faq": Un array de objetos con "question" y "answer".
           5. "category": UNA de estas categorías exactas: "ecommerce", "estrategia-marketing", "ia-automatizacion", "headless-commerce", "prompts". Elige la más relevante.
           6. "tags": Un array de 3-5 etiquetas relevantes en español (ej: ["shopify", "seo", "conversiones"]).
