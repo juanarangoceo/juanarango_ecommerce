@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -6,7 +6,6 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
   try {
-    // Optional: validate webhook secret
     const secret = process.env.SANITY_WEBHOOK_SECRET
     if (secret) {
       const auth = request.headers.get('authorization')
@@ -15,12 +14,11 @@ export async function POST(request: Request) {
       }
     }
 
-    // Parse body — Sanity sends the projected fields directly
     let body: Record<string, unknown> = {}
     try {
       body = await request.json()
     } catch {
-      // If body parsing fails, still revalidate app-tools
+      // If body parsing fails, still revalidate
     }
 
     const docType = body?._type as string | undefined
@@ -28,16 +26,13 @@ export async function POST(request: Request) {
 
     const revalidated: string[] = []
 
-    // Always revalidate app-tools listing via Path and Tag
+    // Revalidate app-tools listing
     revalidatePath('/app-tools', 'page')
-    // revalidateTag('app-tools')
     revalidated.push('/app-tools')
-    revalidated.push('tag:app-tools')
 
     if (docType === 'appTool' && slug) {
       revalidatePath(`/app-tools/${slug}`, 'page')
       revalidated.push(`/app-tools/${slug}`)
-      // If we had detail page tagged, we would revalidateTag(`app-tool:${slug}`)
     }
 
     if (docType === 'post') {
@@ -49,7 +44,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // Revalidate sitemap
     revalidatePath('/sitemap.xml', 'page')
     revalidated.push('/sitemap.xml')
 
@@ -67,14 +61,12 @@ export async function POST(request: Request) {
   }
 }
 
-// Also support GET for easy manual testing
 export async function GET() {
   revalidatePath('/app-tools', 'page')
-  // revalidateTag('app-tools')
   revalidatePath('/sitemap.xml', 'page')
-  return NextResponse.json({ 
-    revalidated: true, 
-    paths: ['/app-tools', 'tag:app-tools'], 
-    now: Date.now() 
+  return NextResponse.json({
+    revalidated: true,
+    paths: ['/app-tools', '/sitemap.xml'],
+    now: Date.now(),
   })
 }

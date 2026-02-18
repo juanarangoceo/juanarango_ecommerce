@@ -29,13 +29,10 @@ export const metadata: Metadata = {
 }
 
 export default async function AppToolsPage() {
-  // Use useCdn: false to bypass Sanity CDN cache — ensures fresh data on revalidation
-  const freshClient = client.withConfig({ useCdn: false })
-
   const [allApps, featuredApp, trendingApps] = await Promise.all([
-    freshClient.fetch<AppToolSanity[]>(ALL_APP_TOOLS_QUERY),
-    freshClient.fetch<AppToolSanity | null>(FEATURED_APP_QUERY),
-    freshClient.fetch<AppToolSanity[]>(TRENDING_APPS_QUERY),
+    client.fetch<AppToolSanity[]>(ALL_APP_TOOLS_QUERY),
+    client.fetch<AppToolSanity | null>(FEATURED_APP_QUERY),
+    client.fetch<AppToolSanity[]>(TRENDING_APPS_QUERY),
   ])
 
   return (
