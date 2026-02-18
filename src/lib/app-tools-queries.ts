@@ -55,7 +55,8 @@ export const CATEGORIES = [
 export const ALL_APP_TOOLS_QUERY = `*[
   _type == "appTool"
   && defined(slug.current)
-]|order(rank asc) {
+  && defined(slug.current)
+]|order(coalesce(rank, 999) asc, _updatedAt desc) {
   _id,
   appName,
   slug,
@@ -80,7 +81,8 @@ export const FEATURED_APP_QUERY = `*[
   _type == "appTool"
   && defined(slug.current)
   && isFeatured == true
-]|order(rank asc)[0] {
+  && isFeatured == true
+]|order(coalesce(rank, 999) asc, _updatedAt desc)[0] {
   _id,
   appName,
   slug,
@@ -105,7 +107,8 @@ export const TRENDING_APPS_QUERY = `*[
   _type == "appTool"
   && defined(slug.current)
   && isTrending == true
-]|order(rank asc)[0...8] {
+  && isTrending == true
+]|order(coalesce(rank, 999) asc, _updatedAt desc)[0...8] {
   _id,
   appName,
   slug,

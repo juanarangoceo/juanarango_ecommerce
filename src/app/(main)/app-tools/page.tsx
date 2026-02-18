@@ -30,9 +30,9 @@ export const metadata: Metadata = {
 
 export default async function AppToolsPage() {
   const [allApps, featuredApp, trendingApps] = await Promise.all([
-    client.fetch<AppToolSanity[]>(ALL_APP_TOOLS_QUERY),
-    client.fetch<AppToolSanity | null>(FEATURED_APP_QUERY),
-    client.fetch<AppToolSanity[]>(TRENDING_APPS_QUERY),
+    client.fetch<AppToolSanity[]>(ALL_APP_TOOLS_QUERY, {}, { next: { tags: ['app-tools'] } }),
+    client.fetch<AppToolSanity | null>(FEATURED_APP_QUERY, {}, { next: { tags: ['app-tools'] } }),
+    client.fetch<AppToolSanity[]>(TRENDING_APPS_QUERY, {}, { next: { tags: ['app-tools'] } }),
   ])
 
   return (

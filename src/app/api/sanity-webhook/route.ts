@@ -1,4 +1,4 @@
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -28,13 +28,16 @@ export async function POST(request: Request) {
 
     const revalidated: string[] = []
 
-    // Always revalidate app-tools listing
+    // Always revalidate app-tools listing via Path and Tag
     revalidatePath('/app-tools', 'page')
+    revalidateTag('app-tools')
     revalidated.push('/app-tools')
+    revalidated.push('tag:app-tools')
 
     if (docType === 'appTool' && slug) {
       revalidatePath(`/app-tools/${slug}`, 'page')
       revalidated.push(`/app-tools/${slug}`)
+      // If we had detail page tagged, we would revalidateTag(`app-tool:${slug}`)
     }
 
     if (docType === 'post') {
@@ -67,6 +70,11 @@ export async function POST(request: Request) {
 // Also support GET for easy manual testing
 export async function GET() {
   revalidatePath('/app-tools', 'page')
+  revalidateTag('app-tools')
   revalidatePath('/sitemap.xml', 'page')
-  return NextResponse.json({ revalidated: true, paths: ['/app-tools'], now: Date.now() })
+  return NextResponse.json({ 
+    revalidated: true, 
+    paths: ['/app-tools', 'tag:app-tools'], 
+    now: Date.now() 
+  })
 }
