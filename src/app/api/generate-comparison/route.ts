@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Se requieren datos de las dos apps.' }, { status: 400 })
     }
 
-    const prompt = `Eres un experto en tecnología y marketing digital especializado en herramientas de IA. Genera una comparación exhaustiva y profesional entre "${app1.appName}" y "${app2.appName}".
+    const prompt = `Eres un experto en tecnología y marketing digital. Genera una comparación CONCISA y visualmente organizada entre "${app1.appName}" y "${app2.appName}".
 
 DATOS DE ${app1.appName.toUpperCase()}:
 - Descripción: ${app1.description || 'N/A'}
@@ -35,59 +35,56 @@ DATOS DE ${app2.appName.toUpperCase()}:
 - Contras: ${(app2.cons || []).join(', ') || 'N/A'}
 - Plataformas: ${(app2.platforms || []).join(', ') || 'N/A'}
 
-Devuelve un JSON con esta estructura:
+REGLAS DE FORMATO IMPORTANTE:
+- El contenido debe ser CONCISO y SCANNABLE (fácil de escanear visualmente)
+- Máximo 800-1000 palabras en el campo "content"
+- Usa párrafos CORTOS (máximo 2-3 líneas cada uno)
+- Usa listas con bullets en vez de párrafos largos
+- Cada sección h2/h3 debe tener máximo 3-4 párrafos cortos o listas
+- Piensa en mobile: el usuario va a leer en el celular
+- NO repitas información que ya está en comparisonTable o en los otros campos
+
+Devuelve un JSON con esta estructura exacta:
 
 {
-  "title": "Título SEO optimizado tipo: ${app1.appName} vs ${app2.appName}: [Subtítulo con keyword principal]",
-  "slug": "slug-en-formato-url tipo: ${(app1.appName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-vs-${(app2.appName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}",
-  "metaDescription": "Meta description de 150-160 caracteres optimizada para CTR en Google, naturalmente incluyendo las dos apps",
-  "content": "Contenido completo en formato Markdown. DEBE incluir:
-    ## Introducción (2-3 párrafos contextualizando la comparación, mencionando por qué alguien buscaría esta comparación)
-    ## ¿Qué es [App1]? (descripción detallada)
-    ## ¿Qué es [App2]? (descripción detallada)
-    ## Comparativa Detallada
-    ### Funcionalidades
-    ### Interfaz y Experiencia de Usuario
-    ### Precios y Planes
-    ### Integraciones y Compatibilidad
-    ### Soporte y Comunidad
-    ## ¿Cuándo elegir [App1]?
-    ## ¿Cuándo elegir [App2]?
-    ## Veredicto Final
+  "title": "Título SEO tipo: ${app1.appName} vs ${app2.appName}: [Subtítulo corto]",
+  "slug": "${(app1.appName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-vs-${(app2.appName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}",
+  "metaDescription": "Meta description de 150-160 caracteres para Google",
+  "introText": "1-2 párrafos cortos introduciendo POR QUÉ alguien compararía estas dos apps. Máximo 80 palabras.",
+  "app1Summary": "Descripción de ${app1.appName} en 2-3 oraciones. Directa y al grano.",
+  "app2Summary": "Descripción de ${app2.appName} en 2-3 oraciones. Directa y al grano.",
+  "app1BestFor": "Frase corta: Para quién es ideal App1. Ej: 'Ideal para creadores de contenido que necesitan generar imágenes rápido'",
+  "app2BestFor": "Frase corta: Para quién es ideal App2.",
+  "content": "Contenido en Markdown con estas secciones BREVES:
+    ## Funcionalidades Clave (lista con bullets comparando las funcionalidades principales, máximo 6 bullets)
+    ## Experiencia de Uso (2 párrafos cortos: uno por app)
+    ## Precios y Planes (comparación directa de precios, sin repetir la tabla)
+    ## Integraciones (lista corta de integraciones clave de cada app)
     
-    El contenido debe ser:
-    - Mínimo 2000 palabras
-    - Objetivo e imparcial
-    - Con datos reales y comparaciones específicas
-    - Optimizado para SEO y SGE (Search Generative Experience)
-    - En español natural y profesional
-    - Rico en keywords long-tail relacionadas
-    - Incluir listas, negritas y formato enriquecido
-    ",
+    IMPORTANTE: No incluyas introducción ni veredicto en el content, esos van en campos separados.",
   "comparisonTable": [
-    {"feature": "Nombre de la característica", "app1Value": "Valor para App1", "app2Value": "Valor para App2"},
-    // Mínimo 8 filas comparando: Precio, Plan Gratuito, Funcionalidad Principal, Facilidad de Uso, Soporte, Integraciones, Plataformas, Idioma, etc.
+    {"feature": "Característica", "app1Value": "Valor corto", "app2Value": "Valor corto"},
+    // 8-10 filas: Precio, Plan Gratis, Funcionalidad Principal, Facilidad de Uso, Soporte, Integraciones, Plataformas, Idioma Español, API
   ],
-  "verdict": "Párrafo de veredicto final de 3-4 oraciones, objetivo y útil, indicando para qué tipo de usuario es mejor cada app",
+  "verdict": "Veredicto en 2-3 oraciones: cuál es mejor para qué tipo de usuario.",
   "faq": [
-    {"question": "Pregunta frecuente sobre la comparación", "answer": "Respuesta detallada y útil"},
-    // 5-7 preguntas frecuentes reales que la gente buscaría, tipo: "¿Cuál es más barato?", "¿Cuál es mejor para principiantes?", etc.
+    {"question": "Pregunta", "answer": "Respuesta en máximo 2-3 oraciones"},
+    // 5 preguntas cortas y directas
   ]
 }
 
 IMPORTANTE:
-- Responde SOLO con el JSON puro, sin markdown ni explicaciones.
-- Todo el contenido debe estar en español.
-- El contenido markdown debe ser rico, detallado y con formato adecuado.
-- Las preguntas FAQ deben ser las que la gente realmente busca en Google.
-- El slug debe ser limpio y SEO-friendly.`
+- Responde SOLO con JSON puro, sin markdown ni explicaciones
+- Todo en español
+- Sé CONCISO: calidad > cantidad
+- Las respuestas de FAQ deben ser cortas (2-3 oraciones máximo)`
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
       config: {
         temperature: 0.7,
-        maxOutputTokens: 16000,
+        maxOutputTokens: 8000,
       },
     })
 
@@ -118,6 +115,11 @@ IMPORTANTE:
         title: parsedData.title,
         slug: parsedData.slug || `${app1.appName}-vs-${app2.appName}`.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         metaDescription: parsedData.metaDescription || '',
+        introText: parsedData.introText || '',
+        app1Summary: parsedData.app1Summary || '',
+        app2Summary: parsedData.app2Summary || '',
+        app1BestFor: parsedData.app1BestFor || '',
+        app2BestFor: parsedData.app2BestFor || '',
         content: parsedData.content,
         comparisonTable: Array.isArray(parsedData.comparisonTable) ? parsedData.comparisonTable : [],
         verdict: parsedData.verdict || '',

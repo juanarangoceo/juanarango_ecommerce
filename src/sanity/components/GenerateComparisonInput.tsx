@@ -84,6 +84,11 @@ export const GenerateComparisonInput = (props: any) => {
         title: data.title || `${app1Data.appName} vs ${app2Data.appName}`,
         slug: { _type: 'slug', current: finalSlug },
         metaDescription: data.metaDescription || '',
+        introText: data.introText || '',
+        app1Summary: data.app1Summary || '',
+        app2Summary: data.app2Summary || '',
+        app1BestFor: data.app1BestFor || '',
+        app2BestFor: data.app2BestFor || '',
         content: data.content || '',
         comparisonTable: (data.comparisonTable || []).map((row: any, i: number) => ({
           _type: 'object',
