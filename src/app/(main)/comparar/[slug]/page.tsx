@@ -98,7 +98,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
 
       <div className="bg-white dark:bg-zinc-950 min-h-screen">
         {/* ===== HERO ===== */}
-        <header className="container mx-auto px-4 pt-28 md:pt-32 pb-8 max-w-4xl">
+        <header className="container mx-auto px-4 pt-28 md:pt-32 pb-8 max-w-5xl">
           <nav className="flex items-center gap-2 text-xs text-zinc-500 mb-4">
             <Link href="/" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Inicio</Link>
             <span>/</span>
@@ -119,7 +119,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
           )}
         </header>
 
-        <div className="container mx-auto px-4 pb-12 md:pb-20 max-w-4xl space-y-8 md:space-y-12">
+        <div className="container mx-auto px-4 pb-12 md:pb-20 max-w-5xl space-y-8 md:space-y-12">
 
           {/* ===== VS CARDS ===== */}
           {app1 && app2 && (
