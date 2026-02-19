@@ -7,5 +7,6 @@ import advertising from './advertising'
 import advertisingShopify from './advertising-shopify'
 import appToolCategory from './appToolCategory'
 import appTool from './appTool'
+import appComparison from './appComparison'
 
-export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool]
+export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool, appComparison]

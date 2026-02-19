@@ -65,6 +65,10 @@ Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas claves:
 
 10. "iconBg": Una clase de TailwindCSS para el color de fondo del ícono. Debe ser una de: ${Object.values(CATEGORY_ICON_COLORS).map(c => `"${c}"`).join(', ')}. Elige el color que mejor represente la marca de la app.
 
+11. "rating": Un número decimal entre 1.0 y 5.0 representando la calificación general de la app basada en reviews y reputación. Usa incrementos de 0.5 (ej: 4.0, 4.5, 3.5). Sé objetivo y realista.
+
+12. "priceDetail": Un string corto describiendo el precio real de la app. Ej: "Gratis", "Desde $20/mes", "$9.99/mes", "Plan Pro: $49/mes", "Free + Pro desde $10/mes". Investiga el precio real.
+
 IMPORTANTE: 
 - Responde SOLO con el JSON puro, sin markdown ni explicaciones.
 - Toda la información debe ser precisa y basada en datos reales de la app.
@@ -108,6 +112,8 @@ IMPORTANTE:
       cons: Array.isArray(rawData.cons) ? rawData.cons : [],
       platforms: Array.isArray(rawData.platforms) ? rawData.platforms : ['Web'],
       iconBg: rawData.iconBg || CATEGORY_ICON_COLORS[rawData.category] || 'bg-emerald-500',
+      rating: typeof rawData.rating === 'number' ? Math.min(5, Math.max(0, Math.round(rawData.rating * 2) / 2)) : 4.0,
+      priceDetail: rawData.priceDetail || (rawData.pricing === 'Free' ? 'Gratis' : ''),
     };
 
     if (!appData.description) {

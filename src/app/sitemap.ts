@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '',
     '/blog',
     '/app-tools',
+    '/comparar',
     '/soluciones/clinicas',
     '/soluciones/nitro-commerce',
     '/demos/aura-stetic',
@@ -105,6 +106,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
+  // 7. Fetch App Comparisons from Sanity
+  const comparisons = await client.fetch(`
+    *[_type == "appComparison" && defined(slug.current) && !(_id in path("drafts.**"))] {
+      "slug": slug.current,
+      _updatedAt
+    }
+  `)
+
+  const comparisonRoutes = (comparisons || []).map((comp: any) => ({
+    url: `${baseUrl}/comparar/${comp.slug}`,
+    lastModified: new Date(comp._updatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   return [
     ...staticRoutes,
     ...categoryRoutes,
@@ -112,5 +128,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...validTagRoutes,
     ...pseoRoutes,
     ...appToolRoutes,
+    ...comparisonRoutes,
   ]
 }

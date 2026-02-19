@@ -326,6 +326,27 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
   const rawContent = post.content || ""; 
   const readingTime = rawContent ? calculateReadingTime(rawContent) : 5; 
 
+  // === EXTRACT PROMPT BLOCKS ===
+  // 1. From markdown content: extract ```prompt ... ``` blocks
+  const promptRegex = /```prompt\s*\n([\s\S]*?)\n```/g;
+  const promptMatches = [...rawContent.matchAll(promptRegex)];
+  const markdownPrompts = promptMatches.map((m: RegExpMatchArray) => ({ title: 'Prompt', code: m[1].trim() }));
+  // Remove prompt blocks from content so they don't render inline
+  const contentWithoutPrompts = rawContent.replace(promptRegex, '').trim();
+
+  // 2. From PortableText body: extract codeBlock items with language "prompt"
+  const bodyPrompts: { title: string; code: string }[] = [];
+  const filteredBody = (post.body || []).filter((block: any) => {
+    if (block._type === 'codeBlock' && block.language === 'prompt') {
+      bodyPrompts.push({ title: block.title || 'Prompt', code: block.code || '' });
+      return false; // Remove from inline body rendering
+    }
+    return true;
+  });
+
+  // Combine all found prompts (markdown first, then body)
+  const allPrompts = [...markdownPrompts, ...bodyPrompts];
+
   const date = new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
     year: "numeric",
     month: "long",
@@ -500,6 +521,20 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
                 <article className="lg:col-span-8">
+                    {/* PROMPT BLOCKS - Rendered FIRST before all content */}
+                    {allPrompts.length > 0 && (
+                        <div className="mb-8 space-y-4">
+                            {allPrompts.map((prompt, i) => (
+                                <CopyableCodeBlock
+                                    key={i}
+                                    title={prompt.title}
+                                    language="prompt"
+                                    code={prompt.code}
+                                />
+                            ))}
+                        </div>
+                    )}
+
                     {post.mainImage?.asset?._ref && (
                         <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm relative aspect-video">
                             <Image 
@@ -633,14 +668,14 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                                     }
                                 }}
                             >
-                                {post.content}
+                                {contentWithoutPrompts}
                             </ReactMarkdown>
                         )}
                         
                         {/* Render PortableText mainly for Embedding capability (like TikTok) */}
-                        {post.body && (
+                        {filteredBody && filteredBody.length > 0 && (
                             <div className="mt-8">
-                                <PortableText value={post.body} components={ptComponents} />
+                                <PortableText value={filteredBody} components={ptComponents} />
                             </div>
                         )}
                     </div>

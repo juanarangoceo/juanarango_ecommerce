@@ -4,6 +4,7 @@ import { getCategoryLabel } from "@/lib/app-tools-queries"
 import type { AppToolSanity } from "@/lib/app-tools-queries"
 import { AppIcon } from "./app-icon"
 import { PricingBadge } from "./pricing-badge"
+import { StarRating } from "./star-rating"
 
 export function AppCard({
   app,
@@ -30,6 +31,15 @@ export function AppCard({
       <p className="mt-1 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
         {app.description}
       </p>
+      {/* Stars & Price */}
+      <div className="mt-2 flex items-center justify-between gap-2">
+        {app.rating ? <StarRating rating={app.rating} /> : <span />}
+        {app.priceDetail && (
+          <span className="text-xs font-medium text-muted-foreground">
+            {app.priceDetail}
+          </span>
+        )}
+      </div>
       <div className="mt-auto flex items-center justify-between pt-4">
         <span className="inline-block rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-muted-foreground">
           {getCategoryLabel(app.category)}

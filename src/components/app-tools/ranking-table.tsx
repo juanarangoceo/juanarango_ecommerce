@@ -6,6 +6,7 @@ import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AppIcon } from "./app-icon"
 import { PricingBadge } from "./pricing-badge"
+import { StarRating } from "./star-rating"
 import { CategoryFilter } from "./category-filter"
 import type { AppToolSanity } from "@/lib/app-tools-queries"
 import { getCategoryLabel, getAppUrl, type CategoryId } from "@/lib/app-tools-queries"
@@ -46,6 +47,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
               <th className="w-16 pb-3 text-left" scope="col">Rank</th>
               <th className="pb-3 text-left" scope="col">App</th>
               <th className="hidden pb-3 text-left md:table-cell" scope="col">Categoría</th>
+              <th className="hidden pb-3 text-left lg:table-cell" scope="col">Rating</th>
               <th className="hidden pb-3 text-left sm:table-cell" scope="col">Precio</th>
               <th className="pb-3 text-right" scope="col">Acción</th>
             </tr>
@@ -53,7 +55,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
           <tbody>
             {paginatedApps.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-12 text-center text-muted-foreground">
+                <td colSpan={6} className="py-12 text-center text-muted-foreground">
                   No hay apps en esta categoría todavía.
                 </td>
               </tr>
@@ -112,9 +114,21 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                       </button>
                     </td>
 
+                    {/* Rating */}
+                    <td className="hidden py-4 lg:table-cell">
+                      <StarRating rating={app.rating} showNumber={true} />
+                    </td>
+
                     {/* Pricing */}
                     <td className="hidden py-4 sm:table-cell">
-                      <PricingBadge pricing={app.pricing} />
+                      <div className="flex flex-col gap-0.5">
+                        <PricingBadge pricing={app.pricing} />
+                        {app.priceDetail && (
+                          <span className="text-[10px] text-muted-foreground">
+                            {app.priceDetail}
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     {/* Action */}

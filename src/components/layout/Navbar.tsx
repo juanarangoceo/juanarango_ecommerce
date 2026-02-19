@@ -163,6 +163,9 @@ export function Navbar() {
             <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
             </Link>
+            <Link href="/comparar" className="text-white hover:text-primary transition-colors">
+              Comparativas
+            </Link>
             <Link href="/app-tools" className="text-white hover:text-primary transition-colors">
               IA Apps
             </Link>
@@ -212,6 +215,9 @@ export function Navbar() {
             </Link>
             <Link href="/#contacto" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Contacto
+            </Link>
+            <Link href="/comparar" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+              Comparativas
             </Link>
             <Link href="/app-tools" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               IA Apps

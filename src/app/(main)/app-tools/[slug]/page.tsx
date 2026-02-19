@@ -11,6 +11,7 @@ import {
 import type { AppToolSanity } from "@/lib/app-tools-queries"
 import { AppIcon } from "@/components/app-tools/app-icon"
 import { PricingBadge } from "@/components/app-tools/pricing-badge"
+import { StarRating } from "@/components/app-tools/star-rating"
 import { AppCard } from "@/components/app-tools/app-card"
 import {
   ArrowRight,
@@ -114,6 +115,7 @@ export default async function AppToolDetailPage(
                   {getCategoryLabel(app.category)}
                 </span>
               </div>
+              {app.rating && <StarRating rating={app.rating} className="mt-1" />}
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
                 {app.description}
               </p>
@@ -223,6 +225,22 @@ export default async function AppToolDetailPage(
                   <PricingBadge pricing={app.pricing} />
                 </dd>
               </div>
+              {app.priceDetail && (
+                <div className="flex items-center justify-between">
+                  <dt className="text-muted-foreground">Detalle</dt>
+                  <dd className="font-medium text-foreground text-right">
+                    {app.priceDetail}
+                  </dd>
+                </div>
+              )}
+              {app.rating && (
+                <div className="flex items-center justify-between">
+                  <dt className="text-muted-foreground">Rating</dt>
+                  <dd>
+                    <StarRating rating={app.rating} />
+                  </dd>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Categoría</dt>
                 <dd className="font-medium text-foreground">
@@ -298,6 +316,15 @@ export default async function AppToolDetailPage(
               priceCurrency: "USD",
               category: app.pricing,
             },
+            ...(app.rating && {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: app.rating.toString(),
+                bestRating: "5",
+                worstRating: "1",
+                ratingCount: "1",
+              },
+            }),
             operatingSystem: app.platforms?.join(", "),
           }),
         }}

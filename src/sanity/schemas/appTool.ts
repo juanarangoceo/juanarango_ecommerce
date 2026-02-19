@@ -98,6 +98,21 @@ export default {
       description: 'Asignado automáticamente por IA.',
     },
     {
+      name: 'priceDetail',
+      title: 'Detalle de Precio',
+      type: 'string',
+      group: 'generated',
+      description: 'Ej: "$20/mes", "Gratis", "Desde $9.99/mes". Generado por IA.',
+    },
+    {
+      name: 'rating',
+      title: 'Calificación (Estrellas)',
+      type: 'number',
+      group: 'generated',
+      validation: (Rule: any) => Rule.min(0).max(5),
+      description: 'Calificación de 0 a 5 estrellas. Asignada por IA.',
+    },
+    {
       name: 'features',
       title: 'Funcionalidades Principales',
       type: 'array',

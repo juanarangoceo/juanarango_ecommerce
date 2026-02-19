@@ -22,6 +22,8 @@ export type AppToolSanity = {
   longDescription: string
   category: Exclude<CategoryId, 'all'>
   pricing: Pricing
+  priceDetail?: string
+  rating?: number
   features: string[]
   pros: string[]
   cons: string[]
@@ -63,6 +65,8 @@ export const ALL_APP_TOOLS_QUERY = `*[
   longDescription,
   category,
   pricing,
+  priceDetail,
+  rating,
   features,
   pros,
   cons,
@@ -88,6 +92,8 @@ export const FEATURED_APP_QUERY = `*[
   longDescription,
   category,
   pricing,
+  priceDetail,
+  rating,
   features,
   pros,
   cons,
@@ -112,6 +118,8 @@ export const TRENDING_APPS_QUERY = `*[
   description,
   category,
   pricing,
+  priceDetail,
+  rating,
   iconBg,
   websiteUrl,
   affiliateUrl,
@@ -130,6 +138,8 @@ export const APP_TOOL_BY_SLUG_QUERY = `*[
   longDescription,
   category,
   pricing,
+  priceDetail,
+  rating,
   features,
   pros,
   cons,
@@ -153,6 +163,8 @@ export const APP_TOOL_BY_SLUG_QUERY = `*[
     description,
     category,
     pricing,
+    priceDetail,
+    rating,
     iconBg,
     websiteUrl,
     affiliateUrl,

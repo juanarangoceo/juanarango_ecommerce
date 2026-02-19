@@ -81,6 +81,8 @@ export const GenerateAppToolInput = (props: any) => {
         longDescription: data.longDescription || '',
         category: data.category || 'productivity',
         pricing: data.pricing || 'Freemium',
+        priceDetail: data.priceDetail || '',
+        rating: typeof data.rating === 'number' ? data.rating : 4.0,
         features: data.features || [],
         pros: data.pros || [],
         cons: data.cons || [],
