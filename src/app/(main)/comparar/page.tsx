@@ -147,7 +147,6 @@ export default async function CompararPage() {
             </p>
           </div>
         )}
-      </div>
 
         {/* Cross-link to IA Apps */}
         <Link
@@ -167,6 +166,7 @@ export default async function CompararPage() {
           </div>
           <ArrowRight className="w-5 h-5 text-emerald-500 shrink-0 transition-transform group-hover:translate-x-1" />
         </Link>
+      </div>
 
       {/* Schema.org */}
       <script

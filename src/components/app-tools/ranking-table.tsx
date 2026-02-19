@@ -40,8 +40,8 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
       <CategoryFilter selected={category} onChange={handleCategoryChange} />
 
       {/* Table */}
-      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-        <table className="w-full" role="table">
+      <div className="overflow-x-auto min-w-0">
+        <table className="w-full table-fixed" role="table">
           <thead>
             <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-muted-foreground">
               <th className="w-16 pb-3 text-left" scope="col">Rank</th>

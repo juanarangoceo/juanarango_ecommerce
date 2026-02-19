@@ -37,7 +37,7 @@ export default async function AppToolsPage() {
   ])
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8 overflow-hidden">
       {/* ===== HERO INTRO ===== */}
       <section className="mb-10">
         <div className="flex items-center gap-2 text-primary">
