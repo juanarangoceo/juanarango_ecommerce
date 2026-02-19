@@ -9,7 +9,8 @@ import type { AppToolSanity } from "@/lib/app-tools-queries"
 import { HeroBanner } from "@/components/app-tools/hero-banner"
 import { TrendingSection } from "@/components/app-tools/trending-section"
 import { RankingTable } from "@/components/app-tools/ranking-table"
-import { Sparkles, Library } from "lucide-react"
+import { Sparkles, Library, Swords, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export const revalidate = 3600
 
@@ -69,6 +70,27 @@ export default async function AppToolsPage() {
           <TrendingSection apps={trendingApps} />
         </section>
       )}
+
+      {/* ===== CROSS-LINK: Comparativas ===== */}
+      <section className="mb-12">
+        <Link
+          href="/comparar"
+          className="group flex items-center gap-4 rounded-xl border border-blue-200 dark:border-blue-900/50 bg-gradient-to-r from-blue-50 to-white dark:from-blue-950/30 dark:to-zinc-900 p-5 md:p-6 transition-all hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10"
+        >
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20">
+            <Swords className="w-6 h-6 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              ⚔️ ¿No sabes cuál elegir? Mira nuestras Comparativas
+            </h3>
+            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
+              Comparaciones lado a lado con veredicto, tabla comparativa y análisis detallado.
+            </p>
+          </div>
+          <ArrowRight className="w-5 h-5 text-blue-500 shrink-0 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </section>
 
       {/* ===== RANKING TABLE ===== */}
       <section>

@@ -40,7 +40,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
       <CategoryFilter selected={category} onChange={handleCategoryChange} />
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
         <table className="w-full" role="table">
           <thead>
             <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -159,7 +159,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-border pt-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4">
           <p className="text-xs text-muted-foreground">
             Mostrando {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredApps.length)} de {filteredApps.length} apps
           </p>
@@ -174,22 +174,39 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
             >
               <ChevronLeft className="size-4" />
             </Button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant="ghost"
-                size="icon"
-                onClick={() => setCurrentPage(page)}
-                className={cn(
-                  "size-8 text-xs font-medium",
-                  page === currentPage
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {page}
-              </Button>
-            ))}
+            {/* Smart pagination: show first, last, current ± 1, with ellipsis */}
+            {(() => {
+              const pages: (number | string)[] = []
+              if (totalPages <= 5) {
+                for (let i = 1; i <= totalPages; i++) pages.push(i)
+              } else {
+                pages.push(1)
+                if (currentPage > 3) pages.push('...')
+                for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) pages.push(i)
+                if (currentPage < totalPages - 2) pages.push('...')
+                pages.push(totalPages)
+              }
+              return pages.map((page, idx) =>
+                typeof page === 'string' ? (
+                  <span key={`ellipsis-${idx}`} className="px-1 text-xs text-muted-foreground">…</span>
+                ) : (
+                  <Button
+                    key={page}
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setCurrentPage(page)}
+                    className={cn(
+                      "size-8 text-xs font-medium",
+                      page === currentPage
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {page}
+                  </Button>
+                )
+              )
+            })()}
             <Button
               variant="ghost"
               size="icon"

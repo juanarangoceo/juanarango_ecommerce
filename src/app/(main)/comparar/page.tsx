@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { client } from "@/sanity/lib/client"
 import { StarRating } from "@/components/app-tools/star-rating"
-import { ArrowRight, Swords } from "lucide-react"
+import { ArrowRight, Swords, Trophy } from "lucide-react"
 
 export const revalidate = 3600
 
@@ -148,6 +148,25 @@ export default async function CompararPage() {
           </div>
         )}
       </div>
+
+        {/* Cross-link to IA Apps */}
+        <Link
+          href="/app-tools"
+          className="group mt-10 flex items-center gap-4 rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-gradient-to-r from-emerald-50 to-white dark:from-emerald-950/30 dark:to-zinc-900 p-5 md:p-6 transition-all hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
+        >
+          <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20">
+            <Trophy className="w-6 h-6 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              🏆 Ver el Ranking Completo de Apps IA
+            </h3>
+            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
+              +25 herramientas analizadas con rating, precios y reviews detalladas.
+            </p>
+          </div>
+          <ArrowRight className="w-5 h-5 text-emerald-500 shrink-0 transition-transform group-hover:translate-x-1" />
+        </Link>
 
       {/* Schema.org */}
       <script
