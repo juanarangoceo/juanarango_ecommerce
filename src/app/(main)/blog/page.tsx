@@ -7,6 +7,7 @@ import { RecentPostPills } from "@/components/recent-post-pills";
 import { BlogCard } from "@/components/blog/blog-card";
 import { TrendingCard } from "@/components/blog/trending-card";
 import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
+import { SidebarAppsBanner, SidebarComparisonBanner } from "@/components/blog/sidebar-banners";
 import { Pagination } from "@/components/ui/pagination";
 
 import { constructMetadata } from "@/lib/utils";
@@ -153,6 +154,12 @@ export default async function BlogPage({
           <div className="lg:sticky lg:top-24 space-y-6">
             {/* Trending Topics */}
             <TrendingCard />
+
+            {/* IA Apps Ranking Banner */}
+            <SidebarAppsBanner />
+
+            {/* Comparativas Banner */}
+            <SidebarComparisonBanner />
 
             {/* CTA Card */}
             <NitroCtaCard />
