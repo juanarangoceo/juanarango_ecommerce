@@ -4,6 +4,7 @@ import Script from "next/script";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { constructMetadata } from "@/lib/utils";
 import "../globals.css";
 
@@ -115,19 +116,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <DynamicChatWidget />
-        {/* Google Analytics - lazyOnload to avoid render-blocking */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"
-          strategy="lazyOnload"
-        />
-        <Script id="gtag-init" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-J2RT4C9YPR');
-          `}
-        </Script>
+        <GoogleAnalytics gaId="G-J2RT4C9YPR" />
       </body>
     </html>
   );

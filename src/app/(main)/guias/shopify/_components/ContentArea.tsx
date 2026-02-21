@@ -91,8 +91,10 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 relative shrink-0">
                 <img 
-                  src="https://res.cloudinary.com/dohwyszdj/image/upload/v1771691233/Sidekick_LogoIcon_qyr6zj.avif" 
+                  src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto/v1771691233/Sidekick_LogoIcon_qyr6zj.avif" 
                   alt="Shopify Sidekick" 
+                  width={48}
+                  height={48}
                   className="w-full h-full object-contain" 
                 />
               </div>
@@ -119,14 +121,18 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
             <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10"></div>
             {/* Desktop Banner */}
             <img 
-              src="https://res.cloudinary.com/dohwyszdj/image/upload/v1771690286/Affiliate_3mPTL_Banners_-_2138_-_Standard_-_Evergreen_-_US_-_English_-_Daydream_to_Dream_Job_-_Static_-_1200x628_zwq04l.png" 
+              src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto/v1771690286/Affiliate_3mPTL_Banners_-_2138_-_Standard_-_Evergreen_-_US_-_English_-_Daydream_to_Dream_Job_-_Static_-_1200x628_zwq04l.png" 
               alt="Empieza en Shopify con una prueba gratis" 
+              width={1200}
+              height={628}
               className="w-full h-auto hidden sm:block object-cover"
             />
             {/* Mobile Banner */}
             <img 
-              src="https://res.cloudinary.com/dohwyszdj/image/upload/v1771690286/Affiliate_3mPTL_Banners_-_2138_-_Standard_-_Evergreen_-_US_-_English_-_Daydream_to_Dream_Job_-_Static_-_320x480_y0xtpx.png" 
+              src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto/v1771690286/Affiliate_3mPTL_Banners_-_2138_-_Standard_-_Evergreen_-_US_-_English_-_Daydream_to_Dream_Job_-_Static_-_320x480_y0xtpx.png" 
               alt="Empieza en Shopify con una prueba gratis" 
+              width={320}
+              height={480}
               className="w-full h-auto block sm:hidden object-cover"
             />
           </a>
