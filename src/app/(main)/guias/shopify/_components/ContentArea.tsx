@@ -1,5 +1,6 @@
+'use client';
+
 import { Step } from '@/lib/guias/guide-content';
-import { motion } from 'motion/react';
 import { PromptCard } from './PromptCard';
 import { ExternalLink, ArrowRight, Download } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -28,13 +29,9 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
   };
 
   return (
-    <motion.div
+    <div
       key={step.id}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.3 }}
-      className="max-w-4xl mx-auto py-8 px-4 lg:px-12"
+      className="max-w-4xl mx-auto py-8 px-4 lg:px-12 animate-fade-in"
     >
       <header className="mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-medium mb-4">
@@ -112,11 +109,7 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
       )}
 
       {step.affiliateLink && (
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full mb-12 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group"
-        >
+        <div className="w-full mb-12 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group">
           <a href={step.affiliateLink} target="_blank" rel="noopener noreferrer" className="block relative">
             <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10"></div>
             {/* Desktop Banner */}
@@ -136,7 +129,7 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
               className="w-full h-auto block sm:hidden object-cover"
             />
           </a>
-        </motion.div>
+        </div>
       )}
 
       {/* Navigation and Download Section */}
@@ -160,14 +153,10 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
               </p>
               
               {isSubmitted ? (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white/10 rounded-xl p-4 border border-white/20"
-                >
+                <div className="bg-white/10 rounded-xl p-4 border border-white/20 animate-fade-in">
                   <p className="font-bold text-lg">¡Gracias! Revisá tu correo.</p>
                   <p className="text-sm text-indigo-100">Te hemos enviado el PDF con los prompts.</p>
-                </motion.div>
+                </div>
               ) : (
                 <form onSubmit={handleDownloadSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
@@ -191,6 +180,6 @@ export function ContentArea({ step, onNextStep, isLastStep }: ContentAreaProps) 
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

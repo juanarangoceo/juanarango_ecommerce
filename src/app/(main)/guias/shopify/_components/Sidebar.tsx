@@ -1,5 +1,4 @@
 import { ExternalLink } from 'lucide-react';
-import { motion } from 'motion/react';
 import { Step } from '@/lib/guias/guide-content';
 
 interface SidebarProps {
@@ -81,9 +80,8 @@ export function Sidebar({ steps, activeStepId, onSelectStep, isOpen, setIsOpen }
                 </div>
                 
                 {isActive && (
-                  <motion.div
-                    layoutId="active-pill"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#95BF47] rounded-r-full"
+                  <span
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#95BF47] rounded-r-full transition-all duration-300"
                   />
                 )}
               </button>
