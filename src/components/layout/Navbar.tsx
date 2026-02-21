@@ -16,18 +16,25 @@ const negociosLinks = [
   { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
 ]
 
+const guiasLinks = [
+  { href: "/guias/shopify", label: "Guía Shopify" },
+]
+
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isNegociosOpen, setIsNegociosOpen] = useState(false)
+  const [isGuiasOpen, setIsGuiasOpen] = useState(false)
   const servicesTimeout = useRef<NodeJS.Timeout | null>(null)
   const negociosTimeout = useRef<NodeJS.Timeout | null>(null)
+  const guiasTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => {
     setIsMenuOpen(false)
     setIsServicesOpen(false)
     setIsNegociosOpen(false)
+    setIsGuiasOpen(false)
   }
 
   // Desktop dropdown hover handlers
@@ -45,11 +52,19 @@ export function Navbar() {
   const handleNegociosLeave = () => {
     negociosTimeout.current = setTimeout(() => setIsNegociosOpen(false), 150)
   }
+  const handleGuiasEnter = () => {
+    if (guiasTimeout.current) clearTimeout(guiasTimeout.current)
+    setIsGuiasOpen(true)
+  }
+  const handleGuiasLeave = () => {
+    guiasTimeout.current = setTimeout(() => setIsGuiasOpen(false), 150)
+  }
 
   useEffect(() => {
     return () => {
       if (servicesTimeout.current) clearTimeout(servicesTimeout.current)
       if (negociosTimeout.current) clearTimeout(negociosTimeout.current)
+      if (guiasTimeout.current) clearTimeout(guiasTimeout.current)
     }
   }, [])
 
@@ -77,6 +92,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMenu}
                 className={`block px-5 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all ${
                   i < links.length - 1 ? "border-b border-white/5" : ""
                 }`}
@@ -127,9 +143,14 @@ export function Navbar() {
       <div className="absolute top-0 left-0 w-full h-[1px] bg-white/[0.05]" />
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-tight" onClick={closeMenu}>
-            <span className="text-primary">NITRO</span>
-            <span className="text-foreground"> ECOM</span>
+          <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
+            <div className="text-2xl font-bold tracking-tight">
+              <span className="text-primary">NITRO</span>
+              <span className="text-foreground"> ECOM</span>
+            </div>
+            <span className="hidden sm:inline-block text-[10px] font-medium tracking-widest text-white/50 uppercase mt-1.5 ml-1">
+              [ por Juan Arango ]
+            </span>
           </Link>
 
           {/* Desktop Menu */}
@@ -144,7 +165,11 @@ export function Navbar() {
               isOpen={isServicesOpen}
               onEnter={handleServicesEnter}
               onLeave={handleServicesLeave}
-              onToggle={() => setIsServicesOpen(!isServicesOpen)}
+              onToggle={() => {
+                setIsServicesOpen(!isServicesOpen)
+                setIsNegociosOpen(false)
+                setIsGuiasOpen(false)
+              }}
             />
 
             <DesktopDropdown
@@ -153,7 +178,24 @@ export function Navbar() {
               isOpen={isNegociosOpen}
               onEnter={handleNegociosEnter}
               onLeave={handleNegociosLeave}
-              onToggle={() => setIsNegociosOpen(!isNegociosOpen)}
+              onToggle={() => {
+                setIsNegociosOpen(!isNegociosOpen)
+                setIsServicesOpen(false)
+                setIsGuiasOpen(false)
+              }}
+            />
+
+            <DesktopDropdown
+              label="Guías"
+              links={guiasLinks}
+              isOpen={isGuiasOpen}
+              onEnter={handleGuiasEnter}
+              onLeave={handleGuiasLeave}
+              onToggle={() => {
+                setIsGuiasOpen(!isGuiasOpen)
+                setIsServicesOpen(false)
+                setIsNegociosOpen(false)
+              }}
             />
 
             <Link href="/shopify" className="text-white hover:text-primary transition-colors">
@@ -163,11 +205,11 @@ export function Navbar() {
             <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
               Contacto
             </Link>
-            <Link href="/comparar" className="text-white hover:text-primary transition-colors">
-              Comparativas
-            </Link>
             <Link href="/app-tools" className="text-white hover:text-primary transition-colors">
               IA Apps
+            </Link>
+            <Link href="/comparar" className="text-white hover:text-primary transition-colors">
+              Comparativas
             </Link>
             <Link href="/blog" className="text-white hover:text-primary transition-colors">
               Blog
@@ -202,13 +244,31 @@ export function Navbar() {
               label="Servicios Headless"
               links={serviceLinks}
               isOpen={isServicesOpen}
-              onToggle={() => setIsServicesOpen(!isServicesOpen)}
+              onToggle={() => {
+                setIsServicesOpen(!isServicesOpen)
+                setIsNegociosOpen(false)
+                setIsGuiasOpen(false)
+              }}
             />
             <MobileAccordion
               label="Nitro Negocios"
               links={negociosLinks}
               isOpen={isNegociosOpen}
-              onToggle={() => setIsNegociosOpen(!isNegociosOpen)}
+              onToggle={() => {
+                setIsNegociosOpen(!isNegociosOpen)
+                setIsServicesOpen(false)
+                setIsGuiasOpen(false)
+              }}
+            />
+            <MobileAccordion
+              label="Guías"
+              links={guiasLinks}
+              isOpen={isGuiasOpen}
+              onToggle={() => {
+                setIsGuiasOpen(!isGuiasOpen)
+                setIsServicesOpen(false)
+                setIsNegociosOpen(false)
+              }}
             />
             <Link href="/shopify" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Shopify
@@ -216,11 +276,11 @@ export function Navbar() {
             <Link href="/#contacto" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Contacto
             </Link>
-            <Link href="/comparar" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
-              Comparativas
-            </Link>
             <Link href="/app-tools" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               IA Apps
+            </Link>
+            <Link href="/comparar" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+              Comparativas
             </Link>
             <Link href="/blog" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Blog

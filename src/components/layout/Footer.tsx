@@ -12,9 +12,14 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="text-2xl font-bold mb-4">
-              <span className="text-primary">Nitro</span>
-              <span className="text-foreground">Tech</span>
+            <div className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <div>
+                <span className="text-primary">Nitro</span>
+                <span className="text-foreground">Tech</span>
+              </div>
+              <span className="text-[10px] font-medium tracking-widest text-muted-foreground/60 uppercase mt-1">
+                [ por Juan Arango ]
+              </span>
             </div>
             <p className="text-muted-foreground text-sm">
               Arquitectos de ecosistemas digitales de alto rendimiento
@@ -100,8 +105,9 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-border/50 pt-8 text-center text-sm text-muted-foreground">
-          © 2026 NITROECOM. Todos los derechos reservados a NITROECOM.
+        <div className="border-t border-border/50 pt-8 flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+          <p>© 2026 NITROECOM. Todos los derechos reservados a NITROECOM.</p>
+          <p className="text-xs text-muted-foreground/60">Una marca de Juan Arango</p>
         </div>
       </div>
 
