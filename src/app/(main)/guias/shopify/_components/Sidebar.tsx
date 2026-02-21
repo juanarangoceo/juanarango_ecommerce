@@ -33,7 +33,7 @@ export function Sidebar({ steps, activeStepId, onSelectStep, isOpen, setIsOpen }
           <div className="flex items-center gap-3">
             <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
               <img 
-                src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto/v1771690286/shopify_logo_hmwdrn.webp" 
+                src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto,w_64,h_64,c_fill/v1771690286/shopify_logo_hmwdrn.webp" 
                 alt="Shopify Logo" 
                 width={32}
                 height={32}

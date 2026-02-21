@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 import { Sidebar } from './Sidebar';
-import { ContentArea } from './ContentArea';
+import dynamic from 'next/dynamic';
 import { guideSteps } from '@/lib/guias/guide-content';
+
+const DynamicContentArea = dynamic(
+  () => import('./ContentArea').then((mod) => mod.ContentArea),
+  { ssr: false }
+);
 import { Menu } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -54,7 +59,7 @@ export default function GuideInteractiveViewer() {
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 relative shrink-0">
                 <img 
-                  src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto/v1771690286/shopify_logo_hmwdrn.webp" 
+                  src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto,w_64,h_64,c_fill/v1771690286/shopify_logo_hmwdrn.webp" 
                   alt="Shopify Logo" 
                   width={32}
                   height={32}
@@ -74,7 +79,7 @@ export default function GuideInteractiveViewer() {
 
         {/* Content */}
         <div className="flex-1">
-          <ContentArea 
+          <DynamicContentArea 
             step={activeStep} 
             onNextStep={handleNextStep}
             isLastStep={isLastStep}
