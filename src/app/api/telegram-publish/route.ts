@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { createClient } from '@sanity/client'
-import { dataset, projectId } from '@/sanity/env'
-
+import { createClient } from '@sanity/client'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -81,6 +80,17 @@ export async function POST(req: Request) {
     }
 
     // Initialize clients purely at runtime to avoid Next.js build-time errors
+    // Initialize clients purely at runtime to avoid Next.js build-time errors
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
+
+    if (!projectId || !dataset) {
+      return NextResponse.json(
+        { error: 'Faltan variables de entorno de Sanity (Project ID o Dataset)' },
+        { status: 500 }
+      )
+    }
+
     const sanity = createClient({
       projectId,
       dataset,
