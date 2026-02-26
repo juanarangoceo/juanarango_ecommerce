@@ -8,23 +8,6 @@ export const dynamic = 'force-dynamic'
 export const maxDuration = 30
 
 // ─────────────────────────────────────────────
-// Sanity Client (read-only)
-// ─────────────────────────────────────────────
-const sanity = createClient({
-  projectId,
-  dataset,
-  apiVersion: '2024-01-01',
-  useCdn: false,
-  // Read token avoids hitting CDN and ensures draft-aware reads
-  token: process.env.SANITY_API_TOKEN,
-})
-
-// ─────────────────────────────────────────────
-// Gemini Client
-// ─────────────────────────────────────────────
-const gemini = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY })
-
-// ─────────────────────────────────────────────
 // PROMPT MAESTRO
 // Genera un resumen optimizado para Telegram con la estrategia correcta,
 // emojis relevantes, formato y un CTA con enlace al blog.
@@ -96,6 +79,17 @@ export async function POST(req: Request) {
     if (!process.env.GOOGLE_API_KEY) {
       return NextResponse.json({ error: 'Falta GOOGLE_API_KEY' }, { status: 500 })
     }
+
+    // Initialize clients purely at runtime to avoid Next.js build-time errors
+    const sanity = createClient({
+      projectId,
+      dataset,
+      apiVersion: '2024-01-01',
+      useCdn: false,
+      token: process.env.SANITY_API_TOKEN,
+    })
+
+    const gemini = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY })
 
     // 2. Fetch post from Sanity
     const post = await sanity.fetch(
