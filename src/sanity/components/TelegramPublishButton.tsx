@@ -91,7 +91,7 @@ export const TelegramPublishButton = (props: any) => {
             <Card padding={3} tone="critical" border radius={2}>
               <Text size={1}>
                 Hubo un error. Revisa que el bot esté como Administrador en el canal y que las
-                variables TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID estén configuradas correctamente.
+                variables TELEGRAM_BOT_TOKEN y TELEGRAM_CHANNEL_ID estén configuradas correctamente.
               </Text>
             </Card>
           )}

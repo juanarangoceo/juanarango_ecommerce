@@ -16,12 +16,19 @@ function buildMasterPrompt(post: {
   slug: string
   category: string
 }) {
-  const postUrl = `https://juanarango.com/blog/${post.slug}`
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.juanarangoecommerce.com'
+  const postUrl = `${baseUrl}/blog/${post.slug}`
 
-  return `Eres el Community Manager experto de "Nitro Ecom" — un canal de Telegram sobre ecommerce, 
+  return `Eres el Community Manager experto de "Juan Arango | IA | Ecommerce" — un canal de Telegram sobre ecommerce, 
 inteligencia artificial y estrategias para vender más en internet.
 
-Tu misión: convertir el siguiente artículo de blog en un POST VIRAL para Telegram.
+Tu misión: convertir el siguiente artículo de blog en un POST VIRAL e INFORMATIVO para la comunidad de Telegram.
+
+💡 DETALLE DE CATEGORÍA: 
+El post pertenece a la categoría: "${post.category}". 
+- Si es una noticia o actualización de IA, el tono debe ser urgente e informativo ("Última hora").
+- Si es un tutorial o guía, el tono debe ser educativo y práctico.
+- Si es opinión o estrategia, el tono debe ser analítico y de autoridad.
 
 📋 DATOS DEL ARTÍCULO:
 Título: ${post.title}
@@ -32,26 +39,25 @@ ${post.content.slice(0, 2500)}
 
 📐 REGLAS DE FORMATO OBLIGATORIAS (Markdown de Telegram):
 - Usa *texto* para negrita (NO **doble asterisco**)
-- Usa emojis al inicio de cada sección para dinamismo visual
+- Usa emojis estratégicos al inicio de cada sección para dinamismo visual
 - Máximo 900 caracteres en total (sin contar el enlace)
-- NO uses #hashtags en el cuerpo, ponlos todos al final en una sola línea
-- El enlace al artículo va en la última línea, como CTA
+- PROHIBIDO USAR HASHTAGS (#). No incluyas ningún hashtag en todo el post.
+- El enlace al artículo va exclusivamente en la última línea.
 
 🎯 ESTRUCTURA DEL POST (ÚSA ESTA EXACTAMENTE):
-1. GANCHO (1 línea): Una pregunta o afirmación provocadora sobre el tema. Usa un emoji al inicio.
-2. CONTEXTO (2-3 líneas): Por qué el tema es relevante AHORA para tu audiencia de ecommerce/emprendedores.
-3. LO QUE VAN A APRENDER (2-4 bullets): Los 3-4 puntos más valiosos del artículo, con emoji por cada uno.
-4. CTA (1 línea): Llamada a la acción directa + emoji de fuego/flecha. Ej: "👇 Lee el artículo completo:"
-5. ENLACE: ${postUrl}
-6. HASHTAGS (en 1 única línea al final): 4-5 hashtags relevantes en español. Ej: #Ecommerce #InteligenciaArtificial
+1. GANCHO (1 línea): Una pregunta o afirmación provocadora sobre el tema adaptada a la categoría. Usa un emoji.
+2. CONTEXTO (2-3 líneas): Por qué el tema es relevante AHORA para tu audiencia.
+3. LO QUE VAN A ENCONTRAR (2-4 bullets): Los 3-4 puntos más valiosos del artículo, con emoji por cada uno.
+4. CTA (1 línea clara): Llamada a la acción invitando a ampliar la información. Ej: "👇 Para ampliar esta información y leer el análisis completo, haz clic aquí:"
+5. ENLACE DIRECTO: ${postUrl}
 
 ⚠️ IMPORTANTE:
-- Escribe en español latinoamericano, tono cercano y de autoridad
+- Escribe en español latinoamericano, tono cercano pero muy profesional
 - Evita el exceso de emojis (máx. 1 por línea)
 - NO inventes información que no esté en el artículo
-- El objetivo es que genere CLICS al enlace y RETENCIÓN en el canal
+- Nunca incluyas hashtags en la respuesta
 
-Responde SOLO con el texto del post, sin explicaciones adicionales ni comillas externas.`
+Responde SOLO con el texto del post formateado, sin explicaciones ni saludos previos.`
 }
 
 // ─────────────────────────────────────────────
@@ -67,10 +73,10 @@ export async function POST(req: Request) {
 
     // Validate env vars
     const botToken = process.env.TELEGRAM_BOT_TOKEN
-    const chatId = process.env.TELEGRAM_CHAT_ID
-    if (!botToken || !chatId) {
+    const channelId = process.env.TELEGRAM_CHANNEL_ID
+    if (!botToken || !channelId) {
       return NextResponse.json(
-        { error: 'Faltan variables de entorno: TELEGRAM_BOT_TOKEN o TELEGRAM_CHAT_ID' },
+        { error: 'Faltan variables de entorno: TELEGRAM_BOT_TOKEN o TELEGRAM_CHANNEL_ID' },
         { status: 500 }
       )
     }
@@ -171,7 +177,7 @@ export async function POST(req: Request) {
     // 4. Publish to Telegram
     const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`
     const telegramPayload = {
-      chat_id: chatId,
+      chat_id: channelId,
       text: telegramText,
       parse_mode: 'Markdown',
       // Disable web preview for the link preview to appear cleanly
