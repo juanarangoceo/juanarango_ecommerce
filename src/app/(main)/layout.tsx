@@ -4,6 +4,7 @@ import Script from "next/script";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { constructMetadata } from "@/lib/utils";
 import "../globals.css";
 
@@ -110,11 +111,12 @@ export default function RootLayout({
         />
         
         <Navbar />
-        <main className="flex-1 flex flex-col">
+        <main className="flex-1 flex flex-col pb-[72px] md:pb-0">
           {children}
         </main>
+        <MobileBottomNav />
         <Footer />
-        <DynamicChatWidget />
+        {/* <DynamicChatWidget /> Deshabilitado temporalmente */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"
           strategy="lazyOnload"

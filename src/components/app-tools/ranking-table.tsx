@@ -44,12 +44,12 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
         <table className="w-full table-fixed" role="table">
           <thead>
             <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              <th className="w-16 pb-3 text-left" scope="col">Rank</th>
-              <th className="pb-3 text-left" scope="col">App</th>
-              <th className="hidden pb-3 text-left md:table-cell" scope="col">Categoría</th>
-              <th className="hidden pb-3 text-left lg:table-cell" scope="col">Rating</th>
-              <th className="hidden pb-3 text-left sm:table-cell" scope="col">Precio</th>
-              <th className="pb-3 text-right" scope="col">Acción</th>
+              <th className="w-[10%] min-w-[60px] pb-3 text-left pl-2" scope="col">Rank</th>
+              <th className="w-[30%] min-w-[200px] pb-3 text-left" scope="col">App</th>
+              <th className="w-[15%] hidden pb-3 text-left md:table-cell" scope="col">Categoría</th>
+              <th className="w-[15%] hidden pb-3 text-left lg:table-cell" scope="col">Rating</th>
+              <th className="w-[15%] hidden pb-3 text-left sm:table-cell" scope="col">Precio</th>
+              <th className="w-[15%] min-w-[100px] pb-3 text-right pr-2" scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +71,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                     )}
                   >
                     {/* Rank */}
-                    <td className="py-4 pr-2">
+                    <td className="py-5 pl-2 pr-4">
                       <span
                         className={cn(
                           "text-xl font-bold tabular-nums",
@@ -83,7 +83,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                     </td>
 
                     {/* App Name */}
-                    <td className="py-4">
+                    <td className="py-5 pr-4">
                       <Link
                         href={`/app-tools/${app.slug.current}`}
                         className="flex items-center gap-3"
@@ -97,7 +97,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                           <p className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                             {app.appName}
                           </p>
-                          <p className="text-xs text-muted-foreground truncate max-w-[200px] md:max-w-[300px]">
+                          <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
                             {app.description}
                           </p>
                         </div>
@@ -105,7 +105,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                     </td>
 
                     {/* Category */}
-                    <td className="hidden py-4 md:table-cell">
+                    <td className="hidden py-5 pr-4 md:table-cell">
                       <button
                         onClick={() => handleCategoryChange(app.category)}
                         className="inline-block rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors cursor-pointer"
@@ -115,12 +115,12 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                     </td>
 
                     {/* Rating */}
-                    <td className="hidden py-4 lg:table-cell">
+                    <td className="hidden py-5 pr-4 lg:table-cell text-sm">
                       <StarRating rating={app.rating} showNumber={true} />
                     </td>
 
                     {/* Pricing */}
-                    <td className="hidden py-4 sm:table-cell">
+                    <td className="hidden py-5 pr-4 sm:table-cell">
                       <div className="flex flex-col gap-0.5">
                         <PricingBadge pricing={app.pricing} />
                         {app.priceDetail && (
@@ -132,7 +132,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                     </td>
 
                     {/* Action */}
-                    <td className="py-4 text-right">
+                    <td className="py-5 pr-2 text-right">
                       <Button
                         variant="outline"
                         size="sm"

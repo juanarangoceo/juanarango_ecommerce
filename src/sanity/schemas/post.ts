@@ -1,10 +1,24 @@
 import { GeneratePostInput } from '../components/GeneratePostInput'
+import { TelegramPublishButton } from '../components/TelegramPublishButton'
 
 export default {
   name: 'post',
   title: 'Post',
   type: 'document',
   fields: [
+    // ══ TELEGRAM PUBLISHER ══
+    {
+      name: 'telegramPublish',
+      title: '📢 Publicar en Telegram',
+      type: 'string',
+      components: {
+        input: TelegramPublishButton,
+      },
+      readOnly: false,
+      // This field stores no data — it's purely a UI action button
+      hidden: false,
+    },
+    // ══ AI GENERATOR ══
     {
       name: 'topic',
       title: 'Topic (AI Generator)',

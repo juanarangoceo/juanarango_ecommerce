@@ -18,7 +18,7 @@ export function PricingBadge({
   return (
     <Badge
       variant="outline"
-      className={cn(pricingStyles[pricing], "text-xs font-medium", className)}
+      className={cn(pricingStyles[pricing], "text-[10px] sm:text-xs px-1.5 py-0.5 font-medium min-w-min whitespace-nowrap", className)}
     >
       {pricing}
     </Badge>

@@ -21,32 +21,35 @@ export function AppCard({
         className
       )}
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-2">
         <AppIcon category={app.category} iconBg={app.iconBg} size="md" />
-        <PricingBadge pricing={app.pricing} />
+        <PricingBadge pricing={app.pricing} className="shrink-0" />
       </div>
-      <h3 className="mt-3 font-semibold text-foreground group-hover:text-primary transition-colors text-balance">
-        {app.appName}
-      </h3>
-      <p className="mt-1 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-        {app.description}
-      </p>
-      {/* Stars & Price */}
-      <div className="mt-2 flex items-center justify-between gap-2">
-        {app.rating ? <StarRating rating={app.rating} /> : <span />}
-        {app.priceDetail && (
-          <span className="text-xs font-medium text-muted-foreground">
-            {app.priceDetail}
-          </span>
-        )}
-      </div>
-      <div className="mt-auto flex items-center justify-between pt-4">
-        <span className="inline-block rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-muted-foreground">
+
+      <div className="mt-4 flex flex-col items-start gap-1.5 flex-1">
+        <span className="inline-block rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-[10px] uppercase font-semibold tracking-wider text-muted-foreground">
           {getCategoryLabel(app.category)}
         </span>
-        <span className="text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-          Ver detalle
-        </span>
+        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-balance text-lg line-clamp-1">
+          {app.appName}
+        </h3>
+        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+          {app.description}
+        </p>
+      </div>
+
+      <div className="mt-5 pt-4 border-t border-border/50 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          {app.rating ? <StarRating rating={app.rating} /> : <span />}
+        </div>
+        
+        {app.priceDetail && (
+          <div className="flex items-center justify-end">
+            <span className="text-xs font-medium text-muted-foreground text-right w-full">
+              {app.priceDetail}
+            </span>
+          </div>
+        )}
       </div>
     </Link>
   )
