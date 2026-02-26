@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { createClient } from '@sanity/client'
+import { dataset, projectId } from '@/sanity/env'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -10,8 +11,8 @@ export const maxDuration = 30
 // Sanity Client (read-only)
 // ─────────────────────────────────────────────
 const sanity = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId,
+  dataset,
   apiVersion: '2024-01-01',
   useCdn: false,
   // Read token avoids hitting CDN and ensures draft-aware reads
