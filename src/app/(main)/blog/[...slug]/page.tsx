@@ -32,6 +32,7 @@ import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 
 import { BlogAudioPlayer } from "@/components/blog/blog-audio-player";
 import { AdvertisingBanner } from "@/components/blog/advertising-banner";
+import { PromptGallery } from "@/components/blog/prompt-gallery";
 
 // ========== CONFIGURATION ==========
 
@@ -106,6 +107,15 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
 
 const CATEGORY_POSTS_QUERY = `*[_type == "post" && category == $category && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
   _id, title, slug, publishedAt, _createdAt, mainImage, excerpt, topic, category, tags, estimatedReadingTime
+}`;
+
+const PROMPTS_QUERY = `*[_type == "promptGallery" && isPublished == true] | order(publishedAt desc) {
+  _id,
+  title,
+  prompt,
+  "imageUrl": image.asset->url,
+  tool,
+  publishedAt
 }`;
 
 // ========== HELPERS ==========
@@ -255,7 +265,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 
 // ========== CATEGORY LISTING COMPONENT ==========
 
-function CategoryPage({ categorySlug, meta, posts }: { categorySlug: string; meta: { title: string; description: string }; posts: any[] }) {
+function CategoryPage({ categorySlug, meta, posts, prompts }: { categorySlug: string; meta: { title: string; description: string }; posts: any[]; prompts?: any[] }) {
   return (
     <main className="container mx-auto px-4 py-20 min-h-screen">
       <div className="mb-12">
@@ -268,6 +278,12 @@ function CategoryPage({ categorySlug, meta, posts }: { categorySlug: string; met
         </h1>
         <p className={`text-xl max-w-2xl ${categorySlug === 'prompts' ? 'text-purple-200/80' : 'text-muted-foreground'}`}>{meta.description}</p>
       </div>
+
+      {/* Prompts Gallery - Only shows in /blog/prompts */}
+      {categorySlug === 'prompts' && prompts && prompts.length > 0 && (
+        <PromptGallery prompts={prompts} />
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8">
           {posts && posts.length > 0 ? (
@@ -302,7 +318,14 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
   if (parsed.mode === 'category' && parsed.category) {
     const meta = CATEGORY_META[parsed.category];
     const categoryPosts = await client.fetch(CATEGORY_POSTS_QUERY, { category: parsed.category } as any);
-    return <CategoryPage categorySlug={parsed.category} meta={meta} posts={categoryPosts} />;
+    
+    // Fetch prompts only if this is the prompts category page
+    let prompts = [];
+    if (parsed.category === 'prompts') {
+      prompts = await client.fetch(PROMPTS_QUERY);
+    }
+    
+    return <CategoryPage categorySlug={parsed.category} meta={meta} posts={categoryPosts} prompts={prompts} />;
   }
 
   // ===== BLOG POST MODE =====

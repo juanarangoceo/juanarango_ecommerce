@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, ChevronDown } from "lucide-react"
+import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
 
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
@@ -220,9 +220,13 @@ export function Navbar() {
             <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeMenu}>
               <Home className="w-5 h-5" />
             </Link>
-            <Link href="/#contacto" className="hidden sm:inline-flex">
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Consulta Gratuita
+            <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeMenu}>
+              <GraduationCap className="w-5 h-5" />
+            </Link>
+            <Link href="/academia" className="hidden sm:inline-flex" onClick={closeMenu}>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
+                <GraduationCap className="w-4 h-4" />
+                Academia
               </Button>
             </Link>
             <button 
@@ -285,9 +289,10 @@ export function Navbar() {
             <Link href="/blog" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Blog
             </Link>
-            <Link href="/#contacto" onClick={closeMenu}>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4">
-                Consulta Gratuita
+            <Link href="/academia" onClick={closeMenu}>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4 gap-2">
+                <GraduationCap className="w-4 h-4" />
+                Academia
               </Button>
             </Link>
           </div>

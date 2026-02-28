@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { constructMetadata } from "@/lib/utils";
+import { NewsletterPopupLoader } from "@/components/newsletter-popup-loader";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -116,6 +117,8 @@ export default function RootLayout({
         </main>
         <MobileBottomNav />
         <Footer />
+        {/* Newsletter Popup - lazy loaded, zero SSR cost */}
+        <NewsletterPopupLoader />
         {/* <DynamicChatWidget /> Deshabilitado temporalmente */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"

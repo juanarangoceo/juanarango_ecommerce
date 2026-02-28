@@ -1,0 +1,98 @@
+/* Específico para la landing de Nitro Dropshipping */
+.nitro-landing-scope {
+  --nitro-primary: oklch(0.95 0.25 125); /* #C8FF00 equivalente approx */
+  --nitro-red: oklch(0.58 0.25 27); /* #FF2D2D equivalente approx */
+  --nitro-dark: #050505;
+  
+  /* Sobrescribimos algunas utilidades solo dentro de este scope si es necesario,
+     pero usaremos clases directas en tailwind donde se pueda.
+     Aquí van las animaciones específicas de la landing.
+  */
+}
+
+/* Ticker animation */
+@keyframes nitro-ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.nitro-landing-scope .animate-ticker {
+  animation: nitro-ticker 25s linear infinite;
+}
+
+/* Glitch button */
+.nitro-landing-scope .btn-glitch {
+  position: relative;
+  transition: transform 0.1s;
+}
+.nitro-landing-scope .btn-glitch:hover {
+  transform: translate(-4px, -4px);
+}
+.nitro-landing-scope .btn-glitch::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 2px solid theme('colors.primary.DEFAULT');
+  transform: translate(6px, 6px);
+  transition: transform 0.1s;
+  z-index: -1;
+}
+.nitro-landing-scope .btn-glitch:hover::after {
+  transform: translate(10px, 10px);
+}
+
+/* Pulse dot - adaptado al primary del main project */
+@keyframes nitro-pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); } /* Fallback a verde neón del main */
+  70% { box-shadow: 0 0 0 10px rgba(0, 255, 157, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
+}
+.nitro-landing-scope .pulse-dot {
+  animation: nitro-pulse-green 2s infinite;
+}
+
+/* Countdown pulse */
+@keyframes nitro-countdown-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.nitro-landing-scope .animate-countdown {
+  animation: nitro-countdown-pulse 1s ease-in-out infinite;
+}
+
+/* Text outline */
+.nitro-landing-scope .text-outline {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  color: transparent;
+}
+
+/* Video frame glow */
+.nitro-landing-scope .video-frame-glow {
+  position: relative;
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.15);
+  border: 1px solid theme('colors.primary.DEFAULT');
+}
+
+/* Video frame glitch */
+.nitro-landing-scope .video-frame-glitch {
+  position: relative;
+  border: 1px solid var(--border);
+}
+.nitro-landing-scope .video-frame-glitch::after {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px;
+  right: -4px; bottom: -4px;
+  border: 1px solid theme('colors.primary.DEFAULT');
+  z-index: -1;
+}
+
+/* Utilidades para forzar las tipografías */
+.font-heading {
+  font-family: var(--font-bebas-neue), sans-serif !important;
+}
+
+.font-mono {
+  font-family: var(--font-space-mono), monospace !important;
+}
