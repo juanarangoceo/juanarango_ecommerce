@@ -72,7 +72,7 @@ export default async function AcademiaPage() {
 
         {/* Content */}
         {cursos.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 relative z-10">
+          <div className="flex flex-col gap-6 relative z-10 max-w-5xl mx-auto">
             {cursos.map((curso) => (
               <CursoCard key={curso._id} curso={curso} />
             ))}

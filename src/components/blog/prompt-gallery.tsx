@@ -130,17 +130,21 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
                 </div>
               </div>
 
-              <div className="p-4 flex flex-col flex-1">
-                <h3 className="font-semibold text-zinc-200 mb-3 truncate">{item.title}</h3>
+              <div className="p-4 flex flex-col">
+                <h3 className="font-semibold text-zinc-200 mb-3">{item.title}</h3>
                 
-                <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg p-3 relative flex-1 group/code">
-                  <p className="font-mono text-[11px] leading-relaxed text-zinc-400 line-clamp-4 group-hover/code:line-clamp-none transition-all">
-                    {item.prompt}
-                  </p>
+                {/* Fixed-height scrollable prompt — never deforms the card */}
+                <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg relative">
+                  <div className="overflow-y-auto h-[100px] p-3 pr-9 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+                    <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
+                      {item.prompt}
+                    </p>
+                  </div>
                   
+                  {/* Copy button always visible in top-right */}
                   <button
                     onClick={() => handleCopy(item._id, item.prompt)}
-                    className="absolute top-2 right-2 p-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-white transition-colors border border-zinc-700 shadow-xl opacity-0 group-hover/code:opacity-100 focus:opacity-100"
+                    className="absolute top-2 right-2 p-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-white transition-colors border border-zinc-700"
                     title="Copiar prompt"
                   >
                     {copiedId === item._id ? (
