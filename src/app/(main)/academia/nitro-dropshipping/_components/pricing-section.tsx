@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { ShieldCheck, RefreshCw, BadgeCheck, ArrowRight, Zap, Sparkles } from "lucide-react"
+import { EarlyAccessModal } from "@/components/academia/early-access-modal"
 
 const valueItems = [
   {
@@ -31,6 +33,8 @@ const valueItems = [
 ]
 
 export function PricingSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section
       id="acceso"
@@ -109,14 +113,14 @@ export function PricingSection() {
               Acceso sin fricción a todo el contenido, métodos y comunidad en el mismo instante de la compra.
             </p>
 
-            <a
+            <button
+              onClick={() => setIsModalOpen(true)}
               className="btn-glitch w-full flex items-center justify-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-5 md:py-6 text-center mb-6 md:mb-8 shadow-[0_0_50px_rgba(255,45,45,0.3)] hover:shadow-[0_0_70px_rgba(255,45,45,0.5)] transition-shadow"
-              href="#"
             >
               <Zap className="w-4 h-4" />
-              ACCEDER AL PROGRAMA HOY
+              RESERVAR CUPO AHORA
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
 
             {/* Guarantee */}
             <div className="border border-dashed border-primary/40 bg-primary/[0.02] p-4 md:p-5 mb-6 md:mb-8 flex items-start gap-3 md:gap-4 w-full">
@@ -155,6 +159,13 @@ export function PricingSection() {
       <div className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-[15vw] md:text-[20vw] font-heading text-primary/[0.02] select-none pointer-events-none">
         $49
       </div>
+
+      <EarlyAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        cursoId="nitro-dropshipping"
+        cursoTitulo="Nitro Dropshipping"
+      />
     </section>
   )
 }

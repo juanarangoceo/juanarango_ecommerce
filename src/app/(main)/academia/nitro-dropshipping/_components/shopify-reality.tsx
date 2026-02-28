@@ -160,6 +160,7 @@ export function ShopifyReality() {
           </div>
         </div>
       </div>
+
     </section>
   )
 }

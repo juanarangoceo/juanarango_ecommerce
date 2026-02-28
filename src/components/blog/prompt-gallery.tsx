@@ -108,18 +108,20 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
           className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 snap-x snap-mandatory hide-scrollbar relative"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {prompts.map((item) => (
+          {prompts.map((item, index) => (
             <div 
               key={item._id} 
               className="snap-start shrink-0 w-[280px] md:w-[320px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden flex flex-col group/card hover:border-zinc-700 transition-colors"
             >
               <div className="relative aspect-square w-full bg-zinc-800 overflow-hidden">
                 {item.imageUrl ? (
-                  <img
+                  <Image
                     src={item.imageUrl}
                     alt={item.title}
-                    className="object-cover w-full h-full group-hover/card:scale-105 transition-transform duration-500"
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 768px) 280px, 320px"
+                    priority={index < 2}
+                    className="object-cover group-hover/card:scale-105 transition-transform duration-500"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-zinc-600">No Image</div>
@@ -134,25 +136,34 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
                 <h3 className="font-semibold text-zinc-200 mb-3">{item.title}</h3>
                 
                 {/* Fixed-height scrollable prompt — never deforms the card */}
-                <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg relative">
-                  <div className="overflow-y-auto h-[100px] p-3 pr-9 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+                {/* Fixed-height scrollable prompt — never deforms the card */}
+                <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg flex flex-col">
+                  <div className="overflow-y-auto h-[100px] p-3 prompt-scrollbar">
                     <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
                       {item.prompt}
                     </p>
                   </div>
                   
-                  {/* Copy button always visible in top-right */}
-                  <button
-                    onClick={() => handleCopy(item._id, item.prompt)}
-                    className="absolute top-2 right-2 p-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-white transition-colors border border-zinc-700"
-                    title="Copiar prompt"
-                  >
-                    {copiedId === item._id ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-500" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                  </button>
+                  {/* Copy button repositioned at the bottom of the prompt area */}
+                  <div className="border-t border-zinc-800/50 p-2 flex justify-end bg-zinc-900/40">
+                    <button
+                      onClick={() => handleCopy(item._id, item.prompt)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-white transition-colors border border-zinc-700 text-xs font-medium"
+                      title="Copiar prompt"
+                    >
+                      {copiedId === item._id ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-500" />
+                          <span className="text-emerald-500">Copiado</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

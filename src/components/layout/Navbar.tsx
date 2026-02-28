@@ -3,7 +3,25 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
+import { Menu, X, Home, ChevronDown, GraduationCap, GitCompare, LayoutGrid, MessageCircle } from "lucide-react"
+
+/** Rayito verde sólido — igual que en MobileBottomNav */
+function ZapSolidGreen({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="0.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  )
+}
 
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
@@ -14,11 +32,47 @@ const negociosLinks = [
   { href: "/soluciones/clinicas", label: "Clínicas" },
   { href: "/soluciones/nitro-inmobiliaria", label: "Nitro Inmobiliaria" },
   { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
+  { href: "/shopify", label: "Shopify" },
 ]
 
 const guiasLinks = [
   { href: "/guias/shopify", label: "Guía Shopify" },
+  { href: "/guias/openclaw-ai", label: "Guía OpenClaw AI" },
 ]
+
+/** Tooltip icon link — desktop nav only */
+function NavIconLink({ href, label, green = false, children }: {
+  href: string
+  label: string
+  green?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div className="relative group/tip">
+      <Link
+        href={href}
+        aria-label={label}
+        className={`transition-colors duration-200 ${
+          green
+            ? 'text-[rgba(0,255,157,0.65)] hover:text-[#00ff9d]'
+            : 'text-white/55 hover:text-primary'
+        }`}
+      >
+        {children}
+      </Link>
+      <span
+        className={`absolute -bottom-7 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap
+          opacity-0 group-hover/tip:opacity-100 pointer-events-none transition-opacity duration-150 ${
+          green
+            ? 'bg-[#00ff9d]/10 text-[#00ff9d]'
+            : 'bg-white/10 text-white'
+        }`}
+      >
+        {label}
+      </span>
+    </div>
+  )
+}
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -198,22 +252,19 @@ export function Navbar() {
               }}
             />
 
-            <Link href="/shopify" className="text-white hover:text-primary transition-colors">
-              Shopify
-            </Link>
-
-            <Link href="/#contacto" className="text-white hover:text-primary transition-colors">
-              Contacto
-            </Link>
-            <Link href="/app-tools" className="text-white hover:text-primary transition-colors">
-              IA Apps
-            </Link>
-            <Link href="/comparar" className="text-white hover:text-primary transition-colors">
-              Comparativas
-            </Link>
-            <Link href="/blog" className="text-white hover:text-primary transition-colors">
-              Blog
-            </Link>
+            {/* Icon-only links with custom tooltips — desktop only */}
+            <NavIconLink href="/#contacto" label="Contacto">
+              <MessageCircle className="w-5 h-5" />
+            </NavIconLink>
+            <NavIconLink href="/app-tools" label="IA Apps">
+              <LayoutGrid className="w-5 h-5" />
+            </NavIconLink>
+            <NavIconLink href="/comparar" label="Comparativas">
+              <GitCompare className="w-5 h-5" />
+            </NavIconLink>
+            <NavIconLink href="/blog" label="Blog" green>
+              <ZapSolidGreen className="w-6 h-6" />
+            </NavIconLink>
           </div>
 
           <div className="flex items-center gap-4">
@@ -274,9 +325,6 @@ export function Navbar() {
                 setIsNegociosOpen(false)
               }}
             />
-            <Link href="/shopify" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
-              Shopify
-            </Link>
             <Link href="/#contacto" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
               Contacto
             </Link>

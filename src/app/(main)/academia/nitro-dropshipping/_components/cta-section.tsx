@@ -20,11 +20,11 @@ export function CTASection() {
         </p>
 
         <a
-          className="btn-glitch inline-flex items-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-5 md:py-6 px-10 md:px-14 shadow-[0_0_40px_rgba(255,45,45,0.2)] hover:shadow-[0_0_60px_rgba(255,45,45,0.4)] transition-shadow"
           href="#acceso"
+          className="btn-glitch inline-flex items-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-5 md:py-6 px-10 md:px-14 shadow-[0_0_40px_rgba(255,45,45,0.2)] hover:shadow-[0_0_60px_rgba(255,45,45,0.4)] transition-shadow"
         >
           <Zap className="w-4 h-4" />
-          QUIERO EL CURSO AHORA
+          RESERVAR MI LUGAR
           <ArrowRight className="w-4 h-4" />
         </a>
 

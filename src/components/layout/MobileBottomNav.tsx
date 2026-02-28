@@ -1,74 +1,107 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Home, Search, BookOpen } from "lucide-react"
+import { Home, LayoutGrid } from "lucide-react"
+
+/** Rayito morado — solo bordeado (estilo outline), para Prompts */
+function ZapOutlinePurple({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  )
+}
+
+/** Rayito verde — relleno con cuerpo, para Blog */
+function ZapSolidGreen({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="0.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  )
+}
 
 export function MobileBottomNav() {
   const pathname = usePathname()
 
-  const navItems = [
-    {
-      name: "Inicio",
-      href: "/",
-      icon: Home,
-      exact: true,
-    },
-    {
-      name: "Blog",
-      href: "/blog",
-      icon: Search,
-      exact: false,
-    },
-    {
-      name: "Apps",
-      href: "/app-tools",
-      icon: BookOpen,
-      exact: false,
-    },
-  ]
+  const isActive = (href: string, exact = false) =>
+    exact ? pathname === href : pathname.startsWith(href)
 
   return (
     <div className="fixed bottom-0 left-0 w-full z-50 md:hidden pb-safe">
-      <div className="bg-black/70 backdrop-blur-md border-t border-white/10 px-6 py-3 flex justify-between items-center">
-        {navItems.map((item) => {
-          const isActive = item.exact
-            ? pathname === item.href
-            : pathname.startsWith(item.href)
+      <div className="bg-black/70 backdrop-blur-md border-t border-white/10 px-6 py-3 flex justify-around items-center">
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              prefetch={false}
-              className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-                isActive ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
-              }`}
-            >
-              <item.icon className="w-6 h-6" />
-              <span className="text-[10px] font-medium">{item.name}</span>
-            </Link>
-          )
-        })}
-
-        {/* Telegram Link */}
-        <a
-          href="https://t.me/juanarangoecommerce"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center transition-all duration-200 hover:brightness-110 active:scale-95 translate-y-[-2px]"
+        {/* 1. Inicio */}
+        <Link
+          href="/"
+          prefetch={false}
+          className={`flex flex-col items-center gap-1 transition-all duration-200 ${
+            isActive("/", true) ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+          }`}
         >
-          <div className="relative w-12 h-12 flex items-center justify-center">
-            <Image 
-              src="https://res.cloudinary.com/dohwyszdj/image/upload/v1772079994/Telegram_2019_Logo.svg_xtftjk.png" 
-              alt="Telegram Channel" 
-              fill
-              className="object-contain drop-shadow-lg"
-              sizes="48px"
-            />
+          <Home className="w-6 h-6" />
+          <span className="text-[10px] font-medium">Inicio</span>
+        </Link>
+
+        {/* 2. Apps */}
+        <Link
+          href="/app-tools"
+          prefetch={false}
+          className={`flex flex-col items-center gap-1 transition-all duration-200 ${
+            isActive("/app-tools") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+          }`}
+        >
+          <LayoutGrid className="w-6 h-6" />
+          <span className="text-[10px] font-medium">Apps</span>
+        </Link>
+
+        {/* 3. Prompts — rayito morado bordeado */}
+        <Link
+          href="/blog/prompts"
+          prefetch={false}
+          className={`flex flex-col items-center gap-1 transition-all duration-200 ${
+            isActive("/blog/prompts") ? "scale-110" : "hover:opacity-80"
+          }`}
+          style={{ color: isActive("/blog/prompts") ? "#a855f7" : "rgba(168,85,247,0.6)" }}
+        >
+          <ZapOutlinePurple className="w-6 h-6" />
+          <span className="text-[10px] font-medium">Prompts</span>
+        </Link>
+
+        {/* 4. Blog — rayito verde con cuerpo (más grande porque es el principal) */}
+        <Link
+          href="/blog"
+          prefetch={false}
+          className={`flex flex-col items-center gap-0.5 transition-all duration-200 ${
+            isActive("/blog") ? "scale-110" : "hover:opacity-80"
+          }`}
+          style={{ color: isActive("/blog") ? "#00ff9d" : "rgba(0,255,157,0.6)" }}
+        >
+          <div className="flex items-center justify-center p-1">
+            <ZapSolidGreen className="w-7 h-7" />
           </div>
-        </a>
+          <span className="text-[10px] font-medium">Blog</span>
+        </Link>
+
       </div>
     </div>
   )

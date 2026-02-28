@@ -21,7 +21,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Insertar en Supabase
     const { error } = await supabaseAdmin
       .from('acceso_anticipado')
       .insert([
@@ -32,7 +31,7 @@ export async function POST(request: Request) {
           curso_id,
           curso_titulo,
           mensaje: mensaje || null,
-        },
+        }
       ]);
 
     if (error) {

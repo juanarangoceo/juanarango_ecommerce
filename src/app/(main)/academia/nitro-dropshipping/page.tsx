@@ -5,6 +5,7 @@ import { ShopifyReality } from './_components/shopify-reality';
 import { PainCycle } from './_components/pain-cycle';
 import { ComparisonTable } from './_components/comparison-table';
 import { TechStack } from './_components/tech-stack';
+import { PensumSection } from './_components/pensum-section';
 import { ShowcaseCarousel } from './_components/showcase-carousel';
 import { AudienceFilter } from './_components/audience-filter';
 import { SocialProof } from './_components/social-proof';
@@ -27,6 +28,7 @@ export default function NitroDropshippingPage() {
       <ShopifyReality />
       <ComparisonTable />
       <TechStack />
+      <PensumSection />
       <ShowcaseCarousel />
       <AudienceFilter />
       <SocialProof />

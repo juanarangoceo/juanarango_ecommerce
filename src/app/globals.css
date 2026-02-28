@@ -202,14 +202,27 @@
   }
 }
 
-.animate-aurora-1 {
-  animation: aurora-1 60s ease-in-out infinite alternate;
-}
-
 .animate-aurora-2 {
   animation: aurora-2 80s ease-in-out infinite alternate;
 }
 
 @utility text-glow {
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+@utility prompt-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--primary) 20%, transparent);
+    border-radius: 8px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--primary) 60%, transparent);
+  }
 }

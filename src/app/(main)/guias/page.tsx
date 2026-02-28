@@ -20,10 +20,14 @@ const guides = [
     title: "Guía Definitiva Shopify 2024",
     description: "Aprende paso a paso cómo crear y configurar tu tienda Shopify desde cero. Guía completa con prompts de IA, estrategias y configuración.",
     href: "/guias/shopify",
-    image: "/visual/shopify-guide-thumb.jpg", // Placeholder until an image exists
     badge: "Nuevo"
   },
-  // Add more guides here in the future
+  {
+    title: "Guía OpenClaw AI 2026",
+    description: "Domina los agentes de IA autónomos con OpenClaw. Instala, configura Skills y automatiza flujos de trabajo completos desde cero.",
+    href: "/guias/openclaw-ai",
+    badge: "Nuevo"
+  },
 ]
 
 export default function GuiasIndexPage() {

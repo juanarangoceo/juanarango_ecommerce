@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowRight, Zap, Sparkles, ShoppingBag, Cpu } from "lucide-react"
 
 export function HeroSection() {
@@ -60,19 +58,19 @@ export function HeroSection() {
         {/* CTA Row */}
         <div className="flex flex-col sm:flex-row items-start gap-5 md:gap-6 mb-12 md:mb-16 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
           <a
-            className="btn-glitch inline-flex items-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-4 md:py-5 px-8 md:px-10 hover:bg-destructive/90 transition-colors shadow-[0_0_30px_rgba(255,45,45,0.2)] hover:shadow-[0_0_50px_rgba(255,45,45,0.4)]"
             href="#acceso"
+            className="btn-glitch inline-flex items-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-4 md:py-5 px-8 md:px-10 hover:bg-destructive/90 transition-colors shadow-[0_0_30px_rgba(255,45,45,0.2)] hover:shadow-[0_0_50px_rgba(255,45,45,0.4)]"
           >
             <Zap className="w-4 h-4" />
-            QUIERO MI TIENDA A $0
+            RESERVAR TIENDA A $0
             <ArrowRight className="w-4 h-4" />
           </a>
           <div className="flex flex-col gap-1">
             <span className="font-mono text-xs text-foreground/80 tracking-wider uppercase font-bold">
-              Pago único. Acceso de por vida.
+              Cupos Limitados de Lanzamiento.
             </span>
             <span className="font-mono text-[11px] text-foreground/40 tracking-wider">
-              Aprende a construir webs sin costos mensuales.
+              Asegura tu lugar en la lista de espera VIP.
             </span>
           </div>
         </div>

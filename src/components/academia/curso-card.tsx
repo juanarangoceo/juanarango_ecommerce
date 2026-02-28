@@ -26,11 +26,7 @@ interface CursoNode {
   urlLanding?: string;
 }
 
-interface CursoCardProps {
-  curso: CursoNode;
-}
-
-export function CursoCard({ curso }: CursoCardProps) {
+export function CursoCard({ curso }: { curso: CursoNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isProximamente = curso.estado === 'proximamente';
@@ -47,122 +43,119 @@ export function CursoCard({ curso }: CursoCardProps) {
   };
 
   const getNivelLabel = (nivel?: string) => {
-    const levels: Record<string, string> = {
-      principiante: 'Principiante',
-      intermedio: 'Intermedio',
-      avanzado: 'Avanzado',
-      todos: 'Todos los niveles',
+    const labels: Record<string, string> = {
+      principiante: 'Principiante', intermedio: 'Intermedio',
+      avanzado: 'Avanzado', todos: 'Todos los niveles',
     };
-    return nivel && levels[nivel] ? levels[nivel] : nivel;
+    return labels[nivel ?? ''] ?? nivel;
   };
 
   return (
     <>
-      {/* Full-width horizontal card */}
-      <div
-        className={`w-full flex flex-col sm:flex-row rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 group ${
-          curso.destacado ? 'ring-1 ring-primary/30 shadow-2xl shadow-primary/5' : ''
-        }`}
-      >
-        {/* Image – fixed size on the left */}
-        <div className="relative w-full sm:w-72 md:w-80 lg:w-96 shrink-0 overflow-hidden bg-zinc-950" style={{ minHeight: '220px' }}>
-          {imageUrl && (
+      <div className={`w-full flex flex-col rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 group ${
+        curso.destacado ? 'ring-1 ring-primary/30 shadow-2xl shadow-primary/5' : ''
+      }`}>
+
+        {/* ── Banner 2:1 — Full-width, shows completely at natural proportions ── */}
+        <div className="relative w-full overflow-hidden">
+          {imageUrl ? (
             <Image
               src={imageUrl}
               alt={curso.titulo}
-              fill
-              sizes="(max-width: 640px) 100vw, 384px"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              width={1280}
+              height={640}
+              sizes="(max-width: 768px) 100vw, 900px"
+              className="w-full h-auto block"
+              priority={curso.destacado}
             />
+          ) : (
+            <div className="w-full aspect-[2/1] bg-zinc-950 flex items-center justify-center text-zinc-700 text-sm">Sin imagen</div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-zinc-900 opacity-40 hidden sm:block" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-70 sm:hidden" />
 
-          {/* Badges */}
-          {curso.categoria && curso.categoria.length > 0 && (
-            <div className="absolute top-4 left-4">
+          {/* Badges over image */}
+          <div className="absolute top-4 left-4 right-4 flex items-start justify-between gap-2">
+            {curso.categoria && curso.categoria.length > 0 && (
               <span className="bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-semibold text-white rounded-full border border-white/10">
                 {curso.categoria[0].replace(/-/g, ' ').toUpperCase()}
               </span>
-            </div>
-          )}
-          <div className="absolute top-4 right-4 sm:hidden">
-            <span className={`px-3 py-1 text-xs font-bold rounded-full backdrop-blur-md flex items-center gap-1.5 ${getBadgeStyle()}`}>
+            )}
+            <span className={`ml-auto px-3 py-1 text-xs font-bold rounded-full backdrop-blur-md flex items-center gap-1.5 ${getBadgeStyle()}`}>
               {isProximamente && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />}
               {isProximamente ? 'PRÓXIMAMENTE' : curso.estado.toUpperCase()}
             </span>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 p-6 flex flex-col justify-between">
+        {/* ── Content below image ── */}
+        <div className="p-6 flex flex-col gap-5">
+
+          {/* Title + description */}
           <div>
-            {/* Status badge (desktop) */}
-            <div className="hidden sm:flex items-center justify-between mb-3">
-              <span className={`px-3 py-1 text-xs font-bold rounded-full flex items-center gap-1.5 ${getBadgeStyle()}`}>
-                {isProximamente && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />}
-                {isProximamente ? 'PRÓXIMAMENTE' : curso.estado.toUpperCase()}
-              </span>
+            <h3 className="text-2xl font-bold text-white mb-2 leading-tight">{curso.titulo}</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">{curso.descripcionCorta}</p>
+          </div>
+
+          {/* Meta chips + temario in two column grid on wide cards */}
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="flex flex-col gap-4">
+              {/* Meta */}
+              <div className="flex flex-wrap gap-2">
+                {curso.tiempoEstudio && (
+                  <span className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium text-zinc-300">
+                    <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />{curso.tiempoEstudio}
+                  </span>
+                )}
+                {curso.nivel && (
+                  <span className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium text-zinc-300">
+                    <BarChart className="w-3.5 h-3.5 text-blue-400 shrink-0" />{getNivelLabel(curso.nivel)}
+                  </span>
+                )}
+              </div>
             </div>
 
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-2 leading-tight">{curso.titulo}</h3>
-            <p className="text-zinc-400 text-sm mb-4 leading-relaxed">{curso.descripcionCorta}</p>
-
-            <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-zinc-300 mb-4">
-              {curso.tiempoEstudio && (
-                <div className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800">
-                  <Clock className="w-4 h-4 text-emerald-400" />
-                  {curso.tiempoEstudio}
-                </div>
-              )}
-              {curso.nivel && (
-                <div className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800">
-                  <BarChart className="w-4 h-4 text-blue-400" />
-                  {getNivelLabel(curso.nivel)}
-                </div>
-              )}
-            </div>
-
+            {/* Temario */}
             {curso.temario && curso.temario.length > 0 && (
               <ul className="space-y-1.5">
-                {curso.temario.slice(0, 4).map((item, idx) => (
+                {curso.temario.slice(0, 3).map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-zinc-400">
                     <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
-                {curso.temario.length > 4 && (
+                {curso.temario.length > 3 && (
                   <li className="text-xs text-zinc-500 italic pl-6">+ y mucho más</li>
                 )}
               </ul>
             )}
           </div>
 
-          {/* Footer: Price + CTA */}
-          <div className="pt-5 border-t border-zinc-800 mt-5 flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex flex-col">
+          {/* ── Footer: price + CTA ── */}
+          <div className="pt-5 border-t border-zinc-800 flex items-end justify-between gap-4 flex-wrap">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[10px] uppercase tracking-widest font-semibold text-zinc-500">Inversión única</span>
               {curso.esPago ? (
-                <>
+                <div className="flex items-baseline gap-1.5">
                   {curso.precioAnterior && (
-                    <span className="text-xs text-zinc-500 line-through mb-0.5">
-                      {formatMoney(curso.precioAnterior)}
-                    </span>
+                    <span className="text-sm text-zinc-600 line-through">{formatMoney(curso.precioAnterior)}</span>
                   )}
                   {curso.precio !== undefined ? (
-                    <span className="text-2xl font-black text-white">{formatMoney(curso.precio)}</span>
+                    <>
+                      <span className="text-3xl font-black text-white tracking-tight">{formatMoney(curso.precio)}</span>
+                      <span className="text-xs font-semibold text-zinc-500">USD</span>
+                    </>
                   ) : (
-                    <span className="text-lg font-bold text-zinc-400">Precio TBD</span>
+                    <span className="text-xl font-bold text-zinc-400">Precio TBD</span>
                   )}
-                </>
+                </div>
               ) : (
-                <span className="text-xl font-bold text-emerald-400">Gratis</span>
+                <span className="text-3xl font-black text-white tracking-tight">Gratis</span>
               )}
             </div>
 
             {isProximamente ? (
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-white hover:bg-zinc-200 text-black text-sm font-bold py-2.5 px-6 rounded-xl transition-all flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]"
+                className="bg-white hover:bg-zinc-200 text-black text-sm font-bold py-2.5 px-6 rounded-xl transition-all shrink-0"
               >
                 Reservar Lugar
               </button>
@@ -170,7 +163,7 @@ export function CursoCard({ curso }: CursoCardProps) {
               <Link
                 href={curso.urlLanding || '#'}
                 target={curso.urlLanding ? '_blank' : '_self'}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-bold py-2.5 px-6 rounded-xl transition-colors flex items-center gap-1.5"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-bold py-2.5 px-6 rounded-xl transition-colors flex items-center gap-1.5 shrink-0"
               >
                 Ver Curso
                 {curso.urlLanding ? <ExternalLink className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
