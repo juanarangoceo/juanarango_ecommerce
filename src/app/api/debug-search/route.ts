@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from "@/lib/supabase";
 import { generateEmbedding } from "@/lib/embeddings";
+import { requireInternalAuth } from '@/lib/api-auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
+  const authError = requireInternalAuth(request);
+  if (authError) return authError;
+
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q') || 'marketing';
 

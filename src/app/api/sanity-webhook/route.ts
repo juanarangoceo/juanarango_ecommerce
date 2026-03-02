@@ -1,5 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
+import { requireInternalAuth } from '@/lib/api-auth'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -7,11 +8,13 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: Request) {
   try {
     const secret = process.env.SANITY_WEBHOOK_SECRET
-    if (secret) {
-      const auth = request.headers.get('authorization')
-      if (auth !== `Bearer ${secret}`) {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
-      }
+    if (!secret) {
+      console.error('❌ SANITY_WEBHOOK_SECRET is not configured. Denying webhook.')
+      return NextResponse.json({ message: 'Webhook not configured' }, { status: 500 })
+    }
+    const auth = request.headers.get('authorization')
+    if (auth !== `Bearer ${secret}`) {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     let body: Record<string, unknown> = {}
@@ -61,7 +64,10 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authError = requireInternalAuth(request);
+  if (authError) return authError;
+
   revalidatePath('/app-tools', 'page')
   revalidatePath('/sitemap.xml', 'page')
   return NextResponse.json({

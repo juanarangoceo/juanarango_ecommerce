@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
+import { requireInternalAuth } from '@/lib/api-auth'
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 
 export async function POST(request: NextRequest) {
+  const authError = requireInternalAuth(request);
+  if (authError) return authError;
+
   try {
     const { app1, app2 } = await request.json()
 

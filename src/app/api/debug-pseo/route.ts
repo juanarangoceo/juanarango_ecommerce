@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+import { requireInternalAuth } from '@/lib/api-auth'
 
 export async function GET(request: Request) {
+  const authError = requireInternalAuth(request);
+  if (authError) return authError;
+
   const { searchParams } = new URL(request.url)
   const slug = searchParams.get('slug') || 'clinicas-esteticas-bogota'
 

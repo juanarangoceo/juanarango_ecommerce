@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { createClient } from '@sanity/client'
+import { requireInternalAuth } from '@/lib/api-auth'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -64,6 +65,9 @@ Responde SOLO con el texto del post formateado, sin explicaciones ni saludos pre
 // POST Handler
 // ─────────────────────────────────────────────
 export async function POST(req: Request) {
+  const authError = requireInternalAuth(req);
+  if (authError) return authError;
+
   try {
     // 1. Parse body
     const { postId } = await req.json()

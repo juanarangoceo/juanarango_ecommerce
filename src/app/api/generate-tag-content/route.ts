@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { requireInternalAuth } from "@/lib/api-auth";
 
 // Inicialización de cliente Gemini
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
@@ -8,6 +9,9 @@ export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  const authError = requireInternalAuth(req);
+  if (authError) return authError;
+
   try {
     const { tag } = await req.json();
     if (!tag) return NextResponse.json({ error: "Falta el nombre de la etiqueta" }, { status: 400 });

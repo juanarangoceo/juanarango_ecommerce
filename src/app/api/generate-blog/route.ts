@@ -2,6 +2,7 @@ import { normalizeTagSlug } from "@/lib/normalize-tag";
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { syncSanityPosts } from "@/app/actions/sync-posts";
+import { requireInternalAuth } from "@/lib/api-auth";
 
 
 // Inicialización de cliente Gemini
@@ -11,6 +12,9 @@ export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  const authError = requireInternalAuth(req);
+  if (authError) return authError;
+
   try {
     const { topic } = await req.json();
     if (!topic) return NextResponse.json({ error: "Falta el tema" }, { status: 400 });

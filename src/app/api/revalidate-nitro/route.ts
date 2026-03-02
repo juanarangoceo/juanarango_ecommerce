@@ -1,14 +1,12 @@
 import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
+import { requireInternalAuth } from '@/lib/api-auth'
 
 export async function POST(request: NextRequest) {
-  try {
-    // Optional: Add authentication here if needed
-    // const authHeader = request.headers.get('authorization')
-    // if (authHeader !== `Bearer ${process.env.REVALIDATION_SECRET}`) {
-    //   return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
-    // }
+  const authError = requireInternalAuth(request);
+  if (authError) return authError;
 
+  try {
     // Revalidate the Nitro Commerce page
     revalidatePath('/soluciones/nitro-commerce')
     

@@ -56,7 +56,6 @@ export async function syncSanityPosts() {
                 embedding: embedding,
                 category: post.category,
                 tags: post.tags,
-                updated_at: new Date().toISOString()
             }, { onConflict: 'sanity_id' });
 
             if (error) {

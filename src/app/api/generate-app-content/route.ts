@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { requireInternalAuth } from "@/lib/api-auth";
 
 // Inicialización de cliente Gemini
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
@@ -25,6 +26,9 @@ const CATEGORY_ICON_COLORS: Record<string, string> = {
 };
 
 export async function POST(req: Request) {
+  const authError = requireInternalAuth(req);
+  if (authError) return authError;
+
   try {
     const { appName, websiteUrl } = await req.json();
 
