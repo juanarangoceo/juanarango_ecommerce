@@ -36,7 +36,10 @@ export const GeneratePostInput = (props: any) => {
       // 1. CALL API
       const res = await fetch('/api/generate-blog', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
+        },
         body: JSON.stringify({ topic: currentTopic }),
       })
       
