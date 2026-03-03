@@ -71,5 +71,12 @@ export default defineType({
       rows: 3,
       description: 'Meta descripción para buscadores.',
     }),
+    defineField({
+      name: 'forzarIndexacion',
+      title: 'Forzar Indexación (SEO)',
+      type: 'boolean',
+      description: 'Activa esto para indexar esta etiqueta incluso si tiene 1 o ningún artículo (por defecto requiere 2+).',
+      initialValue: false,
+    }),
   ],
 })

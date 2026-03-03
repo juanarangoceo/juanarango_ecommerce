@@ -60,7 +60,8 @@ export async function generateMetadata(props: Props) {
         name,
         seoTitle,
         seoDescription,
-        description
+        description,
+        forzarIndexacion
       },
       "postCount": count(*[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current)])
     }
@@ -74,8 +75,8 @@ export async function generateMetadata(props: Props) {
     title: displayTitle,
     description: displayDesc,
     canonical: `https://www.juanarangoecommerce.com/blog/tags/${params.tag}`,
-    // Indexing only if more than 3 posts
-    noIndex: postCount <= 3
+    // Indexing only if forced or has at least 2 posts (=> noIndex if not forced AND postCount < 2)
+    noIndex: !tagDoc?.forzarIndexacion && postCount < 2
   });
 }
 

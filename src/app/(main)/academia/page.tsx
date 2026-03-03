@@ -30,7 +30,19 @@ const ACADEMIA_QUERY = `
     estado,
     fechaLanzamiento,
     destacado,
-    urlLanding
+    urlLanding,
+    urlPago,
+    urlVideo,
+    descripcionLarga,
+    garantia,
+    valorTotal,
+    mensajeUrgencia,
+    sloganOferta,
+    publicoObjetivo,
+    contenido[] {
+      titulo,
+      lecciones
+    }
   }
 `;
 

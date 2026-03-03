@@ -6,6 +6,7 @@ export default {
   type: 'document',
   groups: [
     { name: 'info', title: '✏️ Información Principal', default: true },
+    { name: 'media', title: '🎬 Video y Contenido' },
     { name: 'precio', title: '💰 Precio y Acceso' },
     { name: 'publicacion', title: '🚀 Publicación' },
   ],
@@ -34,7 +35,7 @@ export default {
       title: 'Descripción Corta',
       type: 'string',
       group: 'info',
-      description: 'Aparece en la tarjeta del curso.',
+      description: 'Aparece en la tarjeta del curso como hook inicial.',
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -42,11 +43,19 @@ export default {
       title: 'Descripción Larga',
       type: 'text',
       group: 'info',
-      description: 'Aparece en la página de detalle del curso.',
+      description: 'Texto persuasivo y completo del curso. Usa saltos de línea para separar párrafos.',
+    },
+    {
+      name: 'publicoObjetivo',
+      title: '¿Para quién es?',
+      type: 'text',
+      group: 'info',
+      rows: 3,
+      description: 'Describe el perfil ideal del estudiante. Ej: "Para emprendedores digitales que..."',
     },
     {
       name: 'imagen',
-      title: 'Imagen (Thumbnail)',
+      title: 'Imagen de Portada (Thumbnail)',
       type: 'image',
       group: 'info',
       options: {
@@ -73,11 +82,11 @@ export default {
     },
     {
       name: 'temario',
-      title: '¿Qué aprenderás?',
+      title: '¿Qué aprenderás? (Beneficios clave)',
       type: 'array',
       of: [{ type: 'string' }],
       group: 'info',
-      description: 'Lista de los puntos clave del curso. Aparecerán listados en la UI.',
+      description: 'Lista de beneficios/puntos clave del curso. Aparecerán con checkmarks.',
     },
     {
       name: 'tiempoEstudio',
@@ -96,9 +105,50 @@ export default {
           { title: 'Principiante', value: 'principiante' },
           { title: 'Intermedio', value: 'intermedio' },
           { title: 'Avanzado', value: 'avanzado' },
-          { title: 'Todos los niveles', value: 'todos' }
+          { title: 'Todos los niveles', value: 'todos' },
         ],
       },
+    },
+
+    // --- GRUPO: MEDIA ---
+    {
+      name: 'urlVideo',
+      title: 'URL del Video de Presentación (Cloudinary)',
+      type: 'url',
+      group: 'media',
+      description: 'Link directo al MP4 de Cloudinary. Se reproduce inline al hacer click en play.',
+    },
+    {
+      name: 'contenido',
+      title: 'Contenido del Curso (Módulos)',
+      type: 'array',
+      group: 'media',
+      description: 'Lista de módulos. Cada módulo tiene un título y sus lecciones. Se muestra con efecto de bloqueo para generar curiosidad.',
+      of: [
+        {
+          type: 'object',
+          name: 'modulo',
+          title: 'Módulo',
+          fields: [
+            {
+              name: 'titulo',
+              title: 'Título del Módulo',
+              type: 'string',
+              validation: (Rule: Rule) => Rule.required(),
+            },
+            {
+              name: 'lecciones',
+              title: 'Lecciones',
+              type: 'array',
+              of: [{ type: 'string' }],
+              description: 'Lista de lecciones dentro de este módulo.',
+            },
+          ],
+          preview: {
+            select: { title: 'titulo' },
+          },
+        },
+      ],
     },
 
     // --- GRUPO: PRECIO ---
@@ -125,11 +175,39 @@ export default {
       hidden: ({ document }: any) => !document?.esPago,
     },
     {
+      name: 'valorTotal',
+      title: 'Valor Total Real (Opcional)',
+      type: 'number',
+      group: 'precio',
+      description: 'El precio total si se vendiera por separado (Value Stacking). Ej: 500.',
+    },
+    {
+      name: 'sloganOferta',
+      title: 'Slogan de Oferta Especial (Opcional)',
+      type: 'string',
+      group: 'precio',
+      description: 'Slogan corto como "⭐ HOT SALE" o "🔥 BLACK FRIDAY" que acompaña al precio.',
+    },
+    {
+      name: 'mensajeUrgencia',
+      title: 'Banner de Urgencia (Opcional)',
+      type: 'string',
+      group: 'precio',
+      description: 'Mensaje que aparece arriba del bloque de pago. Ej: "Precio con descuento disponible solo esta semana".',
+    },
+    {
+      name: 'garantia',
+      title: 'Garantía',
+      type: 'string',
+      group: 'precio',
+      description: 'Ej: "Garantía de devolución de 7 días". Aparece junto al precio para generar confianza.',
+    },
+    {
       name: 'urlLanding',
-      title: 'URL de la Landing Page',
+      title: 'URL de Landing (legado)',
       type: 'url',
       group: 'precio',
-      description: 'Opcional. Si el curso tiene una landing page externa o separada, enlaza aquí.',
+      description: 'Campo heredado. Usa urlPago para el nuevo flujo.',
     },
 
     // --- GRUPO: PUBLICACION ---
@@ -142,12 +220,12 @@ export default {
         list: [
           { title: 'Disponible', value: 'disponible' },
           { title: 'Próximamente', value: 'proximamente' },
-          { title: 'Borrador', value: 'borrador' }
+          { title: 'Borrador', value: 'borrador' },
         ],
       },
       initialValue: 'borrador',
       validation: (Rule: Rule) => Rule.required(),
-      description: 'Controla si el curso se ve disponible para comprar, en lista de espera (próximamente) u oculto (borrador).',
+      description: 'Controla si el curso se ve disponible para comprar, en lista de espera u oculto.',
     },
     {
       name: 'fechaLanzamiento',
@@ -171,7 +249,7 @@ export default {
       type: 'boolean',
       group: 'publicacion',
       initialValue: false,
-      description: 'Si es true, se mostrará más grande o con un estilo especial en la página.',
+      description: 'Si es true, se mostrará con estilo especial en la página.',
     },
   ],
   orderings: [
@@ -184,25 +262,25 @@ export default {
       title: 'Últimos Creados',
       name: 'createdAtDesc',
       by: [{ field: '_createdAt', direction: 'desc' }],
-    }
+    },
   ],
   preview: {
     select: {
       title: 'titulo',
       subtitle: 'estado',
-      media: 'imagen'
+      media: 'imagen',
     },
     prepare({ title, subtitle, media }: any) {
       const stateLabels: Record<string, string> = {
         disponible: '🟢 Disponible',
         proximamente: '⏳ Próximamente',
-        borrador: '⚪ Borrador'
+        borrador: '⚪ Borrador',
       }
       return {
         title: title || 'Sin Nombre',
         subtitle: subtitle ? stateLabels[subtitle] || subtitle : 'Sin Estado',
-        media
+        media,
       }
-    }
-  }
+    },
+  },
 }
