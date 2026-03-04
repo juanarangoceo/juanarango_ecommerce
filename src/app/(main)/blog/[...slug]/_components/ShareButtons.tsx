@@ -9,21 +9,20 @@ interface ShareButtonsProps {
   category?: string
 }
 
-export function ShareButtons({ title, slug, category }: ShareButtonsProps) {
+export function ShareButtons({ title }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false)
 
-  const path = category ? `/blog/${category}/${slug}` : `/blog/${slug}`
-  const url = `https://juanarango.com${path}`
-  const encodedTitle = encodeURIComponent(title)
-  const encodedUrl = encodeURIComponent(url)
+  // Always use the real current page URL — avoids hardcoded domain mismatches
+  const getUrl = () =>
+    typeof window !== "undefined" ? window.location.href : ""
 
   const copyToClipboard = async () => {
+    const url = getUrl()
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
       setTimeout(() => setCopied(false), 2500)
     } catch {
-      // Fallback for older browsers
       const el = document.createElement("input")
       el.value = url
       document.body.appendChild(el)
@@ -35,32 +34,35 @@ export function ShareButtons({ title, slug, category }: ShareButtonsProps) {
     }
   }
 
+  const encodedTitle = encodeURIComponent(title)
+  const getEncodedUrl = () => encodeURIComponent(getUrl())
+
   const shareLinks = [
     {
       id: "twitter",
       label: "X / Twitter",
-      href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+      get href() { return `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${getEncodedUrl()}` },
       icon: Twitter,
       color: "hover:bg-black hover:text-white hover:border-black",
     },
     {
       id: "whatsapp",
       label: "WhatsApp",
-      href: `https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`,
+      get href() { return `https://api.whatsapp.com/send?text=${encodedTitle}%0A${getEncodedUrl()}` },
       icon: MessageCircle,
       color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]",
     },
     {
       id: "linkedin",
       label: "LinkedIn",
-      href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
+      get href() { return `https://www.linkedin.com/shareArticle?mini=true&url=${getEncodedUrl()}&title=${encodedTitle}` },
       icon: Linkedin,
       color: "hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5]",
     },
     {
       id: "facebook",
       label: "Facebook",
-      href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      get href() { return `https://www.facebook.com/sharer/sharer.php?u=${getEncodedUrl()}` },
       icon: Facebook,
       color: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
     },
