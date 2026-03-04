@@ -36,6 +36,14 @@ export default {
       group: 'manual',
       description: 'Si tienes un link de afiliado, colócalo aquí. Si no, se usará la URL principal.',
     },
+    {
+      name: 'logo',
+      title: '🖼️ Logo de la App (Opcional)',
+      type: 'image',
+      group: 'manual',
+      options: { hotspot: true },
+      description: 'Sube el logo de la app. Si está disponible, reemplaza el ícono de color genérico.',
+    },
 
     // ===== GENERATED FIELDS =====
     {

@@ -51,13 +51,14 @@ export function HeroBanner({ app }: { app: AppToolSanity }) {
           <AppIcon
             category={app.category}
             iconBg={app.iconBg}
+            logoUrl={(app as any).logoUrl}
             size="lg"
           />
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl font-bold text-foreground md:text-4xl text-balance">
               {app.appName}
             </h2>
-            <p className="max-w-xl text-sm text-muted-foreground leading-relaxed md:text-base">
+            <p className="max-w-xl text-base text-zinc-300 leading-relaxed">
               {app.longDescription ? app.longDescription.slice(0, 180) + '...' : app.description}
             </p>
           </div>

@@ -69,7 +69,7 @@ export default async function AppToolsPage() {
               Las Mejores Herramientas de{" "}
               <span className="text-primary">Inteligencia Artificial</span>
             </h1>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground leading-relaxed">
+            <p className="mt-3 max-w-2xl text-base text-zinc-300 leading-relaxed">
               Descubre, compara y elige las mejores apps de IA para potenciar tu
               negocio. Cada herramienta ha sido investigada y analizada para que
               tomes la mejor decisión.

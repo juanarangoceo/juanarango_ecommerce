@@ -99,24 +99,25 @@ export default async function AppToolDetailPage(
         {/* ===== MAIN CONTENT ===== */}
         <div className="lg:col-span-2 flex flex-col gap-10">
           {/* Header */}
-          <header className="flex items-start gap-4">
+          <header className="flex items-start gap-5">
             <AppIcon
               category={app.category}
               iconBg={app.iconBg}
+              logoUrl={(app as any).logoUrl}
               size="lg"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
+              <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
                 {app.appName}
               </h1>
               <div className="flex items-center gap-2 flex-wrap">
                 <PricingBadge pricing={app.pricing} />
-                <span className="rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-muted-foreground">
+                <span className="rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-zinc-300">
                   {getCategoryLabel(app.category)}
                 </span>
               </div>
               {app.rating && <StarRating rating={app.rating} className="mt-1" />}
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
+              <p className="text-base text-zinc-300 leading-relaxed max-w-xl">
                 {app.description}
               </p>
             </div>
@@ -125,10 +126,10 @@ export default async function AppToolDetailPage(
           {/* Long Description */}
           {app.longDescription && (
             <section>
-              <h2 className="text-lg font-semibold text-foreground mb-3">
+              <h2 className="text-xl font-semibold text-foreground mb-4">
                 ¿Qué es {app.appName}?
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+              <p className="text-base text-zinc-300 leading-relaxed whitespace-pre-line">
                 {app.longDescription}
               </p>
             </section>
@@ -137,17 +138,17 @@ export default async function AppToolDetailPage(
           {/* Features */}
           {app.features && app.features.length > 0 && (
             <section>
-              <h2 className="text-lg font-semibold text-foreground mb-3">
+              <h2 className="text-xl font-semibold text-foreground mb-4">
                 Funcionalidades Principales
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {app.features.map((feature, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-2.5 rounded-lg border border-border bg-card p-3"
+                    className="flex items-start gap-3 rounded-lg border border-border bg-card p-4"
                   >
-                    <CheckCircle className="mt-0.5 size-4 shrink-0 text-primary" />
-                    <p className="text-sm text-muted-foreground">{feature}</p>
+                    <CheckCircle className="mt-0.5 size-5 shrink-0 text-primary" />
+                    <p className="text-base text-zinc-200">{feature}</p>
                   </div>
                 ))}
               </div>
@@ -160,16 +161,16 @@ export default async function AppToolDetailPage(
               {/* Pros */}
               {app.pros?.length > 0 && (
                 <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5">
-                  <h3 className="mb-3 font-semibold text-emerald-400">
+                  <h3 className="mb-4 font-semibold text-emerald-400 text-lg">
                     Ventajas
                   </h3>
-                  <ul className="flex flex-col gap-2">
+                  <ul className="flex flex-col gap-3">
                     {app.pros.map((pro, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                        className="flex items-start gap-2.5 text-base text-zinc-200"
                       >
-                        <CheckCircle className="mt-0.5 size-3.5 shrink-0 text-emerald-400" />
+                        <CheckCircle className="mt-0.5 size-4 shrink-0 text-emerald-400" />
                         {pro}
                       </li>
                     ))}
@@ -180,16 +181,16 @@ export default async function AppToolDetailPage(
               {/* Cons */}
               {app.cons?.length > 0 && (
                 <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-5">
-                  <h3 className="mb-3 font-semibold text-rose-400">
+                  <h3 className="mb-4 font-semibold text-rose-400 text-lg">
                     Desventajas
                   </h3>
-                  <ul className="flex flex-col gap-2">
+                  <ul className="flex flex-col gap-3">
                     {app.cons.map((con, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                        className="flex items-start gap-2.5 text-base text-zinc-200"
                       >
-                        <XCircle className="mt-0.5 size-3.5 shrink-0 text-rose-400" />
+                        <XCircle className="mt-0.5 size-4 shrink-0 text-rose-400" />
                         {con}
                       </li>
                     ))}

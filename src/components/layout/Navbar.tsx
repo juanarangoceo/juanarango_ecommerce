@@ -26,13 +26,13 @@ function ZapSolidGreen({ className }: { className?: string }) {
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
   { href: "/soluciones/nitro-commerce", label: "Nitro Commerce" },
+  { href: "/shopify", label: "Shopify" },
 ]
 
 const negociosLinks = [
   { href: "/soluciones/clinicas", label: "Clínicas" },
   { href: "/soluciones/nitro-inmobiliaria", label: "Nitro Inmobiliaria" },
   { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
-  { href: "/shopify", label: "Shopify" },
 ]
 
 const guiasLinks = [
@@ -74,80 +74,35 @@ function NavIconLink({ href, label, green = false, children }: {
   )
 }
 
-export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
-  const [isNegociosOpen, setIsNegociosOpen] = useState(false)
-  const [isGuiasOpen, setIsGuiasOpen] = useState(false)
-  const servicesTimeout = useRef<NodeJS.Timeout | null>(null)
-  const negociosTimeout = useRef<NodeJS.Timeout | null>(null)
-  const guiasTimeout = useRef<NodeJS.Timeout | null>(null)
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-    setIsServicesOpen(false)
-    setIsNegociosOpen(false)
-    setIsGuiasOpen(false)
-  }
-
-  // Desktop dropdown hover handlers
-  const handleServicesEnter = () => {
-    if (servicesTimeout.current) clearTimeout(servicesTimeout.current)
-    setIsServicesOpen(true)
-  }
-  const handleServicesLeave = () => {
-    servicesTimeout.current = setTimeout(() => setIsServicesOpen(false), 150)
-  }
-  const handleNegociosEnter = () => {
-    if (negociosTimeout.current) clearTimeout(negociosTimeout.current)
-    setIsNegociosOpen(true)
-  }
-  const handleNegociosLeave = () => {
-    negociosTimeout.current = setTimeout(() => setIsNegociosOpen(false), 150)
-  }
-  const handleGuiasEnter = () => {
-    if (guiasTimeout.current) clearTimeout(guiasTimeout.current)
-    setIsGuiasOpen(true)
-  }
-  const handleGuiasLeave = () => {
-    guiasTimeout.current = setTimeout(() => setIsGuiasOpen(false), 150)
-  }
-
-  useEffect(() => {
-    return () => {
-      if (servicesTimeout.current) clearTimeout(servicesTimeout.current)
-      if (negociosTimeout.current) clearTimeout(negociosTimeout.current)
-      if (guiasTimeout.current) clearTimeout(guiasTimeout.current)
-    }
-  }, [])
-
-  // Reusable desktop dropdown component
-  const DesktopDropdown = ({ label, links, isOpen, onEnter, onLeave, onToggle }: {
-    label: string
-    links: { href: string; label: string }[]
-    isOpen: boolean
-    onEnter: () => void
-    onLeave: () => void
-    onToggle: () => void
-  }) => (
+// ─── Desktop Dropdown ─── (outside Navbar to avoid re-mount on every render)
+function DesktopDropdown({ label, links, isOpen, onEnter, onLeave, onToggle, onClose }: {
+  label: string
+  links: { href: string; label: string }[]
+  isOpen: boolean
+  onEnter: () => void
+  onLeave: () => void
+  onToggle: () => void
+  onClose: () => void
+}) {
+  return (
     <div className="relative" onMouseEnter={onEnter} onMouseLeave={onLeave}>
       <button
         className="flex items-center gap-1 text-white hover:text-primary transition-colors font-medium"
         onClick={onToggle}
+        aria-expanded={isOpen}
       >
         {label}
         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
       {isOpen && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 min-w-[220px]">
-          <div className="bg-black/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-2xl shadow-primary/5 overflow-hidden">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 min-w-[220px] z-50">
+          <div className="bg-zinc-950 border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
             {links.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={closeMenu}
-                className={`block px-5 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all ${
+                onClick={onClose}
+                className={`block px-5 py-3 text-sm font-medium text-zinc-200 hover:text-primary hover:bg-primary/5 transition-all ${
                   i < links.length - 1 ? "border-b border-white/5" : ""
                 }`}
               >
@@ -159,18 +114,22 @@ export function Navbar() {
       )}
     </div>
   )
+}
 
-  // Reusable mobile accordion component
-  const MobileAccordion = ({ label, links, isOpen, onToggle }: {
-    label: string
-    links: { href: string; label: string }[]
-    isOpen: boolean
-    onToggle: () => void
-  }) => (
+// ─── Mobile Accordion ─── (outside Navbar to avoid re-mount on every render)
+function MobileAccordion({ label, links, isOpen, onToggle, onClose }: {
+  label: string
+  links: { href: string; label: string }[]
+  isOpen: boolean
+  onToggle: () => void
+  onClose: () => void
+}) {
+  return (
     <>
       <button
-        className="flex items-center justify-between text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5 w-full text-left"
+        className="flex items-center justify-between text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 w-full text-left"
         onClick={onToggle}
+        aria-expanded={isOpen}
       >
         {label}
         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
@@ -181,8 +140,8 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="block text-base text-muted-foreground/70 hover:text-primary transition-colors py-2 pl-3 border-l-2 border-primary/20 hover:border-primary"
-              onClick={closeMenu}
+              className="block text-base text-zinc-300 hover:text-primary transition-colors py-2 pl-3 border-l-2 border-primary/20 hover:border-primary"
+              onClick={onClose}
             >
               {link.label}
             </Link>
@@ -191,13 +150,42 @@ export function Navbar() {
       )}
     </>
   )
+}
+
+export function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<"services" | "negocios" | "guias" | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const closeAll = () => {
+    setIsMenuOpen(false)
+    setOpenDropdown(null)
+  }
+
+  const clearTimer = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+  }
+
+  const scheduleClose = () => {
+    clearTimer()
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150)
+  }
+
+  const openMenu = (which: "services" | "negocios" | "guias") => {
+    clearTimer()
+    setOpenDropdown(which)
+  }
+
+  useEffect(() => {
+    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }
+  }, [])
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-2xl border-b border-white/[0.08] transition-all">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-white/[0.05]" />
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
+          <Link href="/" className="flex items-center gap-2" onClick={closeAll}>
             <div className="text-2xl font-bold tracking-tight">
               <span className="text-primary">NITRO</span>
               <span className="text-foreground"> ECOM</span>
@@ -214,42 +202,33 @@ export function Navbar() {
             </Link>
 
             <DesktopDropdown
-              label="Servicios Headless"
+              label="Servicios Nitro"
               links={serviceLinks}
-              isOpen={isServicesOpen}
-              onEnter={handleServicesEnter}
-              onLeave={handleServicesLeave}
-              onToggle={() => {
-                setIsServicesOpen(!isServicesOpen)
-                setIsNegociosOpen(false)
-                setIsGuiasOpen(false)
-              }}
+              isOpen={openDropdown === "services"}
+              onEnter={() => openMenu("services")}
+              onLeave={scheduleClose}
+              onToggle={() => setOpenDropdown(openDropdown === "services" ? null : "services")}
+              onClose={closeAll}
             />
 
             <DesktopDropdown
               label="Nitro Negocios"
               links={negociosLinks}
-              isOpen={isNegociosOpen}
-              onEnter={handleNegociosEnter}
-              onLeave={handleNegociosLeave}
-              onToggle={() => {
-                setIsNegociosOpen(!isNegociosOpen)
-                setIsServicesOpen(false)
-                setIsGuiasOpen(false)
-              }}
+              isOpen={openDropdown === "negocios"}
+              onEnter={() => openMenu("negocios")}
+              onLeave={scheduleClose}
+              onToggle={() => setOpenDropdown(openDropdown === "negocios" ? null : "negocios")}
+              onClose={closeAll}
             />
 
             <DesktopDropdown
               label="Guías"
               links={guiasLinks}
-              isOpen={isGuiasOpen}
-              onEnter={handleGuiasEnter}
-              onLeave={handleGuiasLeave}
-              onToggle={() => {
-                setIsGuiasOpen(!isGuiasOpen)
-                setIsServicesOpen(false)
-                setIsNegociosOpen(false)
-              }}
+              isOpen={openDropdown === "guias"}
+              onEnter={() => openMenu("guias")}
+              onLeave={scheduleClose}
+              onToggle={() => setOpenDropdown(openDropdown === "guias" ? null : "guias")}
+              onClose={closeAll}
             />
 
             {/* Icon-only links with custom tooltips — desktop only */}
@@ -268,21 +247,21 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeMenu}>
+            <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeAll}>
               <Home className="w-5 h-5" />
             </Link>
-            <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeMenu}>
+            <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeAll}>
               <GraduationCap className="w-5 h-5" />
             </Link>
-            <Link href="/academia" className="hidden sm:inline-flex" onClick={closeMenu}>
+            <Link href="/academia" className="hidden sm:inline-flex" onClick={closeAll}>
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
                 <GraduationCap className="w-4 h-4" />
                 Academia
               </Button>
             </Link>
-            <button 
+            <button
               className="md:hidden text-white hover:text-primary p-1"
-              onClick={toggleMenu}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -296,48 +275,39 @@ export function Navbar() {
         <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border/50 shadow-2xl animate-in slide-in-from-top-5 max-h-[85vh] overflow-y-auto">
           <div className="flex flex-col p-6 space-y-1">
             <MobileAccordion
-              label="Servicios Headless"
+              label="Servicios Nitro"
               links={serviceLinks}
-              isOpen={isServicesOpen}
-              onToggle={() => {
-                setIsServicesOpen(!isServicesOpen)
-                setIsNegociosOpen(false)
-                setIsGuiasOpen(false)
-              }}
+              isOpen={openDropdown === "services"}
+              onToggle={() => setOpenDropdown(openDropdown === "services" ? null : "services")}
+              onClose={closeAll}
             />
             <MobileAccordion
               label="Nitro Negocios"
               links={negociosLinks}
-              isOpen={isNegociosOpen}
-              onToggle={() => {
-                setIsNegociosOpen(!isNegociosOpen)
-                setIsServicesOpen(false)
-                setIsGuiasOpen(false)
-              }}
+              isOpen={openDropdown === "negocios"}
+              onToggle={() => setOpenDropdown(openDropdown === "negocios" ? null : "negocios")}
+              onClose={closeAll}
             />
             <MobileAccordion
               label="Guías"
               links={guiasLinks}
-              isOpen={isGuiasOpen}
-              onToggle={() => {
-                setIsGuiasOpen(!isGuiasOpen)
-                setIsServicesOpen(false)
-                setIsNegociosOpen(false)
-              }}
+              isOpen={openDropdown === "guias"}
+              onToggle={() => setOpenDropdown(openDropdown === "guias" ? null : "guias")}
+              onClose={closeAll}
             />
-            <Link href="/#contacto" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+            <Link href="/#contacto" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               Contacto
             </Link>
-            <Link href="/app-tools" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+            <Link href="/app-tools" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               IA Apps
             </Link>
-            <Link href="/comparar" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+            <Link href="/comparar" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               Comparativas
             </Link>
-            <Link href="/blog" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeMenu}>
+            <Link href="/blog" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               Blog
             </Link>
-            <Link href="/academia" onClick={closeMenu}>
+            <Link href="/academia" onClick={closeAll}>
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4 gap-2">
                 <GraduationCap className="w-4 h-4" />
                 Academia

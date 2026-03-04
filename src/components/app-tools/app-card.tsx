@@ -22,7 +22,7 @@ export function AppCard({
       )}
     >
       <div className="flex items-start justify-between gap-2">
-        <AppIcon category={app.category} iconBg={app.iconBg} size="md" />
+        <AppIcon category={app.category} iconBg={app.iconBg} logoUrl={(app as any).logoUrl} size="md" />
         <PricingBadge pricing={app.pricing} className="shrink-0" />
       </div>
 
@@ -33,7 +33,7 @@ export function AppCard({
         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-balance text-lg line-clamp-1">
           {app.appName}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+        <p className="text-sm text-zinc-300 line-clamp-2 leading-relaxed">
           {app.description}
         </p>
       </div>
@@ -45,7 +45,7 @@ export function AppCard({
         
         {app.priceDetail && (
           <div className="flex items-center justify-end">
-            <span className="text-xs font-medium text-muted-foreground text-right w-full">
+            <span className="text-sm font-medium text-zinc-400 text-right w-full">
               {app.priceDetail}
             </span>
           </div>

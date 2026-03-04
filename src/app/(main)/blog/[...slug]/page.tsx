@@ -730,6 +730,12 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                      )}
 
                     <div className="mt-12 mb-12">
+                      {/* Share Buttons */}
+                      <ShareButtons
+                        title={post.title}
+                        slug={post.slug}
+                        category={post.category}
+                      />
                       <NewsletterForm />
                     </div>
 
@@ -796,21 +802,6 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                         {/* High Converting CTA - Second */}
                         <NitroCtaCard />
 
-                        <div>
-                            {post.affiliateBanner && (
-                                <div className="mb-8">
-                                    <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Recomendado</h4>
-                                    <AffiliateBanner 
-                                        title={post.affiliateBanner.title} 
-                                        image={post.affiliateBanner.image} 
-                                        url={post.affiliateBanner.url} 
-                                    />
-                                </div>
-                            )}
-
-                            <h4 className="font-bold text-sm uppercase tracking-wider text-zinc-500 mb-4">Compartir</h4>
-                            <ShareButtons title={post.title} slug={post.slug} category={post.category} />
-                         </div>
                     </div>
                 </aside>
 

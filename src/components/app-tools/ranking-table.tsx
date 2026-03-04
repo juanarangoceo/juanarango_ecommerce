@@ -91,13 +91,14 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                         <AppIcon
                           category={app.category}
                           iconBg={app.iconBg}
+                          logoUrl={(app as any).logoUrl}
                           size="sm"
                         />
                         <div className="min-w-0">
                           <p className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                             {app.appName}
                           </p>
-                          <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                          <p className="text-sm text-zinc-400 line-clamp-2 mt-0.5">
                             {app.description}
                           </p>
                         </div>
@@ -124,7 +125,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
                       <div className="flex flex-col gap-0.5">
                         <PricingBadge pricing={app.pricing} />
                         {app.priceDetail && (
-                          <span className="text-[10px] text-muted-foreground">
+                          <span className="text-xs text-zinc-400">
                             {app.priceDetail}
                           </span>
                         )}
@@ -160,7 +161,7 @@ export function RankingTable({ apps }: { apps: AppToolSanity[] }) {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-zinc-400">
             Mostrando {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredApps.length)} de {filteredApps.length} apps
           </p>
           <div className="flex items-center gap-1">

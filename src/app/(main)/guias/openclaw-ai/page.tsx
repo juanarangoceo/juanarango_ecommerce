@@ -11,6 +11,8 @@ import { OpenClawSidebar } from "./_components/OpenClawSidebar"
 import { OpenClawCodeBlock } from "./_components/OpenClawCodeBlock"
 import { OpenClawInstallationTabs } from "./_components/OpenClawInstallationTabs"
 import { OpenClawFAQ } from "./_components/OpenClawFAQ"
+import { LatestNewsColumn } from "../_components/LatestNewsColumn"
+import { client } from "@/sanity/lib/client"
 import { constructMetadata } from "@/lib/utils"
 
 export const metadata: Metadata = constructMetadata({
@@ -24,6 +26,24 @@ export const metadata: Metadata = constructMetadata({
 // Primary accent : #e05a3a (coral/red)
 // Dark bg        : #070303 / #0a0505
 // Emerald accent : #10b981 (for code/success states)
+
+const OPENCLAW_POSTS_QUERY = `
+  *[_type == "post" && (
+    "openclaw" in tags[] ||
+    "openclaw-ai" in tags[] ||
+    "agentes-ia" in tags[] ||
+    "ia-automatizacion" in tags[] ||
+    "inteligencia-artificial" in tags[]
+  ) && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    _createdAt,
+    mainImage,
+    excerpt
+  }
+`;
 
 export const revalidate = 86400 // 24h
 
@@ -62,7 +82,9 @@ function StepNumber({ n }: { n: number }) {
   )
 }
 
-export default function OpenClawGuidePage() {
+export default async function OpenClawGuidePage() {
+  const posts = await client.fetch<any[]>(OPENCLAW_POSTS_QUERY);
+
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -83,12 +105,12 @@ export default function OpenClawGuidePage() {
       />
 
       <div className="min-h-screen bg-[#070303] text-white">
-        <div className="flex md:flex-row flex-col">
+        <div className="flex md:flex-row flex-col max-w-[1600px] mx-auto relative content-start">
           {/* ─── Sidebar (Client Island) ─── */}
           <OpenClawSidebar />
 
           {/* ─── Main Content (Server) ─── */}
-          <main className="flex-1 px-5 md:px-12 lg:px-20 py-10 md:py-14 max-w-5xl mx-auto w-full">
+          <main className="flex-1 px-5 lg:px-12 py-10 md:py-14 w-full xl:max-w-4xl min-w-0">
             <article className="space-y-28">
 
               {/* ── HERO ── */}
@@ -498,8 +520,29 @@ ALLOW_SHELL_EXECUTION=true`}
                 </div>
               </section>
 
+              {/* Mobile Latest News Column */}
+              <div className="xl:hidden pb-24">
+                <LatestNewsColumn 
+                  posts={posts} 
+                  tagLink="/blog/tags/openclaw" 
+                  theme="dark"
+                />
+              </div>
+
             </article>
           </main>
+
+          {/* ─── Right Sidebar (Latest News) - Desktop Only ─── */}
+          <aside className="hidden xl:block w-[320px] shrink-0 py-14 pr-8">
+            <div className="sticky top-28">
+              <LatestNewsColumn 
+                posts={posts} 
+                tagLink="/blog/tags/openclaw" 
+                theme="dark"
+              />
+            </div>
+          </aside>
+
         </div>
       </div>
     </>

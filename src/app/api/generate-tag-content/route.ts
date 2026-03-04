@@ -25,26 +25,35 @@ export async function POST(req: Request) {
       contents: [{
         role: "user",
         parts: [{
-          text: `Eres un experto en SEO y Marketing Digita para Ecommerce. 
-          Genera una estructura de contenido "MegaPro" para la etiqueta: "${tag}".
+          text: `Eres un experto en SEO y creación de contenido para la marca Nitro Ecom (blog de Juan Arango), 
+          que cubre temas de ecommerce, inteligencia artificial, automatización, marketing digital, herramientas de productividad, 
+          shopify, estrategia de negocios digitales y más.
+
+          Tu estilo es: profesional pero cercano, directo, orientado a la acción, sin relleno, con autoridad real en el tema.
+          Jamás uses frases genéricas como "en el mundo digital de hoy" o "en este artículo exploraremos".
+
+          Genera una estructura de contenido SEO de alto impacto para la etiqueta/tema: "${tag}".
+
+          Detecta automáticamente el tema real de "${tag}" (puede ser IA, shopify, marketing, automatización, SEO, prompts, ecommerce, etc.)
+          y adapta TODO el contenido a ese tema específico. NO asumas que siempre es sobre ecommerce.
 
           IMPORTANTE: Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 5 claves:
-          
-          1. "h1": Un Título H1 optimizado (ej: "Guía Completa de ${tag} para Ecommerce").
-          2. "description": Un artículo en MARKDOWN (NO HTML) de 300-400 palabras. Estructura:
-             - H2 inicial (Intro)
-             - Párrafos de valor
-             - Lista con bullet points
-             - H2 secundario (Beneficios/Usos)
-             - Conclusión breve
-             - USA NEGRITAS para keywords.
-          3. "faq": Un array de 3 objetos exactamente: [{"question": "...", "answer": "..."}].
-             - Preguntas reales que la gente busca en Google sobre "${tag}".
-             - Respuestas directas y útiles (40-60 palabras).
-          4. "seoTitle": Título SEO (Title Tag) < 60 caracteres.
-          5. "seoDescription": Meta description < 155 caracteres.
 
-          NO incluyas "markdown" u otros textos fuera del JSON. Solo el objeto puro.`
+          1. "h1": Título H1 optimizado para SEO. Debe ser específico al tema de "${tag}", atractivo, con intención de búsqueda clara. Máx 65 chars.
+          2. "description": Artículo en MARKDOWN (NO HTML) de 350-450 palabras. Estructura:
+             - H2 de intro (contextualiza el tema sin clichés)
+             - 2-3 párrafos de valor real con perspectiva experta
+             - Lista con bullet points (mínimo 4 puntos accionables)
+             - H2 secundario (beneficios, casos de uso, o estrategias según aplique al tema)
+             - Párrafo de cierre con llamado sutil a explorar más contenido de Nitro Ecom
+             - USA **NEGRITAS** para conceptos clave importantes.
+          3. "faq": Array de exactamente 3 objetos: [{"question": "...", "answer": "..."}].
+             - Preguntas reales que la gente busca en Google sobre "${tag}" específicamente.
+             - Respuestas directas, útiles, sin relleno (40-70 palabras por respuesta).
+          4. "seoTitle": Title Tag SEO < 60 caracteres. Orientado al tema real de "${tag}". Incluye la keyword principal.
+          5. "seoDescription": Meta description < 155 caracteres. Persuasiva, con la keyword y un call to action implícito.
+
+          NO incluyas texto ni markdown fuera del JSON. Solo el objeto JSON puro.`
         }]
       }],
       config: { 
@@ -72,8 +81,11 @@ export async function POST(req: Request) {
     const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
     const rawData = JSON.parse(cleanJson);
     
+    // Include all 5 fields (h1, description, faq, seoTitle, seoDescription)
     const tagData = {
+        h1: rawData.h1 || "",
         description: rawData.description || "",
+        faq: rawData.faq || [],
         seoTitle: rawData.seoTitle || "",
         seoDescription: rawData.seoDescription || "",
     };

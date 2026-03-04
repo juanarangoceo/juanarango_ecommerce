@@ -2,25 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, LayoutGrid } from "lucide-react"
-
-/** Rayito morado — solo bordeado (estilo outline), para Prompts */
-function ZapOutlinePurple({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-    </svg>
-  )
-}
+import { Home, LayoutGrid, Terminal } from "lucide-react"
 
 /** Rayito verde — relleno con cuerpo, para Blog */
 function ZapSolidGreen({ className }: { className?: string }) {
@@ -74,16 +56,15 @@ export function MobileBottomNav() {
           <span className="text-[10px] font-medium">Apps</span>
         </Link>
 
-        {/* 3. Prompts — rayito morado bordeado */}
+        {/* 3. Prompts */}
         <Link
           href="/blog/prompts"
           prefetch={false}
           className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-            isActive("/blog/prompts") ? "scale-110" : "hover:opacity-80"
+            isActive("/blog/prompts") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
           }`}
-          style={{ color: isActive("/blog/prompts") ? "#a855f7" : "rgba(168,85,247,0.6)" }}
         >
-          <ZapOutlinePurple className="w-6 h-6" />
+          <Terminal className="w-6 h-6" />
           <span className="text-[10px] font-medium">Prompts</span>
         </Link>
 
