@@ -70,11 +70,11 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
             <Zap className="w-5 h-5 text-emerald-500" />
             Galería de Prompts
           </h2>
-          <p className="text-muted-foreground text-sm mt-1">Copia y pega estos comandos para obtener resultados increíbles.</p>
+          <p className="text-zinc-400 text-sm mt-1">Copia y pega estos comandos para obtener resultados increíbles.</p>
         </div>
         
-        {/* Navigation Controls */}
-        <div className="flex items-center gap-2">
+        {/* Navigation Controls — only visible on desktop */}
+        <div className="hidden sm:flex items-center gap-2">
           <Button
             variant="outline"
             size="icon"
@@ -96,22 +96,25 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
         </div>
       </div>
 
-      {/* Required for fade edges */}
-      <div className="relative group">
-        {/* Left Fade */}
-        <div className={`absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none transition-opacity duration-300 ${canScrollLeft ? 'opacity-100' : 'opacity-0'}`} />
+      {/* Carousel wrapper — overflow-hidden clips the scroll container but we use padding to show peek */}
+      <div className="relative">
+        {/* Left Fade — desktop only, shows when scrolled right */}
+        <div className={`hidden sm:block absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none transition-opacity duration-300 ${canScrollLeft ? 'opacity-100' : 'opacity-0'}`} />
         
         {/* Carousel Container */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 snap-x snap-mandatory hide-scrollbar relative"
+          className="flex overflow-x-auto gap-4 sm:gap-6 pb-6 pt-2 snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
+          {/* Left spacer on mobile for visual alignment */}
+          <div className="shrink-0 w-2 sm:w-0" aria-hidden="true" />
+
           {prompts.map((item, index) => (
             <div 
               key={item._id} 
-              className="snap-start shrink-0 w-[280px] md:w-[320px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden flex flex-col group/card hover:border-zinc-700 transition-colors"
+              className="snap-start shrink-0 w-[82vw] sm:w-[280px] md:w-[320px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden flex flex-col group/card hover:border-zinc-700 transition-colors"
             >
               <div className="relative aspect-square w-full bg-zinc-800 overflow-hidden">
                 {item.imageUrl ? (
@@ -119,7 +122,7 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
                     src={item.imageUrl}
                     alt={item.title}
                     fill
-                    sizes="(max-width: 768px) 280px, 320px"
+                    sizes="(max-width: 640px) 82vw, (max-width: 768px) 280px, 320px"
                     priority={index < 2}
                     className="object-cover group-hover/card:scale-105 transition-transform duration-500"
                   />
@@ -135,8 +138,6 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
               <div className="p-4 flex flex-col">
                 <h3 className="font-semibold text-zinc-200 mb-3">{item.title}</h3>
                 
-                {/* Fixed-height scrollable prompt — never deforms the card */}
-                {/* Fixed-height scrollable prompt — never deforms the card */}
                 <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg flex flex-col">
                   <div className="overflow-y-auto h-[100px] p-3 prompt-scrollbar">
                     <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
@@ -144,7 +145,6 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
                     </p>
                   </div>
                   
-                  {/* Copy button repositioned at the bottom of the prompt area */}
                   <div className="border-t border-zinc-800/50 p-2 flex justify-end bg-zinc-900/40">
                     <button
                       onClick={() => handleCopy(item._id, item.prompt)}
@@ -168,10 +168,15 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
               </div>
             </div>
           ))}
+
+          {/* Right spacer — gives breathing room and makes peek more visible */}
+          <div className="shrink-0 w-2 sm:w-0" aria-hidden="true" />
         </div>
 
-        {/* Right Fade */}
-        <div className={`absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none transition-opacity duration-300 ${canScrollRight ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Swipe hint — mobile only, fades after first scroll */}
+        <p className={`sm:hidden text-center text-[11px] text-zinc-500 mt-1 transition-opacity duration-500 ${canScrollLeft ? 'opacity-0' : 'opacity-100'}`}>
+          ← Desliza para ver más →
+        </p>
       </div>
 
     </div>
