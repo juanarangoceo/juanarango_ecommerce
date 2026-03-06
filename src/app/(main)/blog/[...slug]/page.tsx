@@ -33,6 +33,7 @@ import { AffiliateBanner } from "@/components/blog/affiliate-banner";
 import { BlogAudioPlayer } from "@/components/blog/blog-audio-player";
 import { AdvertisingBanner } from "@/components/blog/advertising-banner";
 import { PromptGallery } from "@/components/blog/prompt-gallery";
+import { FeaturedPromoBlock } from "@/components/blog/FeaturedPromoBlock";
 
 // ========== CONFIGURATION ==========
 
@@ -77,6 +78,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   faq,
   youtubeVideo,
   affiliateBanner,
+  featuredPromoBlock,
   category,
   tags,
   "audio": *[_type == "audioResource" && post._ref == ^._id][0] {
@@ -738,6 +740,11 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                       />
                       <NewsletterForm />
                     </div>
+
+                    {/* Featured Promo Block — solo si está configurado en Sanity */}
+                    {post.featuredPromoBlock && (
+                      <FeaturedPromoBlock block={post.featuredPromoBlock} />
+                    )}
 
                     {/* Related Posts - Category-aware */}
                      {((post.relatedPosts && post.relatedPosts.length > 0) || (post.fallbackPosts && post.fallbackPosts.length > 0)) && (

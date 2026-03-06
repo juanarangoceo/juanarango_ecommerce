@@ -60,45 +60,51 @@ export const GeneratePostInput = (props: any) => {
           throw new Error(`Contenido generado insuficiente (${content?.length || 0} chars).`)
       }
 
-      // 3. UPDATE SANITY DOCUMENT & CREATE TAGS
-      const tagsData = json.data.tags || []
-      const tagSlugs: string[] = []
-
-      // Create missing tags (Fire & Forget for user experience, but await for consistency)
-      // Since we are in Studio, we have write permissions via useClient
-      toast.push({ title: "Procesando etiquetas...", status: 'info' })
-      
-      for (const tag of tagsData) {
-          if (!tag.slug) continue
-          
-          tagSlugs.push(tag.slug)
-
-          // Try to create the tag document if it doesn't exist
-          try {
-              // Deterministic ID based on slug to avoid duplicates
-              const tagDocId = `tag-${tag.slug}`
-              await client.createIfNotExists({
-                  _id: tagDocId,
-                  _type: 'tag',
-                  name: tag.name, // "Next.js"
-                  slug: { _type: 'slug', current: tag.slug }, // "next-js"
-                  // description: Left empty for now as requested
-              })
-          } catch (err) {
-              console.error("Error creating tag:", tag.name, err)
-              // Continue even if tag creation fails, we still want to save the post
-          }
-      }
-
-      // Helper to sanitize slug
+      // Helper to sanitize slug — garantiza slugs limpios aunque la IA devuelva formato inesperado
       const sanitizeSlug = (text: string) => {
           return text
               .toString()
               .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with -
-              .replace(/(^-|-$)/g, '')     // Remove leading/trailing -
-              .slice(0, 96)                // Limit length
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')    // quita acentos
+              .replace(/[^a-z0-9]+/g, '-')        // chars inválidos → guiones
+              .replace(/(^-|-$)/g, '')             // sin guiones al inicio/final
+              .slice(0, 96)
       }
+
+      // 3. UPDATE SANITY DOCUMENT & CREATE TAGS
+      const tagsData = json.data.tags || []
+
+      // Filtra tags inválidos antes de procesar
+      const validTags = tagsData.filter((tag: any) => {
+          const name = (tag?.name || '').trim()
+          const slug = sanitizeSlug(tag?.slug || tag?.name || '')
+          return name.length > 0 && slug.length > 0
+      })
+
+      const tagSlugs: string[] = validTags.map((tag: any) =>
+          sanitizeSlug(tag.slug || tag.name)
+      )
+
+      // Crea los documentos de tag en paralelo — si alguno falla el resto continúa
+      toast.push({ title: "Procesando etiquetas...", status: 'info' })
+      await Promise.allSettled(
+          validTags.map(async (tag: any) => {
+              const cleanSlug = sanitizeSlug(tag.slug || tag.name)
+              const cleanName = (tag.name || tag.slug || '').trim()
+              const tagDocId = `tag-${cleanSlug}`
+              try {
+                  await client.createIfNotExists({
+                      _id: tagDocId,
+                      _type: 'tag',
+                      name: cleanName,
+                      slug: { _type: 'slug', current: cleanSlug },
+                  })
+              } catch (err) {
+                  console.warn(`⚠️ Tag "${cleanName}" no se pudo crear (no bloquea):`, err)
+              }
+          })
+      )
 
       const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
 
@@ -107,10 +113,15 @@ export const GeneratePostInput = (props: any) => {
           title: title || currentTopic,
           slug: { _type: 'slug', current: finalSlug },
           content: content,
-          faq: json.data.faq || [],
+          // Sanity requiere _key único por cada item del array para renderizarlos en Studio
+          faq: (json.data.faq || []).map((item: any, index: number) => ({
+              _key: `faq-${index}-${Date.now()}`,
+              question: item.question || '',
+              answer: item.answer || '',
+          })),
           author: "Juan Arango",
           category: json.data.category || 'ecommerce',
-          tags: tagSlugs, // Now saving normalized slugs ["next-js"]
+          tags: tagSlugs,
       }
 
       // Also update the current field (Topic) in the form state

@@ -136,6 +136,47 @@ export default {
       ]
     },
     {
+      name: 'featuredPromoBlock',
+      title: '🚀 Bloque de Recomendación Destacada',
+      type: 'object',
+      description: 'Aparece al final del post (después de compartir en redes). Solo se muestra si tiene imagen configurada.',
+      fields: [
+        {
+          name: 'image',
+          title: 'Imagen del Bloque',
+          type: 'image',
+          options: { hotspot: true },
+          description: 'Imagen principal del bloque. Opcional: si no se sube, el bloque no aparece.',
+        },
+        {
+          name: 'title',
+          title: 'Título del Bloque',
+          type: 'string',
+          description: 'Ej: "¿Listo para llevar tu tienda al siguiente nivel?"',
+        },
+        {
+          name: 'description',
+          title: 'Descripción Corta',
+          type: 'text',
+          rows: 2,
+          description: 'Texto de apoyo visible debajo del título (1-2 líneas).',
+        },
+        {
+          name: 'linkUrl',
+          title: 'URL de Destino',
+          type: 'string',
+          description: 'Ruta interna (ej: /blog, /cursos) o URL externa completa.',
+        },
+        {
+          name: 'linkText',
+          title: 'Texto del Botón CTA',
+          type: 'string',
+          description: 'Ej: "Ver cursos", "Ir al blog", "Conoce más"',
+          initialValue: 'Conoce más',
+        },
+      ],
+    },
+    {
       name: 'faq',
       title: 'FAQ (Preguntas Frecuentes)',
       type: 'array',
