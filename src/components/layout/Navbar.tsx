@@ -232,7 +232,7 @@ export function Navbar() {
           </div>
 
           {/* RIGHT — Academia + mobile controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-end gap-3">
             {/* Mobile only icons */}
             <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeAll}>
               <Home className="w-5 h-5" />

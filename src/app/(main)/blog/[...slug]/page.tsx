@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/image";
-import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag, Zap } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, ArrowRight, ChevronDown, Tag, Zap, Send } from "lucide-react";
 import { BlogProgressBar } from "./_components/BlogProgressBar";
 import { ShareButtons } from "./_components/ShareButtons";
 import { TableOfContents } from "./_components/TableOfContents";
@@ -591,7 +591,33 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
 
                     {/* Mobile Table of Contents - Fixed (Always Visible) */}
                     {post.content && (
-                        <div className="lg:hidden mb-8">
+                        <div className="lg:hidden mb-8 space-y-4">
+                            {/* Telegram CTA Mobile */}
+                            <a 
+                                href="https://t.me/juanarangoecommerce" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group relative overflow-hidden flex items-center justify-between gap-3 w-full p-4 rounded-2xl bg-gradient-to-r from-zinc-50 to-white dark:from-zinc-900 dark:to-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-[#2AABEE]/50 transition-all shadow-[0_2px_10px_-3px_rgba(42,171,238,0.15)] hover:shadow-[0_8px_20px_-6px_rgba(42,171,238,0.25)]"
+                            >
+                                <div className="flex items-center gap-3 relative z-10 w-full">
+                                    <img 
+                                        src="https://res.cloudinary.com/dohwyszdj/image/upload/v1772079994/Telegram_2019_Logo.svg_xtftjk.png" 
+                                        alt="Telegram" 
+                                        loading="lazy"
+                                        className="w-10 h-10 drop-shadow-sm group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+                                    />
+                                    <div className="flex flex-col text-left pr-2">
+                                        <span className="font-bold text-zinc-900 dark:text-white text-[15px] leading-tight mb-0.5">¿Post muy largo?</span>
+                                        <span className="text-[13px] text-zinc-500 dark:text-zinc-400 font-medium leading-snug">Lee el resumen en Telegram</span>
+                                    </div>
+                                </div>
+                                <div className="w-8 h-8 rounded-full bg-[#2AABEE]/10 flex items-center justify-center group-hover:bg-[#2AABEE] transition-colors duration-300 relative z-10 flex-shrink-0">
+                                    <ArrowRight className="w-4 h-4 text-[#2AABEE] group-hover:text-white transition-colors" />
+                                </div>
+                                
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#2AABEE]/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+                            </a>
+                            
                             <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-4">
                                 <TableOfContents toc={parseTOC(post.content)} />
                             </div>
@@ -804,8 +830,36 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                     <div className="sticky top-24 space-y-8">
                         {/* Table of Contents Box - First Priority */}
                          {post.content && (
-                            <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
-                                <TableOfContents toc={parseTOC(post.content)} />
+                            <div className="space-y-4">
+                                {/* Telegram CTA Desktop */}
+                                <a 
+                                    href="https://t.me/juanarangoecommerce" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="group relative overflow-hidden flex items-center justify-between gap-4 w-full p-5 rounded-2xl bg-gradient-to-r from-zinc-50 to-white dark:from-zinc-900 dark:to-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-[#2AABEE]/50 transition-all shadow-[0_2px_10px_-3px_rgba(42,171,238,0.15)] hover:shadow-[0_8px_30px_-6px_rgba(42,171,238,0.25)]"
+                                >
+                                    <div className="flex items-center gap-4 relative z-10">
+                                        <img 
+                                            src="https://res.cloudinary.com/dohwyszdj/image/upload/v1772079994/Telegram_2019_Logo.svg_xtftjk.png" 
+                                            alt="Telegram" 
+                                            loading="lazy"
+                                            className="w-12 h-12 drop-shadow-md group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 flex-shrink-0"
+                                        />
+                                        <div className="flex flex-col text-left">
+                                            <span className="font-bold text-zinc-900 dark:text-white text-base leading-tight mb-1">¿Post muy largo?</span>
+                                            <span className="text-sm text-zinc-500 dark:text-zinc-400 font-medium tracking-tight">Lee el resumen en Telegram</span>
+                                        </div>
+                                    </div>
+                                    <div className="w-9 h-9 rounded-full bg-[#2AABEE]/10 flex items-center justify-center group-hover:bg-[#2AABEE] transition-colors duration-300 relative z-10 flex-shrink-0">
+                                        <ArrowRight className="w-[18px] h-[18px] text-[#2AABEE] group-hover:text-white transition-colors" />
+                                    </div>
+                                    
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#2AABEE]/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+                                </a>
+
+                                <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
+                                    <TableOfContents toc={parseTOC(post.content)} />
+                                </div>
                             </div>
                          )}
 
