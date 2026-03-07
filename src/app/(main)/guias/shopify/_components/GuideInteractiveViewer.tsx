@@ -43,19 +43,9 @@ export default function GuideInteractiveViewer() {
 
       {/* Main Content Wrapper */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Progress Bar (Sticky) */}
-        <div className="sticky top-[72px] lg:top-24 z-20 bg-slate-50/80 backdrop-blur-md border-b border-slate-200">
-          <div className="h-1 bg-slate-200 w-full">
-            <motion.div 
-              className="h-full bg-[#95BF47]"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            />
-          </div>
-          
-          {/* Mobile Header inside sticky area */}
-          <div className="lg:hidden p-4 flex items-center justify-between">
+        {/* Mobile Header (Sticky) */}
+        <div className="sticky top-[72px] z-20 bg-slate-50/80 backdrop-blur-md border-b border-slate-200 lg:hidden">
+          <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 relative shrink-0">
                 <img 

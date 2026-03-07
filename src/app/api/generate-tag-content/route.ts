@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { requireInternalAuth } from "@/lib/api-auth";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // Inicialización de cliente Gemini
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
@@ -11,6 +12,16 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const authError = requireInternalAuth(req);
   if (authError) return authError;
+
+  // Rate limit: 10 requests per 5 minutes per token
+  const token = req.headers.get('Authorization') ?? 'anon';
+  const rl = checkRateLimit(`generate-tag:${token}`, 10, 5 * 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: `Demasiadas solicitudes. Reintenta en ${rl.retryAfter}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
+    );
+  }
 
   try {
     const { tag } = await req.json();

@@ -127,9 +127,10 @@ export const GeneratePostInput = (props: any) => {
       // Also update the current field (Topic) in the form state
       onChange(set(currentTopic))
 
-      // Perform the patch
+      // Perform the patch — always target the draft to avoid overwriting the published doc
+      const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
       toast.push({ title: "Actualizando documento...", status: 'info' })
-      await client.patch(docId).set(attributes).commit()
+      await client.patch(draftId).set(attributes).commit()
 
       // 4. HECHO (No publicar automáticamente)
       toast.push({ 

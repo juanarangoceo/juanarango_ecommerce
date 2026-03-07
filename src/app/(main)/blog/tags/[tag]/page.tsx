@@ -27,7 +27,7 @@ const TAG_DATA_QUERY = `
       seoTitle,
       seoDescription
     },
-    "posts": *[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
+    "posts": *[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current) && !(_id in path("drafts.**"))] | order(coalesce(publishedAt, _createdAt) desc) {
       _id,
       title,
       slug,
@@ -63,7 +63,7 @@ export async function generateMetadata(props: Props) {
         description,
         forzarIndexacion
       },
-      "postCount": count(*[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current)])
+      "postCount": count(*[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current) && !(_id in path("drafts.**"))])
     }
   `, { slug: normalizedSlug, originalName: decodedTag });
 

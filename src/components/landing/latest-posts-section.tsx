@@ -7,6 +7,7 @@ import { client } from "@/sanity/lib/client";
 const LATEST_POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
+  && !(_id in path("drafts.**"))
 ]|order(coalesce(publishedAt, _createdAt) desc)[0...3] {
   _id,
   title,
@@ -33,10 +34,10 @@ export async function LatestPostsSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-4">
             <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-500">
-              Últimas Novedades
+              Lo Último en IA y Ecommerce
             </h2>
             <p className="text-xl text-zinc-400 max-w-2xl text-pretty">
-              Insights estratégicos sobre e-commerce, tecnología y escalamiento digital.
+              Noticias, guías prácticas y estrategias probadas para vender más en internet con tecnología e IA.
             </p>
           </div>
           <Button asChild variant="outline" className="hidden md:flex gap-2 group border-zinc-800 hover:bg-zinc-900 text-zinc-300">

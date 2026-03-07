@@ -75,6 +75,15 @@ export default {
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Texto alternativo (ALT)',
+          type: 'string',
+          description: 'Describe la imagen para accesibilidad y SEO. Ej: "Estrategia de ecommerce con IA para tiendas Shopify"',
+          validation: (Rule: any) => Rule.warning('Agrega un texto ALT para mejorar el SEO.'),
+        },
+      ],
     },
     {
       name: 'publishedAt',

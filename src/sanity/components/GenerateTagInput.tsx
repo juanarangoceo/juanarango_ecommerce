@@ -35,7 +35,10 @@ export const GenerateTagInput = (props: any) => {
       // 1. CALL API
       const res = await fetch('/api/generate-tag-content', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
+        },
         body: JSON.stringify({ tag: tagName }),
       })
       
@@ -65,8 +68,10 @@ export const GenerateTagInput = (props: any) => {
       // But to satisfy the input component requirement, maybe we set a "last generated" timestamp?
       // For now, let's just patch the document fields.
       
+      // Patch always targeting the draft to avoid overwriting the published doc
+      const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
       toast.push({ title: "Actualizando etiqueta...", status: 'info' })
-      await client.patch(docId).set(attributes).commit()
+      await client.patch(draftId).set(attributes).commit()
       
       // Update this field to show done status or timestamp
       onChange(set(new Date().toISOString()))

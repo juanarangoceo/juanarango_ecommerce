@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { syncSanityPosts } from "@/app/actions/sync-posts";
 import { requireInternalAuth } from "@/lib/api-auth";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 
 // Inicialización de cliente Gemini
@@ -14,6 +15,16 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const authError = requireInternalAuth(req);
   if (authError) return authError;
+
+  // Rate limit: 5 requests per 10 minutes per token
+  const token = req.headers.get('Authorization') ?? 'anon';
+  const rl = checkRateLimit(`generate-blog:${token}`, 5, 10 * 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: `Demasiadas solicitudes. Reintenta en ${rl.retryAfter}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
+    );
+  }
 
   try {
     const { topic } = await req.json();

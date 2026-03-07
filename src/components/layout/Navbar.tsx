@@ -2,26 +2,21 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, ChevronDown, GraduationCap, GitCompare, LayoutGrid, MessageCircle } from "lucide-react"
+import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
 
-/** Rayito verde sólido — igual que en MobileBottomNav */
+/** Rayito verde sólido */
 function ZapSolidGreen({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0.5"
+      strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
     </svg>
   )
 }
+
+
 
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
@@ -156,6 +151,7 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<"services" | "negocios" | "guias" | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const pathname = usePathname()
 
   const closeAll = () => {
     setIsMenuOpen(false)
@@ -184,7 +180,8 @@ export function Navbar() {
     <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-2xl border-b border-white/[0.08] transition-all">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-white/[0.05]" />
       <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+          {/* LEFT — Logo */}
           <Link href="/" className="flex items-center gap-2" onClick={closeAll}>
             <div className="text-2xl font-bold tracking-tight">
               <span className="text-primary">NITRO</span>
@@ -195,14 +192,11 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-10">
-            <Link href="/" className="text-primary hover:text-primary/80 transition-colors" aria-label="Inicio">
-              <Home className="w-5 h-5" />
-            </Link>
+          {/* CENTER — Desktop Menu (truly centered) */}
+          <div className="hidden md:flex items-center justify-center gap-7">
 
             <DesktopDropdown
-              label="Servicios Nitro"
+              label="Servicios"
               links={serviceLinks}
               isOpen={openDropdown === "services"}
               onEnter={() => openMenu("services")}
@@ -212,7 +206,7 @@ export function Navbar() {
             />
 
             <DesktopDropdown
-              label="Nitro Negocios"
+              label="Negocios"
               links={negociosLinks}
               isOpen={openDropdown === "negocios"}
               onEnter={() => openMenu("negocios")}
@@ -231,34 +225,48 @@ export function Navbar() {
               onClose={closeAll}
             />
 
-            {/* Icon-only links with custom tooltips — desktop only */}
-            <NavIconLink href="/#contacto" label="Contacto">
-              <MessageCircle className="w-5 h-5" />
-            </NavIconLink>
-            <NavIconLink href="/app-tools" label="IA Apps">
-              <LayoutGrid className="w-5 h-5" />
-            </NavIconLink>
-            <NavIconLink href="/comparar" label="Comparativas">
-              <GitCompare className="w-5 h-5" />
-            </NavIconLink>
-            <NavIconLink href="/blog" label="Blog" green>
-              <ZapSolidGreen className="w-6 h-6" />
-            </NavIconLink>
+            <Link href="/app-tools" className="text-white hover:text-primary transition-colors font-medium">
+              IA Apps
+            </Link>
+
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* RIGHT — Academia + mobile controls */}
+          <div className="flex items-center gap-3">
+            {/* Mobile only icons */}
             <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeAll}>
               <Home className="w-5 h-5" />
             </Link>
             <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeAll}>
               <GraduationCap className="w-5 h-5" />
             </Link>
-            <Link href="/academia" className="hidden sm:inline-flex" onClick={closeAll}>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
-                <GraduationCap className="w-4 h-4" />
-                Academia
-              </Button>
-            </Link>
+
+            {/* Desktop: separator + Blog button + Academia button */}
+            <div className="hidden md:flex items-center gap-2.5">
+              <div className="w-px h-5 bg-white/10" />
+              <Link href="/blog" onClick={closeAll}>
+                <Button className={`gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
+                  pathname.startsWith('/blog')
+                    ? 'bg-primary text-black border border-primary shadow-[0_0_12px_rgba(0,255,157,0.35)]'
+                    : 'bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary'
+                }`}>
+                  <ZapSolidGreen className="w-4 h-4" />
+                  Blog
+                </Button>
+              </Link>
+              <Link href="/academia" onClick={closeAll}>
+                <Button className={`gap-2 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
+                  pathname.startsWith('/academia')
+                    ? 'bg-primary text-black border border-primary shadow-[0_0_12px_rgba(0,255,157,0.35)]'
+                    : 'bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary'
+                }`}>
+                  <GraduationCap className="w-4 h-4" />
+                  Academia
+                </Button>
+              </Link>
+            </div>
+
+            {/* Mobile hamburger */}
             <button
               className="md:hidden text-white hover:text-primary p-1"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -295,17 +303,11 @@ export function Navbar() {
               onToggle={() => setOpenDropdown(openDropdown === "guias" ? null : "guias")}
               onClose={closeAll}
             />
-            <Link href="/#contacto" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
-              Contacto
+            <Link href="/blog" className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors py-3 border-b border-white/5" onClick={closeAll}>
+              Blog
             </Link>
             <Link href="/app-tools" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               IA Apps
-            </Link>
-            <Link href="/comparar" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
-              Comparativas
-            </Link>
-            <Link href="/blog" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
-              Blog
             </Link>
             <Link href="/academia" onClick={closeAll}>
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4 gap-2">

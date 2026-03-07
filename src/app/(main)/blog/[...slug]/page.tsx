@@ -66,7 +66,7 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
 
 // ========== GROQ QUERIES ==========
 
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
+const POST_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   title,
   mainImage,
   body,
@@ -91,14 +91,14 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
     mobileImage,
     link
   },
-  "relatedPosts": *[_type == "post" && slug.current != $slug && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
+  "relatedPosts": *[_type == "post" && slug.current != $slug && !(_id in path("drafts.**")) && count((tags[])[@ in ^.tags[]]) > 0] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
     publishedAt,
     category
   },
-  "fallbackPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+  "fallbackPosts": *[_type == "post" && slug.current != $slug && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
@@ -107,7 +107,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   }
 }`;
 
-const CATEGORY_POSTS_QUERY = `*[_type == "post" && category == $category && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
+const CATEGORY_POSTS_QUERY = `*[_type == "post" && category == $category && defined(slug.current) && !(_id in path("drafts.**"))] | order(coalesce(publishedAt, _createdAt) desc) {
   _id, title, slug, publishedAt, _createdAt, mainImage, excerpt, topic, category, tags, estimatedReadingTime
 }`;
 
@@ -154,7 +154,7 @@ function parseSlugParts(slugParts: string[]): { mode: 'category' | 'categorized-
 
 export async function generateStaticParams() {
   const posts = await client.fetch<any[]>(`
-    *[_type == "post" && defined(slug.current)]{ 
+    *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))]{ 
       "slug": slug.current, 
       category 
     }
@@ -257,10 +257,13 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
     ? `https://www.juanarangoecommerce.com/blog/${post.category}/${post.slug}`
     : `https://www.juanarangoecommerce.com/blog/${post.slug}`;
 
+  const baseUrl = 'https://www.juanarangoecommerce.com';
+  const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category ?? '')}`;
+
   return constructMetadata({
     title: `${post.title} | Blog Nitro Ecom`,
     description: excerpt,
-    image: post.mainImage?.asset?._ref ? urlForImage(post.mainImage).url() : undefined,
+    image: ogImageUrl,
     canonical,
   });
 }
@@ -564,7 +567,7 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                         <div className="mb-12 rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm relative aspect-video">
                             <Image 
                                 src={urlForImage(post.mainImage).url()} 
-                                alt={post.title}
+                                alt={post.mainImage?.alt || post.title}
                                 fill
                                 priority
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"

@@ -23,6 +23,7 @@ export const metadata: Metadata = constructMetadata({
 const POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
+  && !(_id in path("drafts.**"))
 ]|order(coalesce(publishedAt, _createdAt) desc) {
   _id,
   title,
@@ -37,7 +38,7 @@ const POSTS_QUERY = `*[
   estimatedReadingTime
 }`;
 
-const POSTS_COUNT_QUERY = `count(*[_type == "post" && defined(slug.current)])`;
+const POSTS_COUNT_QUERY = `count(*[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))])`;
 
 // ISR: Revalidate every 1 hour — leverages Sanity CDN cache for fast responses
 export const revalidate = 3600;
@@ -91,31 +92,30 @@ export default async function BlogPage({
       </div>
 
       {/* Search Bar */}
-      <div className="mb-8">
+      <div className="mb-6 px-4">
          <BlogSearch />
       </div>
 
-      {/* Category Navigation */}
-      <div className="flex flex-wrap justify-center gap-3 mb-8">
+      {/* Category Navigation — horizontal scroll on mobile */}
+      <div className="flex gap-2 overflow-x-auto pb-1 px-4 md:px-0 md:flex-wrap md:justify-center mb-8 scrollbar-hide">
         {[
           { slug: 'ecommerce', label: 'Ecommerce' },
           { slug: 'estrategia-marketing', label: 'Marketing' },
           { slug: 'ia-automatizacion', label: 'IA y Automatización' },
           { slug: 'headless-commerce', label: 'Headless Commerce' },
-          { slug: 'prompts', label: 'Prompts', icon: true },
+          { slug: 'prompts', label: '⚡ Prompts' },
         ].map((cat) => (
           <Link
             key={cat.slug}
             href={`/blog/${cat.slug}`}
-            className={`px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 flex items-center gap-2
-              ${cat.slug === 'prompts' 
-                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40' 
-                : 'bg-zinc-800/50 text-zinc-400 border-zinc-700/50 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30'
-              }`}
+            className={`shrink-0 px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 flex items-center gap-1.5
+              ${
+                cat.slug === 'prompts'
+                  ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40'
+                  : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30'
+              }`
+            }
           >
-            {cat.icon && (
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            )}
             {cat.label}
           </Link>
         ))}

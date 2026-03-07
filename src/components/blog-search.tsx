@@ -84,15 +84,20 @@ export function BlogSearch() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-3xl mx-auto z-30 px-4">
+    <div ref={containerRef} className="relative w-full max-w-3xl mx-auto z-30">
+      {/* Label */}
+      <p className="text-center text-base font-semibold text-zinc-300 mb-4 tracking-wide">
+        Noticias, guías y estrategias de <span className="text-emerald-400">IA y Ecommerce</span>
+      </p>
+
       <div className="relative group perspective-1000">
         <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full opacity-0 group-focus-within:opacity-20 group-hover:opacity-10 transition duration-1000 blur-xl"></div>
-        <div className="relative flex items-center bg-zinc-900/80 backdrop-blur-xl border border-white/5 rounded-full shadow-2xl overflow-hidden transition-all duration-300 group-focus-within:border-emerald-500/30 group-focus-within:bg-zinc-900/90 group-focus-within:ring-1 group-focus-within:ring-emerald-500/20">
-            <div className="pl-6 pr-4 py-6 text-zinc-500 group-focus-within:text-emerald-400 transition-colors">
+        <div className="relative flex items-center bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 group-focus-within:border-emerald-500/40 group-focus-within:bg-zinc-900/90 group-focus-within:ring-1 group-focus-within:ring-emerald-500/20">
+            <div className="pl-5 pr-3 py-4 text-zinc-400 group-focus-within:text-emerald-400 transition-colors">
                  {isLoading ? (
-                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <Loader2 className="w-5 h-5 animate-spin" />
                  ) : (
-                    <Search className="w-6 h-6" />
+                    <Search className="w-5 h-5" />
                  )}
             </div>
             <input
@@ -106,12 +111,12 @@ export function BlogSearch() {
               onFocus={() => {
                 if (suggestions.length > 0) setIsOpen(true);
               }}
-              placeholder="Encuentra soluciones de escalamiento..."
-              className="w-full bg-transparent text-lg text-white placeholder:text-zinc-500 focus:outline-none py-4 font-light tracking-wide"
+              placeholder="Busca noticias, guías, herramientas, estrategias..."
+              className="w-full bg-transparent text-base text-white placeholder:text-zinc-500 focus:outline-none py-4 font-normal tracking-normal"
             />
-            <div className="pr-6 pl-4">
-                <div className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 border border-white/5">
-                    <Command className="w-4 h-4 text-zinc-500" />
+            <div className="pr-5 pl-3">
+                <div className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 border border-white/10">
+                    <Command className="w-4 h-4 text-zinc-400" />
                 </div>
             </div>
         </div>

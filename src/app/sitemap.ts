@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 3. Fetch Blog Posts from Sanity
   // We query for all posts and their last updated date
   const posts = await client.fetch(`
-    *[_type == "post"] {
+    *[_type == "post" && !(_id in path("drafts.**"))] {
       "slug": slug.current,
       category,
       _updatedAt,

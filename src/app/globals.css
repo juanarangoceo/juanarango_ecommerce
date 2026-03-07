@@ -130,6 +130,9 @@
   html {
     scroll-behavior: auto !important;
   }
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-geist-sans), sans-serif;
+  }
 }
 
 /* Animaciones personalizadas para micro-interacciones */
@@ -225,4 +228,12 @@
   &:hover::-webkit-scrollbar-thumb {
     background: color-mix(in srgb, var(--primary) 60%, transparent);
   }
+}
+
+@utility scrollbar-hide {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
