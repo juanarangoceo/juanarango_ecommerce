@@ -7,7 +7,9 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { constructMetadata } from "@/lib/utils";
 import { NewsletterPopupLoader } from "@/components/newsletter-popup-loader";
+import { AuthProvider } from "@/contexts/AuthContext";
 import "../globals.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -118,14 +120,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         
-        <Navbar />
-        <main className="flex-1 flex flex-col pb-[72px] md:pb-0">
-          {children}
-        </main>
-        <MobileBottomNav />
-        <Footer />
-        {/* Newsletter Popup - lazy loaded, zero SSR cost */}
-        <NewsletterPopupLoader />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-1 flex flex-col pb-[72px] md:pb-0">
+            {children}
+          </main>
+          <MobileBottomNav />
+          <Footer />
+          {/* Newsletter Popup - lazy loaded, zero SSR cost */}
+          <NewsletterPopupLoader />
+        </AuthProvider>
         {/* <DynamicChatWidget /> Deshabilitado temporalmente */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"

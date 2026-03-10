@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
+import { NavUserButton } from "@/components/auth/nav-user-button"
 
 /** Rayito verde sólido */
 function ZapSolidGreen({ className }: { className?: string }) {
@@ -229,6 +230,10 @@ export function Navbar() {
               IA Apps
             </Link>
 
+            <Link href="/blog/prompts" className="text-white hover:text-primary transition-colors font-medium">
+              Prompts
+            </Link>
+
           </div>
 
           {/* RIGHT — Academia + mobile controls */}
@@ -240,8 +245,12 @@ export function Navbar() {
             <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeAll}>
               <GraduationCap className="w-5 h-5" />
             </Link>
+            {/* Mobile user button */}
+            <div className="md:hidden">
+              <NavUserButton mobile />
+            </div>
 
-            {/* Desktop: separator + Blog button + Academia button */}
+            {/* Desktop: separator + Blog button + Academia button + User */}
             <div className="hidden md:flex items-center gap-2.5">
               <div className="w-px h-5 bg-white/10" />
               <Link href="/blog" onClick={closeAll}>
@@ -264,6 +273,8 @@ export function Navbar() {
                   Academia
                 </Button>
               </Link>
+              <div className="w-px h-5 bg-white/10" />
+              <NavUserButton />
             </div>
 
             {/* Mobile hamburger */}
