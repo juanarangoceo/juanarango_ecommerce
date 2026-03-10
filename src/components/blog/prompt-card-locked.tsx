@@ -29,7 +29,7 @@ export function PromptCardLocked({ prompt, onLoginClick }: PromptCardLockedProps
               alt={prompt.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover scale-105 blur-[2px] brightness-50"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </>
         ) : (
@@ -37,7 +37,7 @@ export function PromptCardLocked({ prompt, onLoginClick }: PromptCardLockedProps
         )}
 
         {/* Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-zinc-900/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />
 
         {/* Pills row */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
@@ -51,16 +51,6 @@ export function PromptCardLocked({ prompt, onLoginClick }: PromptCardLockedProps
             {prompt.tool}
           </span>
         </div>
-
-        {/* Lock overlay — center */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 backdrop-blur-sm flex items-center justify-center">
-            <Lock className="w-5 h-5 text-purple-300" />
-          </div>
-          <span className="text-[11px] font-semibold text-purple-300 uppercase tracking-widest bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">
-            Premium
-          </span>
-        </div>
       </div>
 
       {/* Content */}
@@ -69,14 +59,22 @@ export function PromptCardLocked({ prompt, onLoginClick }: PromptCardLockedProps
           {prompt.title}
         </h3>
 
-        {/* Blurred prompt text */}
-        <div className="relative flex-1 bg-zinc-950/60 border border-zinc-800/60 rounded-xl overflow-hidden">
-          <div className="h-[96px] p-3 select-none">
-            <p className="font-mono text-[11px] leading-relaxed text-zinc-400 blur-sm pointer-events-none">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris.
+        {/* Blurred prompt text with lock overlay */}
+        <div className="relative flex-1 min-h-[110px] bg-zinc-950/60 border border-zinc-800/60 rounded-xl overflow-hidden shadow-inner">
+          <div className="absolute inset-0 p-3 select-none overflow-hidden">
+            <p className="font-mono text-[11px] leading-relaxed text-zinc-400 blur-[4px] opacity-40 pointer-events-none">
+              [System prompt structure init...] You are an expert AI assistant specialized in advanced marketing strategies. Your primary objective is to evaluate context and generate high-conversion outputs. Analyze user behavior patterns. [End instruction block] Let's proceed with generating the strategy.
             </p>
+          </div>
+          
+          {/* Lock overlay — center */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-t from-zinc-900/90 via-zinc-900/50 to-transparent">
+            <div className="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/30 backdrop-blur-md flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)] mt-4">
+              <Lock className="w-4 h-4 text-purple-300 drop-shadow-md" />
+            </div>
+            <span className="text-[10px] font-semibold text-purple-300 uppercase tracking-widest bg-purple-500/10 border border-purple-500/20 px-2.5 py-0.5 rounded-full backdrop-blur-md">
+              Premium
+            </span>
           </div>
         </div>
 
