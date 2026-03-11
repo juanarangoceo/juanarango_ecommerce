@@ -63,17 +63,26 @@ export const GenerateTagInput = (props: any) => {
           seoDescription: seoDescription,
       }
       
-      // We don't necessarily update the 'value' of this specific input field, 
-      // primarily we update the document fields. 
-      // But to satisfy the input component requirement, maybe we set a "last generated" timestamp?
-      // For now, let's just patch the document fields.
-      
-      // Patch always targeting the draft to avoid overwriting the published doc
+      // Always target the draft. If no draft exists yet (tag is only published),
+      // createIfNotExists creates it first — otherwise the patch mutation fails with
+      // "The document with the ID 'drafts.tag-xxx' was not found".
+      const cleanPublishedId = (docId || '').replace('drafts.', '')
       const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
+
       toast.push({ title: "Actualizando etiqueta...", status: 'info' })
+
+      // Step 1: Ensure draft exists before patching
+      await client.createIfNotExists({
+          _id: draftId,
+          _type: 'tag',
+          name: tagName,
+          slug: { _type: 'slug', current: cleanPublishedId.replace('tag-', '') },
+      })
+
+      // Step 2: Patch the draft with AI-generated content
       await client.patch(draftId).set(attributes).commit()
       
-      // Update this field to show done status or timestamp
+      // Update this field to show last generation timestamp
       onChange(set(new Date().toISOString()))
 
       toast.push({ title: "¡Contenido generado exitosamente!", status: 'success' })
