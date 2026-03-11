@@ -72,10 +72,11 @@ export const GeneratePostInput = (props: any) => {
               .slice(0, 96)
       }
 
-      // 3. UPDATE SANITY DOCUMENT & CREATE TAGS
+      // 3. PREPARAR TAGS (solo slugs — NO crear documentos de tag todavía)
+      // Los documentos de tag se crean al publicar desde Sanity Studio,
+      // no aquí, para que no aparezcan en el sitemap antes de publicar.
       const tagsData = json.data.tags || []
 
-      // Filtra tags inválidos antes de procesar
       const validTags = tagsData.filter((tag: any) => {
           const name = (tag?.name || '').trim()
           const slug = sanitizeSlug(tag?.slug || tag?.name || '')
@@ -84,26 +85,6 @@ export const GeneratePostInput = (props: any) => {
 
       const tagSlugs: string[] = validTags.map((tag: any) =>
           sanitizeSlug(tag.slug || tag.name)
-      )
-
-      // Crea los documentos de tag en paralelo — si alguno falla el resto continúa
-      toast.push({ title: "Procesando etiquetas...", status: 'info' })
-      await Promise.allSettled(
-          validTags.map(async (tag: any) => {
-              const cleanSlug = sanitizeSlug(tag.slug || tag.name)
-              const cleanName = (tag.name || tag.slug || '').trim()
-              const tagDocId = `tag-${cleanSlug}`
-              try {
-                  await client.createIfNotExists({
-                      _id: tagDocId,
-                      _type: 'tag',
-                      name: cleanName,
-                      slug: { _type: 'slug', current: cleanSlug },
-                  })
-              } catch (err) {
-                  console.warn(`⚠️ Tag "${cleanName}" no se pudo crear (no bloquea):`, err)
-              }
-          })
       )
 
       const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
@@ -128,27 +109,11 @@ export const GeneratePostInput = (props: any) => {
       onChange(set(currentTopic))
 
       // Perform the patch — always target the draft to avoid overwriting the published doc
+      // NOTE: We do NOT call the revalidation webhook here because the post is still a draft.
+      // Revalidation happens when the user clicks "Publish" in Sanity Studio.
       const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
       toast.push({ title: "Actualizando documento...", status: 'info' })
       await client.patch(draftId).set(attributes).commit()
-
-      // Trigger immediate revalidation so the post URL is accessible right away (no 404)
-      try {
-          await fetch('/api/sanity-webhook', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
-              },
-              body: JSON.stringify({
-                  _type: 'post',
-                  slug: { current: finalSlug },
-                  category: json.data.category || 'ecommerce',
-              }),
-          })
-      } catch (revalErr) {
-          console.warn('⚠️ Revalidación no crítica falló:', revalErr)
-      }
 
       // 4. HECHO (No publicar automáticamente)
       toast.push({ 

@@ -93,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 6. Fetch App Tools from Sanity
   const appTools = await client.fetch(`
-    *[_type == "appTool" && defined(slug.current)] {
+    *[_type == "appTool" && defined(slug.current) && !(_id in path("drafts.**"))] {
       "slug": slug.current,
       _updatedAt
     }
