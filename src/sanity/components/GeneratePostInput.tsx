@@ -132,6 +132,24 @@ export const GeneratePostInput = (props: any) => {
       toast.push({ title: "Actualizando documento...", status: 'info' })
       await client.patch(draftId).set(attributes).commit()
 
+      // Trigger immediate revalidation so the post URL is accessible right away (no 404)
+      try {
+          await fetch('/api/sanity-webhook', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
+              },
+              body: JSON.stringify({
+                  _type: 'post',
+                  slug: { current: finalSlug },
+                  category: json.data.category || 'ecommerce',
+              }),
+          })
+      } catch (revalErr) {
+          console.warn('⚠️ Revalidación no crítica falló:', revalErr)
+      }
+
       // 4. HECHO (No publicar automáticamente)
       toast.push({ 
           title: "Borrador Generado Exitosamente", 

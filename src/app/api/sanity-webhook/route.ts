@@ -8,12 +8,15 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: Request) {
   try {
     const secret = process.env.SANITY_WEBHOOK_SECRET
-    if (!secret) {
-      console.error('❌ SANITY_WEBHOOK_SECRET is not configured. Denying webhook.')
+    const internalSecret = process.env.INTERNAL_API_SECRET
+    if (!secret && !internalSecret) {
+      console.error('❌ No webhook secrets configured. Denying webhook.')
       return NextResponse.json({ message: 'Webhook not configured' }, { status: 500 })
     }
     const auth = request.headers.get('authorization')
-    if (auth !== `Bearer ${secret}`) {
+    const isValidWebhook = secret && auth === `Bearer ${secret}`
+    const isValidInternal = internalSecret && auth === `Bearer ${internalSecret}`
+    if (!isValidWebhook && !isValidInternal) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
@@ -42,8 +45,19 @@ export async function POST(request: Request) {
       revalidatePath('/blog', 'page')
       revalidated.push('/blog')
       if (slug) {
+        // Revalidate direct slug path
         revalidatePath(`/blog/${slug}`, 'page')
         revalidated.push(`/blog/${slug}`)
+
+        // Also revalidate categorized path if category is present
+        const category = body?.category as string | undefined
+        if (category) {
+          revalidatePath(`/blog/${category}/${slug}`, 'page')
+          revalidated.push(`/blog/${category}/${slug}`)
+          // Also revalidate the category listing page
+          revalidatePath(`/blog/${category}`, 'page')
+          revalidated.push(`/blog/${category}`)
+        }
       }
     }
 
