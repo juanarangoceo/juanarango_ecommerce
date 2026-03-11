@@ -9,14 +9,20 @@ export async function POST(request: Request) {
   try {
     const secret = process.env.SANITY_WEBHOOK_SECRET
     const internalSecret = process.env.INTERNAL_API_SECRET
-    if (!secret && !internalSecret) {
-      console.error('❌ No webhook secrets configured. Denying webhook.')
-      return NextResponse.json({ message: 'Webhook not configured' }, { status: 500 })
-    }
+
+    // Auth method 1: query param ?secret=xxx  (used by Sanity.io webhook URL)
+    const url = new URL(request.url)
+    const querySecret = url.searchParams.get('secret')
+    const isValidQuerySecret = secret && querySecret === secret
+
+    // Auth method 2: Authorization: Bearer (used by internal Studio components)
     const auth = request.headers.get('authorization')
-    const isValidWebhook = secret && auth === `Bearer ${secret}`
-    const isValidInternal = internalSecret && auth === `Bearer ${internalSecret}`
-    if (!isValidWebhook && !isValidInternal) {
+    const isValidBearer = 
+      (secret && auth === `Bearer ${secret}`) ||
+      (internalSecret && auth === `Bearer ${internalSecret}`)
+
+    if (!isValidQuerySecret && !isValidBearer) {
+      console.error('❌ Webhook auth failed. Query secret present:', !!querySecret, 'Bearer present:', !!auth)
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
