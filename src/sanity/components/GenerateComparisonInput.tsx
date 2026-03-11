@@ -51,7 +51,10 @@ export const GenerateComparisonInput = (props: any) => {
       // Call the comparison API
       const res = await fetch('/api/generate-comparison', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
+        },
         body: JSON.stringify({ app1: app1Data, app2: app2Data }),
       })
 

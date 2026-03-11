@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { requireInternalAuth } from '@/lib/api-auth'
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY! })
 
 export async function POST(request: NextRequest) {
   const authError = requireInternalAuth(request);
@@ -83,6 +83,10 @@ IMPORTANTE:
 - Sé CONCISO: calidad > cantidad
 - Las respuestas de FAQ deben ser cortas (2-3 oraciones máximo)`
 
+    if (!process.env.GOOGLE_API_KEY) {
+      return NextResponse.json({ error: 'Falta GOOGLE_API_KEY' }, { status: 500 })
+    }
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
@@ -92,7 +96,17 @@ IMPORTANTE:
       },
     })
 
-    const rawText = response.text || ''
+    // Robust text extraction (response.text is a function in @google/genai SDK)
+    let rawText = ''
+    // @ts-ignore
+    if (typeof response.text === 'function') {
+      // @ts-ignore
+      rawText = response.text()
+    } else if (typeof response.text === 'string') {
+      rawText = response.text
+    } else if (response.candidates?.[0]?.content?.parts?.[0]?.text) {
+      rawText = response.candidates[0].content.parts[0].text
+    }
     
     // Clean JSON from potential markdown wrapping
     const cleanJson = rawText
