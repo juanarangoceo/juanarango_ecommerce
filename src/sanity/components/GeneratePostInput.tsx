@@ -72,9 +72,10 @@ export const GeneratePostInput = (props: any) => {
               .slice(0, 96)
       }
 
-      // 3. PREPARAR TAGS (solo slugs — NO crear documentos de tag todavía)
-      // Los documentos de tag se crean al publicar desde Sanity Studio,
-      // no aquí, para que no aparezcan en el sitemap antes de publicar.
+      // 3. PREPARAR TAGS — crear documentos de etiqueta como BORRADORES
+      // Se crean con el prefijo "drafts." para que sean invisibles al público
+      // (no aparecen en el sitemap ni en páginas de etiquetas) hasta que el
+      // usuario los revise y publique desde la sección "Etiqueta" en Studio.
       const tagsData = json.data.tags || []
 
       const validTags = tagsData.filter((tag: any) => {
@@ -86,6 +87,28 @@ export const GeneratePostInput = (props: any) => {
       const tagSlugs: string[] = validTags.map((tag: any) =>
           sanitizeSlug(tag.slug || tag.name)
       )
+
+      // Crear documentos de etiqueta como borradores (no publicados)
+      await Promise.allSettled(
+          validTags.map(async (tag: any) => {
+              const cleanSlug = sanitizeSlug(tag.slug || tag.name)
+              const cleanName = (tag.name || tag.slug || '').trim()
+              const publishedId = `tag-${cleanSlug}`
+              const draftTagId = `drafts.tag-${cleanSlug}`
+              try {
+                  // createIfNotExists no sobreescribe si ya existe
+                  await client.createIfNotExists({
+                      _id: draftTagId,
+                      _type: 'tag',
+                      name: cleanName,
+                      slug: { _type: 'slug', current: cleanSlug },
+                  })
+              } catch (err) {
+                  console.warn(`⚠️ Tag draft "${cleanName}" no se pudo crear:`, err)
+              }
+          })
+      )
+
 
       const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
 
