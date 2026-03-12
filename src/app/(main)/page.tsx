@@ -38,7 +38,7 @@ const AnimatedBanner = dynamic(
   () => import("@/components/ui/animated-banner").then((mod) => mod.AnimatedBanner)
 )
 
-export const revalidate = 3600; // Cache homepage for 1 hour
+
 
 export default function Page() {
   const metrics = [

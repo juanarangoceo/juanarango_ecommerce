@@ -10,7 +10,7 @@ export const metadata: Metadata = constructMetadata({
   canonical: 'https://www.juanarangoecommerce.com/academia'
 });
 
-export const revalidate = 3600; // Cache por 1 hora
+
 
 const ACADEMIA_QUERY = `
   *[_type == "curso" && estado != "borrador"]

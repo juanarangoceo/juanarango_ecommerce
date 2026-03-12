@@ -16,8 +16,7 @@ export const metadata: Metadata = constructMetadata({
   canonical: "https://www.juanarangoecommerce.com/blog/prompts",
 });
 
-// ISR: revalidate every 10 minutes
-export const revalidate = 600;
+
 
 const PROMPTS_QUERY = `*[
   _type == "promptGallery"

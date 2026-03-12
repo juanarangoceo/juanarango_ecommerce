@@ -37,7 +37,7 @@ const SHOPIFY_POSTS_QUERY = `
   }
 `;
 
-export const revalidate = 3600;
+
 
 export default async function ShopifyGuidePage() {
   const posts = await client.fetch<any[]>(SHOPIFY_POSTS_QUERY);

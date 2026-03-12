@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { submitLead } from "@/app/actions/submit-lead";
 
-export function ContactForm() {
+interface ContactFormProps {
+  interestOptions?: string[];
+}
+
+export function ContactForm({ interestOptions }: ContactFormProps = {}) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -102,7 +106,7 @@ export function ContactForm() {
     <div key="step2" className="space-y-6">
       <h3 className="text-2xl font-bold text-foreground">¿Qué estás buscando mejorar hoy?</h3>
       <div className="grid gap-3">
-        {["Infraestructura de Ecommerce", "Automatización de Negocio", "Consultoría de Escalamiento", "Otro"].map((option) => (
+        {(interestOptions || ["Infraestructura de Ecommerce", "Automatización de Negocio", "Consultoría de Escalamiento", "Otro"]).map((option) => (
           <label
             key={option}
             className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all ${

@@ -70,6 +70,10 @@ export async function POST(request: Request) {
     revalidatePath('/sitemap.xml', 'page')
     revalidated.push('/sitemap.xml')
 
+    // Global layout revalidation to catch all updates (home page, nav, generic pages)
+    revalidatePath('/', 'layout')
+    revalidated.push('global-layout')
+
     return NextResponse.json({
       revalidated: true,
       paths: revalidated,
@@ -90,9 +94,11 @@ export async function GET(request: Request) {
 
   revalidatePath('/app-tools', 'page')
   revalidatePath('/sitemap.xml', 'page')
+  revalidatePath('/', 'layout')
+  
   return NextResponse.json({
     revalidated: true,
-    paths: ['/app-tools', '/sitemap.xml'],
+    paths: ['/app-tools', '/sitemap.xml', 'global-layout'],
     now: Date.now(),
   })
 }

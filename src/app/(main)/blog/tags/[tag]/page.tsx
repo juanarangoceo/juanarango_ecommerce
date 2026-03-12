@@ -46,7 +46,7 @@ interface Props {
   params: Promise<{ tag: string }>
 }
 
-export const revalidate = 3600; // Cache tag pages for 1 hour
+
 
 export async function generateMetadata(props: Props) {
   const params = await props.params;

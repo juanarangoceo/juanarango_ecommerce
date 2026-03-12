@@ -16,8 +16,7 @@ import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
 import { NitroFooter } from '@/components/landing/nitro-commerce/nitro-footer'
 import { OtherCitiesSection } from '@/components/landing/nitro-commerce/other-cities-section'
 
-// Configure ISR - revalidate every hour
-export const revalidate = 3600
+
 
 // Allow dynamic routes that weren't pre-generated
 export const dynamicParams = true

@@ -12,6 +12,7 @@ import { OpenClawCodeBlock } from "./_components/OpenClawCodeBlock"
 import { OpenClawInstallationTabs } from "./_components/OpenClawInstallationTabs"
 import { OpenClawFAQ } from "./_components/OpenClawFAQ"
 import { LatestNewsColumn } from "../_components/LatestNewsColumn"
+import { NewsletterForm } from "@/components/newsletter-form"
 import { client } from "@/sanity/lib/client"
 import { constructMetadata } from "@/lib/utils"
 
@@ -45,7 +46,7 @@ const OPENCLAW_POSTS_QUERY = `
   }
 `;
 
-export const revalidate = 86400 // 24h
+
 
 function SectionHeader({ icon: Icon, title, iconColor = "text-[#e05a3a]", bgColor = "bg-[#e05a3a]/10", borderColor = "border-[#e05a3a]/20" }: {
   icon: any; title: string; iconColor?: string; bgColor?: string; borderColor?: string
@@ -505,10 +506,17 @@ ALLOW_SHELL_EXECUTION=true`}
               </section>
 
               {/* ── FAQ ── */}
-              <section id="faq" className="scroll-mt-24 pb-24">
+              <section id="faq" className="scroll-mt-24 pb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">Preguntas Frecuentes</h2>
                 <OpenClawFAQ />
+              </section>
 
+              {/* Newsletter Subscripción */}
+              <section className="py-12 border-t border-white/5">
+                <div className="max-w-xl mx-auto">
+                  <NewsletterForm />
+                </div>
+                
                 {/* Back link */}
                 <div className="mt-16 pt-8 border-t border-white/10">
                   <Link

@@ -4,7 +4,7 @@ import { client } from "@/sanity/lib/client"
 import { StarRating } from "@/components/app-tools/star-rating"
 import { ArrowRight, Swords, Trophy } from "lucide-react"
 
-export const revalidate = 3600
+
 
 export const metadata: Metadata = {
   title: "Comparativas de Apps IA | Juan Arango",

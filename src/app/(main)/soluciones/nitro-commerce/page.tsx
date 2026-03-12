@@ -14,7 +14,6 @@ import { CTASection } from '@/components/landing/nitro-commerce/cta-section'
 import { CityExplorerSection } from '@/components/landing/nitro-commerce/city-explorer-section'
 
 // Configure ISR - revalidate every 60 seconds for faster updates
-export const revalidate = 60
 
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!

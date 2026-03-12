@@ -25,7 +25,7 @@ const LATEST_POSTS_QUERY = `*[
   "publishedAt": coalesce(publishedAt, _createdAt)
 }`
 
-export const revalidate = 3600
+
 
 export const metadata: Metadata = {
   title: "Mejores Apps y Herramientas de IA | Biblioteca Completa - Nitro Ecom",

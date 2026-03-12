@@ -16,6 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 const SHOPIFY_LOGO = "https://res.cloudinary.com/dohwyszdj/image/upload/v1771103680/shopify_mrjlq8.svg";
 
@@ -51,7 +52,7 @@ const AD_QUERY = `*[_type == "advertisingShopify"] | order(_createdAt desc)[0] {
   link
 }`;
 
-export const revalidate = 3600;
+
 
 // --- SEO Metadata ---
 export function generateMetadata() {
@@ -590,6 +591,13 @@ export default async function ShopifyPage() {
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+        </section>
+
+        {/* ===== NEWSLETTER SUBSCRIPTION ===== */}
+        <section className="py-20 px-6">
+          <div className="container mx-auto max-w-xl">
+            <NewsletterForm />
           </div>
         </section>
 

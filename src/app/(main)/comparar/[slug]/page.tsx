@@ -8,7 +8,7 @@ import { ChevronDown, ExternalLink, ArrowRight, CheckCircle2, XCircle, Target } 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { StarRating } from "@/components/app-tools/star-rating"
 
-export const revalidate = 86400
+
 
 // GROQ Queries
 const COMPARISON_BY_SLUG_QUERY = `*[_type == "appComparison" && slug.current == $slug && !(_id in path("drafts.**"))][0]{

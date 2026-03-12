@@ -15,7 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export const revalidate = 3600;
+
 
 // --- SEO Metadata ---
 export const metadata: Metadata = {

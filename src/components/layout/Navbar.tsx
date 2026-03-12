@@ -22,6 +22,8 @@ function ZapSolidGreen({ className }: { className?: string }) {
 const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
   { href: "/soluciones/nitro-commerce", label: "Nitro Commerce" },
+  { href: "/soluciones/nitro-search", label: "Nitro Search" },
+  { href: "/soluciones/nitro-bot", label: "Nitro Bot" },
   { href: "/shopify", label: "Shopify" },
 ]
 
@@ -34,6 +36,7 @@ const negociosLinks = [
 const guiasLinks = [
   { href: "/guias/shopify", label: "Guía Shopify" },
   { href: "/guias/openclaw-ai", label: "Guía OpenClaw AI" },
+  { href: "/guias/claude-code", label: "Guía Claude Code" },
 ]
 
 /** Tooltip icon link — desktop nav only */

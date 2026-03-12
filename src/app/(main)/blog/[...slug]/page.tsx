@@ -37,7 +37,7 @@ import { FeaturedPromoBlock } from "@/components/blog/FeaturedPromoBlock";
 
 // ========== CONFIGURATION ==========
 
-export const revalidate = 3600; // Cache de 1 hora (igual que el listado principal)
+
 
 const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce', 'prompts'];
 
