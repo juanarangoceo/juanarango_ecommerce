@@ -98,6 +98,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path(
     publishedAt,
     category
   },
+  "fallbackPosts": *[_type == "post" && slug.current != $slug && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
