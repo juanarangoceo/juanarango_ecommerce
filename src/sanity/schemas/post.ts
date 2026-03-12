@@ -55,6 +55,22 @@ export default {
       description: 'Se asignan automáticamente por la IA. Presiona Enter para agregar manualmente.',
     },
     {
+      name: 'keywordFocus',
+      title: 'Palabra Clave Principal (SEO)',
+      type: 'string',
+      description: 'Keyword principal del post. Usada para Linkbuilding automático.',
+    },
+    {
+      name: 'secondaryKeywords',
+      title: 'Palabras Clave Secundarias',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags'
+      },
+      description: 'Otras keywords relevantes generadas por IA.',
+    },
+    {
       name: 'title',
       title: 'Title',
       type: 'string',

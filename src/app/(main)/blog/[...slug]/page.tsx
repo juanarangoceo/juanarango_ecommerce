@@ -98,11 +98,15 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path(
     publishedAt,
     category
   },
-  "fallbackPosts": *[_type == "post" && slug.current != $slug && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...3] {
     title,
     "slug": slug.current,
     mainImage,
     publishedAt,
+    category
+  },
+  "linkbuildingDictionary": *[_type == "post" && slug.current != $slug && defined(keywordFocus) && !(_id in path("drafts.**"))] {
+    "keyword": keywordFocus,
+    "slug": slug.current,
     category
   }
 }`;
@@ -182,6 +186,75 @@ export async function generateStaticParams() {
   }
 
   return paths;
+}
+
+// ========== LINKBUILDING LOGIC ==========
+
+type LinkRule = { keyword: string; slug: string; category?: string };
+
+function renderTextWithLinks(text: string, dictionary: LinkRule[], linkedSet: Set<string>): React.ReactNode[] {
+  if (!text || dictionary.length === 0) return [text];
+
+  // Ordenar el diccionario por longitud de keyword (las más largas primero evitan colisiones con cortas)
+  const sortedDict = [...dictionary].sort((a, b) => b.keyword.length - a.keyword.length);
+
+  let parts: React.ReactNode[] = [text];
+
+  for (const rule of sortedDict) {
+    if (!rule.keyword) continue;
+    
+    const keywordLower = rule.keyword.toLowerCase().trim();
+    if (linkedSet.has(keywordLower)) continue; // Ya se enlazó esta keyword en el post
+
+    // Solo reemplazar la PRIMERA aparición usando una expresión regular
+    // \b asegura que es palabra completa, 'i' ignora mayúsculas/minúsculas
+    const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b(${escapeRegExp(rule.keyword)})\\b`, 'i');
+
+    let matchFound = false;
+
+    // Recorremos las partes actuales para ver si alguna parte de texto plano contiene la keyword
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      if (typeof part === 'string') {
+        const match = regex.exec(part);
+        if (match) {
+          const matchedText = match[0];
+          const before = part.substring(0, match.index);
+          const after = part.substring(match.index + matchedText.length);
+          
+          const targetUrl = rule.category ? `/blog/${rule.category}/${rule.slug}` : `/blog/${rule.slug}`;
+          
+          const linkNode = (
+            <Link 
+              key={`link-${keywordLower}-${linkedSet.size}`} 
+              href={targetUrl}
+              className="text-primary font-medium hover:underline underline-offset-4 decoration-primary/30"
+              title={`Leer más sobre ${matchedText}`}
+            >
+              {matchedText}
+            </Link>
+          );
+
+          // Reemplazamos este fragmento de texto por: [antes, link, después]
+          const newParts = [];
+          if (before) newParts.push(before);
+          newParts.push(linkNode);
+          if (after) newParts.push(after);
+
+          parts.splice(i, 1, ...newParts);
+          
+          linkedSet.add(keywordLower);
+          matchFound = true;
+          break; // Salimos de parts loop, pasamos a la siguiente rule
+        }
+      }
+    }
+    // Optimization: Si queríamos ser más exhaustivos en el texto, el break asume solo 1 link. 
+    // Lo cual es correcto para SEO (1 vez por artículo).
+  }
+
+  return parts;
 }
 
 // ========== PORTABLE TEXT COMPONENTS ==========
@@ -374,6 +447,10 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
 
   // Combine all found prompts (markdown first, then body)
   const allPrompts = [...markdownPrompts, ...bodyPrompts];
+
+  // Linkbuilding Dictionary & tracking set
+  const linkDictionary = post.linkbuildingDictionary || [];
+  const linkedKeywordsSet = new Set<string>();
 
   const date = new Date(post.publishedAt || post._createdAt).toLocaleDateString("es-ES", {
     year: "numeric",
@@ -653,7 +730,10 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                                         return <h3 id={id} className="text-2xl font-bold mt-8 mb-4 text-zinc-900 dark:text-zinc-100" {...props}>{props.children}</h3>;
                                     },
                                     p: ({node, ...props}) => {
-                                        return <p className="mb-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</p>;
+                                        const content = typeof props.children === 'string' 
+                                            ? renderTextWithLinks(props.children, linkDictionary, linkedKeywordsSet) 
+                                            : props.children;
+                                        return <p className="mb-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300" {...props}>{content}</p>;
                                     },
                                     ul: ({node, ...props}) => {
                                         return <ul className="my-6 space-y-2 pl-6 list-disc text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</ul>;
@@ -662,7 +742,10 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
                                         return <ol className="my-6 space-y-2 pl-6 list-decimal text-zinc-700 dark:text-zinc-300" {...props}>{props.children}</ol>;
                                     },
                                     li: ({node, ...props}) => {
-                                        return <li className="mb-2" {...props}>{props.children}</li>;
+                                        const content = typeof props.children === 'string' 
+                                            ? renderTextWithLinks(props.children, linkDictionary, linkedKeywordsSet) 
+                                            : props.children;
+                                        return <li className="mb-2" {...props}>{content}</li>;
                                     },
                                     strong: ({node, ...props}) => {
                                         return <strong className="font-bold text-zinc-900 dark:text-white" {...props}>{props.children}</strong>;
