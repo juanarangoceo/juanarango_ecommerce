@@ -112,7 +112,6 @@ export const GeneratePostInput = (props: any) => {
 
       const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
 
-      // Patch the document (using docId which might be a draft)
       const attributes: any = {
           title: title || currentTopic,
           slug: { _type: 'slug', current: finalSlug },
@@ -126,6 +125,8 @@ export const GeneratePostInput = (props: any) => {
           author: "Juan Arango",
           category: json.data.category || 'ecommerce',
           tags: tagSlugs,
+          keywordFocus: json.data.keywordFocus || '',
+          secondaryKeywords: json.data.secondaryKeywords || [],
       }
 
       // Also update the current field (Topic) in the form state
