@@ -21,6 +21,12 @@ export default {
       validation: (Rule: Rule) => Rule.required()
     },
     {
+      name: 'instructions',
+      title: 'Instrucciones de Uso (Opcional)',
+      type: 'text',
+      description: 'Breve explicación de cómo el usuario debe utilizar o modificar este prompt (ej: rellenar variables entre corchetes)',
+    },
+    {
       name: 'image',
       title: 'Imagen Generada (1:1)',
       type: 'image',

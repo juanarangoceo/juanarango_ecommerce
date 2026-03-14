@@ -53,6 +53,7 @@ interface PromptCardProps {
     _id: string;
     title: string;
     prompt: string;
+    instructions?: string;
     imageUrl: string;
     tool: string;
     category?: string;
@@ -191,12 +192,19 @@ export function PromptCard({
         </h3>
 
         {/* Prompt text block */}
-        <div className="relative flex-1 bg-zinc-950/60 border border-zinc-800/60 rounded-xl overflow-hidden">
-          <div className="max-h-[96px] overflow-y-auto p-3 prompt-scrollbar">
+        <div className="relative flex-1 bg-zinc-950/60 border border-zinc-800/60 rounded-xl overflow-hidden flex flex-col">
+          <div className="flex-1 max-h-[96px] overflow-y-auto p-3 prompt-scrollbar">
             <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
               {prompt.prompt}
             </p>
           </div>
+          {prompt.instructions && (
+            <div className="bg-emerald-500/10 border-t border-emerald-500/20 px-3 py-2 flex-shrink-0">
+              <p className="text-[10px] text-emerald-400/90 font-medium leading-relaxed">
+                <span className="font-bold">💡 Cómo usar:</span> {prompt.instructions}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* ── Actions ─────────────────────────── */}

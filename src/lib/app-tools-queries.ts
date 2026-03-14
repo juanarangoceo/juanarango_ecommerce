@@ -122,6 +122,7 @@ export const TRENDING_APPS_QUERY = `*[
   priceDetail,
   rating,
   iconBg,
+  "logoUrl": logo.asset->url,
   websiteUrl,
   affiliateUrl,
   rank,

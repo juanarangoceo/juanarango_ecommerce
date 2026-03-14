@@ -2,8 +2,11 @@
 
 import { Resend } from "resend";
 import { supabaseAdmin } from "@/lib/supabase";
+import { Client } from "@notionhq/client";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const notion = new Client({ auth: process.env.NOTION_SECRET });
+const databaseId = process.env.NOTION_SUBSCRIBERS_DB_ID!;
 
 interface SubscriptionResult {
   success: boolean;
@@ -23,11 +26,6 @@ export async function subscribeToNewsletter(
 
   try {
     // 2. Insert into Supabase
-    // We use supabaseAdmin to bypass RLS if strictly necessary, 
-    // but typically standard client works if policies are set for anon.
-    // However, for consistency and security in server actions, admin is often safer if configured.
-    // Re-using the logic from the plan: "public insert" policy was suggested.
-    // Let's check if Admin client is available, otherwise fail gracefully or use what we have.
     const supabase = supabaseAdmin;
 
     if (!supabase) {
@@ -40,7 +38,6 @@ export async function subscribeToNewsletter(
       .insert([{ email }]);
 
     if (dbError) {
-      // Handle unique constraint violation assuming code '23505'
       if (dbError.code === "23505") {
         return {
           success: true,
@@ -51,7 +48,38 @@ export async function subscribeToNewsletter(
       return { success: false, error: "No se pudo guardar tu email en la base de datos." };
     }
 
-    // 3. Send Welcome Email via Resend
+    // 3. Insert into Notion
+    try {
+      if (!process.env.NOTION_SECRET || !databaseId) {
+         console.warn("Faltan credenciales de Notion. Omitiendo sincronización con Notion.");
+      } else {
+        await notion.pages.create({
+          parent: { database_id: databaseId },
+          properties: {
+            "Name": {
+              title: [
+                {
+                  text: { content: email },
+                },
+              ],
+            },
+            "Email": {
+              email: email,
+            },
+            "Fecha de suscripción": {
+              date: {
+                start: new Date().toISOString(),
+              },
+            },
+          },
+        });
+      }
+    } catch (notionError) {
+      console.error("Notion Error:", notionError);
+      // No fallamos la suscripción global si Notion falla, pues ya está en Supabase
+    }
+
+    // 4. Send Welcome Email via Resend
     try {
       if (!process.env.RESEND_API_KEY) {
         console.warn("Resend API Key missing. Skipping email.");
@@ -75,7 +103,6 @@ export async function subscribeToNewsletter(
       }
     } catch (emailError) {
       console.error("Resend Error:", emailError);
-      // We don't fail the request if email fails, as the subscription is recorded.
     }
 
     return { success: true, message: "¡Suscripción exitosa! Revisa tu correo." };

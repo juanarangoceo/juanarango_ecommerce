@@ -26,6 +26,7 @@ const PROMPTS_QUERY = `*[
   _id,
   title,
   prompt,
+  instructions,
   "imageUrl": image.asset->url,
   tool,
   category,

@@ -1,13 +1,8 @@
-import { NextResponse } from "next/server";
+"use server"
+
 import { GoogleGenAI } from "@google/genai";
-import { requireInternalAuth } from "@/lib/api-auth";
 
-// Inicialización de cliente Gemini
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
-
-export const maxDuration = 30;
-export const dynamic = 'force-dynamic';
-
 const VALID_CATEGORIES = [
   'chatbot', 'writing', 'image-gen', 'video', 'audio',
   'coding', 'productivity', 'design', 'marketing'
@@ -25,19 +20,17 @@ const CATEGORY_ICON_COLORS: Record<string, string> = {
   marketing: 'bg-lime-500',
 };
 
-export async function POST(req: Request) {
-  const authError = requireInternalAuth(req);
-  if (authError) return authError;
+export async function generateAppContentAction(appName: string, websiteUrl: string) {
+  if (!appName) return { success: false, error: "Falta el nombre de la app" };
+  if (!websiteUrl) return { success: false, error: "Falta la URL del sitio web" };
+
+  console.log(`🚀 Generando contenido (Server Action) para APP: ${appName} (${websiteUrl})`);
+  
+  if (!process.env.GOOGLE_API_KEY) {
+     return { success: false, error: "Falta GOOGLE_API_KEY en el servidor" };
+  }
 
   try {
-    const { appName, websiteUrl } = await req.json();
-
-    if (!appName) return NextResponse.json({ error: "Falta el nombre de la app" }, { status: 400 });
-    if (!websiteUrl) return NextResponse.json({ error: "Falta la URL del sitio web" }, { status: 400 });
-
-    console.log(`🚀 Generando contenido para APP: ${appName} (${websiteUrl})`);
-    if (!process.env.GOOGLE_API_KEY) throw new Error("Falta GOOGLE_API_KEY");
-
     const geminiResponse = await googleAI.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [{
@@ -84,7 +77,6 @@ IMPORTANTE:
       },
     } as any);
 
-    // Extracción robusta del texto
     let generatedText = "";
     // @ts-ignore
     if (typeof geminiResponse.text === 'function') {
@@ -100,11 +92,9 @@ IMPORTANTE:
 
     if (!generatedText) throw new Error("Gemini no devolvió datos");
 
-    // Limpieza y Normalización
     const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
     const rawData = JSON.parse(cleanJson);
 
-    // Validar y normalizar
     const appData = {
       slug: rawData.slug || appName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       description: rawData.description || '',
@@ -127,10 +117,10 @@ IMPORTANTE:
 
     console.log(`✅ Contenido generado para: ${appName}`);
 
-    return NextResponse.json({ success: true, data: appData });
+    return { success: true, data: appData };
 
   } catch (error: any) {
-    console.error("❌ Error API generate-app-content:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("❌ Error Server Action generate-app-content:", error);
+    return { success: false, error: error.message || "Error al generar contenido" };
   }
 }

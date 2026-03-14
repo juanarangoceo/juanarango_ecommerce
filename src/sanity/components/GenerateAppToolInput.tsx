@@ -1,6 +1,7 @@
 import { Stack, Button, Card, Text, TextInput, Label, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { set, useDocumentOperation, useFormValue, useClient } from 'sanity'
+import { generateAppContentAction } from '@/app/actions/generate-app-tool'
 
 export const GenerateAppToolInput = (props: any) => {
   const { onChange, value } = props
@@ -38,21 +39,11 @@ export const GenerateAppToolInput = (props: any) => {
     try {
       toast.push({ title: '🔍 Investigando la app con IA...', status: 'info' })
 
-      // 1. CALL API
-      const res = await fetch('/api/generate-app-content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ appName: currentName, websiteUrl }),
-      })
+      // 1. CALL SERVER ACTION
+      const json = await generateAppContentAction(currentName, websiteUrl)
 
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => ({}))
-        throw new Error(errJson.error || `Error ${res.status}: ${res.statusText}`)
-      }
-
-      const json = await res.json()
       if (!json.success || !json.data) {
-        throw new Error('Respuesta inválida de la API')
+        throw new Error(json.error || 'Respuesta inválida de la IA')
       }
 
       const data = json.data
