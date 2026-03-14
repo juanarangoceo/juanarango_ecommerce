@@ -1,0 +1,11 @@
+{
+  "name": "generate-blog-content",
+  "version": "1.0.0",
+  "description": "Sanity function for generating blog content using Gemini",
+  "main": "index.ts",
+  "dependencies": {
+    "@google/genai": "latest",
+    "@sanity/client": "latest",
+    "@sanity/functions": "latest"
+  }
+}
