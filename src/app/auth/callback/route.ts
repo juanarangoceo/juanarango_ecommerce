@@ -35,37 +35,55 @@ export async function GET(request: NextRequest) {
        if (user?.email && process.env.NOTION_AUTH_SECRET && process.env.NOTION_AUTH_DB_ID) {
          after(async () => {
            try {
-             // Importación dinámica para aligerar la carga principal
-             const { Client } = await import('@notionhq/client')
-             const notionAuth = new Client({ auth: process.env.NOTION_AUTH_SECRET });
-             const authDatabaseId = process.env.NOTION_AUTH_DB_ID!;
+             const authToken = process.env.NOTION_AUTH_SECRET!;
+             const authDbId = process.env.NOTION_AUTH_DB_ID!;
              const userEmail = user.email!;
 
-             // Check if exists para no duplicar en logueos recurrentes
-             // @ts-ignore: Tipado temporalmente desactualizado en la versión utilizada
-             const existing = await notionAuth.databases.query({
-               database_id: authDatabaseId,
-               filter: {
-                 property: "Email",
-                 email: {
-                   equals: userEmail
+             // Check for duplicates primero
+             const checkRes = await fetch(`https://api.notion.com/v1/databases/${authDbId}/query`, {
+               method: 'POST',
+               headers: {
+                 'Authorization': `Bearer ${authToken}`,
+                 'Notion-Version': '2022-06-28',
+                 'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({
+                 filter: {
+                   property: "Email",
+                   email: { equals: userEmail }
                  }
-               }
+               })
              });
+             const checkData = await checkRes.json() as any;
 
-             if (existing.results.length === 0) {
-               await notionAuth.pages.create({
-                 parent: { database_id: authDatabaseId },
-                 properties: {
-                   "Name": { title: [{ text: { content: userEmail } }] },
-                   "Email": { email: userEmail },
-                   "Fecha de registro": { date: { start: new Date(user.created_at).toISOString() } }
-                 }
+             if (checkData.results?.length === 0) {
+               const insertRes = await fetch('https://api.notion.com/v1/pages', {
+                 method: 'POST',
+                 headers: {
+                   'Authorization': `Bearer ${authToken}`,
+                   'Notion-Version': '2022-06-28',
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                   parent: { database_id: authDbId },
+                   properties: {
+                     "Name": { title: [{ text: { content: userEmail } }] },
+                     "Email": { email: userEmail },
+                     "Fecha de registro": { date: { start: new Date(user.created_at).toISOString() } }
+                   }
+                 })
                });
-               console.log(`Usuario autenticado sincronizado a Notion: ${userEmail}`);
+               if (insertRes.ok) {
+                 console.log(`✅ Usuario sincronizado a Notion: ${userEmail}`);
+               } else {
+                 const errBody = await insertRes.json();
+                 console.error("❌ Notion Auth Insert Error:", errBody);
+               }
+             } else {
+               console.log(`ℹ️ Usuario ya existe en Notion: ${userEmail}`);
              }
-           } catch(err) {
-              console.error("Error sincronizando a Notion en auth callback:", err)
+           } catch(err: any) {
+              console.error("❌ Error sincronizando a Notion en auth callback:", err?.message || err)
            }
          })
        }
@@ -76,3 +94,4 @@ export async function GET(request: NextRequest) {
   // Auth error fallback
   return NextResponse.redirect(`${origin}/blog/prompts?auth_error=true`)
 }
+

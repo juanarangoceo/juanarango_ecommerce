@@ -46,7 +46,7 @@ export async function subscribeToNewsletter(
       return { success: false, error: "No se pudo guardar tu email en la base de datos." };
     }
 
-    // 3. Insert into Notion
+    // 3. Insert into Notion via fetch (SDK has a bug with child_databases)
     try {
       const notionSecret = process.env.NOTION_SECRET;
       const notionDbId = process.env.NOTION_SUBSCRIBERS_DB_ID;
@@ -55,25 +55,31 @@ export async function subscribeToNewsletter(
         console.warn("⚠️ Faltan credenciales de Notion:", { notionSecret: !!notionSecret, notionDbId: !!notionDbId });
       } else {
         console.log("📝 Enviando a Notion Subscribers DB...");
-        const notion = new Client({ auth: notionSecret });
-        await notion.pages.create({
-          parent: { database_id: notionDbId },
-          properties: {
-            "Name": {
-              title: [{ text: { content: email } }],
-            },
-            "Email": {
-              email: email,
-            },
-            "Fecha de suscripción": {
-              date: { start: new Date().toISOString() },
-            },
+        const notionRes = await fetch('https://api.notion.com/v1/pages', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${notionSecret}`,
+            'Notion-Version': '2022-06-28',
+            'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            parent: { database_id: notionDbId },
+            properties: {
+              "Name": { title: [{ text: { content: email } }] },
+              "Email": { email: email },
+              "Fecha de suscripción": { date: { start: new Date().toISOString() } },
+            }
+          })
         });
-        console.log(`✅ Suscriptor enviado a Notion: ${email}`);
+        if (notionRes.ok) {
+          console.log(`✅ Suscriptor enviado a Notion: ${email}`);
+        } else {
+          const errBody = await notionRes.json();
+          console.error("❌ Notion API Error:", errBody);
+        }
       }
     } catch (notionError: any) {
-      console.error("❌ Notion Error:", notionError?.body || notionError?.message || notionError);
+      console.error("❌ Notion Fetch Error:", notionError?.message || notionError);
       // No fallamos la suscripción global si Notion falla
     }
 
