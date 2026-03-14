@@ -12,5 +12,15 @@ export default defineBlueprint({
         includeDrafts: true,
       }
     }),
+    defineDocumentFunction({
+      name: 'createTagsOnPublish',
+      src: './functions/createTagsOnPublish/index.ts',
+      timeout: 60,
+      event: {
+        filter: "_type == 'post' && defined(tags) && length(tags) > 0",
+        on: ['create', 'update'],
+        // Sin includeDrafts → solo posts publicados
+      }
+    }),
   ],
 })
