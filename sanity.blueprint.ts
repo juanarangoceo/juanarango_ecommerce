@@ -6,8 +6,9 @@ export default defineBlueprint({
       name: 'generateBlogContent',
       src: './functions/generateBlogContent/index.ts',
       event: {
-        filter: "_type == 'post'",
+        filter: "_type == 'post' && generationStatus == 'generating'",
         on: ['create', 'update'],
+        includeDrafts: true,
       }
     }),
   ],
