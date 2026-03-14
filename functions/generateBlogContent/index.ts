@@ -1,9 +1,9 @@
-import { documentEventHandler } from '@sanity/functions'
 import { createClient } from '@sanity/client'
 import { GoogleGenAI } from '@google/genai'
 
-export const handler = documentEventHandler(async (envelope) => {
-  const { context, event } = envelope
+// Vanilla JS handler — no @sanity/functions import needed
+// Docs: https://www.sanity.io/docs/functions/function-quickstart
+export async function handler({ context, event }: any) {
   const doc = event.data
 
   // Solo ejecutar si el estado es 'generating' y el _id existe
@@ -18,10 +18,6 @@ export const handler = documentEventHandler(async (envelope) => {
     useCdn: false
   })
 
-  // Evitar duplicidades marcando status='processing'
-  // Pero aquí en Serverless Function esto podría ser over-engineering si no hay race condition
-  // Igualmente, usaremos variables locales
-  
   try {
     // 1. Obtener configuración del prompt
     const promptConfigResult = await client.fetch(`*[_type == "promptConfig"][0]`)
@@ -37,15 +33,15 @@ export const handler = documentEventHandler(async (envelope) => {
 
     const ai = new GoogleGenAI({ apiKey })
 
-    // 3. Preparar Prompt
-    const topic = doc.title || 'Tema general'
+    // 3. Preparar Prompt — usa el campo 'topic' del borrador como tema
+    const topic = doc.topic || doc.title || 'Tema general'
     const finalPrompt = promptConfigResult.instructions.replace('{{topic}}', topic)
 
     console.log(`🚀 Función iniciada para post: ${topic}. Obteniendo de Gemini...`)
 
     // 4. Llamar Gemini
     const geminiResponse = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash-preview-05-20",
       contents: [{
         role: "user",
         parts: [{ text: finalPrompt }]
@@ -55,7 +51,7 @@ export const handler = documentEventHandler(async (envelope) => {
       },
     } as any)
 
-    // Extracción robusta (basada en el route.ts web)
+    // Extracción robusta
     let generatedText = "";
     // @ts-ignore
     if (typeof geminiResponse.text === 'function') {
@@ -77,7 +73,6 @@ export const handler = documentEventHandler(async (envelope) => {
     try {
       rawData = JSON.parse(cleanJson);
     } catch(e) {
-      // Intentar regex fallback si JSON.parse falla simple
        let jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
        if (jsonMatch) rawData = JSON.parse(jsonMatch[0]);
        else throw e;
@@ -89,20 +84,35 @@ export const handler = documentEventHandler(async (envelope) => {
         throw new Error("La IA no generó la llave 'content' requerida.");
     }
 
+    // Función helper para limpiar slugs
+    const sanitizeSlug = (text: string) => {
+      return text
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .slice(0, 96)
+    }
+
+    const finalSlug = rawData.slug 
+      ? sanitizeSlug(typeof rawData.slug === 'string' ? rawData.slug : rawData.slug.current || '') 
+      : sanitizeSlug(rawData.title || topic)
+
     // 6. Actualizar Documento en Sanity
-    // Se elimina el estado 'generating' pasándolo a 'completed'
-    // También mapeamos los campos a la base de datos
     await client.patch(doc._id)
       .set({
         title: rawData.title || rawData.header || doc.title,
-        slug: { _type: 'slug', current: rawData.slug || doc.slug?.current },
+        slug: { _type: 'slug', current: finalSlug },
         content: content,
-        faq: rawData.faq || [],
-        category: rawData.category || "ecommerce",
-        tags: (Array.isArray(rawData.tags) ? rawData.tags : []).map((tag: string) => ({
-             name: tag,
-             slug: tag.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        faq: (rawData.faq || []).map((item: any, index: number) => ({
+          _key: `faq-${index}-${Date.now()}`,
+          question: item.question || '',
+          answer: item.answer || '',
         })),
+        category: rawData.category || "ecommerce",
+        tags: (Array.isArray(rawData.tags) ? rawData.tags : []),
         keywordFocus: rawData.keywordFocus || "",
         secondaryKeywords: Array.isArray(rawData.secondaryKeywords) ? rawData.secondaryKeywords : [],
         generationStatus: 'completed'
@@ -115,10 +125,14 @@ export const handler = documentEventHandler(async (envelope) => {
     console.error('❌ Error AI Function:', err.message)
     
     // Si falla, pasamos el request a estado failed para que el usuario pueda reintentar
-    await client.patch(doc._id)
-      .set({
-        generationStatus: 'failed'
-      })
-      .commit()
+    try {
+      await client.patch(doc._id)
+        .set({
+          generationStatus: 'failed'
+        })
+        .commit()
+    } catch (patchErr) {
+      console.error('❌ No se pudo actualizar el status a failed:', patchErr)
+    }
   }
-})
+}
