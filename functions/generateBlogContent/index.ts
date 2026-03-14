@@ -136,56 +136,6 @@ export async function handler({ context, event }: any) {
       ? sanitizeSlug(typeof rawData.slug === 'string' ? rawData.slug : rawData.slug.current || '')
       : sanitizeSlug(rawData.title || topic)
 
-    // Función para procesar y crear tags como documentos 'Draft' en Sanity
-    async function getOrCreateTagDraftRefs(tagNames: string[]) {
-      const refs: { _type: 'reference', _ref: string, _key: string }[] = []
-      
-      for (const t of tagNames) {
-        if (!t || typeof t !== 'string') continue
-        const cleanName = t.trim()
-        const tSlug = sanitizeSlug(cleanName)
-        if (!tSlug) continue
-        
-        // El id del documento draft
-        const draftId = `drafts.tag-${tSlug}`
-        
-        // Creamos (createIfNotExists) el documento draft tag usando la REST API
-        const createUrl = `${SANITY_API}/mutate/${dataset}`
-        const bodyCreate = JSON.stringify({
-          mutations: [{
-            createIfNotExists: {
-              _id: draftId,
-              _type: 'tag',
-              name: cleanName,
-              slug: { _type: 'slug', current: tSlug }
-            }
-          }]
-        })
-        
-        try {
-          await fetch(createUrl, { method: 'POST', headers, body: bodyCreate })
-        } catch (e) {
-          console.error(`Error creando tag draft ${draftId}:`, e)
-        }
-        
-        // Agregamos la referencia a la lista
-        refs.push({
-          _type: 'reference',
-          _ref: draftId,
-          _key: `ref-${tSlug}-${Date.now()}`
-        })
-      }
-      return refs
-    }
-
-    // Unir tags y secondaryKeywords que vengan de Gemini para crear los Documentos Tag Draft
-    const rawTags = Array.isArray(rawData.tags) ? rawData.tags : []
-    const rawSecKeys = Array.isArray(rawData.secondaryKeywords) ? rawData.secondaryKeywords : []
-    
-    console.log(`🏷️ Creando tags como drafts...`)
-    const tagDraftRefs = await getOrCreateTagDraftRefs(rawTags)
-    const secKeyDraftRefs = await getOrCreateTagDraftRefs(rawSecKeys)
-
     // 7. Actualizar Documento POST en Sanity
     console.log(`💾 Actualizando documento ${doc._id}...`)
     await sanityPatch(doc._id, {
@@ -198,9 +148,9 @@ export async function handler({ context, event }: any) {
         answer: item.answer || '',
       })),
       category: rawData.category || 'ecommerce',
-      tags: tagDraftRefs,
+      tags: Array.isArray(rawData.tags) ? rawData.tags.filter((t: any) => typeof t === 'string') : [],
       keywordFocus: rawData.keywordFocus || '',
-      secondaryKeywords: secKeyDraftRefs,
+      secondaryKeywords: Array.isArray(rawData.secondaryKeywords) ? rawData.secondaryKeywords.filter((t: any) => typeof t === 'string') : [],
       generationStatus: 'completed'
     })
 
