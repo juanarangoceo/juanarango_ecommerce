@@ -27,6 +27,14 @@ export default {
         input: GeneratePostInput
       }
     },
+    {
+      name: 'generationStatus',
+      title: 'Estado de Generación IA',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+      initialValue: 'idle'
+    },
     // Categoría principal (define la URL: /blog/[category]/[slug])
     {
       name: 'category',

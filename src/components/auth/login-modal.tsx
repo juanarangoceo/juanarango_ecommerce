@@ -34,6 +34,7 @@ export function LoginModal({
     setLoading(false);
 
     if (error) {
+      console.error("🚨 Supabase Login Error:", error);
       setError("No pudimos enviar el link. Intenta de nuevo.");
     } else {
       setSent(true);

@@ -1,47 +1,24 @@
-import { normalizeTagSlug } from "@/lib/normalize-tag";
-import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
-import { syncSanityPosts } from "@/app/actions/sync-posts";
-import { requireInternalAuth } from "@/lib/api-auth";
-import { checkRateLimit } from "@/lib/rate-limit";
+export default {
+  name: 'promptConfig',
+  title: 'Configuración de Prompts IA',
+  type: 'document',
+  fields: [
+    {
+      name: 'title',
+      title: 'Título del Prompt',
+      type: 'string',
+      description: 'Nombre para identificar este prompt (e.g. "Prompt Principal de Blog").',
+      initialValue: 'Prompt Principal de Blog'
+    },
+    {
+      name: 'instructions',
+      title: 'Instrucciones Base del Prompt',
+      type: 'text',
+      description: 'Usa {{topic}} para indicar dónde se inyectará el tema que escribe el usuario al generar un post. La IA usará todo este texto para crear el artículo.',
+      rows: 25,
+      initialValue: `Eres Juan Arango, CEO de Nitro Ecom — consultor de ecommerce, inteligencia artificial y estrategia digital con más de 10 años de experiencia ayudando a marcas y emprendedores a vender más en internet.
 
-
-// Inicialización de cliente Gemini
-const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
-
-export const maxDuration = 30; 
-export const dynamic = 'force-dynamic';
-
-export async function POST(req: Request) {
-  const authError = requireInternalAuth(req);
-  if (authError) return authError;
-
-  // Rate limit: 5 requests per 10 minutes per token
-  const token = req.headers.get('Authorization') ?? 'anon';
-  const rl = checkRateLimit(`generate-blog:${token}`, 5, 10 * 60 * 1000);
-  if (!rl.allowed) {
-    return NextResponse.json(
-      { error: `Demasiadas solicitudes. Reintenta en ${rl.retryAfter}s.` },
-      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
-    );
-  }
-
-  try {
-    const { topic } = await req.json();
-    if (!topic) return NextResponse.json({ error: "Falta el tema" }, { status: 400 });
-
-    console.log(`🚀 Generando BLOG (Texto) sobre: ${topic}`);
-    if (!process.env.GOOGLE_API_KEY) throw new Error("Falta GOOGLE_API_KEY");
-
-    // Modelo principal: Gemini 2.5 Flash Preview
-    const geminiResponse = await googleAI.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: [{
-        role: "user",
-        parts: [{
-          text: `Eres Juan Arango, CEO de Nitro Ecom — consultor de ecommerce, inteligencia artificial y estrategia digital con más de 10 años de experiencia ayudando a marcas y emprendedores a vender más en internet.
-
-Escribe un artículo de blog COMPLETO, EXTENSO y de ALTO VALOR sobre el tema: "${topic}".
+Escribe un artículo de blog COMPLETO, EXTENSO y de ALTO VALOR sobre el tema: "{{topic}}".
 
 ━━━━━━━━━━━━━━━━━━━
 VOZ Y ESTILO
@@ -120,70 +97,6 @@ Tu respuesta DEBE ser un objeto JSON válido con EXACTAMENTE estas 8 claves:
 8. "secondaryKeywords": Array de 3-5 keywords longtail secundarias relacionadas (ej: ["crear tienda online gratis", "shopify precio colombia", "plataforma ecommerce latinoamerica"]).
 
 Responde ÚNICAMENTE con el JSON puro. Sin \`\`\`json al inicio ni al final. Sin explicaciones adicionales.`
-        }]
-      }],
-      config: { 
-        responseMimeType: "application/json" 
-      },
-    } as any);
-
-    // Extracción robusta del texto
-    let generatedText = "";
-    // @ts-ignore
-    if (typeof geminiResponse.text === 'function') {
-         // @ts-ignore
-         generatedText = geminiResponse.text();
-    } else if (typeof geminiResponse.text === 'string') {
-         generatedText = geminiResponse.text;
-    } else if (geminiResponse.candidates?.[0]?.content?.parts?.[0]?.text) {
-         generatedText = geminiResponse.candidates[0].content.parts[0].text;
-    } else {
-         generatedText = JSON.stringify(geminiResponse);
     }
-
-    if (!generatedText) throw new Error("Gemini no devolvió datos");
-
-    // Limpieza y Normalización
-    const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim();
-    const rawData = JSON.parse(cleanJson);
-    
-    // Normalizar datos (Gemini a veces usa 'body' o 'article' en lugar de 'content')
-    const blogData = {
-        title: rawData.title || rawData.header || topic,
-        slug: rawData.slug,
-        // Fallback robusto para encontrar el contenido
-        content: rawData.content || rawData.body || rawData.text || rawData.article || rawData.markdown || rawData.fullText || "",
-        faq: rawData.faq || [],
-        category: rawData.category || "ecommerce",
-        tags: (Array.isArray(rawData.tags) ? rawData.tags : []).map((tag: string) => ({
-             name: tag,
-             slug: normalizeTagSlug(tag)
-        })),
-        // Nuevos campos de keywords para SEO
-        keywordFocus: rawData.keywordFocus || "",
-        secondaryKeywords: Array.isArray(rawData.secondaryKeywords) ? rawData.secondaryKeywords : [],
-    };
-
-    if (!blogData.content) {
-        console.error("❌ Gemini devolvió JSON sin contenido:", JSON.stringify(rawData));
-        throw new Error("La IA no generó contenido (JSON incompleto). Intenta de nuevo.");
-    }
-    
-    // Trigger Async Sync to Supabase
-    // We don't await this to keep the response fast for the UI
-    (async () => {
-        try {
-            console.log("⚡ Triggering background sync...");
-            await syncSanityPosts();
-        } catch (err) {
-            console.error("Background sync failed:", err);
-        }
-    })();
-
-    return NextResponse.json({ success: true, data: blogData });
-
-  } catch (error: any) {
-    console.error("❌ Error API:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+  ]
 }

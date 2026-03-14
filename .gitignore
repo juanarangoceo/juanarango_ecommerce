@@ -43,3 +43,9 @@ nuevo_proyecto/
 *.zip
 
 .vercel
+
+
+# Sanity Functions
+functions/**/.env*
+functions/**/.build/
+functions/**/node_modules/

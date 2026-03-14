@@ -1,26 +1,21 @@
 import { Stack, Button, Card, Text, TextArea, Label, useToast } from '@sanity/ui'
-import { useCallback, useState } from 'react'
-import { set, useDocumentOperation, useFormValue, useClient } from 'sanity'
+import { useCallback } from 'react'
+import { set, useFormValue, useClient } from 'sanity'
 
 export const GeneratePostInput = (props: any) => {
   const { onChange, value } = props
   const toast = useToast()
   
-  const [isGenerating, setIsGenerating] = useState(false)
-
-  // Retrieve Document ID and Type
+  // Obtenemos del parent el estado actual y el id
   const docId = useFormValue(['_id']) as string
-  const docType = useFormValue(['_type']) as string
+  const generationStatus = useFormValue(['generationStatus']) as string
+
+  const isGenerating = generationStatus === 'generating'
   
   // Sanity Client
-  const client = useClient({ apiVersion: '2024-01-01' })
-
-  // Operation Hook - crucial: must use the "published" ID format (no 'drafts.' prefix) for useDocumentOperation
-  const publishedId = (docId || '').replace('drafts.', '')
-  const { publish } = useDocumentOperation(publishedId, docType || 'post')
+  const client = useClient({ apiVersion: '2024-03-01' })
 
   const handleGenerate = useCallback(async () => {
-    // Robust value retrieval
     const currentTopic = typeof value === 'string' ? value : (typeof value === 'object' ? JSON.stringify(value) : '')
     
     if (!currentTopic || currentTopic.length < 3) {
@@ -28,139 +23,37 @@ export const GeneratePostInput = (props: any) => {
         return
     }
 
-    setIsGenerating(true)
-    
     try {
-      toast.push({ title: "Iniciando IA...", status: 'info' })
-
-      // 1. CALL API
-      const res = await fetch('/api/generate-blog', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
-        },
-        body: JSON.stringify({ topic: currentTopic }),
-      })
+      toast.push({ title: "Iniciando IA en Sanity Cloud...", status: 'info' })
       
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => ({}))
-        throw new Error(errJson.error || `Error ${res.status}: ${res.statusText}`)
-      }
-
-      const json = await res.json()
-      if (!json.success || !json.data) {
-          throw new Error("Respuesta inválida de la API")
-      }
-
-      const { title, slug, content } = json.data
-
-      // 2. VALIDATION
-      if (!content || content.length < 50) {
-          throw new Error(`Contenido generado insuficiente (${content?.length || 0} chars).`)
-      }
-
-      // Helper to sanitize slug — garantiza slugs limpios aunque la IA devuelva formato inesperado
-      const sanitizeSlug = (text: string) => {
-          return text
-              .toString()
-              .toLowerCase()
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')    // quita acentos
-              .replace(/[^a-z0-9]+/g, '-')        // chars inválidos → guiones
-              .replace(/(^-|-$)/g, '')             // sin guiones al inicio/final
-              .slice(0, 96)
-      }
-
-      // 3. PREPARAR TAGS — crear documentos de etiqueta como BORRADORES
-      // Se crean con el prefijo "drafts." para que sean invisibles al público
-      // (no aparecen en el sitemap ni en páginas de etiquetas) hasta que el
-      // usuario los revise y publique desde la sección "Etiqueta" en Studio.
-      const tagsData = json.data.tags || []
-
-      const validTags = tagsData.filter((tag: any) => {
-          const name = (tag?.name || '').trim()
-          const slug = sanitizeSlug(tag?.slug || tag?.name || '')
-          return name.length > 0 && slug.length > 0
-      })
-
-      const tagSlugs: string[] = validTags.map((tag: any) =>
-          sanitizeSlug(tag.slug || tag.name)
-      )
-
-      // Crear documentos de etiqueta como borradores (no publicados)
-      await Promise.allSettled(
-          validTags.map(async (tag: any) => {
-              const cleanSlug = sanitizeSlug(tag.slug || tag.name)
-              const cleanName = (tag.name || tag.slug || '').trim()
-              const publishedId = `tag-${cleanSlug}`
-              const draftTagId = `drafts.tag-${cleanSlug}`
-              try {
-                  // createIfNotExists no sobreescribe si ya existe
-                  await client.createIfNotExists({
-                      _id: draftTagId,
-                      _type: 'tag',
-                      name: cleanName,
-                      slug: { _type: 'slug', current: cleanSlug },
-                  })
-              } catch (err) {
-                  console.warn(`⚠️ Tag draft "${cleanName}" no se pudo crear:`, err)
-              }
-          })
-      )
-
-
-      const finalSlug = typeof slug === 'string' ? sanitizeSlug(slug) : (slug?.current ? sanitizeSlug(slug.current) : sanitizeSlug(title || currentTopic))
-
-      const attributes: any = {
-          title: title || currentTopic,
-          slug: { _type: 'slug', current: finalSlug },
-          content: content,
-          // Sanity requiere _key único por cada item del array para renderizarlos en Studio
-          faq: (json.data.faq || []).map((item: any, index: number) => ({
-              _key: `faq-${index}-${Date.now()}`,
-              question: item.question || '',
-              answer: item.answer || '',
-          })),
-          author: "Juan Arango",
-          category: json.data.category || 'ecommerce',
-          tags: tagSlugs,
-          keywordFocus: json.data.keywordFocus || '',
-          secondaryKeywords: json.data.secondaryKeywords || [],
-      }
-
-      // Also update the current field (Topic) in the form state
+      // Update local value just in case
       onChange(set(currentTopic))
 
-      // Perform the patch — always target the draft to avoid overwriting the published doc
-      // NOTE: We do NOT call the revalidation webhook here because the post is still a draft.
-      // Revalidation happens when the user clicks "Publish" in Sanity Studio.
       const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
-      toast.push({ title: "Actualizando documento...", status: 'info' })
-      await client.patch(draftId).set(attributes).commit()
+      
+      // SOLO parchamos el status a generating. La Document Function escucha esto remotamente.
+      await client.patch(draftId)
+          .set({ generationStatus: 'generating' })
+          .commit()
 
-      // 4. HECHO (No publicar automáticamente)
       toast.push({ 
-          title: "Borrador Generado Exitosamente", 
-          description: "Revisa el contenido y publica cuando estés listo.", 
+          title: "Generación en Progreso", 
+          description: "La IA está escribiendo (puede tomar ~60s). La página se actualizará sola.", 
           status: 'success',
           duration: 5000
       })
 
     } catch (err: any) {
-      console.error("Gen Error:", err)
+      console.error("Trigger Error:", err)
       toast.push({ 
-          title: "Error en Generación", 
-          description: err.message || "Ocurrió un error inesperado", 
+          title: "Error de Sanity", 
+          description: err.message || "No se pudo iniciar la generación", 
           status: 'error',
           duration: 5000
       })
-    } finally {
-      setIsGenerating(false)
     }
-  }, [value, onChange, client, docId, publish, toast])
+  }, [value, onChange, client, docId, toast])
 
-  // Handle local typing
   const handleTopicChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
       onChange(set(e.currentTarget.value))
   }, [onChange])
@@ -169,9 +62,17 @@ export const GeneratePostInput = (props: any) => {
     <Stack space={3}>
       <Card padding={3} tone="primary" border radius={2}>
         <Stack space={3}>
-            <Label>Generador AI (Gemini 3 Flash)</Label>
-            <Text size={1} muted>Introduce el tema y la IA escribirá y estructurará el post por ti.</Text>
+            <Label>Generador AI en Nube Sanity (Gemini 3 Flash)</Label>
+            <Text size={1} muted>Introduce el tema y el Agente de IA generará el contenido en el servidor de Sanity (Sin límite de tiempo de Vercel). El borrador se actualizará mágicamente.</Text>
             
+            {(generationStatus === 'completed') && (
+               <Text size={1} weight="semibold" style={{color: 'green'}}>¡Última generación exitosa! Revisa el contenido abajo.</Text>
+            )}
+
+            {(generationStatus === 'failed') && (
+               <Text size={1} weight="semibold" style={{color: 'red'}}>La última generación falló. Intenta de nuevo.</Text>
+            )}
+
             <TextArea 
                 value={typeof value === 'string' ? value : ''}
                 onChange={handleTopicChange}
@@ -181,8 +82,8 @@ export const GeneratePostInput = (props: any) => {
             />
 
             <Button 
-                text={isGenerating ? "Generando contenido..." : "Generar Blog Post"}
-                tone="primary"
+                text={isGenerating ? "Generando contenido (espera unos segundos)..." : "Generar Blog Post"}
+                tone={isGenerating ? "caution" : "primary"}
                 onClick={handleGenerate}
                 loading={isGenerating}
                 disabled={!value || isGenerating}

@@ -10,5 +10,6 @@ import appTool from './appTool'
 import appComparison from './appComparison'
 import curso from './curso'
 import promptGallery from './promptGallery'
+import promptConfig from './promptConfig'
 
-export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool, appComparison, curso, promptGallery]
+export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool, appComparison, curso, promptGallery, promptConfig]
