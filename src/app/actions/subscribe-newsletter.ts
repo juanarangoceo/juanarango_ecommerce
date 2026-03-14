@@ -5,8 +5,6 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { Client } from "@notionhq/client";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const notion = new Client({ auth: process.env.NOTION_SECRET });
-const databaseId = process.env.NOTION_SUBSCRIBERS_DB_ID!;
 
 interface SubscriptionResult {
   success: boolean;
@@ -50,33 +48,33 @@ export async function subscribeToNewsletter(
 
     // 3. Insert into Notion
     try {
-      if (!process.env.NOTION_SECRET || !databaseId) {
-         console.warn("Faltan credenciales de Notion. Omitiendo sincronización con Notion.");
+      const notionSecret = process.env.NOTION_SECRET;
+      const notionDbId = process.env.NOTION_SUBSCRIBERS_DB_ID;
+
+      if (!notionSecret || !notionDbId) {
+        console.warn("⚠️ Faltan credenciales de Notion:", { notionSecret: !!notionSecret, notionDbId: !!notionDbId });
       } else {
+        console.log("📝 Enviando a Notion Subscribers DB...");
+        const notion = new Client({ auth: notionSecret });
         await notion.pages.create({
-          parent: { database_id: databaseId },
+          parent: { database_id: notionDbId },
           properties: {
             "Name": {
-              title: [
-                {
-                  text: { content: email },
-                },
-              ],
+              title: [{ text: { content: email } }],
             },
             "Email": {
               email: email,
             },
             "Fecha de suscripción": {
-              date: {
-                start: new Date().toISOString(),
-              },
+              date: { start: new Date().toISOString() },
             },
           },
         });
+        console.log(`✅ Suscriptor enviado a Notion: ${email}`);
       }
-    } catch (notionError) {
-      console.error("Notion Error:", notionError);
-      // No fallamos la suscripción global si Notion falla, pues ya está en Supabase
+    } catch (notionError: any) {
+      console.error("❌ Notion Error:", notionError?.body || notionError?.message || notionError);
+      // No fallamos la suscripción global si Notion falla
     }
 
     // 4. Send Welcome Email via Resend
