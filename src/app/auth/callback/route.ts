@@ -35,9 +35,14 @@ export async function GET(request: NextRequest) {
        if (user?.email && process.env.NOTION_AUTH_SECRET && process.env.NOTION_AUTH_DB_ID) {
          after(async () => {
            try {
-             const authToken = process.env.NOTION_AUTH_SECRET!;
-             const authDbId = process.env.NOTION_AUTH_DB_ID!;
+             const authToken = process.env.NOTION_AUTH_SECRET?.trim();
+             const authDbId = process.env.NOTION_AUTH_DB_ID?.trim();
              const userEmail = user.email!;
+
+             if (!authToken || !authDbId) {
+               console.warn("⚠️ Faltan credenciales de Notion Auth");
+               return;
+             }
 
              // Check for duplicates primero
              const checkRes = await fetch(`https://api.notion.com/v1/databases/${authDbId}/query`, {

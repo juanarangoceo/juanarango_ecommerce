@@ -48,8 +48,8 @@ export async function subscribeToNewsletter(
 
     // 3. Insert into Notion via fetch (SDK has a bug with child_databases)
     try {
-      const notionSecret = process.env.NOTION_SECRET;
-      const notionDbId = process.env.NOTION_SUBSCRIBERS_DB_ID;
+      const notionSecret = process.env.NOTION_SECRET?.trim();
+      const notionDbId = process.env.NOTION_SUBSCRIBERS_DB_ID?.trim();
 
       if (!notionSecret || !notionDbId) {
         console.warn("⚠️ Faltan credenciales de Notion:", { notionSecret: !!notionSecret, notionDbId: !!notionDbId });
