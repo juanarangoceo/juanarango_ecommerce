@@ -62,10 +62,14 @@ export async function handler({ context, event }: any) {
       throw new Error('Secret GOOGLE_API_KEY no configurado.')
     }
 
-    // 3. Preparar Prompt
-    const topic = doc.topic || doc.title || 'Tema general'
+    // 3. Preparar Prompt — limpia comillas del topic para no romper el JSON de Gemini
+    const rawTopic = doc.topic || doc.title || 'Tema general'
+    const topic = rawTopic
+      .replace(/[""«»]/g, '"')   // normalizar comillas tipográficas
+      .replace(/[''‹›]/g, "'")  // normalizar comillas simples
+      .trim()
     const finalPrompt = promptConfig.instructions.replace('{{topic}}', topic)
-    console.log(`🚀 Generando contenido para: "${topic}"`)
+    console.log(`🚀 Generando contenido para: "${topic.slice(0, 80)}"`)
 
     // 4. Llamar Gemini via REST fetch
     const geminiRes = await fetch(
@@ -89,15 +93,31 @@ export async function handler({ context, event }: any) {
     const generatedText = geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text
     if (!generatedText) throw new Error('Gemini no devolvió contenido en el formato esperado')
 
-    // 5. Parsear JSON
+    // 5. Parsear JSON — varios fallbacks para resiliencia
     const cleanJson = generatedText.replace(/```json\n?|```/g, '').trim()
     let rawData: any
     try {
       rawData = JSON.parse(cleanJson)
-    } catch (e) {
+    } catch {
+      // Fallback 1: Extraer el primer objeto JSON del texto
       const match = cleanJson.match(/\{[\s\S]*\}/)
-      if (match) rawData = JSON.parse(match[0])
-      else throw new Error('No se pudo parsear la respuesta de Gemini como JSON')
+      if (match) {
+        try {
+          rawData = JSON.parse(match[0])
+        } catch {
+          // Fallback 2: Si el JSON tiene caracteres problemáticos, intentar parsearlo de forma más permisiva
+          // Reemplazamos saltos de línea dentro de strings con \n escapado
+          const sanitized = match[0]
+            .replace(/(?<=": ?"[^"]*)\n(?=[^"]*")/g, '\\n')  // escapa newlines dentro de strings
+          try {
+            rawData = JSON.parse(sanitized)
+          } catch (finalErr: any) {
+            throw new Error(`JSON inválido: ${finalErr.message}. Texto recibido (inicio): ${cleanJson.slice(0, 300)}`)
+          }
+        }
+      } else {
+        throw new Error('No se encontró JSON en la respuesta de Gemini')
+      }
     }
 
     // 6. Validar contenido
