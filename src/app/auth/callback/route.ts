@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
-import { after } from 'next/server'
+
 
 // Supabase Auth Magic Link callback — receives code, exchanges for session, redirects
 export async function GET(request: NextRequest) {
@@ -33,17 +33,14 @@ export async function GET(request: NextRequest) {
     if (!error) {
        const user = data.user
        if (user?.email && process.env.NOTION_AUTH_SECRET && process.env.NOTION_AUTH_DB_ID) {
-         after(async () => {
-           try {
-             const authToken = process.env.NOTION_AUTH_SECRET?.trim();
-             const authDbId = process.env.NOTION_AUTH_DB_ID?.trim();
-             const userEmail = user.email!;
+         try {
+           const authToken = process.env.NOTION_AUTH_SECRET?.trim();
+           const authDbId = process.env.NOTION_AUTH_DB_ID?.trim();
+           const userEmail = user.email!;
 
-             if (!authToken || !authDbId) {
-               console.warn("⚠️ Faltan credenciales de Notion Auth");
-               return;
-             }
-
+           if (!authToken || !authDbId) {
+             console.warn("⚠️ Faltan credenciales de Notion Auth");
+           } else {
              // Check for duplicates primero
              const checkRes = await fetch(`https://api.notion.com/v1/databases/${authDbId}/query`, {
                method: 'POST',
@@ -87,10 +84,10 @@ export async function GET(request: NextRequest) {
              } else {
                console.log(`ℹ️ Usuario ya existe en Notion: ${userEmail}`);
              }
-           } catch(err: any) {
-              console.error("❌ Error sincronizando a Notion en auth callback:", err?.message || err)
            }
-         })
+         } catch(err: any) {
+            console.error("❌ Error sincronizando a Notion en auth callback:", err?.message || err)
+         }
        }
        return response
     }
