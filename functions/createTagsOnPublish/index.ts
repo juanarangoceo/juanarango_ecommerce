@@ -1,10 +1,10 @@
-// Función que se ejecuta cuando se PUBLICA un post (documento sin drafts.*)
+// Función que se ejecuta cuando se PUBLICA un post
 // Crea documentos 'tag' publicados en Sanity para cada etiqueta del post
 
 export async function handler({ context, event }: any) {
   const doc = event.data
 
-  // Solo ejecutar en posts publicados con tags
+  // Solo ejecutar en posts con tags
   if (doc._type !== 'post') return
   if (!doc.tags || !Array.isArray(doc.tags) || doc.tags.length === 0) {
     console.log('ℹ️ Post sin tags, nada que crear.')
@@ -30,43 +30,59 @@ export async function handler({ context, event }: any) {
 
   const tagsToCreate = doc.tags.filter((t: any) => typeof t === 'string' && t.trim().length > 0)
   console.log(`🏷️ Creando ${tagsToCreate.length} etiqueta(s) para el post "${doc.title}"...`)
+  console.log(`📋 Tags: ${JSON.stringify(tagsToCreate)}`)
+  console.log(`🔗 API: ${SANITY_API}/mutate/${dataset}`)
+
+  // Batch: crear todas las mutaciones en una sola llamada
+  const mutations: any[] = []
 
   for (const tagName of tagsToCreate) {
     const cleanName = tagName.trim()
     const tagSlug = sanitizeSlug(cleanName)
     if (!tagSlug) continue
 
-    // Usamos un ID estable basado en el slug para evitar duplicados
+    // ID sin prefijo drafts. para que se cree PUBLICADO
     const tagId = `tag-${tagSlug}`
 
-    try {
-      const body = JSON.stringify({
-        mutations: [{
-          createIfNotExists: {
-            _id: tagId,
-            _type: 'tag',
-            name: cleanName,
-            slug: { _type: 'slug', current: tagSlug }
-          }
-        }]
-      })
-
-      const res = await fetch(`${SANITY_API}/mutate/${dataset}`, {
-        method: 'POST',
-        headers,
-        body
-      })
-
-      if (res.ok) {
-        console.log(`✅ Etiqueta lista: "${cleanName}" (${tagId})`)
-      } else {
-        const errText = await res.text()
-        console.error(`❌ Error creando etiqueta "${cleanName}": ${res.status} ${errText}`)
+    mutations.push({
+      createIfNotExists: {
+        _id: tagId,
+        _type: 'tag',
+        name: cleanName,
+        slug: { _type: 'slug', current: tagSlug }
       }
-    } catch (err: any) {
-      console.error(`❌ Error creando etiqueta "${cleanName}":`, err.message)
-    }
+    })
+
+    console.log(`  → Preparando etiqueta: "${cleanName}" → id: ${tagId}, slug: ${tagSlug}`)
   }
 
-  console.log('✅ Proceso de creación de etiquetas finalizado.')
+  if (mutations.length === 0) {
+    console.log('⚠️ Ninguna mutación para ejecutar.')
+    return
+  }
+
+  try {
+    const body = JSON.stringify({ mutations })
+    console.log(`📤 Enviando ${mutations.length} mutaciones a Sanity...`)
+
+    const res = await fetch(`${SANITY_API}/mutate/${dataset}?returnDocuments=true`, {
+      method: 'POST',
+      headers,
+      body
+    })
+
+    const responseText = await res.text()
+    console.log(`📥 Status: ${res.status}`)
+    console.log(`📥 Response: ${responseText.slice(0, 500)}`)
+
+    if (!res.ok) {
+      console.error(`❌ Error en mutaciones: ${res.status} ${responseText}`)
+    } else {
+      console.log(`✅ Todas las etiquetas creadas/verificadas exitosamente.`)
+    }
+  } catch (err: any) {
+    console.error(`❌ Error de red:`, err.message)
+  }
+
+  console.log('🏁 Proceso de creación de etiquetas finalizado.')
 }

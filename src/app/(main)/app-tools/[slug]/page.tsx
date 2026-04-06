@@ -58,6 +58,10 @@ export async function generateMetadata(
       description: app.description,
       url: `https://juanarango.com/app-tools/${app.slug.current}`,
     },
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: `https://juanarango.com/app-tools/${app.slug.current}`,
     },

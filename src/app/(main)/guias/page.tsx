@@ -23,6 +23,18 @@ const guides = [
     badge: "Nuevo"
   },
   {
+    title: "Guía Model Context Protocol (MCP) 2026",
+    description: "Domina el MCP desde cero. El 'puerto USB' de la IA que te permite conectar modelos locales a tus bases de datos corporativas de forma segura.",
+    href: "/guias/mcp",
+    badge: "Hot"
+  },
+  {
+    title: "Guía Claude Code 2026",
+    description: "La guía más completa para integrar el agente de codificación de Anthropic directamente en tu terminal y transformar tu flujo de trabajo.",
+    href: "/guias/claude-code",
+    badge: "Pro"
+  },
+  {
     title: "Guía OpenClaw AI 2026",
     description: "Domina los agentes de IA autónomos con OpenClaw. Instala, configura Skills y automatiza flujos de trabajo completos desde cero.",
     href: "/guias/openclaw-ai",

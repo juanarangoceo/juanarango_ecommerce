@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, LayoutGrid, Terminal } from "lucide-react"
+import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
 /** Rayito verde — relleno con cuerpo, para Blog */
 function ZapSolidGreen({ className }: { className?: string }) {
@@ -30,7 +31,7 @@ export function MobileBottomNav() {
 
   return (
     <div className="fixed bottom-0 left-0 w-full z-50 md:hidden pb-safe">
-      <div className="bg-black/70 backdrop-blur-md border-t border-white/10 px-6 py-3 flex justify-around items-center">
+      <div className="bg-black/70 backdrop-blur-md border-t border-white/10 px-4 py-3 flex justify-around items-center">
 
         {/* 1. Inicio */}
         <Link
@@ -68,7 +69,7 @@ export function MobileBottomNav() {
           <span className="text-[10px] font-medium">Prompts</span>
         </Link>
 
-        {/* 4. Blog — rayito verde con cuerpo (más grande porque es el principal) */}
+        {/* 4. Blog — rayito verde con cuerpo */}
         <Link
           href="/blog"
           prefetch={false}
@@ -82,6 +83,11 @@ export function MobileBottomNav() {
           </div>
           <span className="text-[10px] font-medium">Blog</span>
         </Link>
+
+        {/* 5. Language Toggle */}
+        <div className="flex flex-col items-center gap-1">
+          <LanguageToggle variant="mobile" />
+        </div>
 
       </div>
     </div>

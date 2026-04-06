@@ -91,22 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // 6. Fetch App Tools from Sanity
-  const appTools = await client.fetch(`
-    *[_type == "appTool" && defined(slug.current) && !(_id in path("drafts.**"))] {
-      "slug": slug.current,
-      _updatedAt
-    }
-  `)
-
-  const appToolRoutes = (appTools || []).map((app: any) => ({
-    url: `${baseUrl}/app-tools/${app.slug}`,
-    lastModified: new Date(app._updatedAt),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }))
-
-  // 7. Fetch App Comparisons from Sanity
+  // 6. Fetch App Comparisons from Sanity
   const comparisons = await client.fetch(`
     *[_type == "appComparison" && defined(slug.current) && !(_id in path("drafts.**"))] {
       "slug": slug.current,
@@ -127,7 +112,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...postRoutes,
     ...validTagRoutes,
     ...pseoRoutes,
-    ...appToolRoutes,
     ...comparisonRoutes,
   ]
 }

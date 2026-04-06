@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
 import { NavUserButton } from "@/components/auth/nav-user-button"
+import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
 /** Rayito verde sólido */
 function ZapSolidGreen({ className }: { className?: string }) {
@@ -37,6 +38,7 @@ const guiasLinks = [
   { href: "/guias/shopify", label: "Guía Shopify" },
   { href: "/guias/openclaw-ai", label: "Guía OpenClaw AI" },
   { href: "/guias/claude-code", label: "Guía Claude Code" },
+  { href: "/guias/mcp", label: "Guía MCP" },
 ]
 
 /** Tooltip icon link — desktop nav only */
@@ -210,7 +212,7 @@ export function Navbar() {
             />
 
             <DesktopDropdown
-              label="Negocios"
+              label="B2B"
               links={negociosLinks}
               isOpen={openDropdown === "negocios"}
               onEnter={() => openMenu("negocios")}
@@ -253,7 +255,7 @@ export function Navbar() {
               <NavUserButton mobile />
             </div>
 
-            {/* Desktop: separator + Blog button + Academia button + User */}
+            {/* Desktop: separator + Blog button + Academia button + Language + User */}
             <div className="hidden md:flex items-center gap-2.5">
               <div className="w-px h-5 bg-white/10" />
               <Link href="/blog" onClick={closeAll}>
@@ -276,6 +278,8 @@ export function Navbar() {
                   Academia
                 </Button>
               </Link>
+              <div className="w-px h-5 bg-white/10" />
+              <LanguageToggle />
               <div className="w-px h-5 bg-white/10" />
               <NavUserButton />
             </div>
@@ -304,7 +308,7 @@ export function Navbar() {
               onClose={closeAll}
             />
             <MobileAccordion
-              label="Nitro Negocios"
+              label="B2B"
               links={negociosLinks}
               isOpen={openDropdown === "negocios"}
               onToggle={() => setOpenDropdown(openDropdown === "negocios" ? null : "negocios")}
@@ -329,6 +333,10 @@ export function Navbar() {
                 Academia
               </Button>
             </Link>
+            {/* Language Toggle — Mobile */}
+            <div className="pt-2">
+              <LanguageToggle />
+            </div>
           </div>
         </div>
       )}

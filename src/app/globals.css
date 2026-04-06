@@ -237,3 +237,29 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ── Google Translate: ocultar UI nativa, solo usar API ── */
+/* Elimina el banner superior y el iframe sin romper la funcionalidad */
+.goog-te-banner-frame,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+div#goog-gt- {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Elimina el borde/outline en el iframe de traducción */
+.goog-te-menu-frame {
+  box-shadow: none !important;
+}
+
+/* Evita que el body se mueva hacia abajo cuando Google Translate agrega su barra */
+body > .skiptranslate {
+  display: none !important;
+}

@@ -22,6 +22,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@react-email/components": "^1.0.6",
     "@react-email/tailwind": "^2.0.3",
+    "@react-pdf/renderer": "^4.3.2",
     "@sanity/functions": "^1.2.1",
     "@sanity/image-url": "^2.0.3",
     "@sanity/ui": "^3.1.11",

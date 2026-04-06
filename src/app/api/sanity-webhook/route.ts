@@ -67,6 +67,48 @@ export async function POST(request: Request) {
       }
     }
 
+    // ── blogPdfConfig: revalidate the linked post immediately ──────────────
+    // When activating/deactivating the PDF capture on a post, the post page
+    // is revalidated so the email banner appears/disappears without any delay.
+    if (docType === 'blogPdfConfig') {
+      try {
+        const postRef = (body?.post as { _ref?: string })?._ref
+        if (postRef) {
+          const { createClient } = await import('next-sanity')
+          const sanityClient = createClient({
+            projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+            dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+            apiVersion: '2023-05-03',
+            useCdn: false, // bypass CDN to get latest published data
+            token: process.env.SANITY_API_TOKEN,
+          })
+
+          const linkedPost = await sanityClient.fetch<{ slug: string; category?: string } | null>(
+            `*[_type == "post" && _id == $id][0]{ "slug": slug.current, category }`,
+            { id: postRef }
+          )
+
+          if (linkedPost?.slug) {
+            revalidatePath('/blog', 'page')
+            revalidated.push('/blog')
+
+            revalidatePath(`/blog/${linkedPost.slug}`, 'page')
+            revalidated.push(`/blog/${linkedPost.slug}`)
+
+            if (linkedPost.category) {
+              revalidatePath(`/blog/${linkedPost.category}/${linkedPost.slug}`, 'page')
+              revalidated.push(`/blog/${linkedPost.category}/${linkedPost.slug}`)
+            }
+
+            console.log(`✅ blogPdfConfig: revalidated post "${linkedPost.slug}"`)
+          }
+        }
+      } catch (pdfConfigErr) {
+        // Non-fatal: log but don't fail the whole webhook
+        console.error('⚠️ blogPdfConfig revalidation error:', pdfConfigErr)
+      }
+    }
+
     revalidatePath('/sitemap.xml', 'page')
     revalidated.push('/sitemap.xml')
 
