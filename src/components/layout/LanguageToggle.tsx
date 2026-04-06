@@ -27,11 +27,20 @@ declare global {
 
 /** Borra la cookie de Google Translate para restaurar el idioma original */
 function clearTranslateCookie() {
-  const domain = window.location.hostname
-  // Borra en ruta raíz y en el dominio con punto (para subdomios)
+  const hostname = window.location.hostname
+  const domainParts = hostname.split('.')
+
+  // Borrar sin dominio explícito (sirve para localhost / dominios simples)
   document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
-  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain}`
-  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${domain}`
+  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${hostname}`
+  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${hostname}`
+
+  // Si hay subdominios (e.g. www.nitro-commerce.com o app.nitro-commerce.com), borrar también en el root domain
+  if (domainParts.length >= 2) {
+    const rootDomain = domainParts.slice(-2).join('.')
+    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${rootDomain}`
+    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${rootDomain}`
+  }
 }
 
 export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | "mobile" }) {
