@@ -96,9 +96,16 @@ export const NitroProposalEmail = ({
         </Container>
 
         {/* Footer Legal Minimalista */}
-        <Text style={footerStyle}>
-          Este es un reporte de infraestructura técnica. Si no deseas recibir más información de este tipo, responde "no gracias" y detendré el seguimiento.
-        </Text>
+        <Text style={signatureCompanyStyle}>
+            NITRO ECOM &nbsp;·&nbsp;{" "}
+            <Link href="https://www.juanarangoecommerce.com" style={{ color: "#6b7280", textDecoration: "none" }}>
+              juanarangoecommerce.com
+            </Link>
+            {" "}&nbsp;·&nbsp;{" "}
+            <Link href="https://wa.me/573146681896" style={{ color: "#6b7280", textDecoration: "none" }}>
+              WhatsApp (+57) 314 668 1896
+            </Link>
+          </Text>
       </Body>
     </Html>
   );
