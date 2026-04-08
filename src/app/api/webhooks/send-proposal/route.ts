@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import NitroProposalEmail from "@/emails/nitro-proposal";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,36 +16,36 @@ function getSectorCta(sector: string | null | undefined): {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
       solutionSummary: `Implementamos tecnología de última generación (Headless Commerce e IA) que logra que:
-- Tu catálogo cargue casi al instante, para que nadie se frustre y se vaya a otro portal.
-- Un sistema atienda y filtre a los interesados de forma automática, pasándole a tu equipo solo a los que de verdad van a rentar o comprar.
-- Tu marca gane visibilidad en Google sin depender tanto del pago que exigen los portales tradicionales.`,
+- El catálogo cargue casi al instante, eliminando la fricción y la fuga de usuarios.
+- Un sistema atienda y filtre a los interesados de forma automática, pasando al equipo solo prospectos altamente cualificados.
+- La marca gane autoridad digital y eficiencia operativa sin depender del gasto continuo en portales tradicionales.`,
     };
   }
   if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail") || s.includes("shopify")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail",
       solutionSummary: `Llevamos tiendas online al siguiente nivel con infraestructura avanzada (Headless) logrando que:
-- La velocidad de tu página se dispare y la gente compre más rápido, reduciendo los abandonos a la mitad.
-- Un asistente virtual recupere ventas perdidas hablando directamente por WhatsApp.
-- Tu tienda se posicione por encima de los grandes marketplaces.`,
+- La velocidad de carga sea instantánea, acelerando la conversión y reduciendo drásticamente los carritos abandonados.
+- Un agente autónomo recupere ventas perdidas operando directamente vía WhatsApp.
+- El negocio logre un escalado acelerado y máxima soberanía técnica frente a la competencia.`,
     };
   }
   if (s.includes("salud") || s.includes("clinica") || s.includes("estetica") || s.includes("spa")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Integramos tecnología que hace tu clínica más eficiente:
-- Una agenda que funciona sola y reduce cancelaciones enviando recordatorios automáticos por WhatsApp.
-- Filtros inteligentes para que solo lleguen al consultorio pacientes que realmente entienden el tratamiento y pueden pagarlo.
-- Seguimiento sin esfuerzo para que los pacientes vuelvan.`,
+      solutionSummary: `Integramos tecnología que convierte la clínica en una máquina de eficiencia operativa:
+- Una agenda autónoma que reduce cancelaciones con recordatorios inteligentes por WhatsApp.
+- Filtros agénticos para que solo lleguen al consultorio pacientes viables y educados sobre el tratamiento.
+- Seguimiento automatizado y retención de pacientes sin fricción humana.`,
     };
   }
   // Default
   return {
     ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
     solutionSummary: `Implementamos infraestructura y automatización que:
-- Hace que tu página web actúe como un vendedor estrella que nunca duerme.
-- Califica a los interesados automáticamente para que tú solo hables con la gente correcta.
-- Posiciona tu marca para atraer visitantes orgánicamente sin gastar una fortuna en anuncios.`,
+- Transforma la página web de un catálogo pasivo a un activo de alto rendimiento.
+- Califica a los interesados de manera autónoma para que el equipo humano se enfoque solo en el cierre.
+- Garantiza un escalado acelerado y eficiencia operativa en toda la línea de captación digital.`,
   };
 }
 
@@ -53,17 +53,18 @@ function getSectorCta(sector: string | null | undefined): {
 function getFallbackContent(
   prospectName: string,
   companyName: string,
+  websiteUrl: string,
   sectorCta: ReturnType<typeof getSectorCta>
 ) {
   return {
-    subject: `Tu sitio web vs. la tecnología que usan los grandes`,
-    paragraph1: `Vi lo que están haciendo en ${companyName} y decidí escribirte directamente porque noté un detalle técnico que está limitando su alcance.`,
-    paragraph2: `Es común ver negocios muy buenos, con excelentes servicios, pero operando sobre plataformas digitales que son simples vitrinas estáticas. Hoy en día, un sitio lento equivale a cerrarle la puerta a clientes que están listos para comprar.`,
-    paragraph3: `Lo que nosotros hacemos en NITRO ECOM es integrar tecnología de punta —sistemas "Headless" ultra rápidos y asistentes automáticos con Inteligencia Artificial— que toman el control de captar y atender visitantes sin que tengas que intervenir. Suena complejo, pero en pocas palabras: hacemos que tu web no solo se vea bien, sino que trabaje y venda por ti de forma ágil.`,
-    paragraph4: `Esto significa que tu tiempo se concentra en cerrar ventas y atender a clientes filtrados, no en buscar conversiones. Arreglé algo rápido para mostrarte cómo se ve esto en la práctica.`,
-    ctaText: "Mira cómo funciona aquí →",
+    subject: `Auditoría de latencia en ${companyName}`,
+    paragraph1: `Realicé una auditoría técnica en ${websiteUrl} y detecté una fuga de leads a nivel de infraestructura.`,
+    paragraph2: `Esos milisegundos extra de carga operan como un freno de mano para tu negocio, traduciéndose en capital que se pierde silenciosamente por falta de eficiencia operativa.`,
+    paragraph3: `En NITRO ECOM implementamos el Nitro Protocol: arquitecturas "Headless" de ultra-baja latencia y agentes autónomos que recuperan tu soberanía técnica y automatizan el filtrado comercial.`,
+    paragraph4: `Preparé una demo de ingeniería para que evalúes el rendimiento real que tu plataforma debería tener bajo estos estándares.`,
+    ctaText: "Ver diagnóstico de 10 minutos →",
     ctaUrl: sectorCta.ctaUrl,
-    closingLine: "Cualquier duda, simplemente contéstame por acá.",
+    closingLine: "Quedo a tu disposición para revisar la data técnica.",
   };
 }
 
@@ -87,68 +88,72 @@ export async function POST(req: Request) {
     const { email, full_name, company_name, sector, problem, notes, website_url } = record;
     const sectorCta = getSectorCta(sector);
     const firstName = (full_name ?? "").split(" ")[0] || "amigo";
+    const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "tu plataforma";
 
     console.log(`[Nitro Email] Generating for ${email} | ${company_name} | sector: ${sector}`);
 
-    // ─── Gemini AI ──────────────────────────────────────────────────────────
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    // ─── Gemini AI (Nuevo SDK GenAI) ─────────────────────────────────────────
+    const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
     const prompt = `
-Eres Juan Arango, experto en infraestructura digital y comercio electrónico (Headless commerce e IA) en NITRO ECOM. Llevas años ayudando a la gente a sacar el máximo provecho de su presencia digital para que sus negocios crezcan solos.
+Eres Juan Arango, Arquitecto de Infraestructura Digital e Inteligencia Agéntica en NITRO ECOM. Tu enfoque es la Ingeniería de Rendimiento orientada al escalado acelerado y la eficiencia operativa. Consideras que una web lenta o un proceso manual es una falla de infraestructura que le cuesta dinero real al cliente. 
 
-Hoy le vas a escribir un email a un potencial cliente. Háblale directamente, de tú a tú, dándole un consejo y mostrándole posibilidades.
+Tu tono es profesional, directo, analítico y de alta autoridad. Hablas como un consultor de élite que ha detectado una falla en el sistema del cliente.
 
 ═══ INFORMACIÓN DEL DESTINATARIO ═══
 - Nombre: ${firstName}
 - Empresa: ${company_name ?? "su empresa"}
 - Sector: ${sector ?? "negocios digitales"}
-- Problema mencionado: "${problem ?? "mejorar sus conversiones digitales"}"
+- Problema mencionado: "${problem ?? "ineficiencia operativa"}"
 - Notas: "${notes ?? ""}"
-- Sitio web: ${website_url ?? "no disponible"}
+- Sitio web: ${siteUrl}
 
-═══ QUÉ DEBES TRANSMITIR (NITRO ECOM) ═══
+═══ QUÉ DEBES TRANSMITIR ═══
 ${sectorCta.solutionSummary}
-Recuerda: Tu enfoque es el headless commerce (webs que cargan en abrir y cerrar de ojos) y la automatización con IA. Pero debes explicarlo de forma coloquial, como decirle "instalamos tecnología detrás de escena para que tu web vuele y tus clientes sean atendidos automáticamente". No hables tanto de código, sino de resultados.
 
-═══ REGLAS ABSOLUTAS DE TU REDACCIÓN ═══
-1. TONO: Amistoso, consultivo, empático. Imagina que tomas un café con esta persona. Usa "nosotros en NITRO ECOM", NO "Nitro Protocol".
-2. SIN SALUDOS: El template ya tiene la frase "Hola [Nombre],", así que el valor "paragraph1" DEBE ir directo al grano (ej: "Navegando por tu página me di cuenta de..."). NO arranques diciendo "Hola", ni "Saludos".
-3. STORYTELLING Y CONSEJOS: Sé narrativo. No hagas listas de bullets, ni escribas frases acartonadas.
-4. NADA REPETIDO: El "paragraph4" termina la idea principal e invita a ver una demo casual, pero NO repitas la misma frase del "ctaText". Deja que la transición entre el párrafo 4 y el link sea fluida.
-5. LONGITUD CORTA: Máximo 4 párrafos de 2-4 líneas cada uno. Se conciso y directo.
-6. ASUNTO: Intrigante, que sienta que es un email personal. Máximo 7 palabras.
-7. EMPATA SU PROBLEMA: Menciona algo del problema que ellos indicaron de manera natural en la conversación.
+═══ INSTRUCCIONES ESTRUCTURALES (4 PÁRRAFOS CORTOS) ═══
+1. El Gancho Técnico (paragraph1): Inicia mencionando que has realizado una auditoría técnica en su sitio (${siteUrl}) y detectaste una "Latencia Crítica" o "Fuga de Leads". VE DIRECTO AL GRANO. Cero saludos (el template ya incluye el "Hola [Nombre],").
+2. El Dolor Financiero (paragraph2): Traduce los milisegundos de carga o la falta de automatización en pérdida de capital o reputación. Usa la analogía de tener un "Ferrari con el freno de mano puesto" u otra metáfora de ingeniería.
+3. La Solución Nitro (paragraph3): Presenta el "Nitro Protocol" (Infraestructura Headless + Agentes Autónomos de IA) como la intervención necesaria para recuperar la soberanía técnica del negocio y garantizar su escalado acelerado.
+4. La Demo (paragraph4): Menciona que has preparado una "Demo de Ingeniería" para que vean el potencial real de su marca bajo tu infraestructura.
+
+═══ RESTRICCIONES DE ESTILO ABSOLUTAS ═══
+- PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "somos los mejores", "un abrazo", "saludos", "hacer de 6 a 7 cifras".
+- USA TERMINOLOGÍA TÉCNICA: Latencia, Headless, Infraestructura, Soberanía Técnica, Agentes Autónomos, Eficiencia Operativa, Escalado Acelerado.
+- TONO: De "tú a tú", pero con la distancia de un experto respetado. Cero clichés de ventas.
+- LONGITUD: Párrafos de máximo 3 líneas. Alta densidad de valor, cero relleno.
 
 ═══ FORMATO DE RESPUESTA ═══
-Devuelve ÚNICAMENTE un objeto JSON puro, sin bloques markdown (\`\`\`json).
-
+Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
 {
-  "subject": "Asunto enganchador, personal. Ej: Tu web y un detalle importante.",
-  "paragraph1": "La primera frase. Arranca de una vez sin saludar. Menciona si viste su sitio o su caso. Debe ser un gancho inicial muy conversacional.",
-  "paragraph2": "Empatiza con su situación o problema. Explica de forma sencilla por qué operar con métodos digitales lentos o tradicionales les está dejando dinero sobre la mesa.",
-  "paragraph3": "Introduce aquí a NITRO ECOM. Explícale, sin enredarlo con términos hiper técnicos, cómo sus problemas se solucionan con arquitecturas veloces y agentes de IA conversacionales que filtren clientes.",
-  "paragraph4": "Remate donde pones tu propuesta en perspectiva. Termina con una introducción suave al enlace que verán a continuación. (Ej: 'Preparé algo para que te hagas una idea.')",
-  "ctaText": "Texto muy corto del enlace. Ej: 'Puedes ver la demostración aquí →'",
+  "subject": "Asunto técnico, analítico e intrigante. Máx 6 palabras. Ej: Auditoría de latencia en [Empresa]",
+  "paragraph1": "Gancho técnico directo. Sin saludar.",
+  "paragraph2": "Dolor financiero y metáfora de ingeniería.",
+  "paragraph3": "Nitro Protocol, Headless y Agentes de IA.",
+  "paragraph4": "Invitación sobria a la Demo de Ingeniería.",
+  "ctaText": "Ver diagnóstico de 10 minutos →",
   "ctaUrl": "${sectorCta.ctaUrl}",
-  "closingLine": "Cierre natural y simple como quien se despide en WhatsApp o por email personal."
+  "closingLine": "Despedida seca y profesional. Ej: Quedo a tu disposición para revisar la data técnica."
 }
 `;
 
     let generatedData = null;
 
     try {
-      const result = await model.generateContent(prompt);
-      const text = result.response.text();
-      const cleanJson = text
-        .replace(/```json\s*/gi, "")
-        .replace(/```\s*/gi, "")
-        .trim();
-      generatedData = JSON.parse(cleanJson);
+      // ─── Generación con forzado de JSON nativo ─────────────────────────────
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+        }
+      });
+      
+      generatedData = JSON.parse(response.text || "{}");
       console.log(`[Nitro Email] ✅ AI generation OK. Subject: "${generatedData.subject}"`);
     } catch (aiError) {
       console.error("[Nitro Email] AI failed, using fallback:", aiError);
-      generatedData = getFallbackContent(firstName, company_name ?? "tu empresa", sectorCta);
+      generatedData = getFallbackContent(firstName, company_name ?? "tu empresa", siteUrl, sectorCta);
     }
 
     // ─── Send via Resend ────────────────────────────────────────────────────
@@ -163,9 +168,9 @@ Devuelve ÚNICAMENTE un objeto JSON puro, sin bloques markdown (\`\`\`json).
         paragraph2: generatedData.paragraph2,
         paragraph3: generatedData.paragraph3,
         paragraph4: generatedData.paragraph4,
-        ctaText: generatedData.ctaText,
-        ctaUrl: generatedData.ctaUrl,
-        closingLine: generatedData.closingLine,
+        ctaText: generatedData.ctaText || "Ver diagnóstico de 10 minutos →",
+        ctaUrl: generatedData.ctaUrl || sectorCta.ctaUrl,
+        closingLine: generatedData.closingLine || "Quedo a tu disposición para revisar la data técnica.",
       }),
     });
 
