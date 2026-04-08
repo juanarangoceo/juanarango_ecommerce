@@ -51,20 +51,19 @@ function getSectorCta(sector: string | null | undefined): {
 
 // ─── Fallback content ────────────────────────────────────────────────────────
 function getFallbackContent(
-  prospectName: string,
   companyName: string,
   websiteUrl: string,
   sectorCta: ReturnType<typeof getSectorCta>
 ) {
   return {
-    subject: `Auditoría de latencia en ${companyName}`,
-    paragraph1: `Realicé una auditoría técnica en ${websiteUrl} y detecté una fuga de leads a nivel de infraestructura.`,
-    paragraph2: `Esos milisegundos extra de carga operan como un freno de mano para tu negocio. Se traducen en capital que pierdes silenciosamente por falta de eficiencia operativa.`,
-    paragraph3: `En NITRO ECOM implementamos el Nitro Protocol. Usamos arquitecturas "Headless" y agentes autónomos para recuperar tu soberanía técnica y automatizar el filtrado comercial.`,
-    paragraph4: `Preparé una demo de ingeniería. Aquí puedes evaluar el rendimiento real que tu plataforma debería tener bajo estos estándares.`,
-    ctaText: "Ver diagnóstico de 10 minutos →",
+    subject: `Infraestructura y escalado en ${companyName}`,
+    paragraph1: `Estuve analizando la plataforma de ${websiteUrl} y es evidente que tienen un modelo de negocio con excelente tracción.`,
+    paragraph2: `Sin embargo, la infraestructura técnica actual opera como un cuello de botella que genera fricción y limita el escalado acelerado.`,
+    paragraph3: `Con el Nitro Protocol solucionamos esto: implementamos arquitectura "Headless" y Agentes de IA para recuperar su soberanía técnica y automatizar la captación.`,
+    paragraph4: `Preparé una demo de ingeniería para que evalúen el rendimiento real que su marca debería tener bajo estos estándares.`,
+    ctaText: "Ver diagnóstico de ingeniería →",
     ctaUrl: sectorCta.ctaUrl,
-    closingLine: "Quedo a tu disposición para revisar la data técnica.",
+    closingLine: "Quedo a tu disposición para revisar la data operativa.",
   };
 }
 
@@ -87,8 +86,23 @@ export async function POST(req: Request) {
 
     const { email, full_name, company_name, sector, problem, notes, website_url } = record;
     const sectorCta = getSectorCta(sector);
-    const firstName = (full_name ?? "").split(" ")[0] || "amigo";
     const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "tu plataforma";
+    
+    // ─── Lógica para evitar nombres falsos o de empresa ──────────────────────
+    let firstName = (full_name ?? "").split(" ")[0] || "equipo";
+    const companyLower = (company_name ?? "").toLowerCase();
+    const fNameLower = firstName.toLowerCase();
+    
+    // Si el nombre contiene palabras genéricas o es igual al de la empresa, usamos "equipo"
+    if (
+      companyLower.includes(fNameLower) || 
+      ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo"].includes(fNameLower)
+    ) {
+      firstName = "equipo";
+    }
+
+    // Ajuste sutil para el saludo en el componente React Email
+    const finalProspectName = firstName.toLowerCase() === "equipo" ? `equipo de ${company_name}` : firstName;
 
     console.log(`[Nitro Email] Generating for ${email} | ${company_name} | sector: ${sector}`);
 
@@ -96,42 +110,46 @@ export async function POST(req: Request) {
     const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
     const prompt = `
-Eres Juan Arango, Arquitecto de Infraestructura Digital e Inteligencia Agéntica en NITRO ECOM. Tu enfoque es la Ingeniería de Rendimiento orientada al escalado acelerado y la eficiencia operativa. Consideras que una web lenta o un proceso manual es una falla de infraestructura que le cuesta dinero real al cliente. 
+Eres Juan Arango, Arquitecto de Infraestructura Digital e Inteligencia Agéntica en NITRO ECOM. Tu enfoque es la eficiencia operativa y el escalado acelerado. 
 
-Tu tono es profesional, directo, analítico y de alta autoridad. Hablas como un consultor de élite que ha detectado una falla en el sistema del cliente.
+Le estás escribiendo a un negocio que YA tiene tracción y hace las cosas bien, pero cuya infraestructura tecnológica actual es un cuello de botella. No vas a criticar su web diciendo que está "mal"; vas a plantear que su negocio es demasiado bueno para operar sobre una arquitectura que genera fricción.
 
 ═══ INFORMACIÓN DEL DESTINATARIO ═══
-- Nombre: ${firstName}
+- Contacto: ${finalProspectName}
 - Empresa: ${company_name ?? "su empresa"}
 - Sector: ${sector ?? "negocios digitales"}
 - Problema mencionado: "${problem ?? "ineficiencia operativa"}"
 - Notas: "${notes ?? ""}"
 - Sitio web: ${siteUrl}
 
-═══ QUÉ DEBES TRANSMITIR ═══
-${sectorCta.solutionSummary}
+═══ EL MENSAJE Y EL "POR QUÉ" ═══
+1. Validación: Reconoce que tienen una excelente oferta y potencial comercial.
+2. El Cuello de Botella (El Por Qué): Explica que operar sobre plataformas tradicionales crea fricción (latencia o procesos manuales). Esa fricción es capital perdido.
+3. La Solución Metodológica: Introduce el "Nitro Protocol" (Arquitectura Headless + Inteligencia Agéntica) para lograr máxima soberanía técnica.
 
-═══ INSTRUCCIONES ESTRUCTURALES (4 PÁRRAFOS CORTOS) ═══
-1. El Gancho Técnico (paragraph1): Inicia mencionando que has realizado una auditoría técnica en su sitio (${siteUrl}) y detectaste una "Latencia Crítica" o "Fuga de Leads". VE DIRECTO AL GRANO. Cero saludos (el template ya incluye el "Hola [Nombre],").
-2. El Dolor Financiero (paragraph2): Traduce los milisegundos de carga o la falta de automatización en pérdida de capital o reputación. Usa la analogía de tener un "Ferrari con el freno de mano puesto" u otra metáfora de ingeniería.
-3. La Solución Nitro (paragraph3): Presenta el "Nitro Protocol" (Infraestructura Headless + Agentes Autónomos de IA) como la intervención necesaria para recuperar la soberanía técnica del negocio y garantizar su escalado acelerado.
-4. La Demo (paragraph4): Menciona que has preparado una "Demo de Ingeniería" para que vean el potencial real de su marca bajo tu infraestructura.
+═══ INSTRUCCIONES ESTRUCTURALES (EFECTO CASCADA: 4 PÁRRAFOS) ═══
+Debes escribir exactamente 4 párrafos. 
+Cada párrafo DEBE SER EXTREMADAMENTE CORTO (1 o máximo 2 oraciones). Esto es vital para mantener un ritmo de lectura visual ágil. Cero bloques densos de texto.
+
+- paragraph1 (Gancho y Validación): Menciona que estuviste analizando su plataforma y valida su potencial comercial. VE DIRECTO AL GRANO. Cero saludos iniciales.
+- paragraph2 (El Problema Técnico): Señala la fricción estructural (latencia o procesos manuales) que opera como un cuello de botella.
+- paragraph3 (Nitro Protocol): Presenta tu método (Headless + IA) como la intervención necesaria para escalar con eficiencia operativa.
+- paragraph4 (La Demo): Invitación sobria a revisar un diagnóstico o demo de ingeniería.
 
 ═══ RESTRICCIONES DE ESTILO ABSOLUTAS ═══
-- PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "somos los mejores", "un abrazo", "saludos", "hacer de 6 a 7 cifras".
-- USA TERMINOLOGÍA TÉCNICA: Latencia, Headless, Infraestructura, Soberanía Técnica, Agentes Autónomos, Eficiencia Operativa, Escalado Acelerado.
-- TONO: De "tú a tú", pero con la distancia de un experto respetado. Cero clichés de ventas.
-- LONGITUD: Extrema concisión. Ningún párrafo debe superar las 2 oraciones. Escribe con ritmo de "cascada". Mucho aire visual, cero bloques densos de texto.
+- PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "somos los mejores", "tu web está mal", "un abrazo", "saludos".
+- USA TERMINOLOGÍA: Latencia, Infraestructura, Soberanía Técnica, Eficiencia Operativa, Escalado Acelerado, Nitro Protocol.
+- TONO: Consultor de élite, analítico, respetuoso pero directo.
 
 ═══ FORMATO DE RESPUESTA ═══
 Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
 {
-  "subject": "Asunto técnico, analítico e intrigante. Máx 6 palabras. Ej: Auditoría de latencia en [Empresa]",
-  "paragraph1": "Gancho técnico directo. Sin saludar.",
-  "paragraph2": "Dolor financiero y metáfora de ingeniería.",
+  "subject": "Asunto técnico e intrigante. Máx 6 palabras. Ej: Infraestructura y escalado en [Empresa]",
+  "paragraph1": "Gancho técnico y validación directa.",
+  "paragraph2": "Dolor operativo y el por qué del cuello de botella.",
   "paragraph3": "Nitro Protocol, Headless y Agentes de IA.",
   "paragraph4": "Invitación sobria a la Demo de Ingeniería.",
-  "ctaText": "Ver diagnóstico de 10 minutos →",
+  "ctaText": "Ver diagnóstico de ingeniería →",
   "ctaUrl": "${sectorCta.ctaUrl}",
   "closingLine": "Despedida seca y profesional. Ej: Quedo a tu disposición para revisar la data técnica."
 }
@@ -140,7 +158,6 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
     let generatedData = null;
 
     try {
-      // ─── Generación con forzado de JSON nativo ─────────────────────────────
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
@@ -153,7 +170,7 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
       console.log(`[Nitro Email] ✅ AI generation OK. Subject: "${generatedData.subject}"`);
     } catch (aiError) {
       console.error("[Nitro Email] AI failed, using fallback:", aiError);
-      generatedData = getFallbackContent(firstName, company_name ?? "tu empresa", siteUrl, sectorCta);
+      generatedData = getFallbackContent(company_name ?? "tu empresa", siteUrl, sectorCta);
     }
 
     // ─── Send via Resend ────────────────────────────────────────────────────
@@ -162,13 +179,13 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
       to: [email],
       subject: generatedData.subject,
       react: NitroProposalEmail({
-        prospectName: firstName,
+        prospectName: finalProspectName,
         companyName: company_name ?? "tu empresa",
         paragraph1: generatedData.paragraph1,
         paragraph2: generatedData.paragraph2,
         paragraph3: generatedData.paragraph3,
         paragraph4: generatedData.paragraph4,
-        ctaText: generatedData.ctaText || "Ver diagnóstico de 10 minutos →",
+        ctaText: generatedData.ctaText || "Ver diagnóstico de ingeniería →",
         ctaUrl: generatedData.ctaUrl || sectorCta.ctaUrl,
         closingLine: generatedData.closingLine || "Quedo a tu disposición para revisar la data técnica.",
       }),
@@ -184,7 +201,7 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
     return NextResponse.json({
       success: true,
       ai_generated: true,
-      prospect: firstName,
+      prospect: finalProspectName,
       company: company_name,
       resend_id: data.data?.id,
     });
