@@ -18,12 +18,12 @@ function getSectorCta(sector: string | null | undefined): { ctaUrl: string; solu
 
 function getFallbackContent(companyName: string, websiteUrl: string, sectorCta: ReturnType<typeof getSectorCta>) {
   return {
-    subject: `Una oportunidad que vi en ${companyName}`,
-    paragraph1: `Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA, y trabajo ayudando a empresas a escalar su operación sin aumentar proporcionalmente su equipo.`,
-    paragraph2: `La razón de este correo es concreta: revisé el flujo de ${websiteUrl} desde la perspectiva de un cliente y detecté una fricción técnica que probablemente ya conocen.`,
-    paragraph3: `A escala, los procesos manuales o las plataformas con tiempos de carga elevados se traducen directamente en ventas que no cierran y capital que se evapora.`,
-    paragraph4: `En Nitro Ecom resolvemos esto implementando Agentes de Inteligencia Artificial 24/7 y arquitectura Headless. No son chatbots genéricos, son sistemas entrenados con su lógica de negocio para calificar y convertir sin fricción.`,
-    paragraph5: `Preparé un diagnóstico breve y visual donde muestro cómo se vería esto aplicado específicamente a su operación.`,
+    subject: `Una observación sobre la operación de ${companyName}`,
+    paragraph1: `Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA. Ayudo a empresas a escalar su operación sin aumentar proporcionalmente su equipo.`,
+    paragraph2: `Revisé el flujo de ${websiteUrl} desde la perspectiva de un cliente y detecté una fricción técnica que probablemente ya conocen.`,
+    paragraph3: `A escala, los procesos manuales o la latencia se traducen directamente en ventas que no cierran y capital que se evapora.`,
+    paragraph4: `En Nitro Ecom resolvemos esto implementando Agentes de IA 24/7 y arquitectura Headless para calificar y convertir sin fricción.`,
+    paragraph5: `Preparé un diagnóstico breve donde muestro cómo se vería esto aplicado específicamente a su operación.`,
     ctaText: "Ver diagnóstico personalizado →",
     ctaUrl: sectorCta.ctaUrl,
     closingLine: "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896",
@@ -54,40 +54,39 @@ export async function POST(req: Request) {
 
     const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
+    // REGLA DE ORO: Instrucciones de comportamiento, no de plantillas.
     const prompt = `
-Eres Juan Arango, Arquitecto de Infraestructura Digital e IA en NITRO ECOM.
-Tu tarea es redactar un correo persuasivo, conversacional y de élite para el CEO de una empresa.
+Eres Juan Arango, Arquitecto de Infraestructura Digital e IA en NITRO ECOM. Tu estilo es profesional, directo y de alta autoridad técnica, pero con un tono humano y conversacional.
 
-═══ INFORMACIÓN DEL DESTINATARIO ═══
-- Contacto: ${finalProspectName}
-- Empresa: ${company_name ?? "la empresa"}
-- Sector: ${sector ?? "su sector"}
-- PROBLEMA A ATACAR: "${problem ?? "fricción en la captación y lentitud de respuestas"}"
-- Sitio web: ${siteUrl}
+TU MISIÓN: Redactar un correo de prospección único para el CEO de ${company_name}.
 
-═══ ESTRUCTURA PSICOLÓGICA (EL CÓMO DEBES ESCRIBIR) ═══
-Aplica EXACTAMENTE este flujo narrativo, pero adaptando el contenido al "PROBLEMA A ATACAR":
+DATOS DEL PROSPECTO:
+- Nombre/Equipo: ${finalProspectName}
+- Sector: ${sector ?? "su industria"}
+- PROBLEMA DETECTADO: "${problem ?? "fricción en la captación de leads"}"
+- Sitio Web: ${siteUrl}
 
-1. Presentación (paragraph1): "Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA, y trabajo con marcas de [Sector] ayudándoles a escalar su operación sin aumentar proporcionalmente su equipo."
-2. El Descubrimiento Empático (paragraph2): Di que revisaste el flujo de su web desde la perspectiva de un cliente y detectaste el [PROBLEMA A ATACAR]. Usa la frase: "...y detecté algo que probablemente ya conocen: [Describe el problema detectado de forma profesional]."
-3. El Impacto Financiero (paragraph3): Explica cómo ese problema específico frena la conversión. Remata con: "Eso, a escala, se traduce en ventas que no cierran."
-4. La Solución IA (paragraph4): Presenta tu solución. Debes mencionar explícitamente "Agentes de Inteligencia Artificial que operan 24/7". Aclara contundentemente: "No es un chatbot genérico. Es un agente entrenado con la lógica de negocio de su marca".
-5. El Gancho (paragraph5): Menciona que preparaste un diagnóstico breve y visual aplicado específicamente a su empresa.
+ESTRUCTURA NARRATIVA (PROHIBIDO COPIAR EJEMPLOS, REDACTA DESDE CERO):
+1. Párrafo 1 (Presentación de Autoridad): Preséntate como Juan Arango. Explica brevemente que eres Arquitecto de Infraestructura e IA y que ayudas a empresas de ${sector} a escalar su operación de forma eficiente (sin inflar la nómina).
+2. Párrafo 2 (Hallazgo Orgánico): Explica que entraste a ${siteUrl} con ojos de cliente y que, de manera muy natural, detectaste que tienen un reto con: ${problem}. Menciona que sospechas que ellos ya son conscientes de este cuello de botella.
+3. Párrafo 3 (Impacto Financiero): Explica por qué ese problema específico es un drenaje de rentabilidad a gran escala. No uses clichés; habla de cómo se pierden oportunidades en el momento crítico.
+4. Párrafo 4 (Solución Nitro): Introduce los "Agentes de IA 24/7" (y la arquitectura Headless si aplica) como la forma de automatizar ese proceso. Aclara que no es un chatbot básico, sino un sistema con su lógica de negocio.
+5. Párrafo 5 (Cierre de Ingeniería): Menciona que creaste un diagnóstico visual de cómo se vería esta intervención en su marca.
 
-═══ REGLAS ESTRICTAS DE ESTILO ═══
-1. RITMO VISUAL: Extrema concisión. Ningún párrafo debe superar las 2 oraciones (efecto cascada).
-2. TONO: Consultor premium. Empático pero directo.
-3. ADAPTABILIDAD: Si el problema es falta de atención, enfócate 100% en los Agentes IA 24/7. Si es carga lenta, menciona los Agentes IA pero suma infraestructura Headless.
+REGLAS DE ORO:
+- Prohibido repetir frases de correos anteriores.
+- Cada párrafo debe tener máximo 2 frases (Efecto Cascada).
+- Tono de consultor a CEO: Respetuoso pero señalando una falla operativa que cuesta dinero.
+- Si el problema es falta de atención, enfócate en la IA. Si es lentitud, enfócate en infraestructura.
 
-═══ FORMATO DE RESPUESTA ═══
-Devuelve ÚNICAMENTE un objeto JSON puro (sin formato markdown \`\`\`json).
+FORMATO DE RESPUESTA: ÚNICAMENTE JSON puro.
 {
-  "subject": "Asunto natural y conversacional. Ej: Una oportunidad que vi en [Empresa]",
-  "paragraph1": "Presentación de autoridad.",
-  "paragraph2": "Descubrimiento empático del problema.",
-  "paragraph3": "El impacto a escala (ventas perdidas).",
-  "paragraph4": "La solución: Agentes IA 24/7.",
-  "paragraph5": "Diagnóstico específico preparado.",
+  "subject": "Asunto enganchador de máximo 6 palabras relacionado con su problema.",
+  "paragraph1": "Presentación personalizada.",
+  "paragraph2": "El hallazgo orgánico en su web.",
+  "paragraph3": "Impacto financiero del problema.",
+  "paragraph4": "La intervención con Agentes IA 24/7.",
+  "paragraph5": "Invitación al diagnóstico.",
   "ctaText": "Ver diagnóstico personalizado →",
   "ctaUrl": "${sectorCta.ctaUrl}",
   "closingLine": "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896"
@@ -105,15 +104,12 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin formato markdown \`\`\`json).
       });
       
       const parsedData = JSON.parse(response.text || "{}");
-      // Fusionamos los datos generados con los de fallback por si falta alguna llave en el JSON de Gemini
       generatedData = { ...fallbackData, ...parsedData };
-      console.log(`[Nitro Email] ✅ AI generation OK. Subject: "${generatedData.subject}"`);
     } catch (aiError) {
-      console.error("[Nitro Email] AI failed, using fallback:", aiError);
+      console.error("[Nitro Email] AI Error:", aiError);
       generatedData = fallbackData;
     }
 
-    // ─── Send via Resend ────────────────────────────────────────────────────
     const data = await resend.emails.send({
       from: "Juan Arango <nitro@juanarangoecommerce.com>",
       to: [email],
@@ -132,26 +128,9 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin formato markdown \`\`\`json).
       }),
     });
 
-    if (data.error) {
-      console.error("[Nitro Email] Resend error:", data.error);
-      return NextResponse.json({ error: data.error }, { status: 500 });
-    }
-
-    console.log(`[Nitro Email] ✅ Sent to ${email}. ID: ${data.data?.id}`);
-
-    return NextResponse.json({
-      success: true,
-      ai_generated: true,
-      prospect: finalProspectName,
-      company: company_name,
-      resend_id: data.data?.id,
-    });
+    return NextResponse.json({ success: true, resend_id: data.data?.id });
 
   } catch (error: any) {
-    console.error("[Nitro Email] Error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
