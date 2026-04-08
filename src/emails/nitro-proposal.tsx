@@ -5,18 +5,44 @@ import { GoogleGenAI } from "@google/genai";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-function getSectorCta(sector: string | null | undefined): { ctaUrl: string; solutionSummary: string } {
+// ─── Sector CTA mapping ──────────────────────────────────────────────────────
+function getSectorCta(sector: string | null | undefined): {
+  ctaUrl: string;
+  solutionSummary: string;
+} {
   const s = (sector ?? "").toLowerCase().trim();
-  if (s.includes("inmobi") || s.includes("real") || s.includes("propiedad")) {
-    return { ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria", solutionSummary: "" };
+
+  if (s.includes("inmobi") || s.includes("real estate") || s.includes("propiedad") || s.includes("construc")) {
+    return {
+      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
+      solutionSummary: `Intervención de infraestructura y automatización que elimina la fuga de prospectos inmobiliarios mediante respuestas inmediatas y arquitecturas sin fricción.`,
+    };
   }
-  if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail")) {
-    return { ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail", solutionSummary: "" };
+  if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail") || s.includes("shopify")) {
+    return {
+      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail",
+      solutionSummary: `Intervención de infraestructura avanzada que acelera la conversión, elimina carritos abandonados por latencia y recupera ventas vía agentes autónomos.`,
+    };
   }
-  return { ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria", solutionSummary: "" };
+  if (s.includes("salud") || s.includes("clinica") || s.includes("estetica") || s.includes("spa")) {
+    return {
+      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
+      solutionSummary: `Intervención operativa que automatiza agendas, califica pacientes mediante IA y elimina la fricción en el seguimiento clínico.`,
+    };
+  }
+  // Default
+  return {
+    ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
+    solutionSummary: `Intervención de infraestructura digital que automatiza el filtrado de prospectos y garantiza una operación de máxima conversión sin latencia.`,
+  };
 }
 
-function getFallbackContent(companyName: string, websiteUrl: string, sectorCta: ReturnType<typeof getSectorCta>) {
+// ─── Fallback content ────────────────────────────────────────────────────────
+function getFallbackContent(
+  companyName: string,
+  websiteUrl: string,
+  sectorCta: ReturnType<typeof getSectorCta>
+) {
   return {
     subject: `Una oportunidad de optimización en ${companyName}`,
     paragraph1: `Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA, y trabajo ayudando a empresas a escalar su operación sin aumentar proporcionalmente su equipo.`,
@@ -30,28 +56,44 @@ function getFallbackContent(companyName: string, websiteUrl: string, sectorCta: 
   };
 }
 
+// ─── Main handler ────────────────────────────────────────────────────────────
 export async function POST(req: Request) {
   try {
-    if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: "RESEND_API_KEY missing" }, { status: 500 });
-    if (!process.env.GOOGLE_API_KEY) return NextResponse.json({ error: "GOOGLE_API_KEY missing" }, { status: 500 });
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json({ error: "RESEND_API_KEY missing" }, { status: 500 });
+    }
+    if (!process.env.GOOGLE_API_KEY) {
+      return NextResponse.json({ error: "GOOGLE_API_KEY missing" }, { status: 500 });
+    }
 
     const body = await req.json();
     const { record } = body;
-    if (!record || !record.email) return NextResponse.json({ error: "email missing" }, { status: 400 });
+
+    if (!record || !record.email) {
+      return NextResponse.json({ error: "record.email missing" }, { status: 400 });
+    }
 
     const { email, full_name, company_name, sector, problem, notes, website_url } = record;
     const sectorCta = getSectorCta(sector);
     const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "su plataforma";
     
+    // ─── Lógica Corporate C-Level para el Nombre ─────────────────────────────
     let firstName = (full_name ?? "").split(" ")[0] || "equipo";
     const companyLower = (company_name ?? "").toLowerCase();
     const fNameLower = firstName.toLowerCase();
     
-    if (companyLower.includes(fNameLower) || ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo", "contacto"].includes(fNameLower)) {
+    if (
+      companyLower.includes(fNameLower) || 
+      ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo", "contacto"].includes(fNameLower)
+    ) {
       firstName = "equipo";
     }
+    
     const finalProspectName = firstName === "equipo" ? `equipo directivo de ${company_name}` : firstName;
 
+    console.log(`[Nitro Email] Generating for ${email} | ${company_name} | sector: ${sector}`);
+
+    // ─── Gemini AI (Nuevo SDK GenAI) ─────────────────────────────────────────
     const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
     const prompt = `
@@ -100,14 +142,18 @@ Devuelve ÚNICAMENTE un objeto JSON puro.
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
-        config: { responseMimeType: "application/json" }
+        config: { 
+          responseMimeType: "application/json" 
+        }
       });
       generatedData = JSON.parse(response.text || "{}");
+      console.log(`[Nitro Email] ✅ AI generation OK. Subject: "${generatedData.subject}"`);
     } catch (aiError) {
       console.error("[Nitro Email] AI failed, using fallback:", aiError);
       generatedData = getFallbackContent(company_name ?? "la empresa", siteUrl, sectorCta);
     }
 
+    // ─── Send via Resend ────────────────────────────────────────────────────
     const data = await resend.emails.send({
       from: "Juan Arango <nitro@juanarangoecommerce.com>",
       to: [email],
@@ -126,10 +172,26 @@ Devuelve ÚNICAMENTE un objeto JSON puro.
       }),
     });
 
-    if (data.error) return NextResponse.json({ error: data.error }, { status: 500 });
-    return NextResponse.json({ success: true, prospect: finalProspectName, resend_id: data.data?.id });
+    if (data.error) {
+      console.error("[Nitro Email] Resend error:", data.error);
+      return NextResponse.json({ error: data.error }, { status: 500 });
+    }
+
+    console.log(`[Nitro Email] ✅ Sent to ${email}. ID: ${data.data?.id}`);
+
+    return NextResponse.json({
+      success: true,
+      ai_generated: true,
+      prospect: finalProspectName,
+      company: company_name,
+      resend_id: data.data?.id,
+    });
 
   } catch (error: any) {
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    console.error("[Nitro Email] Error:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error", details: error.message },
+      { status: 500 }
+    );
   }
 }
