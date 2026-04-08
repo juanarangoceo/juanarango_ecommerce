@@ -59,9 +59,9 @@ function getFallbackContent(
   return {
     subject: `Auditoría de latencia en ${companyName}`,
     paragraph1: `Realicé una auditoría técnica en ${websiteUrl} y detecté una fuga de leads a nivel de infraestructura.`,
-    paragraph2: `Esos milisegundos extra de carga operan como un freno de mano para tu negocio, traduciéndose en capital que se pierde silenciosamente por falta de eficiencia operativa.`,
-    paragraph3: `En NITRO ECOM implementamos el Nitro Protocol: arquitecturas "Headless" de ultra-baja latencia y agentes autónomos que recuperan tu soberanía técnica y automatizan el filtrado comercial.`,
-    paragraph4: `Preparé una demo de ingeniería para que evalúes el rendimiento real que tu plataforma debería tener bajo estos estándares.`,
+    paragraph2: `Esos milisegundos extra de carga operan como un freno de mano para tu negocio. Se traducen en capital que pierdes silenciosamente por falta de eficiencia operativa.`,
+    paragraph3: `En NITRO ECOM implementamos el Nitro Protocol. Usamos arquitecturas "Headless" y agentes autónomos para recuperar tu soberanía técnica y automatizar el filtrado comercial.`,
+    paragraph4: `Preparé una demo de ingeniería. Aquí puedes evaluar el rendimiento real que tu plataforma debería tener bajo estos estándares.`,
     ctaText: "Ver diagnóstico de 10 minutos →",
     ctaUrl: sectorCta.ctaUrl,
     closingLine: "Quedo a tu disposición para revisar la data técnica.",
@@ -121,7 +121,7 @@ ${sectorCta.solutionSummary}
 - PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "somos los mejores", "un abrazo", "saludos", "hacer de 6 a 7 cifras".
 - USA TERMINOLOGÍA TÉCNICA: Latencia, Headless, Infraestructura, Soberanía Técnica, Agentes Autónomos, Eficiencia Operativa, Escalado Acelerado.
 - TONO: De "tú a tú", pero con la distancia de un experto respetado. Cero clichés de ventas.
-- LONGITUD: Párrafos de máximo 3 líneas. Alta densidad de valor, cero relleno.
+- LONGITUD: Extrema concisión. Ningún párrafo debe superar las 2 oraciones. Escribe con ritmo de "cascada". Mucho aire visual, cero bloques densos de texto.
 
 ═══ FORMATO DE RESPUESTA ═══
 Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
