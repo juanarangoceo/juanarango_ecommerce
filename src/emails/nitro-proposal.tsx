@@ -1,197 +1,191 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
-import NitroProposalEmail from "@/emails/nitro-proposal";
-import { GoogleGenAI } from "@google/genai";
+import {
+  Body,
+  Container,
+  Head,
+  Html,
+  Img,
+  Link,
+  Preview,
+  Section,
+  Text,
+  Hr,
+} from "@react-email/components";
+import * as React from "react";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// ─── Sector CTA mapping ──────────────────────────────────────────────────────
-function getSectorCta(sector: string | null | undefined): {
+// ─── 1. INTERFAZ EXACTA PARA VERCEL Y TYPESCRIPT ─────────────────────────────
+// Aquí le decimos a Vercel que espere los 5 párrafos, evitando el error de "propiedad desconocida".
+interface NitroProposalEmailProps {
+  prospectName: string;
+  companyName?: string;
+  paragraph1: string;
+  paragraph2: string;
+  paragraph3: string;
+  paragraph4: string;
+  paragraph5: string; // <-- La propiedad clave para que no se rompa
+  ctaText: string;
   ctaUrl: string;
-  solutionSummary: string;
-} {
-  const s = (sector ?? "").toLowerCase().trim();
-
-  if (s.includes("inmobi") || s.includes("real estate") || s.includes("propiedad") || s.includes("construc")) {
-    return {
-      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Intervención de infraestructura y automatización que elimina la fuga de prospectos inmobiliarios mediante respuestas inmediatas y arquitecturas sin fricción.`,
-    };
-  }
-  if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail") || s.includes("shopify")) {
-    return {
-      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail",
-      solutionSummary: `Intervención de infraestructura avanzada que acelera la conversión, elimina carritos abandonados por latencia y recupera ventas vía agentes autónomos.`,
-    };
-  }
-  if (s.includes("salud") || s.includes("clinica") || s.includes("estetica") || s.includes("spa")) {
-    return {
-      ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Intervención operativa que automatiza agendas, califica pacientes mediante IA y elimina la fricción en el seguimiento clínico.`,
-    };
-  }
-  // Default
-  return {
-    ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-    solutionSummary: `Intervención de infraestructura digital que automatiza el filtrado de prospectos y garantiza una operación de máxima conversión sin latencia.`,
-  };
+  closingLine: string;
 }
 
-// ─── Fallback content ────────────────────────────────────────────────────────
-function getFallbackContent(
-  companyName: string,
-  websiteUrl: string,
-  sectorCta: ReturnType<typeof getSectorCta>
-) {
-  return {
-    subject: `Una oportunidad de optimización en ${companyName}`,
-    paragraph1: `Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA, y trabajo ayudando a empresas a escalar su operación sin aumentar proporcionalmente su equipo.`,
-    paragraph2: `La razón de este correo es concreta: revisé el flujo de ${websiteUrl} desde la perspectiva de un cliente y detecté una fricción técnica que probablemente ya conocen.`,
-    paragraph3: `A escala, los procesos manuales o las plataformas con tiempos de carga elevados se traducen directamente en ventas que no cierran y capital que se evapora.`,
-    paragraph4: `En Nitro Ecom resolvemos esto implementando Agentes de Inteligencia Artificial 24/7 y arquitectura Headless. No son chatbots genéricos, son sistemas entrenados con su lógica de negocio para calificar y convertir sin fricción.`,
-    paragraph5: `Preparé un diagnóstico breve y visual donde muestro cómo se vería esto aplicado específicamente a su operación.`,
-    ctaText: "Ver diagnóstico personalizado →",
-    ctaUrl: sectorCta.ctaUrl,
-    closingLine: "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896",
-  };
-}
+// ─── 2. COMPONENTE PRINCIPAL CON VALORES POR DEFECTO ─────────────────────────
+export const NitroProposalEmail = ({
+  prospectName = "equipo",
+  companyName = "la empresa",
+  paragraph1 = "Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA...",
+  paragraph2 = "Revisé el flujo de su web desde la perspectiva de un cliente y detecté un detalle...",
+  paragraph3 = "A escala, los procesos manuales o la latencia se traducen en ventas que no cierran.",
+  paragraph4 = "En Nitro Ecom resolvemos esto implementando Agentes de IA 24/7 y arquitectura Headless.",
+  paragraph5 = "Preparé un diagnóstico breve y visual aplicado específicamente a su empresa.",
+  ctaText = "Ver diagnóstico personalizado →",
+  ctaUrl = "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
+  closingLine = "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896",
+}: NitroProposalEmailProps) => {
+  
+  // El texto previo que se lee en la bandeja de entrada antes de abrir el correo
+  const previewText = `Una oportunidad que vi en ${companyName}`;
 
-// ─── Main handler ────────────────────────────────────────────────────────────
-export async function POST(req: Request) {
-  try {
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json({ error: "RESEND_API_KEY missing" }, { status: 500 });
-    }
-    if (!process.env.GOOGLE_API_KEY) {
-      return NextResponse.json({ error: "GOOGLE_API_KEY missing" }, { status: 500 });
-    }
+  return (
+    <Html lang="es">
+      <Head />
+      <Preview>{previewText}</Preview>
+      <Body style={mainBodyStyle}>
+        <Container style={containerStyle}>
 
-    const body = await req.json();
-    const { record } = body;
+          {/* Logo — Discreto y moderno */}
+          <Section style={{ marginBottom: "40px", marginTop: "20px" }}>
+            <Img
+              src="https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg"
+              width="72"
+              height="auto"
+              alt="Nitro Ecom"
+              style={{ borderRadius: "6px" }}
+            />
+          </Section>
 
-    if (!record || !record.email) {
-      return NextResponse.json({ error: "record.email missing" }, { status: 400 });
-    }
+          {/* Saludo dinámico */}
+          <Text style={textStyle}>
+            Hola <strong>{prospectName}</strong>,
+          </Text>
 
-    const { email, full_name, company_name, sector, problem, notes, website_url } = record;
-    const sectorCta = getSectorCta(sector);
-    const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "su plataforma";
-    
-    // ─── Lógica Corporate C-Level para el Nombre ─────────────────────────────
-    let firstName = (full_name ?? "").split(" ")[0] || "equipo";
-    const companyLower = (company_name ?? "").toLowerCase();
-    const fNameLower = firstName.toLowerCase();
-    
-    if (
-      companyLower.includes(fNameLower) || 
-      ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo", "contacto"].includes(fNameLower)
-    ) {
-      firstName = "equipo";
-    }
-    
-    const finalProspectName = firstName === "equipo" ? `equipo directivo de ${company_name}` : firstName;
+          {/* Cuerpo del correo: Efecto Cascada con los 5 párrafos */}
+          <Text style={textStyle}>{paragraph1}</Text>
+          <Text style={textStyle}>{paragraph2}</Text>
+          <Text style={textStyle}>{paragraph3}</Text>
+          <Text style={textStyle}>{paragraph4}</Text>
+          {paragraph5 && <Text style={textStyle}>{paragraph5}</Text>}
 
-    console.log(`[Nitro Email] Generating for ${email} | ${company_name} | sector: ${sector}`);
+          {/* Call to Action (Enlace sobrio y técnico) */}
+          <Text style={{ ...textStyle, marginTop: "32px", marginBottom: "32px" }}>
+            <Link href={ctaUrl} style={linkStyle}>
+              {ctaText}
+            </Link>
+          </Text>
 
-    // ─── Gemini AI (Nuevo SDK GenAI) ─────────────────────────────────────────
-    const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+          {/* Cierre enfocado en respuesta y WhatsApp */}
+          <Text style={textStyle}>{closingLine}</Text>
 
-    const prompt = `
-Eres Juan Arango, Arquitecto de Infraestructura Digital e IA en NITRO ECOM.
-Tu tarea es redactar un correo persuasivo, conversacional y de élite para el CEO de una empresa.
+          {/* Separador */}
+          <Hr style={dividerStyle} />
 
-═══ INFORMACIÓN DEL DESTINATARIO ═══
-- Contacto: ${finalProspectName}
-- Empresa: ${company_name ?? "la empresa"}
-- Sector: ${sector ?? "su sector"}
-- PROBLEMA A ATACAR: "${problem ?? "fricción en la captación y latencia"}"
-- Sitio web: ${siteUrl}
+          {/* Firma Técnica de Autoridad */}
+          <Text style={signatureNameStyle}>
+            Juan Arango
+          </Text>
+          <Text style={signatureTitleStyle}>
+            Arquitecto de Infraestructura Digital & IA
+          </Text>
+          <Text style={signatureCompanyStyle}>
+            NITRO ECOM &nbsp;·&nbsp;{" "}
+            <Link href="https://www.juanarangoecommerce.com" style={{ color: "#6b7280", textDecoration: "none" }}>
+              juanarangoecommerce.com
+            </Link>
+            {" "}&nbsp;·&nbsp;{" "}
+            <Link href="https://wa.me/573146681896" style={{ color: "#6b7280", textDecoration: "none" }}>
+              WhatsApp (+57) 314 668 1896
+            </Link>
+          </Text>
 
-═══ ESTRUCTURA PSICOLÓGICA (EL CÓMO DEBES ESCRIBIR) ═══
-Aplica EXACTAMENTE este flujo narrativo, pero adaptando el contenido al "PROBLEMA A ATACAR":
+        </Container>
 
-1. Presentación (paragraph1): "Mi nombre es Juan Arango, soy Arquitecto de Infraestructura Digital e IA, y trabajo con marcas de [Sector] ayudándoles a escalar su operación sin aumentar proporcionalmente su equipo."
-2. El Descubrimiento Empático (paragraph2): Di que revisaste el flujo de su web desde la perspectiva de un cliente y detectaste el [PROBLEMA A ATACAR]. Usa la frase: "...y detecté algo que probablemente ya conocen: [Describe el problema detectado de forma profesional]."
-3. El Impacto Financiero (paragraph3): Explica cómo ese problema específico frena la conversión. Remata con: "Eso, a escala, se traduce en ventas que no cierran."
-4. La Solución IA (paragraph4): Presenta tu solución. Debes mencionar explícitamente "Agentes de Inteligencia Artificial que operan 24/7". Aclara contundentemente: "No es un chatbot genérico. Es un agente entrenado con la lógica de negocio de su marca". (Adapta esto a Headless Commerce si el problema es de velocidad extrema).
-5. El Gancho (paragraph5): Menciona que preparaste un diagnóstico breve y visual aplicado específicamente a su empresa.
+        {/* Legal Footer para proteger tu entregabilidad */}
+        <Text style={footerStyle}>
+          Este es un contacto profesional B2B. Si no deseas recibir más información de mi parte, por favor responde "no gracias" y detendré el seguimiento de inmediato.
+        </Text>
+      </Body>
+    </Html>
+  );
+};
 
-═══ REGLAS ESTRICTAS DE ESTILO ═══
-1. RITMO VISUAL: Extrema concisión. Ningún párrafo debe superar las 2 oraciones (efecto cascada).
-2. TONO: Consultor premium. Empático pero directo.
-3. ADAPTABILIDAD: Si el problema es "web lenta", enfócate en infraestructura Headless y pérdida de leads por carga. Si es "falta de atención", enfócate 100% en los Agentes IA 24/7.
+// ─── 3. DICCIONARIO DE ESTILOS (UX / ESTÉTICA "SILENT LUXURY") ───────────────
 
-═══ FORMATO DE RESPUESTA ═══
-Devuelve ÚNICAMENTE un objeto JSON puro.
-{
-  "subject": "Asunto natural y conversacional. Ej: Una oportunidad que vi en [Empresa]",
-  "paragraph1": "Presentación de autoridad.",
-  "paragraph2": "Descubrimiento empático del problema.",
-  "paragraph3": "El impacto a escala (ventas perdidas).",
-  "paragraph4": "La solución: Agentes IA 24/7 / Headless.",
-  "paragraph5": "Diagnóstico específico preparado.",
-  "ctaText": "Ver diagnóstico personalizado →",
-  "ctaUrl": "${sectorCta.ctaUrl}",
-  "closingLine": "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896"
-}
-`;
+// Fuentes de sistema Sans-Serif para velocidad de carga y lectura limpia
+const fontFamilyStack = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif";
 
-    let generatedData = null;
+const mainBodyStyle: React.CSSProperties = {
+  backgroundColor: "#ffffff",
+  margin: "0",
+  padding: "0",
+  fontFamily: fontFamilyStack,
+};
 
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-        config: { 
-          responseMimeType: "application/json" 
-        }
-      });
-      generatedData = JSON.parse(response.text || "{}");
-      console.log(`[Nitro Email] ✅ AI generation OK. Subject: "${generatedData.subject}"`);
-    } catch (aiError) {
-      console.error("[Nitro Email] AI failed, using fallback:", aiError);
-      generatedData = getFallbackContent(company_name ?? "la empresa", siteUrl, sectorCta);
-    }
+const containerStyle: React.CSSProperties = {
+  maxWidth: "560px",
+  margin: "0 auto",
+  padding: "48px 24px",
+};
 
-    // ─── Send via Resend ────────────────────────────────────────────────────
-    const data = await resend.emails.send({
-      from: "Juan Arango <nitro@juanarangoecommerce.com>",
-      to: [email],
-      subject: generatedData.subject,
-      react: NitroProposalEmail({
-        prospectName: finalProspectName,
-        companyName: company_name ?? "la empresa",
-        paragraph1: generatedData.paragraph1,
-        paragraph2: generatedData.paragraph2,
-        paragraph3: generatedData.paragraph3,
-        paragraph4: generatedData.paragraph4,
-        paragraph5: generatedData.paragraph5,
-        ctaText: generatedData.ctaText || "Ver diagnóstico personalizado →",
-        ctaUrl: generatedData.ctaUrl || sectorCta.ctaUrl,
-        closingLine: generatedData.closingLine || "Si prefiere conversarlo directamente antes, puede responderme aquí o escribirme por WhatsApp: wa.me/573146681896",
-      }),
-    });
+const textStyle: React.CSSProperties = {
+  fontSize: "15px",
+  lineHeight: "26px", // Mucho aire interlineal
+  color: "#1a1a1a", // Gris muy oscuro (menos cansancio visual)
+  margin: "0 0 24px 0", // Margen inferior que crea la "cascada"
+  textAlign: "left",
+  fontWeight: "400",
+};
 
-    if (data.error) {
-      console.error("[Nitro Email] Resend error:", data.error);
-      return NextResponse.json({ error: data.error }, { status: 500 });
-    }
+const linkStyle: React.CSSProperties = {
+  color: "#000000",
+  textDecoration: "underline",
+  textUnderlineOffset: "4px",
+  fontWeight: "600",
+};
 
-    console.log(`[Nitro Email] ✅ Sent to ${email}. ID: ${data.data?.id}`);
+const dividerStyle: React.CSSProperties = {
+  borderColor: "#eaeaea",
+  margin: "40px 0",
+};
 
-    return NextResponse.json({
-      success: true,
-      ai_generated: true,
-      prospect: finalProspectName,
-      company: company_name,
-      resend_id: data.data?.id,
-    });
+const signatureNameStyle: React.CSSProperties = {
+  fontSize: "15px",
+  lineHeight: "24px",
+  color: "#111827",
+  fontWeight: "600",
+  margin: "0 0 2px 0",
+};
 
-  } catch (error: any) {
-    console.error("[Nitro Email] Error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
-      { status: 500 }
-    );
-  }
-}
+const signatureTitleStyle: React.CSSProperties = {
+  fontSize: "13px",
+  lineHeight: "20px",
+  color: "#4b5563",
+  margin: "0 0 4px 0",
+};
+
+const signatureCompanyStyle: React.CSSProperties = {
+  fontSize: "12px",
+  lineHeight: "18px",
+  color: "#6b7280",
+  margin: "0",
+};
+
+const footerStyle: React.CSSProperties = {
+  textAlign: "center",
+  fontSize: "11px",
+  lineHeight: "16px",
+  color: "#9ca3af",
+  padding: "0 24px 48px",
+  fontFamily: fontFamilyStack,
+  maxWidth: "400px",
+  margin: "0 auto",
+};
+
+export default NitroProposalEmail;
