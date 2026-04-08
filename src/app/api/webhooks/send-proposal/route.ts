@@ -15,37 +15,37 @@ function getSectorCta(sector: string | null | undefined): {
   if (s.includes("inmobi") || s.includes("real estate") || s.includes("propiedad") || s.includes("construc")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Implementamos tecnología de última generación (Headless Commerce e IA) que logra que:
-- El catálogo cargue casi al instante, eliminando la fricción y la fuga de usuarios.
-- Un sistema atienda y filtre a los interesados de forma automática, pasando al equipo solo prospectos altamente cualificados.
-- La marca gane autoridad digital y eficiencia operativa sin depender del gasto continuo en portales tradicionales.`,
+      solutionSummary: `Intervención con tecnología de última generación (Headless Commerce e IA) que logra que:
+- El catálogo alcance latencia cero, eliminando la fricción estructural y el drenaje de leads.
+- Un sistema agéntico pre-califique interesados con precisión quirúrgica, optimizando el tiempo del equipo comercial.
+- La operación alcance soberanía técnica total para un escalado acelerado sin dependencias.`,
     };
   }
   if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail") || s.includes("shopify")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail",
-      solutionSummary: `Llevamos tiendas online al siguiente nivel con infraestructura avanzada (Headless) logrando que:
-- La velocidad de carga sea instantánea, acelerando la conversión y reduciendo drásticamente los carritos abandonados.
-- Un agente autónomo recupere ventas perdidas operando directamente vía WhatsApp.
-- El negocio logre un escalado acelerado y máxima soberanía técnica frente a la competencia.`,
+      solutionSummary: `Intervención de infraestructura avanzada (Headless) en e-commerce logrando que:
+- El renderizado instantáneo elimine el drenaje de rentabilidad por carritos abandonados.
+- Un agente autónomo recupere ventas perdidas con precisión operativa vía WhatsApp.
+- El negocio recupere el control de su conversión con soberanía técnica total.`,
     };
   }
   if (s.includes("salud") || s.includes("clinica") || s.includes("estetica") || s.includes("spa")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Integramos tecnología que convierte la clínica en una máquina de eficiencia operativa:
-- Una agenda autónoma que reduce cancelaciones con recordatorios inteligentes por WhatsApp.
-- Filtros agénticos para que solo lleguen al consultorio pacientes viables y educados sobre el tratamiento.
-- Seguimiento automatizado y retención de pacientes sin fricción humana.`,
+      solutionSummary: `Intervención de infraestructura para máxima eficiencia operativa clínica:
+- Una agenda autónoma que minimiza la fricción y reduce cancelaciones de forma quirúrgica.
+- Filtros agénticos para calificar viabilidad de pacientes sin carga operativa humana.
+- Soberanía técnica total sobre la retención de pacientes a escala.`,
     };
   }
   // Default
   return {
     ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-    solutionSummary: `Implementamos infraestructura y automatización que:
-- Transforma la página web de un catálogo pasivo a un activo de alto rendimiento.
-- Califica a los interesados de manera autónoma para que el equipo humano se enfoque solo en el cierre.
-- Garantiza un escalado acelerado y eficiencia operativa en toda la línea de captación digital.`,
+    solutionSummary: `Intervención de infraestructura y automatización que:
+- Transforma la arquitectura actual en un motor de alta conversión sin latencia.
+- Automatiza el filtrado de prospectos con precisión quirúrgica.
+- Garantiza un escalado acelerado y eficiencia operativa sostenida.`,
   };
 }
 
@@ -56,14 +56,14 @@ function getFallbackContent(
   sectorCta: ReturnType<typeof getSectorCta>
 ) {
   return {
-    subject: `Infraestructura y escalado en ${companyName}`,
-    paragraph1: `Estuve analizando la plataforma de ${websiteUrl} y es evidente que tienen un modelo de negocio con excelente tracción.`,
-    paragraph2: `Sin embargo, la infraestructura técnica actual opera como un cuello de botella que genera fricción y limita el escalado acelerado.`,
-    paragraph3: `Con el Nitro Protocol solucionamos esto: implementamos arquitectura "Headless" y Agentes de IA para recuperar su soberanía técnica y automatizar la captación.`,
-    paragraph4: `Preparé una demo de ingeniería para que evalúen el rendimiento real que su marca debería tener bajo estos estándares.`,
+    subject: `Informe de Auditoría: Diagnóstico de ineficiencia técnica en ${companyName}`,
+    paragraph1: `Tras realizar una auditoría técnica sobre la infraestructura digital de ${websiteUrl}, he detectado una latencia estructural en el renderizado que compromete su eficiencia operativa.`,
+    paragraph2: `A su volumen de operación actual, esta fricción técnica actúa como un drenaje silencioso de rentabilidad, dificultando el escalado acelerado y la conversión fluida de leads.`,
+    paragraph3: `La solución para esta envergadura reside en el Nitro Protocol: una intervención hacia arquitectura "Headless" e Inteligencia Agéntica para alcanzar soberanía técnica total con precisión quirúrgica.`,
+    paragraph4: `He preparado un Diagnóstico de Ingeniería específico donde visualizo cómo transformar su arquitectura actual en un motor de alta conversión.`,
     ctaText: "Ver diagnóstico de ingeniería →",
     ctaUrl: sectorCta.ctaUrl,
-    closingLine: "Quedo a tu disposición para revisar la data operativa.",
+    closingLine: "Quedo a su disposición para analizar la viabilidad técnica y el impacto operativo de esta optimización.",
   };
 }
 
@@ -86,23 +86,22 @@ export async function POST(req: Request) {
 
     const { email, full_name, company_name, sector, problem, notes, website_url } = record;
     const sectorCta = getSectorCta(sector);
-    const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "tu plataforma";
+    const siteUrl = (website_url && website_url.trim() !== "") ? website_url : "su plataforma";
     
-    // ─── Lógica para evitar nombres falsos o de empresa ──────────────────────
+    // ─── Lógica Corporate C-Level para el Nombre ─────────────────────────────
     let firstName = (full_name ?? "").split(" ")[0] || "equipo";
     const companyLower = (company_name ?? "").toLowerCase();
     const fNameLower = firstName.toLowerCase();
     
-    // Si el nombre contiene palabras genéricas o es igual al de la empresa, usamos "equipo"
+    // Si el nombre es genérico o igual al de la empresa, apuntamos a la directiva
     if (
       companyLower.includes(fNameLower) || 
-      ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo"].includes(fNameLower)
+      ["inmobiliaria", "clinica", "tienda", "agencia", "constructora", "equipo", "contacto"].includes(fNameLower)
     ) {
       firstName = "equipo";
     }
 
-    // Ajuste sutil para el saludo en el componente React Email
-    const finalProspectName = firstName.toLowerCase() === "equipo" ? `equipo de ${company_name}` : firstName;
+    const finalProspectName = firstName === "equipo" ? `equipo directivo de ${company_name}` : firstName;
 
     console.log(`[Nitro Email] Generating for ${email} | ${company_name} | sector: ${sector}`);
 
@@ -110,9 +109,10 @@ export async function POST(req: Request) {
     const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
     const prompt = `
-Eres Juan Arango, Arquitecto de Infraestructura Digital e Inteligencia Agéntica en NITRO ECOM. Tu enfoque es la eficiencia operativa y el escalado acelerado. 
+Eres Juan Arango, Arquitecto de Infraestructura Digital e Inteligencia Agéntica en NITRO ECOM. 
+Tu enfoque es de élite corporativa ("Whale targeting"). Le escribes al C-Level (Directores de Operaciones/CTOs) de empresas con alto volumen.
 
-Le estás escribiendo a un negocio que YA tiene tracción y hace las cosas bien, pero cuya infraestructura tecnológica actual es un cuello de botella. No vas a criticar su web diciendo que está "mal"; vas a plantear que su negocio es demasiado bueno para operar sobre una arquitectura que genera fricción.
+REGLA DE ORO: NO USES FLUFF. Cero halagos. No les digas que tienen "buen potencial" ni valides su negocio (ya saben que son líderes, suena a vendedor de humo). Tu misión es presentar un hallazgo de ineficiencia técnica.
 
 ═══ INFORMACIÓN DEL DESTINATARIO ═══
 - Contacto: ${finalProspectName}
@@ -123,35 +123,35 @@ Le estás escribiendo a un negocio que YA tiene tracción y hace las cosas bien,
 - Sitio web: ${siteUrl}
 
 ═══ EL MENSAJE Y EL "POR QUÉ" ═══
-1. Validación: Reconoce que tienen una excelente oferta y potencial comercial.
-2. El Cuello de Botella (El Por Qué): Explica que operar sobre plataformas tradicionales crea fricción (latencia o procesos manuales). Esa fricción es capital perdido.
-3. La Solución Metodológica: Introduce el "Nitro Protocol" (Arquitectura Headless + Inteligencia Agéntica) para lograr máxima soberanía técnica.
+1. El Hallazgo: Has auditado su web y detectado una "latencia estructural" o "fricción en el renderizado".
+2. El Drenaje: A su volumen de operación, esa fricción no es estética, es un "drenaje silencioso de rentabilidad" que impide el escalado acelerado.
+3. La Intervención: Tu método, el "Nitro Protocol" (Headless + IA), es la intervención necesaria para lograr soberanía técnica total y automatización con precisión quirúrgica.
 
 ═══ INSTRUCCIONES ESTRUCTURALES (EFECTO CASCADA: 4 PÁRRAFOS) ═══
-Debes escribir exactamente 4 párrafos. 
-Cada párrafo DEBE SER EXTREMADAMENTE CORTO (1 o máximo 2 oraciones). Esto es vital para mantener un ritmo de lectura visual ágil. Cero bloques densos de texto.
+Escribe exactamente 4 párrafos. 
+Cada párrafo DEBE SER EXTREMADAMENTE CORTO (1 o máximo 2 oraciones). Mantén el ritmo visual ágil y modular.
 
-- paragraph1 (Gancho y Validación): Menciona que estuviste analizando su plataforma y valida su potencial comercial. VE DIRECTO AL GRANO. Cero saludos iniciales.
-- paragraph2 (El Problema Técnico): Señala la fricción estructural (latencia o procesos manuales) que opera como un cuello de botella.
-- paragraph3 (Nitro Protocol): Presenta tu método (Headless + IA) como la intervención necesaria para escalar con eficiencia operativa.
-- paragraph4 (La Demo): Invitación sobria a revisar un diagnóstico o demo de ingeniería.
+- paragraph1 (El Hallazgo Técnico): Inicia directamente con el resultado de tu auditoría técnica en su plataforma. CERO HALAGOS INICIALES.
+- paragraph2 (El Drenaje Financiero): Explica cómo este problema técnico, a su volumen de operación, actúa como un drenaje de rentabilidad.
+- paragraph3 (La Intervención Nitro Protocol): Presenta la transición hacia arquitectura Headless e Inteligencia Agéntica como la intervención para lograr soberanía técnica.
+- paragraph4 (El Diagnóstico): Informa que preparaste un Diagnóstico de Ingeniería específico para ellos y los invitas a visualizar el impacto.
 
 ═══ RESTRICCIONES DE ESTILO ABSOLUTAS ═══
-- PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "somos los mejores", "tu web está mal", "un abrazo", "saludos".
-- USA TERMINOLOGÍA: Latencia, Infraestructura, Soberanía Técnica, Eficiencia Operativa, Escalado Acelerado, Nitro Protocol.
-- TONO: Consultor de élite, analítico, respetuoso pero directo.
+- PROHIBIDO USAR: "espero que estés bien", "quería ofrecerte", "excelente potencial", "gran negocio", "tu web está mal".
+- USA TERMINOLOGÍA CORPORATIVA: Latencia estructural, Intervención, Drenaje de rentabilidad, Precisión quirúrgica, Soberanía técnica total, Volumen de operación, Escalado acelerado.
+- TONO: Clínico, de ingeniería, de C-Level a C-Level.
 
 ═══ FORMATO DE RESPUESTA ═══
 Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
 {
-  "subject": "Asunto técnico e intrigante. Máx 6 palabras. Ej: Infraestructura y escalado en [Empresa]",
-  "paragraph1": "Gancho técnico y validación directa.",
-  "paragraph2": "Dolor operativo y el por qué del cuello de botella.",
-  "paragraph3": "Nitro Protocol, Headless y Agentes de IA.",
-  "paragraph4": "Invitación sobria a la Demo de Ingeniería.",
+  "subject": "Asunto analítico. Máx 7 palabras. Ej: Informe de Auditoría: Ineficiencia técnica en [Empresa]",
+  "paragraph1": "Auditoría y hallazgo técnico.",
+  "paragraph2": "El drenaje de rentabilidad a su volumen operativo.",
+  "paragraph3": "Nitro Protocol, Headless e IA como intervención.",
+  "paragraph4": "Mención del diagnóstico de ingeniería.",
   "ctaText": "Ver diagnóstico de ingeniería →",
   "ctaUrl": "${sectorCta.ctaUrl}",
-  "closingLine": "Despedida seca y profesional. Ej: Quedo a tu disposición para revisar la data técnica."
+  "closingLine": "Despedida corporativa. Ej: Quedo a su disposición para analizar la viabilidad técnica y el impacto operativo de esta optimización."
 }
 `;
 
@@ -187,7 +187,7 @@ Devuelve ÚNICAMENTE un objeto JSON puro (sin bloques markdown).
         paragraph4: generatedData.paragraph4,
         ctaText: generatedData.ctaText || "Ver diagnóstico de ingeniería →",
         ctaUrl: generatedData.ctaUrl || sectorCta.ctaUrl,
-        closingLine: generatedData.closingLine || "Quedo a tu disposición para revisar la data técnica.",
+        closingLine: generatedData.closingLine || "Quedo a su disposición para analizar la viabilidad técnica y el impacto operativo de esta optimización.",
       }),
     });
 
