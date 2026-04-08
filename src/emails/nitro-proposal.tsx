@@ -31,27 +31,27 @@ export const NitroProposalEmail = ({
   paragraph2 = "Muchas empresas en tu sector pasan por lo mismo: tienen un negocio real, con clientes reales, pero su presencia digital no les está vendiendo lo que deberían.",
   paragraph3 = "Lo que hacemos en Nitro es exactamente eso: construir la infraestructura que convierte tu web de un catálogo pasivo en algo que trabaja por ti las 24 horas.",
   paragraph4 = "No te hablo de rediseños visuales. Te hablo de velocidad, de captar el prospecto correcto antes de que llegue a la competencia, y de automatizar el seguimiento para que tus asesores solo hablen con gente lista para cerrar.",
-  ctaText = "Puedes ver cómo funciona aquí →",
+  ctaText = "Ver diagnóstico de 10 minutos →",
   ctaUrl = "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-  closingLine = "Si te genera alguna pregunta, responde este mismo correo. Lo leo yo.",
+  closingLine = "Quedo a tu disposición para revisar la data técnica.",
 }: NitroProposalEmailProps) => {
-  const previewText = `${prospectName}, quería hablarte de algo que vi en ${companyName}.`;
+  const previewText = `Auditoría técnica de infraestructura en ${companyName}`;
 
   return (
     <Html lang="es">
       <Head />
       <Preview>{previewText}</Preview>
-      <Body style={{ backgroundColor: "#ffffff", margin: "0", padding: "0", fontFamily: "'Georgia', 'Times New Roman', serif" }}>
-        <Container style={{ maxWidth: "580px", margin: "0 auto", padding: "40px 32px 48px" }}>
+      <Body style={mainBodyStyle}>
+        <Container style={containerStyle}>
 
-          {/* Logo — pequeño, discreto */}
-          <Section style={{ marginBottom: "36px" }}>
+          {/* Logo — Discreto, alineado a la izquierda */}
+          <Section style={{ marginBottom: "40px", marginTop: "20px" }}>
             <Img
               src="https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg"
-              width="80"
+              width="72"
               height="auto"
               alt="Nitro Ecom"
-              style={{ borderRadius: "4px" }}
+              style={{ borderRadius: "6px" }}
             />
           </Section>
 
@@ -60,71 +60,120 @@ export const NitroProposalEmail = ({
             Hola <strong>{prospectName}</strong>,
           </Text>
 
-          {/* Párrafos conversacionales */}
+          {/* Párrafos con efecto Cascada */}
           <Text style={textStyle}>{paragraph1}</Text>
           <Text style={textStyle}>{paragraph2}</Text>
           <Text style={textStyle}>{paragraph3}</Text>
           <Text style={textStyle}>{paragraph4}</Text>
 
-          {/* CTA como link de texto — sin botón */}
-          <Text style={{ ...textStyle, marginTop: "28px" }}>
-            <Link
-              href={ctaUrl}
-              style={{
-                color: "#1d4ed8",
-                textDecoration: "underline",
-                fontWeight: "600",
-              }}
-            >
+          {/* CTA Técnico y limpio */}
+          <Text style={{ ...textStyle, marginTop: "32px", marginBottom: "32px" }}>
+            <Link href={ctaUrl} style={linkStyle}>
               {ctaText}
             </Link>
           </Text>
 
           {/* Cierre */}
-          <Text style={{ ...textStyle, marginTop: "28px" }}>{closingLine}</Text>
+          <Text style={textStyle}>{closingLine}</Text>
 
-          <Hr style={{ borderColor: "#e5e7eb", margin: "32px 0" }} />
+          {/* Separador sutil */}
+          <Hr style={dividerStyle} />
 
-          {/* Firma */}
-          <Text style={{ ...textStyle, marginBottom: "4px", fontWeight: "700", color: "#111827" }}>
+          {/* Firma estilo Ingeniero / Consultor */}
+          <Text style={signatureNameStyle}>
             Juan Arango
           </Text>
-          <Text style={{ ...smallTextStyle, marginTop: "0" }}>
-            Experto en Infraestructura Digital &amp; E-commerce de Alto Rendimiento
+          <Text style={signatureTitleStyle}>
+            Arquitecto de Infraestructura Digital & IA
           </Text>
-          <Text style={{ ...smallTextStyle, color: "#6b7280" }}>
-            Nitro Ecom &nbsp;·&nbsp;{" "}
-            <Link href="https://www.juanarangoecommerce.com" style={{ color: "#6b7280" }}>
+          <Text style={signatureCompanyStyle}>
+            NITRO ECOM &nbsp;·&nbsp;{" "}
+            <Link href="https://www.juanarangoecommerce.com" style={{ color: "#6b7280", textDecoration: "none" }}>
               juanarangoecommerce.com
             </Link>
           </Text>
 
         </Container>
 
-        {/* Legal */}
-        <Text style={{ textAlign: "center", fontSize: "11px", color: "#9ca3af", padding: "0 32px 32px", fontFamily: "sans-serif" }}>
-          Te escribo porque creo que puedo aportarte algo real.
-          Si no te interesa, no hay problema — responde con "no gracias" y no vuelvo a escribir.
+        {/* Footer Legal Minimalista */}
+        <Text style={footerStyle}>
+          Este es un reporte de infraestructura técnica. Si no deseas recibir más información de este tipo, responde "no gracias" y detendré el seguimiento.
         </Text>
       </Body>
     </Html>
   );
 };
 
-const textStyle: React.CSSProperties = {
-  fontSize: "16px",
-  lineHeight: "28px",
-  color: "#1f2937",
-  margin: "0 0 20px 0",
-  fontFamily: "'Georgia', 'Times New Roman', serif",
+// ─── Diccionario de Estilos ──────────────────────────────────────────────────
+
+// Pila de fuentes del sistema: carga instantánea, 100% legibles, estética moderna.
+const fontFamilyStack = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif";
+
+const mainBodyStyle: React.CSSProperties = {
+  backgroundColor: "#ffffff",
+  margin: "0",
+  padding: "0",
+  fontFamily: fontFamilyStack,
 };
 
-const smallTextStyle: React.CSSProperties = {
+const containerStyle: React.CSSProperties = {
+  maxWidth: "560px", // Un poco más angosto para forzar líneas más cortas
+  margin: "0 auto",
+  padding: "48px 24px",
+};
+
+const textStyle: React.CSSProperties = {
+  fontSize: "15px", // Tamaño ideal para móvil y desktop
+  lineHeight: "26px", // Excelente "aire" interlineal para evitar bloques densos
+  color: "#1a1a1a", // Gris casi negro, reduce fatiga visual vs #000 puro
+  margin: "0 0 24px 0", // El secreto del efecto cascada
+  textAlign: "left",
+  fontWeight: "400",
+};
+
+const linkStyle: React.CSSProperties = {
+  color: "#000000", // Enlace en negro sólido
+  textDecoration: "underline",
+  textUnderlineOffset: "4px", // Separa el subrayado del texto, toque premium
+  fontWeight: "600",
+};
+
+const dividerStyle: React.CSSProperties = {
+  borderColor: "#eaeaea",
+  margin: "40px 0",
+};
+
+const signatureNameStyle: React.CSSProperties = {
+  fontSize: "15px",
+  lineHeight: "24px",
+  color: "#111827",
+  fontWeight: "600",
+  margin: "0 0 2px 0",
+};
+
+const signatureTitleStyle: React.CSSProperties = {
   fontSize: "13px",
   lineHeight: "20px",
-  color: "#374151",
+  color: "#4b5563",
   margin: "0 0 4px 0",
-  fontFamily: "sans-serif",
+};
+
+const signatureCompanyStyle: React.CSSProperties = {
+  fontSize: "12px",
+  lineHeight: "18px",
+  color: "#6b7280",
+  margin: "0",
+};
+
+const footerStyle: React.CSSProperties = {
+  textAlign: "center",
+  fontSize: "11px",
+  lineHeight: "16px",
+  color: "#9ca3af",
+  padding: "0 24px 48px",
+  fontFamily: fontFamilyStack,
+  maxWidth: "400px",
+  margin: "0 auto",
 };
 
 export default NitroProposalEmail;
