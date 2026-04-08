@@ -40,7 +40,7 @@ export function Hero() {
             className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-8 text-balance"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Ingeniería de{" "}
+            Estrategias de{" "}
             <span className="text-primary">Alto Escalamiento</span>{" "}
             para Proyectos Headless y{" "}
             <span className="text-primary">Automatización con IA</span>

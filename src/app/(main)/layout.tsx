@@ -32,7 +32,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   ...constructMetadata({
-    title: "Juan Arango - Ingeniería de Escalamiento",
+    title: "Juan Arango - Experto en Ecommerce",
     description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
     icons: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
   }),
@@ -61,7 +61,7 @@ const organizationSchema = {
         width: 512,
         height: 512
       },
-      description: "Ingeniería de escalamiento acelerado para negocios digitales",
+      description: "Estrategias de escalamiento acelerado para negocios digitales",
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+573146681896",
@@ -82,7 +82,7 @@ const organizationSchema = {
       "@type": "WebSite",
       "@id": "https://www.juanarangoecommerce.com/#website",
       url: "https://www.juanarangoecommerce.com",
-      name: "Nitro Ecom - Ingeniería de Escalamiento",
+      name: "Nitro Ecom - Escalamiento Digital",
       description: "Acelera tu crecimiento digital con infraestructura de alta velocidad",
       publisher: {
         "@id": "https://www.juanarangoecommerce.com/#organization"

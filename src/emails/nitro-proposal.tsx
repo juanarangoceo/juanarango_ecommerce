@@ -17,13 +17,27 @@ import * as React from "react";
 interface NitroProposalEmailProps {
   prospectName: string;
   companyName?: string;
+  headline: string;
+  intro: string;
+  problemParagraph: string;
+  solutionBullets: string[];
+  ctaText: string;
+  ctaUrl: string;
+  ctaMessage: string;
 }
 
 export const NitroProposalEmail = ({
-  prospectName = "Dr. / Dra.",
-  companyName = "su clínica",
+  prospectName = "Visionario",
+  companyName = "tu empresa",
+  headline = "Transformamos tu empresa con Estrategias de Ventas",
+  intro = "He revisado la estrategia digital actual y veo un gran potencial.",
+  problemParagraph = "Actualmente tu negocio funciona más como un escaparate que como un sistema activo y comprobamos que es un punto de fuga de ventas.",
+  solutionBullets = ["Más Conversión", "Atención Automática", "Posicionamiento Premium"],
+  ctaText = "VER DEMO ESTRATÉGICA",
+  ctaUrl = "https://juanarangoecommerce.com",
+  ctaMessage = "👆 Haz clic para agendar tu sesión.",
 }: NitroProposalEmailProps) => {
-  const previewText = `Ingeniería de Ventas para escalar ${companyName} - Nitro Ecom`;
+  const previewText = `Estrategias de Escalamiento para ${companyName} - Nitro Ecom`;
 
   return (
     <Html>
@@ -32,9 +46,9 @@ export const NitroProposalEmail = ({
           theme: {
             extend: {
               colors: {
-                brand: "#000000", // Negro Corporativo (Nitro)
-                accent: "#10b981", // Verde Nitro/Estético (Emerald-500)
-                offWhite: "#f9fafb",
+                brand: "#18181b",
+                accent: "#3b82f6",
+                offWhite: "#f4f4f5",
               },
             },
           },
@@ -42,79 +56,74 @@ export const NitroProposalEmail = ({
       >
         <Head />
         <Preview>{previewText}</Preview>
-        <Body className="bg-offWhite my-auto mx-auto font-sans">
-          <Container className="bg-white border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px] shadow-md">
+        <Body className="bg-[#f4f4f5] my-auto mx-auto font-sans">
+          <Container className="bg-white border text-[#18181b] border-solid border-[#e4e4e7] rounded-xl my-[40px] mx-auto p-[32px] max-w-[500px] shadow-sm">
             
             {/* LOGO SECTION */}
-            <Section className="mt-[32px] mb-[32px] text-center">
+            <Section className="mt-[10px] mb-[32px] text-center">
               <Img
                 src="https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg"
-                width="150"
+                width="130"
                 height="auto"
                 alt="Nitro Ecom Logo"
-                className="my-0 mx-auto"
+                className="my-0 mx-auto rounded-sm"
               />
             </Section>
 
             {/* HEADLINE */}
-            <Heading className="text-brand text-[22px] font-bold text-center p-0 my-[30px] mx-0 leading-tight">
-              Transformamos <span className="text-accent">{companyName}</span> con Ingeniería de Ventas
-            </Heading>
+            <Heading className="text-brand text-[24px] font-bold text-center p-0 mb-[30px] mx-0 leading-tight" dangerouslySetInnerHTML={{ __html: headline }} />
 
             {/* BODY COPY */}
-            <Text className="text-[#333] text-[15px] leading-[26px]">
+            <Text className="text-[#3f3f46] text-[16px] leading-[26px]">
               Hola <strong>{prospectName}</strong>,
             </Text>
 
-            <Text className="text-[#333] text-[15px] leading-[26px]">
-              Estuve revisando la web de <strong>{companyName}</strong> y veo un gran potencial. Sin embargo, noté que actualmente su sitio funciona más como un "folleto informativo" que como un sistema activo de ventas.
+            <Text className="text-[#3f3f46] text-[16px] leading-[26px]">
+              {intro}
             </Text>
 
-            <Text className="text-[#333] text-[15px] leading-[26px]">
-              En <strong>Nitro Ecom</strong>, nos especializamos en el nicho de <strong>estética y spas</strong>. No solo diseñamos webs; implementamos infraestructura digital para atraer pacientes y cerrar citas automáticamente.
+            <Text className="text-[#3f3f46] text-[16px] leading-[26px]">
+              {problemParagraph}
             </Text>
 
             {/* HIGHLIGHT BOX */}
-            <Section className="bg-black p-5 rounded-lg my-6 text-center shadow-sm">
-              <Text className="text-white text-[14px] font-medium m-0 mb-2">
-                Lo que logramos con nuestra tecnología:
+            <Section className="bg-[#f8fafc] border border-[#e2e8f0] p-6 rounded-xl my-6 text-center">
+              <Text className="text-[#334155] text-[14px] font-semibold m-0 mb-3 uppercase tracking-wider">
+                LO QUE LOGRAMOS CON NUESTRA TECNOLOGÍA:
               </Text>
               <Text className="text-accent text-[16px] font-bold m-0 leading-snug">
-                Más Conversión • Agendamiento Automático • Posicionamiento Premium
+                {solutionBullets.join(" • ")}
               </Text>
             </Section>
 
-            <Text className="text-[#333] text-[15px] leading-[26px]">
-              Para que veas exactamente cómo podría funcionar tu negocio, he preparado una demostración interactiva llamada <strong>Aura Stetic</strong>.
+            <Text className="text-[#3f3f46] text-[16px] leading-[26px] text-center font-medium">
+              {ctaMessage}
             </Text>
 
             {/* CTA BUTTON */}
-            <Section className="text-center mt-[32px] mb-[32px]">
+            <Section className="text-center mt-[24px] mb-[32px]">
               <Button
-                className="bg-accent text-white rounded text-[14px] font-bold no-underline text-center px-8 py-4 block w-full hover:bg-[#059669] transition-all shadow-lg"
-                href="https://juanarangoecommerce.com/demos/aura-stetic"
+                className="bg-accent text-white rounded-lg text-[15px] font-bold no-underline text-center px-8 py-4 block w-full hover:bg-[#2563eb] transition-all shadow-md"
+                href={ctaUrl}
               >
-                VER DEMO: AURA STETIC
+                {ctaText}
               </Button>
-              <Text className="text-[#666] text-[12px] mt-3">
-                👆 Haz clic para ver la ingeniería detrás de una clínica exitosa.
-              </Text>
             </Section>
 
-            <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+            <Hr className="border border-solid border-[#e4e4e7] my-[26px] mx-0 w-full" />
 
             {/* FOOTER */}
-            <Text className="text-[#666] text-[13px] leading-[24px]">
-              Si te interesa implementar este sistema en {companyName}, responde a este correo. Estamos listos para optimizar tus procesos.
+            <Text className="text-[#71717a] text-[14px] leading-[24px]">
+              Si te interesa implementar nuestra infraestructura en {companyName}, responde directamente a este correo o visita nuestra plataforma.
             </Text>
 
-            <Text className="text-brand font-bold text-[14px]">
-              El equipo de Nitro Ecom.
+            <Text className="text-brand font-bold text-[15px] mt-4">
+              El Equipo de Nitro Inmobiliaria.
             </Text>
           </Container>
           
-          <Text className="text-center text-[12px] text-gray-400 mt-4">
-            © 2025 Nitro Ecom. Todos los derechos reservados.
+          <Text className="text-center text-[12px] text-[#a1a1aa] mt-4 mb-8">
+            © 2026 Nitro Inmobiliaria & Juan Arango. Todos los derechos reservados.
           </Text>
         </Body>
       </Tailwind>

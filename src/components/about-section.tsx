@@ -35,7 +35,7 @@ export function AboutSection() {
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-primary uppercase tracking-widest">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Ingeniero de Escalamiento
+              Experto en Ecommerce
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">

@@ -43,7 +43,7 @@ export function About() {
               className="mb-6 px-4 py-2 border-primary/30 text-primary bg-primary/5"
             >
               <Award className="w-3 h-3 mr-2" />
-              Ingeniero de Escalamiento
+              Experto en Ecommerce
             </Badge>
 
             <h2 

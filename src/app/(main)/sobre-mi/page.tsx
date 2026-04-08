@@ -4,7 +4,7 @@ import { constructMetadata } from "@/lib/utils";
 
 export const metadata = constructMetadata({
   title: "Sobre Mí - Juan Arango",
-  description: "Conoce más sobre Juan Arango, Ingeniero Full Stack y experto en estrategias de comercio electrónico.",
+  description: "Conoce más sobre Juan Arango, Experto en Ecommerce y automatización para estrategias de comercio electrónico.",
 });
 
 export default function SobreMiPage() {

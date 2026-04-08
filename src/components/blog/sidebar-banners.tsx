@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Crown, Swords, ArrowRight, Star, Zap, Trophy } from "lucide-react"
+import { Crown, Swords, ArrowRight, Star, Zap, Trophy, BookOpen, Sparkles } from "lucide-react"
 
 export function SidebarAppsBanner() {
   return (
@@ -100,3 +100,64 @@ export function SidebarComparisonBanner() {
     </Link>
   )
 }
+
+export function SidebarGuidesBanner() {
+  const guides = [
+    { label: "Shopify 2024", color: "text-violet-300" },
+    { label: "MCP 2026", color: "text-violet-300" },
+    { label: "Claude Code", color: "text-violet-300" },
+    { label: "OpenClaw AI", color: "text-violet-300" },
+  ]
+
+  return (
+    <Link
+      href="/guias"
+      className="group relative block overflow-hidden rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-950/80 via-zinc-900/90 to-zinc-900/80 p-5 transition-all duration-300 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/10"
+    >
+      {/* Decorative glow */}
+      <div className="absolute top-0 right-0 w-20 h-20 bg-violet-500/10 rounded-full blur-2xl" />
+      <div className="absolute bottom-0 left-0 w-16 h-16 bg-indigo-500/5 rounded-full blur-xl" />
+
+      {/* Header */}
+      <div className="relative flex items-center gap-3 mb-3">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-violet-500/15 border border-violet-500/20">
+          <BookOpen className="w-5 h-5 text-violet-400" />
+        </div>
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-violet-400/80">
+            Recursos Gratuitos
+          </span>
+          <h3 className="text-sm font-bold text-white leading-tight">
+            Guías Especializadas
+          </h3>
+        </div>
+      </div>
+
+      {/* Body */}
+      <p className="relative text-xs text-zinc-400 leading-relaxed mb-3">
+        Domina Shopify, IA y automatización con nuestras guías completas paso a paso.
+      </p>
+
+      {/* Guide chips */}
+      <div className="relative flex flex-wrap gap-1.5 mb-3">
+        {guides.map((g) => (
+          <span
+            key={g.label}
+            className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300"
+          >
+            <Sparkles className="w-2.5 h-2.5" />
+            {g.label}
+          </span>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div className="relative flex items-center gap-1.5 text-xs font-semibold text-violet-400 group-hover:text-violet-300 transition-colors">
+        <BookOpen className="w-3.5 h-3.5" />
+        Ver Todas las Guías
+        <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+      </div>
+    </Link>
+  )
+}
+

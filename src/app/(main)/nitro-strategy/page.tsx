@@ -11,7 +11,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Consultoría en Arquitectura Headless y Escalamiento | Nitro Strategy',
-  description: 'Ingeniería de alto nivel para empresas que necesitan escalar. Consultoría en arquitectura headless, automatización con IA y optimización de infraestructura.',
+  description: 'Consultoría de alto nivel para empresas que necesitan escalar. Consultoría en arquitectura headless, automatización con IA y optimización de infraestructura.',
   keywords: ['arquitectura headless', 'escalamiento e-commerce', 'automatización IA', 'consultoría técnica', 'Juan Arango'],
 }
 

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, ChevronDown, GraduationCap } from "lucide-react"
+import { Menu, X, Home, ChevronDown, GraduationCap, Mail, FlaskConical } from "lucide-react"
 import { NavUserButton } from "@/components/auth/nav-user-button"
 import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
@@ -247,8 +247,8 @@ export function Navbar() {
             <Link href="/" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Inicio" onClick={closeAll}>
               <Home className="w-5 h-5" />
             </Link>
-            <Link href="/academia" className="md:hidden text-primary hover:text-primary/80 transition-colors" aria-label="Academia" onClick={closeAll}>
-              <GraduationCap className="w-5 h-5" />
+            <Link href="/laboratorio" className="md:hidden text-violet-400 hover:text-violet-300 transition-colors" aria-label="Laboratorio" onClick={closeAll}>
+              <FlaskConical className="w-5 h-5" />
             </Link>
             {/* Mobile user button */}
             <div className="md:hidden">
@@ -268,14 +268,24 @@ export function Navbar() {
                   Blog
                 </Button>
               </Link>
-              <Link href="/academia" onClick={closeAll}>
-                <Button className={`gap-2 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
-                  pathname.startsWith('/academia')
-                    ? 'bg-primary text-black border border-primary shadow-[0_0_12px_rgba(0,255,157,0.35)]'
-                    : 'bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary'
+              <Link href="/newsletter" onClick={closeAll}>
+                <Button className={`gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
+                  pathname === '/newsletter'
+                    ? 'bg-emerald-500 text-black border border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
+                    : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-black hover:border-emerald-500'
                 }`}>
-                  <GraduationCap className="w-4 h-4" />
-                  Academia
+                  <Mail className="w-4 h-4" />
+                  Newsletter
+                </Button>
+              </Link>
+              <Link href="/laboratorio" onClick={closeAll}>
+                <Button className={`gap-2 text-sm px-4 py-2 h-auto font-semibold transition-all duration-300 ${
+                  pathname.startsWith('/laboratorio')
+                    ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white border-0 shadow-[0_0_15px_rgba(139,92,246,0.5)]'
+                    : 'bg-violet-500/10 text-violet-400 border border-violet-500/30 hover:bg-gradient-to-r hover:from-blue-600 hover:to-violet-600 hover:text-white hover:border-transparent'
+                }`}>
+                  <FlaskConical className="w-4 h-4" />
+                  Laboratorio
                 </Button>
               </Link>
               <div className="w-px h-5 bg-white/10" />
@@ -324,13 +334,17 @@ export function Navbar() {
             <Link href="/blog" className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               Blog
             </Link>
+            <Link href="/newsletter" className="flex items-center gap-2 text-lg font-medium text-emerald-400 hover:text-emerald-300 transition-colors py-3 border-b border-white/5" onClick={closeAll}>
+              <Mail className="w-4 h-4" />
+              Newsletter
+            </Link>
             <Link href="/app-tools" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               IA Apps
             </Link>
-            <Link href="/academia" onClick={closeAll}>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full mt-4 gap-2">
-                <GraduationCap className="w-4 h-4" />
-                Academia
+            <Link href="/laboratorio" onClick={closeAll}>
+              <Button className="bg-gradient-to-r from-blue-600 to-violet-600 text-white w-full mt-4 gap-2 font-bold shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:opacity-90">
+                <FlaskConical className="w-4 h-4" />
+                Laboratorio Ecom
               </Button>
             </Link>
             {/* Language Toggle — Mobile */}

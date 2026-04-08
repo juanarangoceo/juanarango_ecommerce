@@ -9,7 +9,7 @@ import type { AppToolSanity } from "@/lib/app-tools-queries"
 import { HeroBanner } from "@/components/app-tools/hero-banner"
 import { TrendingSection } from "@/components/app-tools/trending-section"
 import { RankingTable } from "@/components/app-tools/ranking-table"
-import { Sparkles, Library, Swords, ArrowRight } from "lucide-react"
+import { Sparkles, Library, Swords, ArrowRight, BookOpen } from "lucide-react"
 import Link from "next/link"
 import { LatestNewsSidebar } from "@/components/app-tools/latest-news-sidebar"
 import { NewsletterForm } from "@/components/newsletter-form"
@@ -108,6 +108,25 @@ export default async function AppToolsPage() {
                 </p>
               </div>
               <ArrowRight className="w-5 h-5 text-blue-500 shrink-0 transition-transform group-hover:translate-x-1" />
+            </Link>
+
+            {/* CROSS-LINK: Guías Especializadas */}
+            <Link
+              href="/guias"
+              className="group mt-3 flex items-center gap-4 rounded-xl border border-violet-200 dark:border-violet-900/50 bg-gradient-to-r from-violet-50 to-white dark:from-violet-950/30 dark:to-zinc-900 p-5 md:p-6 transition-all hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10"
+            >
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shrink-0 shadow-lg shadow-violet-500/20">
+                <BookOpen className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                  📚 ¿Quieres aprender desde cero? Tenemos Guías Gratuitas
+                </h3>
+                <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Shopify, MCP, Claude Code y OpenClaw AI — guías completas paso a paso.
+                </p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-violet-500 shrink-0 transition-transform group-hover:translate-x-1" />
             </Link>
           </section>
 

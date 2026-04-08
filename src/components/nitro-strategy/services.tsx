@@ -38,7 +38,7 @@ const services = [
   {
     icon: Gauge,
     number: "03",
-    title: "Ingeniería de Escalamiento",
+    title: "Estrategias de Escalamiento",
     subtitle: "Crecimiento sin límites",
     description: "Reconstruyo tu infraestructura técnica para que soporte desde 100 hasta 100,000 usuarios sin refactorización, con tiempos de respuesta consistentes bajo cualquier carga.",
     features: [
