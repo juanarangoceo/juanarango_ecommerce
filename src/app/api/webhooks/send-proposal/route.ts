@@ -15,37 +15,37 @@ function getSectorCta(sector: string | null | undefined): {
   if (s.includes("inmobi") || s.includes("real estate") || s.includes("propiedad") || s.includes("construc")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Construimos plataformas inmobiliarias que:
-- Cargan en menos de 1 segundo, eliminando el rebote en móviles.
-- Califican a los prospectos automáticamente, para que los asesores solo hablen con compradores reales.
-- Posicionan el inventario directamente en Google, reduciendo la dependencia de portales de terceros.`,
+      solutionSummary: `Implementamos tecnología de última generación (Headless Commerce e IA) que logra que:
+- Tu catálogo cargue casi al instante, para que nadie se frustre y se vaya a otro portal.
+- Un sistema atienda y filtre a los interesados de forma automática, pasándole a tu equipo solo a los que de verdad van a rentar o comprar.
+- Tu marca gane visibilidad en Google sin depender tanto del pago que exigen los portales tradicionales.`,
     };
   }
   if (s.includes("ecommerce") || s.includes("tienda") || s.includes("retail") || s.includes("shopify")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-retail",
-      solutionSummary: `Construimos tiendas de alto rendimiento que:
-- Reducen el abandono del carrito con un checkout optimizado.
-- Recuperan automáticamente compradores indecisos por WhatsApp.
-- Posicionan productos en Google por encima de Mercado Libre y Amazon.`,
+      solutionSummary: `Llevamos tiendas online al siguiente nivel con infraestructura avanzada (Headless) logrando que:
+- La velocidad de tu página se dispare y la gente compre más rápido, reduciendo los abandonos a la mitad.
+- Un asistente virtual recupere ventas perdidas hablando directamente por WhatsApp.
+- Tu tienda se posicione por encima de los grandes marketplaces.`,
     };
   }
   if (s.includes("salud") || s.includes("clinica") || s.includes("estetica") || s.includes("spa")) {
     return {
       ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-      solutionSummary: `Construimos sistemas para clínicas y centros de bienestar que:
-- Gestionan la agenda con reservas automáticas y recordatorios por WhatsApp.
-- Pre-califican pacientes antes de que lleguen a consulta.
-- Reactivan pacientes inactivos con seguimiento automático.`,
+      solutionSummary: `Integramos tecnología que hace tu clínica más eficiente:
+- Una agenda que funciona sola y reduce cancelaciones enviando recordatorios automáticos por WhatsApp.
+- Filtros inteligentes para que solo lleguen al consultorio pacientes que realmente entienden el tratamiento y pueden pagarlo.
+- Seguimiento sin esfuerzo para que los pacientes vuelvan.`,
     };
   }
   // Default
   return {
     ctaUrl: "https://www.juanarangoecommerce.com/soluciones/nitro-inmobiliaria",
-    solutionSummary: `Construimos infraestructura digital que:
-- Convierte el sitio web en un sistema activo de captación, no un catálogo pasivo.
-- Automatiza el seguimiento comercial para que el equipo solo hable con prospectos calificados.
-- Posiciona el negocio orgánicamente para capturar tráfico sin depender de publicidad paga.`,
+    solutionSummary: `Implementamos infraestructura y automatización que:
+- Hace que tu página web actúe como un vendedor estrella que nunca duerme.
+- Califica a los interesados automáticamente para que tú solo hables con la gente correcta.
+- Posiciona tu marca para atraer visitantes orgánicamente sin gastar una fortuna en anuncios.`,
   };
 }
 
@@ -56,14 +56,14 @@ function getFallbackContent(
   sectorCta: ReturnType<typeof getSectorCta>
 ) {
   return {
-    subject: `${companyName} — algo que quería contarte`,
-    paragraph1: `Vi lo que hacen en ${companyName} y quería escribirte directamente, porque creo que hay algo puntual que puedo aportarte.`,
-    paragraph2: `Trabajando con negocios como el tuyo, me encontré con el mismo patrón una y otra vez: una operación sólida, con clientes reales, pero donde la plataforma digital está frenando el crecimiento sin que nadie se haya dado cuenta todavía.`,
-    paragraph3: `No te hablo de rediseñar nada visual. Te hablo de que tu web empiece a trabajar contigo activamente — que capture, califique y haga seguimiento sin que tengas que mover un dedo.`,
-    paragraph4: `Lo que hacemos se llama Nitro Protocol: una arquitectura que convierte tu presencia digital en un sistema de ventas que opera las 24 horas. ¿Vale la pena 5 minutos para que lo veas funcionando?`,
-    ctaText: "Puedes ver cómo funciona aquí →",
+    subject: `Tu sitio web vs. la tecnología que usan los grandes`,
+    paragraph1: `Vi lo que están haciendo en ${companyName} y decidí escribirte directamente porque noté un detalle técnico que está limitando su alcance.`,
+    paragraph2: `Es común ver negocios muy buenos, con excelentes servicios, pero operando sobre plataformas digitales que son simples vitrinas estáticas. Hoy en día, un sitio lento equivale a cerrarle la puerta a clientes que están listos para comprar.`,
+    paragraph3: `Lo que nosotros hacemos en NITRO ECOM es integrar tecnología de punta —sistemas "Headless" ultra rápidos y asistentes automáticos con Inteligencia Artificial— que toman el control de captar y atender visitantes sin que tengas que intervenir. Suena complejo, pero en pocas palabras: hacemos que tu web no solo se vea bien, sino que trabaje y venda por ti de forma ágil.`,
+    paragraph4: `Esto significa que tu tiempo se concentra en cerrar ventas y atender a clientes filtrados, no en buscar conversiones. Arreglé algo rápido para mostrarte cómo se ve esto en la práctica.`,
+    ctaText: "Mira cómo funciona aquí →",
     ctaUrl: sectorCta.ctaUrl,
-    closingLine: "Si te genera alguna pregunta, responde este mismo correo. Lo leo yo.",
+    closingLine: "Cualquier duda, simplemente contéstame por acá.",
   };
 }
 
@@ -95,45 +95,43 @@ export async function POST(req: Request) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `
-Eres Juan Arango, experto en infraestructura digital y e-commerce de alto rendimiento. Llevas años ayudando a negocios a transformar su presencia digital en sistemas reales de ventas.
+Eres Juan Arango, experto en infraestructura digital y comercio electrónico (Headless commerce e IA) en NITRO ECOM. Llevas años ayudando a la gente a sacar el máximo provecho de su presencia digital para que sus negocios crezcan solos.
 
-Hoy vas a escribir un email personal a un prospecto. No es un email de marketing masivo. Es una conversación uno a uno, como si le escribieras a un contacto conocido al que quieres darle un consejo genuino.
+Hoy le vas a escribir un email a un potencial cliente. Háblale directamente, de tú a tú, dándole un consejo y mostrándole posibilidades.
 
 ═══ INFORMACIÓN DEL DESTINATARIO ═══
-- Nombre (primer nombre solamente): ${firstName}
+- Nombre: ${firstName}
 - Empresa: ${company_name ?? "su empresa"}
 - Sector: ${sector ?? "negocios digitales"}
-- Problema principal que mencionaron: "${problem ?? "mejorar sus resultados digitales"}"
-- Notas adicionales: "${notes ?? "ninguna"}"
-- Sitio web (si aplica): ${website_url ?? "no disponible"}
+- Problema mencionado: "${problem ?? "mejorar sus conversiones digitales"}"
+- Notas: "${notes ?? ""}"
+- Sitio web: ${website_url ?? "no disponible"}
 
-═══ LO QUE OFRECES (Nitro Protocol) ═══
+═══ QUÉ DEBES TRANSMITIR (NITRO ECOM) ═══
 ${sectorCta.solutionSummary}
+Recuerda: Tu enfoque es el headless commerce (webs que cargan en abrir y cerrar de ojos) y la automatización con IA. Pero debes explicarlo de forma coloquial, como decirle "instalamos tecnología detrás de escena para que tu web vuele y tus clientes sean atendidos automáticamente". No hables tanto de código, sino de resultados.
 
-═══ REGLAS ABSOLUTAS DEL EMAIL ═══
-1. TONO: Conversacional, cálido, experto pero accesible. Como un amigo que te da un consejo que nadie más te daría. Nunca corporativo, nunca agresivo.
-2. NO menciones que "auditaste su web" ni que "detectaste su sitio a la fuerza". Más bien: notaste algo, te llamó la atención, algo te hizo querer escribirles.
-3. STORYTELLING: Usa una narrativa natural. No listas de bullets. No recuadros. No frases de "He desarrollado...". Habla como persona.
-4. SALUDO: El email COMIENZA con el saludo ya en el campo paragraph1 (el template ya pone "Hola [nombre],"). El paragraph1 es la primera frase real del cuerpo. NO repitas el saludo.
-5. LONGITUD: Máximo 4 párrafos cortos (3-4 oraciones cada uno). La brevedad es respeto por el tiempo del otro.
-6. CTA: No hay botones. Solo una frase natural que invita a ver la página. Ya está en el template como link de texto.
-7. CIERRE: Una frase final humana, que invite a responder. No "Atentamente" ni cierres formales.
-8. El subject debe generar curiosidad genuina sin clickbait. Máximo 7 palabras.
-9. Personaliza usando el problema específico que mencionaron — demuestra que los entiendes.
-10. Si hay website_url, puedes mencionar sutilmente que visitaste su sitio de forma natural y casual.
+═══ REGLAS ABSOLUTAS DE TU REDACCIÓN ═══
+1. TONO: Amistoso, consultivo, empático. Imagina que tomas un café con esta persona. Usa "nosotros en NITRO ECOM", NO "Nitro Protocol".
+2. SIN SALUDOS: El template ya tiene la frase "Hola [Nombre],", así que el valor "paragraph1" DEBE ir directo al grano (ej: "Navegando por tu página me di cuenta de..."). NO arranques diciendo "Hola", ni "Saludos".
+3. STORYTELLING Y CONSEJOS: Sé narrativo. No hagas listas de bullets, ni escribas frases acartonadas.
+4. NADA REPETIDO: El "paragraph4" termina la idea principal e invita a ver una demo casual, pero NO repitas la misma frase del "ctaText". Deja que la transición entre el párrafo 4 y el link sea fluida.
+5. LONGITUD CORTA: Máximo 4 párrafos de 2-4 líneas cada uno. Se conciso y directo.
+6. ASUNTO: Intrigante, que sienta que es un email personal. Máximo 7 palabras.
+7. EMPATA SU PROBLEMA: Menciona algo del problema que ellos indicaron de manera natural en la conversación.
 
 ═══ FORMATO DE RESPUESTA ═══
-Devuelve ÚNICAMENTE un JSON puro, sin bloques markdown (sin \`\`\`json), sin explicaciones.
+Devuelve ÚNICAMENTE un objeto JSON puro, sin bloques markdown (\`\`\`json).
 
 {
-  "subject": "Asunto del email — máx 7 palabras, genera curiosidad",
-  "paragraph1": "Primera frase del cuerpo. Debe enganchar de inmediato. ¿Qué te llevó a escribir? Menciona algo específico de su negocio o sector que lo haga sentir que esto es para él, no para una lista.",
-  "paragraph2": "Párrafo de empatía y contexto. Conecta con su problema real. Cuenta brevemente por qué este problema es más costoso de lo que parece. Hazlo con storytelling, no con estadísticas frías.",
-  "paragraph3": "El giro natural. Sin vender todavía. Introduce qué es lo que haces, pero desde el ángulo del beneficio que obtiene él, no desde lo que tú ofreces. Una transición suave.",
-  "paragraph4": "El párrafo de valor concreto. Aquí sí puedes ser más específico sobre el resultado. Menciona 1-2 cosas puntuales que les cambiaría algo real en su operación. Termina invitando a ver la demo de forma casual.",
-  "ctaText": "Frase de 5-7 palabras invitando a ver la página. Ejemplos: 'Puedes ver cómo funciona aquí →' o 'Lo armé para que lo veas →'",
+  "subject": "Asunto enganchador, personal. Ej: Tu web y un detalle importante.",
+  "paragraph1": "La primera frase. Arranca de una vez sin saludar. Menciona si viste su sitio o su caso. Debe ser un gancho inicial muy conversacional.",
+  "paragraph2": "Empatiza con su situación o problema. Explica de forma sencilla por qué operar con métodos digitales lentos o tradicionales les está dejando dinero sobre la mesa.",
+  "paragraph3": "Introduce aquí a NITRO ECOM. Explícale, sin enredarlo con términos hiper técnicos, cómo sus problemas se solucionan con arquitecturas veloces y agentes de IA conversacionales que filtren clientes.",
+  "paragraph4": "Remate donde pones tu propuesta en perspectiva. Termina con una introducción suave al enlace que verán a continuación. (Ej: 'Preparé algo para que te hagas una idea.')",
+  "ctaText": "Texto muy corto del enlace. Ej: 'Puedes ver la demostración aquí →'",
   "ctaUrl": "${sectorCta.ctaUrl}",
-  "closingLine": "Una frase final muy corta y humana. Ej: 'Si te genera alguna pregunta, responde este mismo correo. Lo leo yo.' o 'Cuéntame qué opinas cuando puedas.'"
+  "closingLine": "Cierre natural y simple como quien se despide en WhatsApp o por email personal."
 }
 `;
 
