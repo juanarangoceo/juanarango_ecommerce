@@ -183,11 +183,6 @@ export const NewsletterWelcome = ({
               </Row>
               <Text style={{ ...bodyTextStyle, marginTop: "20px" }}>
                 Si tienes cualquier pregunta, responde este correo directamente — lo leo yo.
-                También puedes escribirme por{" "}
-                <a href="https://wa.me/573146681896" style={{ color: "#4ade80", textDecoration: "none" }}>
-                  WhatsApp (+57) 314 668 1896
-                </a>
-                .
               </Text>
             </Section>
 
