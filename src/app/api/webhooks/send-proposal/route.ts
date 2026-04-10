@@ -21,9 +21,9 @@ interface EmailContent {
   closingLine: string;
 }
 
-// ─── DETECCIÓN DE SECTOR MULTI-SEÑAL ─────────────────────────────────────────
-// Analiza todos los campos del prospecto con score ponderado para determinar
-// el sector con mayor probabilidad de coincidencia.
+// ─── DETECCIÓN DE SECTOR MULTI-SEÑAL (v2) ────────────────────────────────────
+// Ponderación: company_name y sector (campo explícito) tienen 3x más peso.
+// Se eliminaron términos ambiguos (local, oficina, bodega) que contaminaban.
 function detectSector(
   sector: string | null | undefined,
   companyName: string | null | undefined,
@@ -31,54 +31,59 @@ function detectSector(
   notes: string | null | undefined,
   websiteUrl: string | null | undefined
 ): Sector {
-  const sources = [
-    (sector ?? "").toLowerCase().trim(),
-    (companyName ?? "").toLowerCase().trim(),
-    (problem ?? "").toLowerCase().trim(),
-    (notes ?? "").toLowerCase().trim(),
-    (websiteUrl ?? "").toLowerCase().trim(),
-  ].join(" ");
+  // Normalizar cada fuente por separado para ponderar distinto
+  const primarySources   = `${(sector ?? "").toLowerCase()} ${(companyName ?? "").toLowerCase()}`; // 3x peso
+  const secondarySources = `${(problem ?? "").toLowerCase()} ${(notes ?? "").toLowerCase()} ${(websiteUrl ?? "").toLowerCase()}`; // 1x peso
 
   const clinicaTerms = [
-    "clinic", "clínica", "clinica", "salud", "health", "méd", "medi", "doctor",
-    "odonto", "dental", "veterina", "bienestar", "wellness", "spa", "estéti",
-    "estetia", "cosmet", "belleza", "beauty", "derma", "nutri", "psicolog",
-    "terapia", "fisio", "cirugi", "cirug", "cirugía", "consultor", "paciente",
-    "cita", "agendam", "tratamiento", "medicina", "aesthetic",
+    "clinic", "cl\u00ednica", "clinica", "salud", "health", "m\u00e9dico", "medico", "m\u00e9d",
+    "doctor", "odonto", "dental", "veterina", "bienestar", "wellness", "spa",
+    "est\u00e9tic", "estetica", "estetico", "est\u00e9tico", "cosmet", "belleza", "beauty",
+    "derma", "nutri", "psicolog", "terapia", "fisio", "cirugi", "cirugía",
+    "paciente", "cita", "agendam", "tratamiento", "medicina", "aesthetic",
+    "quirurg", "consult", "terapeut", "massage", "masaje",
   ];
 
   const retailTerms = [
     "tienda", "store", "ecommerce", "e-commerce", "retail", "producto",
     "moda", "ropa", "calzado", "zapato", "joyería", "joyeria", "accesorio",
-    "catálog", "catalog", "carrito", "shopify", "woocommerce", "inventario",
-    "compra", "venta en línea", "marketplace", "despacho", "envío", "envio",
-    "supermerc", "almacén", "almacen", "ferretería", "ferreteria",
+    "cat\u00e1log", "catalog", "carrito", "shopify", "woocommerce", "inventario",
+    "venta en l\u00ednea", "marketplace", "despacho", "env\u00edo", "envio",
+    "supermerc", "almac\u00e9n", "almacen", "ferretería", "ferreteria",
   ];
 
   const inmobiliariaTerms = [
+    // Solo términos MUY específicos de inmobiliaria — sin ambigüedades
     "inmobi", "inmueble", "propiedad", "real estate", "realestate",
-    "apartamento", "apto", "casa", "vivienda", "finca raíz", "finca raiz",
-    "arriendo", "venta de casas", "constructora", "construcc", "urbanismo",
-    "proyecto de vivienda", "oficina", "local", "bodegas", "bodega", "lote",
-    "terrain", "terreno", "edificio", "conjunto", "arquitecto", "arquitectura",
+    "apartamento", "apto", "vivienda", "finca raíz", "finca raiz",
+    "arriendo", "constructora", "urbanismo", "proyecto de vivienda",
+    "terreno", "edificio", "conjunto residencial", "lote",
+    "venta de apartamento", "venta de casa", "alquiler",
   ];
 
+  // Score con ponderación: primary = 3 puntos, secondary = 1 punto
   let clinicaScore = 0;
   let retailScore = 0;
   let inmobiliariaScore = 0;
 
   for (const term of clinicaTerms) {
-    if (sources.includes(term)) clinicaScore++;
+    if (primarySources.includes(term)) clinicaScore += 3;
+    if (secondarySources.includes(term)) clinicaScore += 1;
   }
   for (const term of retailTerms) {
-    if (sources.includes(term)) retailScore++;
+    if (primarySources.includes(term)) retailScore += 3;
+    if (secondarySources.includes(term)) retailScore += 1;
   }
   for (const term of inmobiliariaTerms) {
-    if (sources.includes(term)) inmobiliariaScore++;
+    if (primarySources.includes(term)) inmobiliariaScore += 3;
+    if (secondarySources.includes(term)) inmobiliariaScore += 1;
   }
 
+  // Log para debugging en Vercel
+  console.log(`[Nitro Sector] clinica=${clinicaScore} retail=${retailScore} inmobi=${inmobiliariaScore}`);
+
   if (clinicaScore === 0 && retailScore === 0 && inmobiliariaScore === 0) {
-    return "inmobiliaria"; // fallback neutro
+    return "inmobiliaria"; // fallback neutro — ninguna señal detectada
   }
 
   if (clinicaScore >= retailScore && clinicaScore >= inmobiliariaScore) return "clinica";
@@ -129,6 +134,13 @@ CONTEXTO DEL SECTOR (Inmobiliarias, Constructoras, Finca Raíz, Arriendo, Venta)
 - Ángulo emocional: tus asesores son costosos y talentosos. No deben hacer filtrado manual de prospectos fríos.`,
   };
 
+  // Vocabulario prohibido por sector (garantiza que la IA no mezcle contextos)
+  const forbiddenVocab: Record<Sector, string> = {
+    clinica: "inmobiliaria, real estate, finca raíz, arriendo, lote, constructora, propiedad, apartamento, asesores inmobiliarios, leads inmobiliarios, ecommerce, carrito de compras, tienda online",
+    retail: "inmobiliaria, real estate, finca raíz, arriendo, citas médicas, pacientes, consulta, agendamiento de citas, cirugía, clínica",
+    inmobiliaria: "citas médicas, pacientes, salud, clínica, cirugía, carrito de compras, tienda online, ecommerce",
+  };
+
   return `
 Eres Juan Arango, Arquitecto de Infraestructura Digital e IA en NITRO ECOM.
 Tu voz: es la de un consultor de alto nivel hablando con un CEO de igual a igual.
@@ -145,12 +157,12 @@ DATOS DEL PROSPECTO:
 TU MISIÓN: Redactar un email de prospección B2B de clase mundial para el CEO de ${companyName}.
 
 FRAMEWORK A APLICAR (en este orden exacto):
-1. HOOK — Una sola frase de máximo 15 palabras. Debe generar curiosidad o incomodidad inmediata. Sin saludos. Directo al cerebro del CEO.
-2. OBSERVATION — Explica que revisaste ${siteUrl} con ojos de cliente y detectaste una fricción relacionada con: "${problem}". 2 frases máximo. Sé específico, como si realmente lo hubieras visto.
-3. PAIN — Cuantifica (con una analogía, cifra estimada o comparación) lo que ese problema le está costando. 2 frases máximo. Sin clichés. Haz que duela suavemente.
-4. SOLUTION — Describe brevemente cómo Nitro resuelve exactamente eso. 2 frases. Sin tecnicismos excesivos. Menciona "Agente IA 24/7" si aplica para el sector.
-5. PROOF — Una micro-prueba de autoridad. Puede ser una estadística del sector, una analogía de éxito o una descripción de resultado. 1 frase. (IMPORTANTE: No inventes clientes, habla de patrones del sector).
-6. INVITATION — Invitación suave al CTA. No "compra ya". Más bien "¿quieres ver cómo se vería esto en tu operación?" 1-2 frases.
+1. HOOK — Una sola frase de máximo 15 palabras. Genera curiosidad o incomodidad inmediata. Sin saludos. Directo al CEO.
+2. OBSERVATION — Revisaste ${siteUrl} con ojos de cliente y detectaste una fricción relacionada con: "${problem}". 2 frases máximo. Específico.
+3. PAIN — Cuantifica lo que ese problema le cuesta (analogía, cifra estimada, comparación). 2 frases máximo. Sin clichés.
+4. SOLUTION — Cómo Nitro resuelve exactamente eso. 2 frases. Menciona "Agente IA 24/7" si aplica.
+5. PROOF — Estadística o patrón observado EN ESTE MISMO SECTOR (${sector}). 1 frase. NO inventes clientes. Solo habla del sector ${sector}.
+6. INVITATION — Invitación suave al CTA. No "compra ya". 1-2 frases.
 
 REGLAS ABSOLUTAS:
 - NINGÚN bloque supera 2 frases.
@@ -158,7 +170,11 @@ REGLAS ABSOLUTAS:
 - PROHIBIDO: frases genéricas como "en el mundo digital de hoy", "en este entorno competitivo", "nos complace ofrecerte".
 - El SUBJECT debe generar apertura en bandeja de entrada. Máx 7 palabras. No clickbait, pero sí tensión.
 - El ctaText debe incluir el nombre de la empresa: "Ver diagnóstico para ${companyName} →"
-- La closingLine debe ser humana y dar opción de WhatsApp.
+
+⚠️ BARRERA DE CONTAMINACIÓN — CRÍTICO:
+Este email es EXCLUSIVAMENTE para el sector: ${sector.toUpperCase()}.
+QUEDA COMPLETAMENTE PROHIBIDO mencionar o aludir a: ${forbiddenVocab[sector]}.
+Si en tu proof, pain, solution u observation mencionas cualquier término de otro sector, el email falla. Escribe ÚNICAMENTE en el contexto del sector ${sector}.
 
 FORMATO DE RESPUESTA: ÚNICAMENTE JSON puro, sin bloques de código, sin comentarios.
 {
