@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Client } from "@notionhq/client";
+import { NewsletterWelcome } from "@/emails/newsletter-welcome";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -83,26 +84,27 @@ export async function subscribeToNewsletter(
       // No fallamos la suscripción global si Notion falla
     }
 
-    // 4. Send Welcome Email via Resend
+    // 4. Send Welcome Email via Resend — template premium
     try {
       if (!process.env.RESEND_API_KEY) {
         console.warn("Resend API Key missing. Skipping email.");
       } else {
+        // Intentar extraer un nombre amigable del email (ej: "carlos.rincon" → "Carlos")
+        const emailAlias = email.split("@")[0];
+        const guessedFirst = emailAlias
+          .replace(/[._\-+0-9]/g, " ")
+          .trim()
+          .split(" ")[0];
+        const firstName =
+          guessedFirst.length > 2
+            ? guessedFirst.charAt(0).toUpperCase() + guessedFirst.slice(1).toLowerCase()
+            : undefined;
+
         await resend.emails.send({
-          from: "Juan Arango <onboarding@resend.dev>", // TODO: Replace with user's verified domain if available, otherwise Resend default
+          from: "Juan Arango <nitro@juanarangoecommerce.com>",
           to: email,
-          subject: "¡Bienvenido a la comunidad!",
-          html: `
-            <div style="font-family: sans-serif; color: #333;">
-              <h1>¡Gracias por suscribirte!</h1>
-              <p>Hola,</p>
-              <p>Me alegra mucho tenerte por aquí. A partir de ahora serás de los primeros en enterarte cuando publique nuevos artículos, guías y recursos sobre ecommerce y tecnología.</p>
-              <p>Si tienes alguna pregunta o tema del que te gustaría que hable, no dudes en responder a este correo.</p>
-              <br>
-              <p>Saludos,</p>
-              <p><strong>Juan Arango</strong></p>
-            </div>
-          `,
+          subject: "Bienvenido. Ya eres de los nuestros 🚀",
+          react: NewsletterWelcome({ firstName, email }),
         });
       }
     } catch (emailError) {
