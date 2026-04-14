@@ -108,10 +108,8 @@ export default async function B2BHubPage() {
             {solutions.map((sol) => {
               const styles = accentStyles[sol.accentColor] || accentStyles.default
               
-              // ✅ FIX: Force the legacy existing routes directly
-              const isLegacy = sol.slug.current === 'clinicas' || sol.slug.current === 'nitro-retail' || sol.slug.current === 'nitro-inmobiliaria';
-              const href = isLegacy ? `/soluciones/${sol.slug.current}` : `/soluciones/b2b/${sol.slug.current}`;
-
+              // Use the direct link configured in Sanity CMS
+              const href = sol.link || "#";
               return (
                 <Link key={sol._id} href={href} className="block group h-full">
                   <SpotlightCard

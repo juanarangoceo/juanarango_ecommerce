@@ -1,7 +1,7 @@
 export type B2BSolution = {
   _id: string;
   title: string;
-  slug: { current: string };
+  link: string;
   niche: string;
   cardImage: any;
   cardImageUrl?: string;
@@ -11,30 +11,16 @@ export type B2BSolution = {
   isActive: boolean;
   isFeatured: boolean;
   order: number;
-  
-  // Dedicated Page Fields
-  heroTitle?: string;
-  heroSubtitle?: string;
-  whatYouGet?: {
-    title: string;
-    description: string;
-    icon: string;
-  }[];
-  targetAudience?: string;
-  pageImage?: any;
-  pageImageUrl?: string;
-  metaTitle?: string;
-  metaDescription?: string;
 };
 
 export const ALL_B2B_SOLUTIONS_QUERY = `*[
   _type == "b2bSolution" 
   && isActive == true 
-  && defined(slug.current)
+  && defined(link)
 ]|order(order asc) {
   _id,
   title,
-  slug,
+  link,
   niche,
   cardDescription,
   accentColor,
@@ -44,26 +30,20 @@ export const ALL_B2B_SOLUTIONS_QUERY = `*[
   "cardImageUrl": cardImage.asset->url
 }`;
 
-export const B2B_SOLUTION_BY_SLUG_QUERY = `*[
+export const B2B_SOLUTION_BY_LINK_QUERY = `*[
   _type == "b2bSolution" 
-  && slug.current == $slug
+  && link == $link
 ][0] {
   _id,
   title,
+  link,
   niche,
+  cardDescription,
   accentColor,
-  heroTitle,
-  heroSubtitle,
-  whatYouGet,
-  targetAudience,
-  "pageImageUrl": pageImage.asset->url,
-  metaTitle,
-  metaDescription
+  ctaLabel,
+  isFeatured,
+  order,
+  "cardImageUrl": cardImage.asset->url
 }`;
 
-export const B2B_ALL_SLUGS_QUERY = `*[
-  _type == "b2bSolution" 
-  && defined(slug.current)
-] {
-  "slug": slug.current
-}`;
+

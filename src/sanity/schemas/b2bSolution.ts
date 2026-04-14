@@ -15,13 +15,10 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "slug",
-      title: "URL Slug",
-      type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
+      name: "link",
+      title: "Enlace de Destino (URL interna o externa)",
+      type: "string",
+      description: "Ej: /soluciones/nitro-retail o https://tu-sitio.com",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -89,57 +86,6 @@ export default defineType({
       type: "number",
       description: "Order priority in the list (lower number comes first).",
       initialValue: 50,
-    }),
-    // --- Dedicated Page Block ---
-    defineField({
-      name: "heroTitle",
-      title: "Hero Title",
-      type: "string",
-      description: "Headline for the dedicated page.",
-    }),
-    defineField({
-      name: "heroSubtitle",
-      title: "Hero Subtitle",
-      type: "text",
-      description: "Introductory text for the dedicated page.",
-    }),
-    defineField({
-      name: "whatYouGet",
-      title: "What You Get (Features)",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "title", title: "Title", type: "string" },
-            { name: "description", title: "Description", type: "text" },
-            { name: "icon", title: "Icon (Lucide name)", type: "string", description: "e.g., Zap, Smartphone, Calendar" }
-          ]
-        }
-      ]
-    }),
-    defineField({
-      name: "targetAudience",
-      title: "Target Audience",
-      type: "text",
-      description: "Who is this service for?",
-    }),
-    defineField({
-      name: "pageImage",
-      title: "Page Image",
-      type: "image",
-      options: { hotspot: true },
-      description: "Image for the top of the dedicated page.",
-    }),
-    defineField({
-      name: "metaTitle",
-      title: "SEO Title",
-      type: "string",
-    }),
-    defineField({
-      name: "metaDescription",
-      title: "SEO Description",
-      type: "text",
     }),
   ],
   preview: {
