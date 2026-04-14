@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, LayoutGrid, Terminal } from "lucide-react"
+import { Home, Terminal, Briefcase } from "lucide-react"
 import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
 /** Rayito verde — relleno con cuerpo, para Blog */
@@ -45,16 +45,16 @@ export function MobileBottomNav() {
           <span className="text-[10px] font-medium">Inicio</span>
         </Link>
 
-        {/* 2. Apps */}
+        {/* 2. B2B */}
         <Link
-          href="/app-tools"
+          href="/soluciones/b2b"
           prefetch={false}
           className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-            isActive("/app-tools") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+            isActive("/soluciones/b2b") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
           }`}
         >
-          <LayoutGrid className="w-6 h-6" />
-          <span className="text-[10px] font-medium">Apps</span>
+          <Briefcase className="w-6 h-6" />
+          <span className="text-[10px] font-medium">B2B</span>
         </Link>
 
         {/* 3. Prompts */}

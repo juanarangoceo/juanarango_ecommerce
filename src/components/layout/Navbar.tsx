@@ -28,18 +28,7 @@ const serviceLinks = [
   { href: "/shopify", label: "Shopify" },
 ]
 
-const negociosLinks = [
-  { href: "/soluciones/clinicas", label: "Clínicas" },
-  { href: "/soluciones/nitro-inmobiliaria", label: "Nitro Inmobiliaria" },
-  { href: "/soluciones/nitro-retail", label: "Nitro Retail" },
-]
 
-const guiasLinks = [
-  { href: "/guias/shopify", label: "Guía Shopify" },
-  { href: "/guias/openclaw-ai", label: "Guía OpenClaw AI" },
-  { href: "/guias/claude-code", label: "Guía Claude Code" },
-  { href: "/guias/mcp", label: "Guía MCP" },
-]
 
 /** Tooltip icon link — desktop nav only */
 function NavIconLink({ href, label, green = false, children }: {
@@ -155,7 +144,7 @@ function MobileAccordion({ label, links, isOpen, onToggle, onClose }: {
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<"services" | "negocios" | "guias" | null>(null)
+  const [openDropdown, setOpenDropdown] = useState<"services" | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const pathname = usePathname()
 
@@ -173,7 +162,7 @@ export function Navbar() {
     timeoutRef.current = setTimeout(() => setOpenDropdown(null), 150)
   }
 
-  const openMenu = (which: "services" | "negocios" | "guias") => {
+  const openMenu = (which: "services") => {
     clearTimer()
     setOpenDropdown(which)
   }
@@ -211,25 +200,13 @@ export function Navbar() {
               onClose={closeAll}
             />
 
-            <DesktopDropdown
-              label="B2B"
-              links={negociosLinks}
-              isOpen={openDropdown === "negocios"}
-              onEnter={() => openMenu("negocios")}
-              onLeave={scheduleClose}
-              onToggle={() => setOpenDropdown(openDropdown === "negocios" ? null : "negocios")}
-              onClose={closeAll}
-            />
+            <Link href="/soluciones/b2b" className="text-white hover:text-primary transition-colors font-medium" onClick={closeAll}>
+              B2B
+            </Link>
 
-            <DesktopDropdown
-              label="Guías"
-              links={guiasLinks}
-              isOpen={openDropdown === "guias"}
-              onEnter={() => openMenu("guias")}
-              onLeave={scheduleClose}
-              onToggle={() => setOpenDropdown(openDropdown === "guias" ? null : "guias")}
-              onClose={closeAll}
-            />
+            <Link href="/guias" className="text-white hover:text-primary transition-colors font-medium" onClick={closeAll}>
+              Guías
+            </Link>
 
             <Link href="/app-tools" className="text-white hover:text-primary transition-colors font-medium">
               IA Apps
@@ -317,20 +294,12 @@ export function Navbar() {
               onToggle={() => setOpenDropdown(openDropdown === "services" ? null : "services")}
               onClose={closeAll}
             />
-            <MobileAccordion
-              label="B2B"
-              links={negociosLinks}
-              isOpen={openDropdown === "negocios"}
-              onToggle={() => setOpenDropdown(openDropdown === "negocios" ? null : "negocios")}
-              onClose={closeAll}
-            />
-            <MobileAccordion
-              label="Guías"
-              links={guiasLinks}
-              isOpen={openDropdown === "guias"}
-              onToggle={() => setOpenDropdown(openDropdown === "guias" ? null : "guias")}
-              onClose={closeAll}
-            />
+            <Link href="/soluciones/b2b" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
+              B2B
+            </Link>
+            <Link href="/guias" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
+              Guías
+            </Link>
             <Link href="/blog" className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               Blog
             </Link>

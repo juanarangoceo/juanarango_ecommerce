@@ -37,17 +37,17 @@ export function NitroBusinessGrid() {
   ]
 
   return (
-    <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-zinc-950/50">
+    <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-zinc-950/50 flex flex-col items-center">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-16">
-            <span className="text-emerald-400 font-mono tracking-widest text-sm uppercase mb-2 block">Sectores Especializados</span>
+            <span className="text-emerald-400 font-mono tracking-widest text-sm uppercase mb-2 block">Infraestructura Modular por Nicho</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">Nitro Negocios</h2>
             <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
                 Tecnología adaptada a las necesidades específicas de tu industria. No vendemos generalidades.
             </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {businesses.map((biz, index) => (
             <motion.div
               key={index}
@@ -103,6 +103,16 @@ export function NitroBusinessGrid() {
               </Link>
             </motion.div>
           ))}
+        </div>
+        
+        <div className="w-full flex justify-center mt-6">
+          <Link 
+            href="/soluciones/b2b" 
+            className="group inline-flex items-center justify-center bg-zinc-900 border border-zinc-800 hover:border-emerald-500/50 hover:bg-zinc-800 text-white font-medium py-3 px-8 rounded-full transition-all"
+          >
+            Ver Todas las Soluciones B2B
+            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 text-emerald-500" />
+          </Link>
         </div>
       </div>
     </section>

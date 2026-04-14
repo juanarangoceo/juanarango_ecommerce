@@ -12,5 +12,6 @@ import curso from './curso'
 import promptGallery from './promptGallery'
 import promptConfig from './promptConfig'
 import blogPdfConfig from './blogPdfConfig'
+import b2bSolution from './b2bSolution'
 
-export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool, appComparison, curso, promptGallery, promptConfig, blogPdfConfig]
+export const schemaTypes = [post, tiktokEmbed, tag, trending, audioResource, advertising, advertisingShopify, appToolCategory, appTool, appComparison, curso, promptGallery, promptConfig, blogPdfConfig, b2bSolution]
