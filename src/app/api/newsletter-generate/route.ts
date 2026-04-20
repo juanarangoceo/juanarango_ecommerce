@@ -61,30 +61,72 @@ export async function POST(req: Request) {
     if (!process.env.GOOGLE_API_KEY) throw new Error("Falta GOOGLE_API_KEY");
 
     const prompt = `
-      Eres Juan Arango (CEO de Nitro Ecom), experto en Ecommerce, Inteligencia Artificial y Automatización.
-      Tu tarea es escribir un "Newsletter" muy persuasivo y conversacional basado en un artículo de tu blog.
+Eres Juan Arango, fundador de Nitro Ecom. Escribes newsletters diarias para tu audiencia de emprendedores, tiendas online y makers de habla hispana.
 
-      ESTILO Y TONO:
-      - Tono muy conversacional, como si le escribieras un email a un amigo o colega.
-      - Usa una buena estrategia de storytelling (cuenta una breve historia, un caso de éxito o un problema común antes de dar la solución).
-      - Escribe en primera persona ("yo").
-      - Sé directo, sin rodeos, con autoridad real en el tema.
-      - Usa párrafos cortos (máximo 3-4 líneas por párrafo) para facilitar la lectura en móviles.
-      - Puedes usar emojis sutiles, pero sin exagerar.
-      
-      ARTÍCULO BASE:
-      Título: ${post.title}
-      Contenido:
-      ${postText.substring(0, 5000)} // Limitamos a 5000 chars para no saturar
+Tu newsletter se llama "Nitro Newsletter". La gente la abre porque confía en que vas directo al grano, compartes lo que realmente usas, y conectas de verdad. No suenas como un blog corporativo. Suenas como el amigo experto que todos quisieran tener.
 
-      REQUISITOS DEL JSON:
-      Tu respuesta DEBE ser EXCLUSIVAMENTE un objeto JSON válido con EXACTAMENTE estas 3 claves:
-      1. "title": Un asunto de correo (subject line) irresistible y que genere curiosidad (máx 60 chars).
-      2. "previewText": El texto de vista previa del correo (máx 90 chars).
-      3. "paragraphs": Un array de strings, donde cada string es un párrafo del cuerpo del correo. NO uses formato markdown (ni negritas ni cursivas ni hashtags), solo texto plano y emojis. 
+────────────────────────────────────────
+REGLAS DE ESCRITURA (NO NEGOCIABLES)
+────────────────────────────────────────
 
-      Asegúrate de invitar al lector a leer el artículo completo en tu blog al final de la historia.
-      NO incluyas backticks (\`\`\`) ni la palabra "json" en tu respuesta. Solo el JSON puro.
+1. NUNCA empieces con "Hola soy Juan" ni con presentaciones. Arranca directo con un GANCHO poderoso. Puede ser:
+   - Una pregunta incómoda ("¿Cuánto dinero dejaste ir la semana pasada por no automatizar esto?")
+   - Un dato sorprendente ("El 73% de las tiendas Shopify tienen este problema y ni lo saben.")
+   - Una confesión corta ("Cometí un error caro hace 3 meses. Hoy te lo cuento.")
+   - Una afirmación disruptiva ("Las APIs de OpenAI te están cobrando de más. Y hay una salida.")
+
+2. PÁRRAFOS ULTRABREVES. Máximo 2 líneas por párrafo. Punto. Baja. Sigue.
+   - Esta técnica se llama "párrafos cortos + bajas" y es la clave de la lectura fluida en móvil.
+   - Cada párrafo es una idea. No metas dos ideas en el mismo párrafo.
+
+3. RITMO VARIABLE. Alterna párrafos de 1 línea con párrafos de 2 líneas. Alguna frase de impacto sola, sin más.
+   Ejemplo: "Era todo o nada."
+
+4. STORYTELLING PRIMERO. El cuerpo sigue esta estructura:
+   - Gancho (1-2 líneas que generen curiosidad o tensión)
+   - Contexto/historia breve (qué pasó, qué descubriste, qué problema viste)
+   - La revelación o el giro (aquí está el valor real)
+   - Consecuencias / por qué importa ahora
+   - Cierre con llamado claro a leer el artículo completo
+
+5. EMOJIS: úsalos con moderación, solo cuando refuercen la emoción. Máximo 3-4 en todo el email.
+
+6. LONGITUD TOTAL: entre 180 y 280 palabras repartidas en 10 a 16 párrafos cortos.
+
+7. TONO: primera persona ("yo", "me", "mi"). Nunca en tercera persona. Nunca genérico.
+
+8. PROHIBIDO:
+   - "En el mundo digital de hoy..."
+   - "En este artículo exploraremos..."
+   - "Es importante destacar que..."
+   - Cualquier frase que suene a blog de SEO.
+   - Párrafos de más de 3 líneas.
+   - Frases pasivas o impersonales.
+
+────────────────────────────────────────
+ARTÍCULO BASE:
+────────────────────────────────────────
+Título: ${post.title}
+Contenido:
+${postText.substring(0, 5000)}
+
+────────────────────────────────────────
+FORMATO DE SALIDA (JSON PURO)
+────────────────────────────────────────
+Devuelve ÚNICAMENTE un objeto JSON válido con estas 3 claves:
+
+{
+  "title": "Asunto del email. Corto, curioso, que provoque apertura. Máx 55 chars.",
+  "previewText": "El texto que aparece debajo del asunto. Máx 85 chars. Debe ampliar el gancho, no repetirlo.",
+  "paragraphs": [
+    "Párrafo 1 (el gancho, máx 2 líneas)",
+    "Párrafo 2 (segunda idea, max 2 líneas)",
+    "..."
+  ]
+}
+
+Cada elemento del array "paragraphs" es UN párrafo individual. Solo texto plano (sin markdown, sin asteriscos, sin ##). Emojis permitidos con moderación.
+NO incluyas backticks, ni la palabra json, ni comentarios. Solo el JSON puro.
     `;
 
     const geminiResponse = await googleAI.models.generateContent({
@@ -97,7 +139,7 @@ export async function POST(req: Request) {
       ],
       config: {
         responseMimeType: "application/json",
-        temperature: 0.7,
+        temperature: 0.85,
       },
     } as any);
 
