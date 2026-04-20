@@ -1,4 +1,5 @@
 import { SendTestEmailButton } from '../components/SendTestEmailButton'
+import { GenerateNewsletterFromPostButton } from '../components/GenerateNewsletterFromPostButton'
 
 export default {
   name: 'newsletter',
@@ -15,6 +16,24 @@ export default {
 
   fields: [
     // ── CONTENT GROUP ────────────────────────────────────────────────────────
+    {
+      name: 'sourcePost',
+      title: 'Artículo Base (Opcional)',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      group: 'content',
+      description: 'Selecciona un artículo del blog para generar el newsletter automáticamente con IA.',
+    },
+    {
+      name: 'generateAction',
+      title: 'Generador IA',
+      type: 'string',
+      group: 'content',
+      components: {
+        input: GenerateNewsletterFromPostButton,
+      },
+      hidden: ({ document }: any) => !document?.sourcePost,
+    },
     {
       name: 'title',
       title: 'Asunto del Email (Subject)',
