@@ -99,9 +99,26 @@ export const newsletterOrchestrator = inngest.createFunction(
   {
     id: 'newsletter-orchestrator',
     triggers: [{ event: 'newsletter/dispatch' }],
+    concurrency: {
+      limit: 1,
+      key: 'event.data._id',
+    },
+    idempotency: 'event.data._id',
   },
   async ({ event, step }: { event: any; step: any }) => {
     const newsletter = event.data as NewsletterDocument
+
+    // 0. Validar idempotencia y concurrencia: si ya está 'sending' o 'sent', abortamos.
+    // Esto evita duplicados si el Cron empujó múltiples eventos por retrasos.
+    const isAlreadyProcessing = await step.run('check-status', async () => {
+      const sanity = await getSanityClient()
+      const doc = await sanity.fetch(`*[_id == $id][0]{sendStatus}`, { id: newsletter._id })
+      return doc?.sendStatus === 'sending' || doc?.sendStatus === 'sent'
+    })
+
+    if (isAlreadyProcessing) {
+      return { skipped: true, message: 'Newsletter ya estaba en proceso o enviado' }
+    }
 
     // 1. Marcar como "sending" en Sanity
     await step.run('mark-as-sending', async () => {
