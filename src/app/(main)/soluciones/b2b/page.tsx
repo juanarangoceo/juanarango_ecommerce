@@ -9,11 +9,11 @@ import Link from "next/link"
 export const revalidate = 0
 
 export const metadata: Metadata = {
-  title: "Infraestructura Agéntica Modular | Soluciones B2B - Nitro Ecom",
-  description: "Ecosistemas digitales automatizados diseñados para tu industria. Captación de leads, agendamiento y velocidad extrema por nicho de mercado.",
+  title: "Soluciones B2B por industria | Juan Arango Ecommerce",
+  description: "Sistemas digitales que capturan, atienden y cierran ventas 24/7, adaptados a cómo compra tu industria: clínicas, retail, inmobiliarias y más.",
   openGraph: {
-    title: "Infraestructura Agéntica Modular | Soluciones B2B",
-    description: "Ecosistemas digitales automatizados diseñados para tu industria. Captación de leads, agendamiento y velocidad extrema por nicho de mercado.",
+    title: "Soluciones B2B por industria | NITRO ECOM",
+    description: "Sistemas digitales que capturan, atienden y cierran ventas 24/7, adaptados a cómo compra tu industria.",
   }
 }
 
@@ -53,53 +53,58 @@ export default async function B2BHubPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-teal-900/15 via-[#030303] to-[#030303] pointer-events-none" />
       <div className="absolute -top-[500px] left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-6 py-24 relative z-10 max-w-7xl">
+      <div className="container mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24 relative z-10 max-w-7xl">
         {/* Hero Section */}
-        <div className="mb-24 max-w-4xl mx-auto text-center flex flex-col items-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-white text-balance leading-tight">
-            Infraestructura Agéntica <br className="hidden md:block"/>
+        <div className="mb-14 md:mb-20 max-w-4xl mx-auto text-center flex flex-col items-center">
+          <p className="font-mono text-xs md:text-sm uppercase tracking-[0.25em] text-emerald-400 mb-6">
+            Soluciones B2B · Por industria
+          </p>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-white text-balance leading-[1.08]">
+            Tu industria vende distinto.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 drop-shadow-sm">
-              Modular a Medida
+              Tu sistema también.
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-zinc-400 leading-relaxed font-light text-balance max-w-3xl mb-12">
-            Tu modelo de negocio es único. Por eso, reemplazamos las páginas web convencionales por <strong className="text-zinc-200 font-semibold shadow-emerald-500/10 text-shadow-sm">ecosistemas agénticos de alto rendimiento</strong>. Sistemas autónomos que operan 24/7 para capturar, filtrar y multiplicar tus cierres de ventas.
+          <p className="text-lg md:text-xl text-zinc-400 leading-relaxed text-balance max-w-2xl mb-10">
+            Diseño <strong className="text-zinc-200 font-semibold">sistemas digitales que capturan, atienden y cierran ventas 24/7</strong>,
+            adaptados a cómo compra tu cliente: clínicas, retail, inmobiliarias y más. Tú diriges el negocio; el sistema trabaja.
           </p>
 
           {/* Connected Flow Element */}
-          <div className="flex items-center justify-center text-emerald-500/80">
-            {/* Step 1 */}
-            <div className="flex flex-col items-center">
-              <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.15)] relative transform transition-transform hover:scale-110">
-                <Users className="w-6 h-6 text-emerald-400" />
+          <div className="flex items-center justify-center text-emerald-500/80 mb-10">
+            {[
+              { icon: Users, label: "Captura" },
+              { icon: Bot, label: "Atiende con IA" },
+              { icon: Zap, label: "Cierra" },
+            ].map((step, i, arr) => (
+              <div key={step.label} className="flex items-center">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.15)] transform transition-transform hover:scale-110">
+                    <step.icon className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
+                  </div>
+                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-emerald-300/80">
+                    {step.label}
+                  </span>
+                </div>
+                {i < arr.length - 1 && (
+                  <div className="w-10 md:w-24 h-[2px] mb-6 bg-gradient-to-r from-emerald-500/20 via-emerald-400/60 to-emerald-500/20 relative">
+                    <div className="absolute inset-0 bg-emerald-400 blur-[2px] opacity-30" />
+                  </div>
+                )}
               </div>
-            </div>
-            
-            {/* Connection 1 */}
-            <div className="w-16 md:w-24 h-[2px] bg-gradient-to-r from-emerald-500/20 via-emerald-400/60 to-emerald-500/20 relative">
-               <div className="absolute inset-0 bg-emerald-400 blur-[2px] opacity-30" />
-            </div>
-            
-            {/* Step 2 */}
-            <div className="flex flex-col items-center">
-              <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.15)] transform transition-transform hover:scale-110">
-                <Bot className="w-6 h-6 text-emerald-400" />
-              </div>
-            </div>
-
-            {/* Connection 2 */}
-            <div className="w-16 md:w-24 h-[2px] bg-gradient-to-r from-emerald-500/20 via-emerald-400/60 to-emerald-500/20 relative">
-               <div className="absolute inset-0 bg-emerald-400 blur-[2px] opacity-30" />
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex flex-col items-center">
-              <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.15)] transform transition-transform hover:scale-110">
-                <Zap className="w-6 h-6 text-emerald-400" />
-              </div>
-            </div>
+            ))}
           </div>
+
+          <Link
+            href="/#contacto"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-8 py-4 text-base md:text-lg font-bold text-black shadow-lg shadow-emerald-500/25 transition-all"
+          >
+            Solicitar diagnóstico
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <p className="text-sm text-zinc-500 mt-3">Sin costo. Te digo qué haría yo con tu operación.</p>
         </div>
 
         {/* Solutions Grid */}
@@ -165,7 +170,7 @@ export default async function B2BHubPage() {
                         {sol.niche}
                       </span>
                       
-                      <h3 className={`text-3xl font-bold mb-4 text-zinc-100 transition-colors tracking-tight ${styles.hover}`}>
+                      <h3 className={`text-2xl md:text-3xl font-bold mb-4 text-zinc-100 transition-colors tracking-tight ${styles.hover}`}>
                         {sol.title}
                       </h3>
 

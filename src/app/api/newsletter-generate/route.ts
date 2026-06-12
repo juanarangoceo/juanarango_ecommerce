@@ -130,7 +130,7 @@ NO incluyas backticks, ni la palabra json, ni comentarios. Solo el JSON puro.
     `;
 
     const geminiResponse = await googleAI.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.5-flash",
       contents: [
         {
           role: "user",

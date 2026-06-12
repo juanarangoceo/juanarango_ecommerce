@@ -8,6 +8,8 @@ import { AboutSection } from "@/components/about-section"
 import { ContactForm } from "@/components/ui/contact-form"
 import { FlaskConical, BookOpen, Youtube, ArrowRight } from "lucide-react"
 import { LatestPostsSection } from "@/components/landing/latest-posts-section"
+import { ChatMockup } from "@/components/nitrobot/chat-mockup"
+import { heroConversation } from "@/components/nitrobot/conversations"
 
 export const metadata: Metadata = {
   title: 'Juan Arango | Ecommerce, Automatización e IA para LATAM',
@@ -92,7 +94,40 @@ export default function Page() {
         {/* 1. Hero */}
         <NitroBanner />
 
-        {/* 2. Quién te habla */}
+        {/* 2. NitroBot — el producto estrella, en vivo */}
+        <section className="py-12 md:py-20 px-6">
+          <div className="container mx-auto max-w-7xl">
+            <div className="rounded-3xl border border-transparent [background:linear-gradient(#0c0c0c,#0c0c0c)_padding-box,var(--gradiente-nitrobot)_border-box] p-8 md:p-14">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-5">
+                    NitroBot · Ventas y atención por WhatsApp con IA
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-6 text-balance">
+                    Tu mejor vendedor responde en segundos.{" "}
+                    <span className="text-primary">Míralo en acción.</span>
+                  </h2>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-[55ch]">
+                    NitroBot atiende, asesora y cierra ventas por WhatsApp con IA entrenada en tu
+                    catálogo y en tu forma de hablar. Esta conversación es el producto funcionando.
+                  </p>
+                  <Link
+                    href="/nitrobot"
+                    className="inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-bold text-white [background:var(--gradiente-nitrobot)] shadow-lg shadow-primary/25 transition-transform hover:scale-[1.02]"
+                  >
+                    Conoce a NitroBot
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </div>
+                <div className="flex justify-center">
+                  <ChatMockup messages={heroConversation} loop />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Quién te habla */}
         <AboutSection />
 
         {/* 3. El ecosistema NITRO */}
@@ -117,8 +152,8 @@ export default function Page() {
                 Lo construyo en público
               </h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
-                No te voy a mostrar testimonios sin nombre. Te muestro lo que construyo, con sus números,
-                mientras lo construyo. Si quieres saber cómo trabajo, no me creas: mírame trabajar.
+                Te muestro lo que construyo, con sus números, mientras lo construyo.
+                Si quieres saber cómo trabajo: mírame trabajar.
               </p>
             </div>
 

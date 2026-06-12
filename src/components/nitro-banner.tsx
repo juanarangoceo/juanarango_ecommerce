@@ -22,7 +22,7 @@ export function NitroBanner() {
 
           <p className="text-lg md:text-xl text-zinc-400 mb-10 leading-relaxed text-pretty max-w-[65ch]">
             Soy Juan Arango. Ayudo a empresas de Colombia y Latinoamérica a automatizar su operación y escalar
-            sus ventas con arquitectura avanzada e inteligencia artificial. Sin humo: te muestro cómo funciona
+            sus ventas con arquitectura avanzada e inteligencia artificial. Te muestro cómo funciona
             antes de que me contrates.
           </p>
 

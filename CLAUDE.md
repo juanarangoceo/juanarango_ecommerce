@@ -74,3 +74,21 @@ referencias y plantillas): `DEMO/`, `Landing_apps/`, `Landingpage_nitrocommerce/
 - Sin tests (216 `.tsx`, 67 `.ts`).
 - ~140 usos de `: any` y varios `console.log` en `src/` — limpiar gradualmente.
 - Pendiente: limpieza de las carpetas-ruido del repo (ver "Higiene del repo").
+
+## Estado de la sesión 2026-06-12 (continuar aquí)
+
+**Hecho y desplegado en esta sesión (2ª ronda):**
+- Foto de Juan (Cloudinary `v1781237424/Juan_arango_Ecommerce_r96gjj.png`) en home (about-section) y /nitrobot S6.
+- Panel inventado en /nitrobot S5 (`src/components/nitrobot/panel-mockup.tsx`).
+- Narrativa 100% en positivo (sin "humo", sin negaciones) en home, nitrobot, banner, grids y FAQ.
+- Home: nueva sección 2 con ChatMockup de NitroBot en bucle + CTA a /nitrobot; título de servicios en naranja.
+- Menú móvil inferior: "Servicios" en naranja (link /#servicios), eliminado "Prompts".
+- B2B (`/soluciones/b2b`): hero reescrito (verde neón se mantiene), eyebrow, flujo Captura→Atiende→Cierra con labels, CTA diagnóstico, tipografías responsive.
+- Todos los modelos Gemini → `gemini-3.5-flash` (8 archivos en src/app/api y actions).
+- Prompts: título reducido y en naranja, eyebrow DM Mono.
+
+**PENDIENTE para la próxima sesión:**
+1. Prompts page: queda un ícono `Sparkles` (línea ~97, estado vacío) — reemplazar por Terminal/primary y quitar import. Metadata title aún dice "Nitro Ecom".
+2. Newsletter (`/newsletter`): rediseñar narrativa/diseño completo y QUITAR la burbuja-badge del hero ("Newsletter · Gratis · Sin spam"). Quitar también las burbujas-badge equivalentes al inicio de otras páginas (buscar pills `rounded-full` con badge en heros: nitro-strategy, clinicas, etc.). La página newsletter aún usa verde esmeralda → migrar a naranja primary.
+3. Revisar espaciados largos restantes en landings (laboratorio, guias).
+4. TODOs previos de Juan: `NEXT_PUBLIC_NITROBOT_WA` en Vercel, cifras S2 con fuente, buzón hola@, revisar conversaciones de ejemplo.

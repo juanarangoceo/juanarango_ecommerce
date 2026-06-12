@@ -39,7 +39,7 @@ export async function analyzeSkin(imageBase64: string): Promise<AnalysisResult> 
   const localAi = new GoogleGenAI({ apiKey });
 
   // User requested "newest flash", assuming gemini-2.0-flash-exp
-  const model = 'gemini-2.0-flash-exp';
+  const model = 'gemini-3.5-flash';
 
   console.log(`Starting skin analysis with model: ${model}`);
 

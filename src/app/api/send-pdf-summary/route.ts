@@ -130,7 +130,7 @@ REGLAS CRÍTICAS:
 - Responde SOLO con el JSON, sin ningún texto adicional ni bloques de código.`
 
   const response = await gemini.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3.5-flash',
     contents: prompt,
   })
 

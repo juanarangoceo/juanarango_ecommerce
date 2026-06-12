@@ -26,7 +26,7 @@ export const stepFragments: { step: string; title: string; desc: string; chat: C
     desc: "Enlazamos NitroBot con tu WhatsApp y tu tienda. Sin cambiar tu número, sin tocar tu operación.",
     chat: [
       { from: "cliente", text: "¿Tengo que cambiar mi número?" },
-      { from: "bot", text: "No. Me conecto a tu WhatsApp actual y a la tienda que ya tienes." },
+      { from: "bot", text: "Sigues con tu número de siempre: me conecto a tu WhatsApp actual y a la tienda que ya tienes." },
     ],
   },
   {

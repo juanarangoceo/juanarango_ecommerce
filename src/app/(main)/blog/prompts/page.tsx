@@ -73,24 +73,16 @@ export default async function PromptsPage() {
           Volver al Blog
         </Link>
 
-        <div className="flex items-start gap-4 mb-6">
-          <div className="p-3 rounded-xl bg-purple-500/15 border border-purple-500/20 shrink-0 mt-1">
-            <Sparkles className="w-7 h-7 text-purple-400" />
-          </div>
-          <div>
-            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl text-white mb-2">
-              Galería de{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Prompts
-              </span>
-            </h1>
-            <p className="text-zinc-400 text-lg">
-              Prompts listos para usar.{" "}
-              <span className="text-purple-400 font-medium">Copia</span>, da{" "}
-              <span className="text-rose-400 font-medium">like</span> y
-              comparte tu favorito.
-            </p>
-          </div>
+        <div className="mb-6">
+          <p className="font-dm-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">
+            Recursos · IA aplicada
+          </p>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+            Galería de <span className="text-primary">prompts</span>
+          </h1>
+          <p className="text-zinc-400 text-lg">
+            Prompts listos para usar: cópialos, dales like y comparte tu favorito.
+          </p>
         </div>
       </div>
 

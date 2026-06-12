@@ -1,6 +1,8 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import { ChatMockup } from "@/components/nitrobot/chat-mockup"
+import { PanelMockup } from "@/components/nitrobot/panel-mockup"
 import { ConversationGallery } from "@/components/nitrobot/conversation-gallery"
 import { NitroBotCta } from "@/components/nitrobot/nitrobot-cta"
 import { heroConversation, stepFragments } from "@/components/nitrobot/conversations"
@@ -73,23 +75,23 @@ const nitrobotSchema = {
 const faqs = [
   {
     q: "¿Va a sonar robótico con mis clientes?",
-    a: "No, porque no usa respuestas enlatadas. Entrenamos a NitroBot con tu catálogo, tus políticas y tu forma de hablar — y tú apruebas cómo suena antes de que atienda a un solo cliente. La prueba está arriba: las conversaciones que viste son el estilo real del producto.",
+    a: "Va a sonar como tu mejor asesor. Entrenamos a NitroBot con tu catálogo, tus políticas y tu forma de hablar — y tú apruebas cómo suena antes de que atienda a tu primer cliente. La prueba está arriba: las conversaciones que viste son el estilo real del producto.",
   },
   {
-    q: "¿Qué pasa cuando no sabe la respuesta?",
-    a: "Te la pasa a ti. Cuando una conversación necesita criterio humano — una queja delicada, una negociación, un caso raro — NitroBot la transfiere a tu equipo con todo el contexto, y tú lo ves en el panel. Prefiero un bot que sabe cuándo callarse a uno que inventa respuestas.",
+    q: "¿Qué pasa cuando necesita criterio humano?",
+    a: "Te la pasa a ti. Cuando una conversación requiere criterio — una negociación, un caso especial — NitroBot la transfiere a tu equipo con todo el contexto a la vista en el panel. Así cada cliente recibe siempre la mejor respuesta: la instantánea del bot o la de tu equipo cuando aporta más valor.",
   },
   {
     q: "¿Qué pasa con los datos de mis clientes?",
-    a: "Tus conversaciones y tus clientes son tuyos. Los datos se usan únicamente para que NitroBot atienda tu negocio: no se venden ni se comparten con terceros. El detalle completo está en la política de privacidad del sitio.",
+    a: "Tus conversaciones y tus clientes son tuyos. Los datos se usan únicamente para que NitroBot atienda tu negocio y permanecen bajo tu control. El detalle completo está en la política de privacidad del sitio.",
   },
   {
     q: "¿Cuánto tarda la implementación?",
-    a: "Depende del tamaño de tu catálogo y de las integraciones que necesites. No te voy a prometer 'minutos': en el diagnóstico revisamos tu operación y te doy un cronograma real antes de que pagues un peso.",
+    a: "Depende del tamaño de tu catálogo y de las integraciones que necesites. En el diagnóstico revisamos tu operación y te doy un cronograma real desde el primer día, antes de cualquier pago.",
   },
   {
     q: "¿Necesito cambiar mi número o mi tienda?",
-    a: "No. NitroBot se conecta a tu número de WhatsApp actual y a la tienda que ya tienes.",
+    a: "Sigues con tu número y tu tienda de siempre: NitroBot se conecta a lo que ya tienes y empieza a trabajar.",
   },
 ]
 
@@ -102,7 +104,7 @@ export default function NitroBotPage() {
       />
 
       {/* ============ S1 · Hero — La conversación que vende sola ============ */}
-      <section className="relative pt-28 md:pt-40 pb-20 md:pb-32 px-6 overflow-hidden">
+      <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 px-6 overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-center">
@@ -138,7 +140,7 @@ export default function NitroBotPage() {
 
       {/* ============ S2 · El contexto — solo se muestra con cifras validadas y con fuente ============ */}
       {whatsappStats.length > 0 && (
-        <section className="py-20 md:py-32 px-6 bg-azul-estructura">
+        <section className="py-16 md:py-24 px-6 bg-azul-estructura">
           <div className="container mx-auto max-w-6xl">
             <div className="grid md:grid-cols-3 gap-12">
               {whatsappStats.map((stat) => (
@@ -164,7 +166,7 @@ export default function NitroBotPage() {
       )}
 
       {/* ============ S3 · Cómo funciona — Tres pasos, cero jerga ============ */}
-      <section className="py-20 md:py-32 px-6">
+      <section className="py-16 md:py-24 px-6">
         <div className="container mx-auto max-w-7xl">
           <h2 className="text-3xl md:text-5xl font-bold mb-16 text-balance">
             Cómo funciona — tres pasos, cero jerga
@@ -207,20 +209,20 @@ export default function NitroBotPage() {
       </section>
 
       {/* ============ S4 · NitroBot en acción — Galería de conversaciones ============ */}
-      <section className="py-20 md:py-32 px-6 bg-zinc-950/60">
+      <section className="py-16 md:py-24 px-6 bg-zinc-950/60">
         <div className="container mx-auto max-w-7xl">
           <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-4">
             NitroBot en acción
           </p>
           <h2 className="text-3xl md:text-5xl font-bold mb-12 text-balance">
-            No te cuento lo que hace. Míralo conversar.
+            La mejor demo es verlo conversar.
           </h2>
           <ConversationGallery />
         </div>
       </section>
 
       {/* ============ S5 · El panel — Lo que tú ves mientras él trabaja ============ */}
-      <section className="py-20 md:py-32 px-6">
+      <section className="py-16 md:py-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -236,48 +238,40 @@ export default function NitroBotPage() {
                 Cuando una conversación necesita criterio, la toma tu equipo con todo el contexto a la vista.
               </p>
             </div>
-            {/* TODO JUAN: reemplazar por screenshots reales del panel de nitro-bot
-                en marco de navegador oscuro. Nunca una ilustración inventada. */}
-            <div className="rounded-2xl border border-white/10 bg-zinc-900 overflow-hidden shadow-2xl shadow-black/50">
-              <div className="flex items-center gap-2 px-4 py-3 bg-zinc-950 border-b border-white/5">
-                <span className="w-3 h-3 rounded-full bg-zinc-700" />
-                <span className="w-3 h-3 rounded-full bg-zinc-700" />
-                <span className="w-3 h-3 rounded-full bg-zinc-700" />
-              </div>
-              <div className="aspect-video flex items-center justify-center bg-zinc-800/50">
-                <p className="font-dm-mono text-sm text-zinc-500 px-8 text-center">
-                  [ screenshot real del panel pendiente ]
-                </p>
-              </div>
-            </div>
+            <PanelMockup />
           </div>
         </div>
       </section>
 
       {/* ============ S6 · Quién está detrás — Juan ============ */}
-      <section className="py-20 md:py-32 px-6 bg-zinc-950/60">
+      <section className="py-16 md:py-24 px-6 bg-zinc-950/60">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-[2fr_3fr] gap-12 items-center">
-            {/* TODO JUAN: foto real con rim light naranja sobre fondo negro.
-                Sin stock, sin avatar IA en esta sección. */}
-            <div className="aspect-[4/5] max-w-sm w-full mx-auto rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-900 to-negro-profundo flex items-end justify-center overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-primary/15" />
-              <p className="font-dm-mono text-sm text-zinc-600 pb-10 text-center px-6">
-                [ foto de Juan con rim light naranja — pendiente ]
-              </p>
+            <div className="relative max-w-sm w-full mx-auto">
+              <div className="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-primary/25 via-transparent to-transparent blur-xl pointer-events-none" />
+              <div className="relative rounded-2xl overflow-hidden border border-primary/20 bg-zinc-900">
+                <Image
+                  src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto,w_700/v1781237424/Juan_arango_Ecommerce_r96gjj.png"
+                  alt="Juan Arango, creador de NitroBot"
+                  width={700}
+                  height={875}
+                  className="w-full h-auto object-cover"
+                  sizes="(max-width: 1024px) 90vw, 380px"
+                />
+              </div>
             </div>
             <div>
               <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-4">
                 Quién está detrás
               </p>
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-balance">
-                No te lo vende una corporación anónima.
+                Te lo implemento yo, <span className="text-primary">con mi equipo.</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Soy Juan Arango. Llevo 15 años construyendo ecommerce en Latinoamérica y NitroBot es la
                 herramienta que construí para resolver el cuello de botella que veo en casi todos los
-                negocios que asesoro: las ventas que se enfrían esperando una respuesta. No te lo vende
-                una corporación anónima — te lo implemento yo, con mi equipo, adaptado a tu operación.
+                negocios que asesoro: las ventas que se enfrían esperando una respuesta. Te lo implemento
+                yo, con mi equipo, adaptado a tu operación.
               </p>
               <Link
                 href="/laboratorio"
@@ -292,7 +286,7 @@ export default function NitroBotPage() {
       </section>
 
       {/* ============ S7 · CTA final — Habla con NitroBot ============ */}
-      <section id="contacto-nitrobot" className="py-20 md:py-32 px-6 scroll-mt-20">
+      <section id="contacto-nitrobot" className="py-16 md:py-24 px-6 scroll-mt-20">
         <div className="container mx-auto max-w-4xl">
           {/* Único momento de color total: la burbuja gigante con el gradiente NitroBot */}
           <div className="rounded-[2.5rem] rounded-bl-lg [background:var(--gradiente-nitrobot)] p-10 md:p-16 text-center mb-16">
@@ -307,14 +301,14 @@ export default function NitroBotPage() {
 
           <div className="text-center mb-10">
             <h3 className="text-2xl font-bold mb-2">¿Prefieres que te escriba yo?</h3>
-            <p className="text-muted-foreground">Déjame tus datos. Te escribo yo, no una lista de correos.</p>
+            <p className="text-muted-foreground">Déjame tus datos y te escribo yo personalmente.</p>
           </div>
           <ContactForm />
         </div>
       </section>
 
       {/* ============ S8 · FAQ — Las objeciones, de frente ============ */}
-      <section className="py-20 md:py-32 px-6 bg-zinc-950/60">
+      <section className="py-16 md:py-24 px-6 bg-zinc-950/60">
         <div className="container mx-auto max-w-3xl">
           <h2 className="text-3xl md:text-5xl font-bold mb-12 text-balance">
             Las objeciones, de frente

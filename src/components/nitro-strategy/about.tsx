@@ -17,7 +17,7 @@ const credentials = [
     icon: TrendingUp,
     label: "SISTEMAS",
     title: "Implementación completa",
-    description: "No te entrego una página: te dejo funcionando el sistema completo — estrategia, automatización e infraestructura."
+    description: "Te dejo funcionando el sistema completo — estrategia, automatización e infraestructura — y te enseño a operarlo."
   },
   {
     icon: Globe,

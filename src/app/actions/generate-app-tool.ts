@@ -32,7 +32,7 @@ export async function generateAppContentAction(appName: string, websiteUrl: stri
 
   try {
     const geminiResponse = await googleAI.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.5-flash",
       contents: [{
         role: "user",
         parts: [{

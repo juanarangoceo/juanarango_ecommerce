@@ -43,7 +43,7 @@ export function NitroBusinessGrid() {
             <span className="text-primary font-dm-mono tracking-widest text-sm uppercase mb-2 block">Soluciones por industria</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">Nitro Negocios</h2>
             <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
-                No vendo plantillas: adapto el sistema a cómo vende tu industria.
+                Adapto el sistema a cómo vende tu industria, con tecnología hecha a la medida de tu operación.
             </p>
         </div>
 

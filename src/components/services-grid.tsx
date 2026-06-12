@@ -104,7 +104,9 @@ export function ServicesGrid() {
     <section id="servicios" className="py-12 md:py-24 px-6 relative z-10">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-20 text-center md:text-left">
-          <h2 className="text-5xl font-bold mb-6 text-balance tracking-tight">El ecosistema NITRO</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance tracking-tight">
+            Servicios: <span className="text-primary">el ecosistema NITRO</span>
+          </h2>
           <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
             Cuatro sistemas que trabajan juntos. Te los presento por lo que logran en tu negocio, no por su sofisticación técnica.
           </p>

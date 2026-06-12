@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, Terminal, Briefcase } from "lucide-react"
+import { Home, Layers, Briefcase } from "lucide-react"
 import { LanguageToggle } from "@/components/layout/LanguageToggle"
 
 /** Rayito verde — relleno con cuerpo, para Blog */
@@ -57,16 +57,16 @@ export function MobileBottomNav() {
           <span className="text-[10px] font-medium">B2B</span>
         </Link>
 
-        {/* 3. Prompts */}
+        {/* 3. Servicios — siempre en naranja (acceso clave en móvil) */}
         <Link
-          href="/blog/prompts"
+          href="/#servicios"
           prefetch={false}
-          className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-            isActive("/blog/prompts") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+          className={`flex flex-col items-center gap-1 transition-all duration-200 text-primary ${
+            isActive("/#servicios") ? "scale-110" : "hover:text-naranja-suave"
           }`}
         >
-          <Terminal className="w-6 h-6" />
-          <span className="text-[10px] font-medium">Prompts</span>
+          <Layers className="w-6 h-6" />
+          <span className="text-[10px] font-bold">Servicios</span>
         </Link>
 
         {/* 4. Blog — rayito verde con cuerpo */}
