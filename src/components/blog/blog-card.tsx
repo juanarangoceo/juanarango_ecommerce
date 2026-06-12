@@ -69,7 +69,7 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
           </div>
           
           <p className="text-zinc-400 line-clamp-2 text-sm leading-relaxed mb-4 flex-grow">
-            {post.excerpt || "Lee el artículo completo para descubrir más detalles sobre este tema..."}
+            {post.excerpt}
           </p>
           
           <span className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400 group-hover:text-emerald-300 transition-colors mt-auto">

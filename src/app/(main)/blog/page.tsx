@@ -31,7 +31,7 @@ const POSTS_QUERY = `*[
   publishedAt,
   _createdAt,
   mainImage,
-  excerpt,
+  "excerpt": coalesce(excerpt, array::join(string::split(pt::text(body), "")[0..199], "") + "…"),
   topic,
   category,
   tags,
