@@ -13,7 +13,7 @@ export function NitroBusinessGrid() {
       title: "Nitro Salud",
       desc: "Ecosistema digital completo para clínicas estéticas y dentales. Agendamiento automático y reputación online.",
       href: "/soluciones/clinicas",
-      color: "emerald", // Unified to emerald
+      color: "primary",
       cta: "Ver Solución Médica"
     },
     {
@@ -40,10 +40,10 @@ export function NitroBusinessGrid() {
     <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-zinc-950/50 flex flex-col items-center">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-16">
-            <span className="text-emerald-400 font-mono tracking-widest text-sm uppercase mb-2 block">Infraestructura Modular por Nicho</span>
+            <span className="text-primary font-dm-mono tracking-widest text-sm uppercase mb-2 block">Soluciones por industria</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">Nitro Negocios</h2>
             <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
-                Tecnología adaptada a las necesidades específicas de tu industria. No vendemos generalidades.
+                No vendo plantillas: adapto el sistema a cómo vende tu industria.
             </p>
         </div>
 
@@ -60,16 +60,16 @@ export function NitroBusinessGrid() {
               <Link href={biz.href} className="block h-full">
                 <SpotlightCard 
                     spotlightColor={
-                      biz.color === 'emerald' ? "rgba(16, 185, 129, 0.2)" : 
+                      biz.color === 'primary' ? "rgba(232, 82, 10, 0.2)" : 
                       biz.color === 'blue' ? "rgba(59, 130, 246, 0.2)" : 
                       biz.color === 'orange' ? "rgba(249, 115, 22, 0.2)" : 
                       "rgba(255, 255, 255, 0.05)"
                     }
-                    className="h-full p-8 flex flex-col group border-white/5 hover:border-emerald-500/30 transition-colors"
+                    className="h-full p-8 flex flex-col group border-white/5 hover:border-primary/30 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-8">
                     <div className={`p-4 rounded-xl ${
-                      biz.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400' : 
+                      biz.color === 'primary' ? 'bg-primary/10 text-primary' : 
                       biz.color === 'blue' ? 'bg-blue-500/10 text-blue-400' : 
                       biz.color === 'orange' ? 'bg-orange-500/10 text-orange-400' : 
                       'bg-white/5 text-slate-400'
@@ -82,7 +82,7 @@ export function NitroBusinessGrid() {
                   <h3 className={`text-2xl font-bold mb-4 text-white transition-colors tracking-tight ${
                     biz.color === 'blue' ? 'group-hover:text-blue-400' : 
                     biz.color === 'orange' ? 'group-hover:text-orange-400' : 
-                    'group-hover:text-emerald-400'
+                    'group-hover:text-primary'
                   }`}>
                     {biz.title}
                   </h3>
@@ -95,7 +95,7 @@ export function NitroBusinessGrid() {
                     biz.color === 'blue' ? 'text-blue-400' : 
                     biz.color === 'orange' ? 'text-orange-400' : 
                     biz.color === 'purple' ? 'text-violet-400' : 
-                    'text-emerald-400'
+                    'text-primary'
                   }`}>
                     {biz.cta} <ArrowRight className="w-4 h-4 ml-2" />
                   </div>
@@ -108,10 +108,10 @@ export function NitroBusinessGrid() {
         <div className="w-full flex justify-center mt-6">
           <Link 
             href="/soluciones/b2b" 
-            className="group inline-flex items-center justify-center bg-zinc-900 border border-zinc-800 hover:border-emerald-500/50 hover:bg-zinc-800 text-white font-medium py-3 px-8 rounded-full transition-all"
+            className="group inline-flex items-center justify-center bg-zinc-900 border border-zinc-800 hover:border-primary/50 hover:bg-zinc-800 text-white font-medium py-3 px-8 rounded-full transition-all"
           >
             Ver Todas las Soluciones B2B
-            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 text-emerald-500" />
+            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 text-primary" />
           </Link>
         </div>
       </div>

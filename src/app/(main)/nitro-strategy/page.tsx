@@ -3,7 +3,6 @@ import { PainPoints } from "@/components/nitro-strategy/pain-points"
 import { Services } from "@/components/nitro-strategy/services"
 import { About } from "@/components/nitro-strategy/about"
 import { Methodology } from "@/components/nitro-strategy/methodology"
-import { Results } from "@/components/nitro-strategy/results"
 import { FAQ } from "@/components/nitro-strategy/faq"
 import { UrgencyBanner } from "@/components/nitro-strategy/urgency-banner"
 import { CTAForm } from "@/components/nitro-strategy/cta-form"
@@ -23,7 +22,6 @@ export default function NitroStrategyPage() {
       <Services />
       <About />
       <Methodology />
-      <Results />
       <FAQ />
       <UrgencyBanner />
       <CTAForm />
