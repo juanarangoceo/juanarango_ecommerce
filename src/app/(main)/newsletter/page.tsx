@@ -12,7 +12,6 @@ import {
   BookOpen,
   Shield,
   Sparkles,
-  Bell,
   Clock,
 } from "lucide-react";
 import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
@@ -25,8 +24,8 @@ const benefits = [
     icon: TrendingUp,
     title: "Estrategias de Ecommerce",
     desc: "Tácticas probadas para escalar ventas, mejorar conversión y construir operaciones sólidas.",
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10 border-emerald-500/20",
+    color: "text-primary",
+    bg: "bg-primary/10 border-primary/20",
   },
   {
     icon: Zap,
@@ -93,14 +92,14 @@ function HeroNewsletterForm() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center gap-4 py-8"
         >
-          <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+          <div className="w-16 h-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+            <CheckCircle2 className="w-8 h-8 text-primary" />
           </div>
           <h3 className="text-2xl font-bold text-white">¡Ya estás dentro! 🎉</h3>
           <p className="text-zinc-400 text-center max-w-sm">{message}</p>
           <Link
             href="/guias"
-            className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+            className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-naranja-suave transition-colors"
           >
             Mientras tanto, explora las Guías Gratuitas
             <ArrowRight className="w-4 h-4" />
@@ -123,13 +122,13 @@ function HeroNewsletterForm() {
               onChange={(e) => setEmail(e.target.value)}
               disabled={status === "loading"}
               required
-              className="w-full pl-11 pr-4 py-4 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-base"
+              className="w-full pl-11 pr-4 py-4 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-base"
             />
           </div>
           <button
             type="submit"
             disabled={status === "loading" || !email}
-            className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
+            className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg shadow-primary/25 hover:shadow-primary/40"
           >
             {status === "loading" ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -155,7 +154,7 @@ export default function NewsletterPage() {
     <div className="min-h-screen bg-[#050505] relative overflow-x-hidden">
       {/* Background aurora */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-emerald-500/5 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-violet-900/8 blur-[120px]" />
       </div>
 
@@ -163,12 +162,6 @@ export default function NewsletterPage() {
         {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="pt-32 pb-20 px-6">
           <div className="container mx-auto max-w-3xl text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold mb-8">
-              <Bell className="w-4 h-4" />
-              Newsletter · Gratis · Sin spam
-            </div>
-
             <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-6">
               Lo nuevo en IA y ecommerce,{" "}
               <span className="text-primary">
@@ -195,7 +188,7 @@ export default function NewsletterPage() {
               <p className="text-xs text-zinc-600 mt-4 text-center">
                 Al suscribirte aceptas nuestros{" "}
                 <TermsModal>
-                  <button className="text-zinc-500 hover:text-emerald-400 underline underline-offset-2 transition-colors">
+                  <button className="text-zinc-500 hover:text-primary underline underline-offset-2 transition-colors">
                     Términos y Condiciones
                   </button>
                 </TermsModal>
@@ -241,7 +234,7 @@ export default function NewsletterPage() {
           <div className="container mx-auto max-w-4xl">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6">
                   <Sparkles className="w-3.5 h-3.5" />
                   Incluido en cada edición
                 </div>
@@ -256,8 +249,8 @@ export default function NewsletterPage() {
               <div className="space-y-3">
                 {included.map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mt-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mt-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-primary" />
                     </div>
                     <span className="text-zinc-300 text-sm leading-relaxed">{item}</span>
                   </div>
@@ -270,14 +263,14 @@ export default function NewsletterPage() {
         {/* ── CTA FINAL ────────────────────────────────────────────────── */}
         <section className="py-24 px-6">
           <div className="container mx-auto max-w-2xl">
-            <div className="relative rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-10 md:p-14 text-center shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden border border-primary/20 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-10 md:p-14 text-center shadow-2xl">
               {/* Glow effects */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none" />
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-teal-500/8 blur-2xl rounded-full pointer-events-none" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-primary/10 blur-3xl rounded-full pointer-events-none" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-primary/8 blur-2xl rounded-full pointer-events-none" />
 
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center mx-auto mb-6">
-                  <Mail className="w-8 h-8 text-emerald-400" />
+                <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center mx-auto mb-6">
+                  <Mail className="w-8 h-8 text-primary" />
                 </div>
 
                 <h2 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
@@ -293,11 +286,11 @@ export default function NewsletterPage() {
 
             <p className="text-center text-zinc-600 text-sm mt-6">
               ¿Ya tienes todo bajo control?{" "}
-              <Link href="/blog" className="text-zinc-500 hover:text-emerald-400 transition-colors underline underline-offset-2">
+              <Link href="/blog" className="text-zinc-500 hover:text-primary transition-colors underline underline-offset-2">
                 Lee el blog
               </Link>{" "}
               ·{" "}
-              <Link href="/guias" className="text-zinc-500 hover:text-emerald-400 transition-colors underline underline-offset-2">
+              <Link href="/guias" className="text-zinc-500 hover:text-primary transition-colors underline underline-offset-2">
                 Explora las guías
               </Link>
             </p>

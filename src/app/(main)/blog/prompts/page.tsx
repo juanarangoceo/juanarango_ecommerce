@@ -7,10 +7,10 @@ import { PromptGalleryClient } from "@/components/blog/prompt-gallery-client";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
 import { SidebarAppsBanner } from "@/components/blog/sidebar-banners";
-import { Zap, ArrowLeft, Sparkles } from "lucide-react";
+import { Zap, ArrowLeft, Terminal } from "lucide-react";
 
 export const metadata: Metadata = constructMetadata({
-  title: "Galería de Prompts de IA | Nitro Ecom",
+  title: "Galería de Prompts de IA | Juan Arango Ecommerce",
   description:
     "Descubre prompts listos para usar con Midjourney, DALL·E, ChatGPT y más. Copia, da like y explora nuestra colección de prompts de IA.",
   canonical: "https://www.juanarangoecommerce.com/blog/prompts",
@@ -94,7 +94,7 @@ export default async function PromptsPage() {
             <PromptGalleryClient prompts={allPrompts} likeCounts={likeCounts} />
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center">
-              <Sparkles className="w-12 h-12 text-purple-400 mb-4 opacity-50" />
+              <Terminal className="w-12 h-12 text-primary mb-4 opacity-50" />
               <p className="text-xl text-zinc-400 mb-2">
                 Aún no hay prompts publicados.
               </p>

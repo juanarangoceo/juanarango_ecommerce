@@ -88,7 +88,6 @@ referencias y plantillas): `DEMO/`, `Landing_apps/`, `Landingpage_nitrocommerce/
 - Prompts: título reducido y en naranja, eyebrow DM Mono.
 
 **PENDIENTE para la próxima sesión:**
-1. Prompts page: queda un ícono `Sparkles` (línea ~97, estado vacío) — reemplazar por Terminal/primary y quitar import. Metadata title aún dice "Nitro Ecom".
-2. Newsletter (`/newsletter`): rediseñar narrativa/diseño completo y QUITAR la burbuja-badge del hero ("Newsletter · Gratis · Sin spam"). Quitar también las burbujas-badge equivalentes al inicio de otras páginas (buscar pills `rounded-full` con badge en heros: nitro-strategy, clinicas, etc.). La página newsletter aún usa verde esmeralda → migrar a naranja primary.
-3. Revisar espaciados largos restantes en landings (laboratorio, guias).
+1. ~~Prompts: Sparkles/metadata~~ HECHO. ~~Newsletter: badge + migración a naranja~~ HECHO. ~~Badge nitro-strategy~~ HECHO (eyebrow DM Mono).
+2. Revisar burbujas-badge restantes en otras páginas (clinicas, retail, inmobiliaria, guias) y espaciados largos en laboratorio/guias.
 4. TODOs previos de Juan: `NEXT_PUBLIC_NITROBOT_WA` en Vercel, cifras S2 con fuente, buzón hola@, revisar conversaciones de ejemplo.

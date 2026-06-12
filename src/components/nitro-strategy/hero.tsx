@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Play, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 
@@ -22,22 +21,14 @@ export function Hero() {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-5xl lg:max-w-6xl mx-auto text-center">
-          {/* Badge */}
-          <Badge 
-            variant="outline" 
-            className="mb-6 px-4 py-2 border-primary/30 text-primary bg-primary/5"
-          >
-            <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            Consultoría de Alto Nivel para Empresas que Escalan
-          </Badge>
+          <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-6">
+            Consultoría directa con Juan · Para empresas que escalan
+          </p>
 
           {/* Main Headline - H1 for SEO */}
           <h1 
             id="hero-title"
-            className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-8 text-balance"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-balance"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Estrategias de{" "}
