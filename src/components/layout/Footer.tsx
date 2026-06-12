@@ -14,22 +14,19 @@ export function Footer() {
           <div>
             <div className="text-2xl font-bold mb-4 flex items-center gap-2">
               <div>
-                <span className="text-primary">Nitro</span>
-                <span className="text-foreground">Tech</span>
+                <span className="text-primary">JUAN ARANGO</span>
+                <span className="text-foreground"> ECOMMERCE</span>
               </div>
-              <span className="text-[10px] font-medium tracking-widest text-muted-foreground/60 uppercase mt-1">
-                [ por Juan Arango ]
-              </span>
             </div>
             <p className="text-muted-foreground text-sm">
-              Arquitectos de ecosistemas digitales de alto rendimiento
+              NITRO ECOM · La estructura de implementación de Juan Arango · Pereira, Colombia — para toda Latinoamérica.
             </p>
           </div>
           <div>
             <h4 className="font-bold mb-4">Servicios</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/#servicios" className="hover:text-primary transition-colors">
+                <Link href="/nitrobot" className="hover:text-primary transition-colors">
                   NitroBot
                 </Link>
               </li>
@@ -83,8 +80,8 @@ export function Footer() {
             <h4 className="font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="mailto:nitroecommercecolombia@gmail.com" className="hover:text-primary transition-colors">
-                  nitroecommercecolombia@gmail.com
+                <a href="mailto:hola@juanarangoecommerce.com" className="hover:text-primary transition-colors">
+                  hola@juanarangoecommerce.com
                 </a>
               </li>
             </ul>
@@ -106,8 +103,8 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-border/50 pt-8 flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
-          <p>© 2026 NITROECOM. Todos los derechos reservados a NITROECOM.</p>
-          <p className="text-xs text-muted-foreground/60">Una marca de Juan Arango</p>
+          <p>© 2026 Juan Arango Ecommerce. Todos los derechos reservados.</p>
+          <p className="text-xs text-muted-foreground/60">NITRO ECOM es la marca de productos e implementación de Juan Arango</p>
         </div>
       </div>
 
@@ -137,7 +134,7 @@ export function Footer() {
 
           <h3 className="text-lg font-bold mt-6 mb-3">4. Tus Derechos</h3>
           <p className="text-muted-foreground mb-4">
-            Tienes derecho a acceder, corregir o eliminar tu información personal. Contáctanos en nitroecommercecolombia@gmail.com para ejercer tus derechos.
+            Tienes derecho a acceder, corregir o eliminar tu información personal. Escríbeme a hola@juanarangoecommerce.com para ejercer tus derechos.
           </p>
         </div>
       </PolicyModal>
@@ -157,17 +154,17 @@ export function Footer() {
 
           <h3 className="text-lg font-bold mt-6 mb-3">2. Servicios</h3>
           <p className="text-muted-foreground mb-4">
-            NITROECOM proporciona servicios de desarrollo de software, consultoría tecnológica y soluciones de ecommerce. Los detalles específicos se acuerdan en contratos individuales.
+            Juan Arango Ecommerce (NITRO ECOM) proporciona servicios de desarrollo de software, consultoría tecnológica y soluciones de ecommerce. Los detalles específicos se acuerdan en contratos individuales.
           </p>
 
           <h3 className="text-lg font-bold mt-6 mb-3">3. Propiedad Intelectual</h3>
           <p className="text-muted-foreground mb-4">
-            Todo el contenido de este sitio, incluyendo texto, gráficos, logos y software, es propiedad de NITROECOM y está protegido por leyes de propiedad intelectual.
+            Todo el contenido de este sitio, incluyendo texto, gráficos, logos y software, es propiedad de Juan Arango Ecommerce (NITRO ECOM) y está protegido por leyes de propiedad intelectual.
           </p>
 
           <h3 className="text-lg font-bold mt-6 mb-3">4. Limitación de Responsabilidad</h3>
           <p className="text-muted-foreground mb-4">
-            NITROECOM no será responsable de daños indirectos, incidentales o consecuentes que surjan del uso de nuestros servicios o sitio web.
+            Juan Arango Ecommerce (NITRO ECOM) no será responsable de daños indirectos, incidentales o consecuentes que surjan del uso de nuestros servicios o sitio web.
           </p>
         </div>
       </PolicyModal>

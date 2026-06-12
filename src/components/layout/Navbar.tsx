@@ -24,7 +24,7 @@ const serviceLinks = [
   { href: "/nitro-strategy", label: "Nitro Strategy" },
   { href: "/soluciones/nitro-commerce", label: "Nitro Commerce" },
   { href: "/soluciones/nitro-search", label: "Nitro Search" },
-  { href: "/soluciones/nitro-bot", label: "Nitro Bot" },
+  { href: "/nitrobot", label: "NitroBot" },
   { href: "/shopify", label: "Shopify" },
 ]
 
@@ -178,12 +178,12 @@ export function Navbar() {
         <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
           {/* LEFT — Logo */}
           <Link href="/" className="flex items-center gap-2" onClick={closeAll}>
-            <div className="text-2xl font-bold tracking-tight">
-              <span className="text-primary">NITRO</span>
-              <span className="text-foreground"> ECOM</span>
+            <div className="text-xl md:text-2xl font-bold tracking-tight">
+              <span className="text-primary">JUAN ARANGO</span>
+              <span className="text-foreground"> ECOMMERCE</span>
             </div>
             <span className="hidden sm:inline-block text-[10px] font-medium tracking-widest text-white/50 uppercase mt-1.5 ml-1">
-              [ por Juan Arango ]
+              [ NITRO ECOM ]
             </span>
           </Link>
 
