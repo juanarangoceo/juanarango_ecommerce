@@ -39,6 +39,11 @@ const nextConfig: NextConfig = {
         destination: '/laboratorio/:path*',
         permanent: true,
       },
+      {
+        source: '/soluciones/nitro-bot',
+        destination: '/nitrobot',
+        permanent: true,
+      },
     ];
   },
 };
