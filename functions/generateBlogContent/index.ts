@@ -73,7 +73,7 @@ export async function handler({ context, event }: any) {
 
     // 4. Llamar Gemini via REST fetch
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -90,7 +90,9 @@ export async function handler({ context, event }: any) {
     }
 
     const geminiJson: any = await geminiRes.json()
-    const generatedText = geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text
+    const generatedText = (geminiJson?.candidates?.[0]?.content?.parts || [])
+      .map((p: any) => p?.text || '')
+      .join('')
     if (!generatedText) throw new Error('Gemini no devolvió contenido en el formato esperado')
 
     // 5. Parsear JSON — varios fallbacks para resiliencia
