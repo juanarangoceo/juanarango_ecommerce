@@ -9,21 +9,21 @@ import {
 const credentials = [
   {
     icon: Terminal,
-    label: "+8 AÑOS",
-    title: "Full Stack Engineering",
-    description: "Arquitectura de software escalable. Desde monolitos hasta microservicios distribuidos."
+    label: "15 AÑOS",
+    title: "Ecommerce y marketing digital en LATAM",
+    description: "Marketplaces, marcas propias y tiendas de clientes. Experiencia de operación real, no de manual."
   },
   {
     icon: TrendingUp,
-    label: "$10M+",
-    title: "Revenue Generado",
-    description: "Sistemas diseñados para procesar millones en transacciones sin caídas durante picos de tráfico."
+    label: "SISTEMAS",
+    title: "Implementación completa",
+    description: "No te entrego una página: te dejo funcionando el sistema completo — estrategia, automatización e infraestructura."
   },
   {
     icon: Globe,
-    label: "GLOBAL",
-    title: "Liderazgo Técnico",
-    description: "Dirigiendo equipos remotos de alto rendimiento en LATAM y USA."
+    label: "LATAM",
+    title: "Base en Colombia, cancha en la región",
+    description: "Trabajo con mi equipo desde Pereira para empresas de Colombia y toda Latinoamérica."
   }
 ]
 
@@ -62,9 +62,8 @@ export function About() {
                 para que puedan escalar x10 sin romperse.
               </p>
               <p>
-                Con <strong className="text-foreground">más de 20 años haciendo estrategias de comercio electrónico</strong>, 
-                he facturado millones en marketplaces, lanzado marcas propias y escalado negocios para empresas 
-                que hoy son líderes en sus industrias.
+                Llevo <strong className="text-foreground">15 años en ecommerce y marketing digital en LATAM</strong>:
+                he vendido en marketplaces, lanzado marcas propias y escalado las operaciones de mis clientes.
               </p>
               <p>
                 Combino <strong className="text-foreground">estrategia de negocio</strong> con{" "}

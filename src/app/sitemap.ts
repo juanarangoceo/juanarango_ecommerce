@@ -10,9 +10,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. Static Routes
   const staticRoutes = [
     '',
+    '/nitrobot',
     '/blog',
     '/app-tools',
     '/comparar',
+    '/laboratorio',
     '/soluciones/clinicas',
     '/soluciones/nitro-commerce',
     '/demos/aura-stetic',

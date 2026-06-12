@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Syne, DM_Mono } from "next/font/google";
 import Script from "next/script";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { Navbar } from "@/components/layout/Navbar";
@@ -23,17 +23,24 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["700", "800"],
+  display: "swap",
+});
+
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   ...constructMetadata({
     title: "Juan Arango - Experto en Ecommerce",
-    description: "Acelera tu crecimiento digital con infraestructura de alta velocidad.",
+    description: "Ayudo a empresas de Colombia y Latinoamérica a vender más con ecommerce avanzado, automatización e IA. Soy Juan Arango: 15 años de experiencia real.",
     icons: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
   }),
   verification: {
@@ -46,14 +53,36 @@ export const metadata: Metadata = {
   },
 };
 
-// Schema Markup: Organization + WebSite
+// Schema Markup: Person (Juan Arango) + Organization (NITRO ECOM) + WebSite
 const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Person",
+      "@id": "https://www.juanarangoecommerce.com/#person",
+      name: "Juan Arango",
+      url: "https://www.juanarangoecommerce.com",
+      jobTitle: "Consultor de ecommerce, automatización e IA aplicada",
+      description: "15 años construyendo ecommerce en Latinoamérica. Ayudo a empresas de Colombia y LATAM a vender más con ecommerce avanzado, automatización e IA.",
+      sameAs: [
+        "https://instagram.com/juanarangoecommerce",
+        "https://www.tiktok.com/@juanarangoecommerce",
+        "https://www.youtube.com/@NitroEcom",
+        "https://www.linkedin.com/in/juanarangoecommerce"
+      ],
+      worksFor: {
+        "@id": "https://www.juanarangoecommerce.com/#organization"
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "CO",
+        addressLocality: "Pereira"
+      }
+    },
+    {
       "@type": "Organization",
       "@id": "https://www.juanarangoecommerce.com/#organization",
-      name: "Nitro Ecom",
+      name: "NITRO ECOM",
       url: "https://www.juanarangoecommerce.com",
       logo: {
         "@type": "ImageObject",
@@ -61,13 +90,17 @@ const organizationSchema = {
         width: 512,
         height: 512
       },
-      description: "Estrategias de escalamiento acelerado para negocios digitales",
+      description: "La estructura de implementación de Juan Arango: ecommerce, automatización e IA para empresas de Colombia y Latinoamérica.",
+      founder: {
+        "@id": "https://www.juanarangoecommerce.com/#person"
+      },
       contactPoint: {
         "@type": "ContactPoint",
+        email: "hola@juanarangoecommerce.com",
         telephone: "+573146681896",
         contactType: "customer service",
         areaServed: "CO",
-        availableLanguage: ["es", "en"]
+        availableLanguage: ["es"]
       },
       sameAs: [
         "https://instagram.com/juanarangoecommerce"
@@ -75,15 +108,15 @@ const organizationSchema = {
       address: {
         "@type": "PostalAddress",
         addressCountry: "CO",
-        addressLocality: "Colombia"
+        addressLocality: "Pereira"
       }
     },
     {
       "@type": "WebSite",
       "@id": "https://www.juanarangoecommerce.com/#website",
       url: "https://www.juanarangoecommerce.com",
-      name: "Nitro Ecom - Escalamiento Digital",
-      description: "Acelera tu crecimiento digital con infraestructura de alta velocidad",
+      name: "Juan Arango Ecommerce",
+      description: "Ecommerce avanzado, automatización e IA aplicada para empresas de Colombia y Latinoamérica",
       publisher: {
         "@id": "https://www.juanarangoecommerce.com/#organization"
       },
@@ -112,7 +145,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${dmMono.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
       >
         {/* Schema Markup: Organization + WebSite - native script for SSR */}
         <script

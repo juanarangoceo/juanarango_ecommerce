@@ -82,7 +82,7 @@ export function ContactForm({ interestOptions }: ContactFormProps = {}) {
 
     // Step 1: Email
     <div key="step1" className="space-y-6">
-      <h3 className="text-2xl font-bold text-foreground">Genial, {formData.name.split(" ")[0]}. <br/> ¿Dónde podemos contactarte?</h3>
+      <h3 className="text-2xl font-bold text-foreground">Genial, {formData.name.split(" ")[0]}. <br/> ¿Dónde te escribo?</h3>
       <div>
         <input
           type="email"
@@ -151,7 +151,7 @@ export function ContactForm({ interestOptions }: ContactFormProps = {}) {
         disabled={loading}
         className="w-full bg-primary text-primary-foreground font-bold text-lg py-4 rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
       >
-        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Enviar Solicitud"}
+        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Enviar — te respondo yo"}
       </button>
     </div>,
 
@@ -162,9 +162,9 @@ export function ContactForm({ interestOptions }: ContactFormProps = {}) {
       </div>
       <h3 className="text-3xl font-bold text-foreground">¡Recibido!</h3>
       <p className="text-muted-foreground text-lg max-w-md mx-auto">
-        Gracias por tu interés, {formData.name.split(" ")[0]}. Hemos enviado un correo de confirmación a <strong className="text-primary">{formData.email}</strong>.
+        Gracias por tu interés, {formData.name.split(" ")[0]}. Te envié un correo de confirmación a <strong className="text-primary">{formData.email}</strong>.
       </p>
-      <p className="text-muted-foreground">Nuestro equipo te contactará en breve.</p>
+      <p className="text-muted-foreground">Te respondo yo, normalmente el mismo día.</p>
     </div>
   ];
 

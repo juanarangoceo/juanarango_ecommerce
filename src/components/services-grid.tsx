@@ -7,60 +7,74 @@ import { Button } from "@/components/ui/button"
 import { SpotlightCard } from "@/components/ui/spotlight-card"
 import Link from "next/link"
 
-// Data Structure (could be separate file, but kept here for simplicity/integrity)
-const serviceDetails = [
+// Los cuatro Nitros, reescritos por logro (narrativa-web.md §4.2). NitroBot primero y
+// es la única card del sitio que usa el gradiente NitroBot.
+type ServiceDetail = {
+  id: string
+  icon: typeof MessageSquare
+  title: string
+  desc: string
+  cta: string
+  href?: string
+  featured?: boolean
+  features: string[]
+}
+
+const serviceDetails: ServiceDetail[] = [
   {
     id: "01",
     icon: MessageSquare,
     title: "NitroBot",
-    desc: "Eficiencia Operativa. No es solo un chat, es liberar tiempo de tu equipo mediante automatización inteligente.",
-    cta: "Ver Automatización",
+    desc: "Ventas y atención por WhatsApp con IA. Tus clientes reciben respuesta en segundos; tu equipo se concentra en lo que necesita criterio humano.",
+    cta: "Habla con NitroBot",
+    href: "/nitrobot",
+    featured: true,
     features: [
-      "Atención al cliente 24/7 sin humanos",
-      "Calificación automática de leads",
-      "Agendamiento directo en calendario",
-      "Integración con WhatsApp y CRM"
+      "Atiende, asesora y cierra ventas por WhatsApp",
+      "Entrenado en tu catálogo y tu forma de hablar",
+      "Traspaso a humano cuando se necesita criterio",
+      "Todo queda registrado en tu panel"
     ]
   },
   {
     id: "02",
-    icon: Search,
-    title: "NitroSearch", 
-    desc: "Visibilidad inmediata. Estrategias de búsqueda avanzada para dominar tu nicho.",
-    cta: "Ver Búsqueda",
+    icon: ShoppingCart,
+    title: "NitroCommerce",
+    desc: "Tiendas de arquitectura headless que cargan en menos de 200 ms. Para negocios que ya venden y necesitan que la tecnología deje de ser el freno.",
+    cta: "Ver infraestructura",
+    href: "/soluciones/nitro-commerce",
     features: [
-      "Auditoría SEO Técnica profunda",
-      "Estrategia de palabras clave de alta intención",
-      "Optimización de velocidad (Core Web Vitals)",
-      "Indexación prioritaria en Google"
+      "Headless Shopify / MedusaJS",
+      "Cargas de página en menos de 200 ms",
+      "Aguanta tu mejor día de ventas sin caerse",
+      "UX optimizada para conversión móvil"
     ]
   },
   {
     id: "03",
-    icon: ShoppingCart,
-    title: "NitroCommerce",
-    desc: "Velocidad sin fricción. Arquitectura Headless (<200ms) diseñada para soportar tráfico masivo.",
-    cta: "Ver Infraestructura",
-    href: "/soluciones/nitro-commerce",
+    icon: Search,
+    title: "NitroSearch",
+    desc: "Que te encuentren primero. SEO técnico y estrategia de búsqueda para que tu marca aparezca cuando tu cliente está decidiendo.",
+    cta: "Ver búsqueda",
     features: [
-      "Headless Shopify / MedusaJS",
-      "Cargas de página en < 200ms",
-      "Reducción de tasa de rebote",
-      "UX optimizada para conversión móvil"
+      "Auditoría SEO técnica profunda",
+      "Palabras clave de alta intención de compra",
+      "Optimización de velocidad (Core Web Vitals)",
+      "Contenido que responde lo que tu cliente busca"
     ]
   },
   {
     id: "04",
     icon: BarChart3,
     title: "NitroStrategy",
-    desc: "Consultoría de alto nivel para identificar fugas de capital y diseñar el roadmap técnico.",
-    cta: "Ver Consultoría",
+    desc: "Consultoría directa conmigo. Auditamos tu operación, encontramos dónde se fuga la plata y diseñamos el plan técnico para escalar.",
+    cta: "Agendar sesión",
     href: "/nitro-strategy",
     features: [
       "Análisis de fugas en el funnel",
-      "Roadmap de deuda técnica",
-      "Selección de Stack Tecnológico",
-      "Mentoria para equipos in-house"
+      "Roadmap técnico priorizado",
+      "Selección de stack tecnológico",
+      "Mentoría para tu equipo in-house"
     ]
   }
 ]
@@ -90,9 +104,9 @@ export function ServicesGrid() {
     <section id="servicios" className="py-12 md:py-24 px-6 relative z-10">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-20 text-center md:text-left">
-          <h2 className="text-5xl font-bold mb-6 text-balance tracking-tight">Ecosistema de servicios</h2>
+          <h2 className="text-5xl font-bold mb-6 text-balance tracking-tight">El ecosistema NITRO</h2>
           <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
-            Soluciones modulares que trabajan juntas para acelerar tu crecimiento digital.
+            Cuatro sistemas que trabajan juntos. Te los presento por lo que logran en tu negocio, no por su sofisticación técnica.
           </p>
         </div>
 
@@ -106,12 +120,18 @@ export function ServicesGrid() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="col-span-1"
             >
-              <SpotlightCard className="h-full p-8 flex flex-col group relative z-0">
+              <SpotlightCard
+                className={`h-full p-8 flex flex-col group relative z-0 ${
+                  service.featured ? "border-transparent [background:linear-gradient(#0f0f0f,#0f0f0f)_padding-box,var(--gradiente-nitrobot)_border-box] border" : ""
+                }`}
+              >
                 <div className="flex items-start justify-between mb-8">
-                  <div className="p-4 bg-primary/10 rounded-xl">
-                    <service.icon className="w-8 h-8 text-primary" />
+                  <div
+                    className={`p-4 rounded-xl ${service.featured ? "[background:var(--gradiente-nitrobot)]" : "bg-primary/10"}`}
+                  >
+                    <service.icon className={`w-8 h-8 ${service.featured ? "text-white" : "text-primary"}`} />
                   </div>
-                  <span className="text-sm text-slate-500 font-mono tracking-widest">{service.id}</span>
+                  <span className="text-sm text-slate-500 font-dm-mono tracking-widest">{service.id}</span>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors tracking-tight">
                   {service.title}

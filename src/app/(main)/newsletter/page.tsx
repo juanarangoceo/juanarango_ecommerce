@@ -11,8 +11,6 @@ import {
   TrendingUp,
   BookOpen,
   Shield,
-  Users,
-  Star,
   Sparkles,
   Bell,
   Clock,
@@ -60,24 +58,6 @@ const included = [
   "Reseñas honestas de herramientas nuevas",
   "Alertas tempranas de cambios en algoritmos",
   "Acceso anticipado a guías y recursos gratuitos",
-];
-
-const testimonials = [
-  {
-    quote: "Llevo 3 meses leyendo la newsletter y ya implementé 2 automatizaciones que me ahorraron 15 horas semanales.",
-    name: "Carlos M.",
-    role: "Fundador, AgenciaCom",
-  },
-  {
-    quote: "Lo que Juan comparte por email no lo encuentras en ningún blog. Es el insight del que opera, no del que teoriza.",
-    name: "Valentina R.",
-    role: "Directora de Ecommerce",
-  },
-  {
-    quote: "Cada correo tiene algo accionable. No es contenido de relleno. Vale oro.",
-    name: "Andrés P.",
-    role: "Emprendedor Digital",
-  },
 ];
 
 // ─── Newsletter Form ──────────────────────────────────────────────────────────
@@ -155,7 +135,7 @@ function HeroNewsletterForm() {
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <>
-                Suscribirme Gratis
+                Quiero recibirlo primero
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
@@ -190,30 +170,23 @@ export default function NewsletterPage() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-6">
-              El conocimiento que{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
-                escala negocios
-              </span>{" "}
-              directamente en tu inbox
+              Lo nuevo en IA y ecommerce,{" "}
+              <span className="text-primary">
+                primero aquí
+              </span>
             </h1>
 
             <p className="text-xl text-zinc-400 leading-relaxed mb-10 max-w-2xl mx-auto">
-              Cada semana comparto estrategias de ecommerce, herramientas de IA y recursos exclusivos que uso con clientes reales. Sin teoría. Solo lo que funciona.
+              Cada semana te cuento qué salió nuevo en IA y ecommerce, qué probé yo mismo y qué vale la pena aplicar en tu negocio.
             </p>
 
-            {/* Stats row */}
+            {/* Datos sin fuente verificable eliminados (regla: prueba antes que promesa) */}
             <div className="flex items-center justify-center gap-8 mb-10 flex-wrap">
-              {[
-                { icon: Users, value: "2,400+", label: "Suscriptores" },
-                { icon: Star, value: "4.9/5", label: "Valoración promedio" },
-                { icon: Clock, value: "Semanal", label: "Frecuencia" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-center gap-2 text-zinc-400">
-                  <stat.icon className="w-4 h-4 text-emerald-400" />
-                  <span className="font-bold text-white">{stat.value}</span>
-                  <span className="text-sm">{stat.label}</span>
-                </div>
-              ))}
+              <div className="flex items-center gap-2 text-zinc-400">
+                <Clock className="w-4 h-4 text-primary" />
+                <span className="font-bold text-white">Semanal</span>
+                <span className="text-sm">Frecuencia</span>
+              </div>
             </div>
 
             {/* Hero Form */}
@@ -294,40 +267,6 @@ export default function NewsletterPage() {
           </div>
         </section>
 
-        {/* ── TESTIMONIOS ──────────────────────────────────────────────── */}
-        <section className="py-20 px-6">
-          <div className="container mx-auto max-w-5xl">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Lo que dicen quienes ya la leen
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((t) => (
-                <div
-                  key={t.name}
-                  className="bg-zinc-900/60 border border-white/8 rounded-2xl p-6 hover:border-emerald-500/20 transition-colors duration-300"
-                >
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-zinc-300 text-sm leading-relaxed italic mb-5">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div className="border-t border-white/8 pt-4">
-                    <p className="font-bold text-white text-sm">{t.name}</p>
-                    <p className="text-zinc-500 text-xs">{t.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── CTA FINAL ────────────────────────────────────────────────── */}
         <section className="py-24 px-6">
           <div className="container mx-auto max-w-2xl">
@@ -345,7 +284,7 @@ export default function NewsletterPage() {
                   Únete ahora. Es gratis.
                 </h2>
                 <p className="text-zinc-400 mb-8 leading-relaxed">
-                  Más de 2,400 fundadores, marketers y emprendedores ya reciben esto en su inbox cada semana.
+                  Lo nuevo, primero aquí: qué salió en IA y ecommerce, qué probé yo mismo y qué vale la pena aplicar en tu negocio.
                 </p>
 
                 <HeroNewsletterForm />
