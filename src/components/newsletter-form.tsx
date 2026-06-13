@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Loader2, Mail, CheckCircle2, ArrowRight } from "lucide-react";
 import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
-import { TermsModal } from "@/components/terms-modal";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function NewsletterForm() {
@@ -114,11 +114,9 @@ export function NewsletterForm() {
 
                 <div className="text-xs text-zinc-500 text-center">
                   Al suscribirte, aceptas nuestros{" "}
-                  <TermsModal>
-                    <button type="button" className="text-zinc-400 hover:text-emerald-400 underline underline-offset-2 transition-colors">
-                      Términos y Condiciones
-                    </button>
-                  </TermsModal>
+                  <Link href="/legal/terminos" className="text-zinc-400 hover:text-emerald-400 underline underline-offset-2 transition-colors">
+                    Términos y Condiciones
+                  </Link>
                   .
                 </div>
               </motion.form>

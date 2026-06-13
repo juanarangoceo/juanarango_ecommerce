@@ -21,10 +21,10 @@ function ZapSolidGreen({ className }: { className?: string }) {
 
 
 const serviceLinks = [
+  { href: "/nitrobot", label: "NitroBot" },
   { href: "/nitro-strategy", label: "Nitro Strategy" },
   { href: "/soluciones/nitro-commerce", label: "Nitro Commerce" },
   { href: "/soluciones/nitro-search", label: "Nitro Search" },
-  { href: "/nitrobot", label: "NitroBot" },
   { href: "/shopify", label: "Shopify" },
 ]
 
@@ -236,21 +236,13 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-2.5">
               <div className="w-px h-5 bg-white/10" />
               <Link href="/blog" onClick={closeAll}>
-                <Button className={`gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
-                  pathname.startsWith('/blog')
-                    ? 'bg-primary text-black border border-primary shadow-[0_0_12px_rgba(0,255,157,0.35)]'
-                    : 'bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary'
-                }`}>
+                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary">
                   <ZapSolidGreen className="w-4 h-4" />
                   Blog
                 </Button>
               </Link>
               <Link href="/newsletter" onClick={closeAll}>
-                <Button className={`gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 ${
-                  pathname === '/newsletter'
-                    ? 'bg-emerald-500 text-black border border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
-                    : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-black hover:border-emerald-500'
-                }`}>
+                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-zinc-900 text-white border border-zinc-700 hover:bg-emerald-500 hover:text-black hover:border-emerald-500">
                   <Mail className="w-4 h-4" />
                   Newsletter
                 </Button>

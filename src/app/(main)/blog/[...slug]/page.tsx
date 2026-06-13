@@ -38,9 +38,12 @@ import { PdfEmailCaptureLazy } from "@/components/blog/pdf-email-capture-lazy";
 
 // ========== CONFIGURATION ==========
 
+// Red de seguridad: si por algo falla el webhook, la página igual se refresca
+// cada hora. La actualización inmediata la hace el webhook de Sanity
+// (src/app/api/webhooks/sanity/route.ts) vía revalidatePath on-demand.
+export const revalidate = 3600;
 
-
-const VALID_CATEGORIES = ['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce', 'prompts'];
+const VALID_CATEGORIES =['ecommerce', 'estrategia-marketing', 'ia-automatizacion', 'headless-commerce', 'prompts'];
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   'ecommerce': {

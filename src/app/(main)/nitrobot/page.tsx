@@ -6,7 +6,7 @@ import { PanelMockup } from "@/components/nitrobot/panel-mockup"
 import { ConversationGallery } from "@/components/nitrobot/conversation-gallery"
 import { NitroBotCta } from "@/components/nitrobot/nitrobot-cta"
 import { heroConversation, stepFragments } from "@/components/nitrobot/conversations"
-import { ContactForm } from "@/components/ui/contact-form"
+import { NitroBotForm } from "@/components/nitrobot/nitrobot-form"
 import {
   Accordion,
   AccordionContent,
@@ -301,9 +301,9 @@ export default function NitroBotPage() {
 
           <div className="text-center mb-10">
             <h3 className="text-2xl font-bold mb-2">¿Prefieres que te escriba yo?</h3>
-            <p className="text-muted-foreground">Déjame tus datos y te escribo yo personalmente.</p>
+            <p className="text-muted-foreground">Cuéntame de tu operación y te escribo personalmente por WhatsApp.</p>
           </div>
-          <ContactForm />
+          <NitroBotForm />
         </div>
       </section>
 

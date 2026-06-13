@@ -15,7 +15,6 @@ import {
   Clock,
 } from "lucide-react";
 import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
-import { TermsModal } from "@/components/terms-modal";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Social Proof Data ───────────────────────────────────────────────────────
@@ -187,11 +186,9 @@ export default function NewsletterPage() {
               <HeroNewsletterForm />
               <p className="text-xs text-zinc-600 mt-4 text-center">
                 Al suscribirte aceptas nuestros{" "}
-                <TermsModal>
-                  <button className="text-zinc-500 hover:text-primary underline underline-offset-2 transition-colors">
-                    Términos y Condiciones
-                  </button>
-                </TermsModal>
+                <Link href="/legal/terminos" className="text-zinc-500 hover:text-primary underline underline-offset-2 transition-colors">
+                  Términos y Condiciones
+                </Link>
                 . Cancelación en 1 clic, siempre.
               </p>
             </div>

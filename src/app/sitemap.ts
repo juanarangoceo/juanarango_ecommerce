@@ -25,6 +25,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }))
 
+  // Legal pages (low priority, rarely change)
+  const legalRoutes = [
+    '/legal',
+    '/legal/privacidad',
+    '/legal/terminos',
+    '/legal/cookies',
+    '/legal/aviso-legal',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly' as const,
+    priority: 0.3,
+  }))
+
   const categoryRoutes = [
     'ecommerce',
     'estrategia-marketing',
@@ -110,6 +124,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...legalRoutes,
     ...categoryRoutes,
     ...postRoutes,
     ...validTagRoutes,

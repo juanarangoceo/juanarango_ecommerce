@@ -38,7 +38,7 @@ export function MobileBottomNav() {
           href="/"
           prefetch={false}
           className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-            isActive("/", true) ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+            isActive("/", true) ? "text-white scale-110" : "text-white/50 hover:text-white/80"
           }`}
         >
           <Home className="w-6 h-6" />
@@ -50,7 +50,7 @@ export function MobileBottomNav() {
           href="/soluciones/b2b"
           prefetch={false}
           className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-            isActive("/soluciones/b2b") ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
+            isActive("/soluciones/b2b") ? "text-white scale-110" : "text-white/50 hover:text-white/80"
           }`}
         >
           <Briefcase className="w-6 h-6" />
