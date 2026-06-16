@@ -72,6 +72,7 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   title,
+  metaDescription,
   mainImage,
   body,
   content,
@@ -332,9 +333,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   if (!post) return { title: 'Post no encontrado' };
 
   const rawContent = post.content || "";
-  const excerpt = rawContent 
-    ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
-    : post.title;
+  const excerpt = post.metaDescription
+    || (rawContent
+      ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
+      : post.title);
 
   const canonical = post.category
     ? `https://www.juanarangoecommerce.com/blog/${post.category}/${post.slug}`
@@ -475,9 +477,10 @@ export default async function BlogCatchAllPage(props: { params: Promise<{ slug: 
     ? urlForImage(post.mainImage).url() 
     : "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/logo_pt9zn7.jpg";
 
-  const excerpt = rawContent 
-    ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
-    : post.title;
+  const excerpt = post.metaDescription
+    || (rawContent
+      ? rawContent.substring(0, 160).replace(/[#*`]/g, '').trim() + '...'
+      : post.title);
 
   const postUrl = post.category
     ? `https://www.juanarangoecommerce.com/blog/${post.category}/${post.slug}`

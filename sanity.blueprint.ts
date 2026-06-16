@@ -13,6 +13,16 @@ export default defineBlueprint({
       }
     }),
     defineDocumentFunction({
+      name: 'refineBlogContent',
+      src: './functions/refineBlogContent/index.ts',
+      timeout: 300,
+      event: {
+        filter: "_type == 'post' && refineStatus == 'refining'",
+        on: ['update'],
+        includeDrafts: true,
+      }
+    }),
+    defineDocumentFunction({
       name: 'createTagsOnPublish',
       src: './functions/createTagsOnPublish/index.ts',
       timeout: 60,

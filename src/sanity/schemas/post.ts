@@ -1,4 +1,5 @@
 import { GeneratePostInput } from '../components/GeneratePostInput'
+import { RefinePostInput } from '../components/RefinePostInput'
 import { TelegramPublishButton } from '../components/TelegramPublishButton'
 
 export default {
@@ -30,6 +31,24 @@ export default {
     {
       name: 'generationStatus',
       title: 'Estado de Generación IA',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+      initialValue: 'idle'
+    },
+    // ══ REFINADOR DE CTR (posts con muchas impresiones y pocos clics) ══
+    {
+      name: 'refineAction',
+      title: '✨ Refinar para CTR',
+      type: 'string',
+      components: {
+        input: RefinePostInput
+      },
+      // Campo de acción: no almacena datos
+    },
+    {
+      name: 'refineStatus',
+      title: 'Estado de Refinado IA',
       type: 'string',
       readOnly: true,
       hidden: true,
@@ -77,6 +96,14 @@ export default {
         layout: 'tags'
       },
       description: 'Otras keywords relevantes generadas por IA.',
+    },
+    {
+      name: 'metaDescription',
+      title: 'Meta Description (SEO)',
+      type: 'text',
+      rows: 3,
+      description: 'Descripción que muestra Google bajo el título. Ideal 140-155 caracteres, frase completa y atractiva. La generan/refinan la IA. Si está vacía, se deriva del inicio del contenido.',
+      validation: (Rule: any) => Rule.max(160).warning('Mantén la meta description en ~160 caracteres para que Google no la corte.'),
     },
     {
       name: 'title',
