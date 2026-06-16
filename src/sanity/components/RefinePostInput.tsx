@@ -24,9 +24,21 @@ export const RefinePostInput = () => {
     try {
       toast.push({ title: 'Iniciando refinado en Sanity Cloud...', status: 'info' })
 
-      const draftId = docId.startsWith('drafts.') ? docId : `drafts.${docId}`
+      const publishedId = docId.replace(/^drafts\./, '')
+      const draftId = `drafts.${publishedId}`
 
-      // Solo parchamos el status a refining. La Document Function escucha esto remotamente.
+      // Si el post está publicado y no tiene borrador, hay que crearlo primero
+      // (a partir del publicado). Si no, el patch a drafts.<id> falla con "document not found".
+      const existingDraft = await client.getDocument(draftId)
+      if (!existingDraft) {
+        const published = await client.getDocument(publishedId)
+        if (published) {
+          const { _rev, _createdAt, _updatedAt, ...rest } = published as any
+          await client.createIfNotExists({ ...rest, _id: draftId })
+        }
+      }
+
+      // Parchamos el status a refining. La Document Function escucha esto remotamente.
       await client.patch(draftId)
         .set({ refineStatus: 'refining' })
         .commit()
