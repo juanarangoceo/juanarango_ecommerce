@@ -67,10 +67,10 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
       <div className="flex items-center justify-between mb-6 px-2">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
-            <Zap className="w-5 h-5 text-emerald-500" />
+            <Zap className="w-5 h-5 text-primary" />
             Galería de Prompts
           </h2>
-          <p className="text-zinc-400 text-sm mt-1">Copia y pega estos comandos para obtener resultados increíbles.</p>
+          <p className="text-white/58 text-sm mt-1">Copia y pega estos comandos para obtener resultados increíbles.</p>
         </div>
         
         {/* Navigation Controls — only visible on desktop */}
@@ -80,7 +80,7 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
             size="icon"
             onClick={() => scrollByAmount('left')}
             disabled={!canScrollLeft}
-            className="h-9 w-9 rounded-full bg-zinc-900 border-zinc-800 disabled:opacity-30"
+            className="h-9 w-9 rounded-full bg-[#0d110e] border-white/10 disabled:opacity-30"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -89,7 +89,7 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
             size="icon"
             onClick={() => scrollByAmount('right')}
             disabled={!canScrollRight}
-            className="h-9 w-9 rounded-full bg-zinc-900 border-zinc-800 disabled:opacity-30"
+            className="h-9 w-9 rounded-full bg-[#0d110e] border-white/10 disabled:opacity-30"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
@@ -114,9 +114,9 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
           {prompts.map((item, index) => (
             <div 
               key={item._id} 
-              className="snap-start shrink-0 w-[82vw] sm:w-[280px] md:w-[320px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden flex flex-col group/card hover:border-zinc-700 transition-colors"
+              className="snap-start shrink-0 w-[82vw] sm:w-[280px] md:w-[320px] bg-[#0d110e]/60 border border-white/10 rounded-xl overflow-hidden flex flex-col group/card hover:border-white/15 transition-colors"
             >
-              <div className="relative aspect-square w-full bg-zinc-800 overflow-hidden">
+              <div className="relative aspect-square w-full bg-[#111512] overflow-hidden">
                 {item.imageUrl ? (
                   <Image
                     src={item.imageUrl}
@@ -127,34 +127,34 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
                     className="object-cover group-hover/card:scale-105 transition-transform duration-500"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-zinc-600">No Image</div>
+                  <div className="w-full h-full flex items-center justify-center text-white/38">No Image</div>
                 )}
                 <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span className="text-[10px] font-mono text-zinc-300 tracking-wider uppercase">{item.tool}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-[10px] font-mono text-white/78 tracking-wider uppercase">{item.tool}</span>
                 </div>
               </div>
 
               <div className="p-4 flex flex-col">
-                <h3 className="font-semibold text-zinc-200 mb-3">{item.title}</h3>
+                <h3 className="font-semibold text-white/84 mb-3">{item.title}</h3>
                 
-                <div className="bg-zinc-950/50 border border-zinc-800/50 rounded-lg flex flex-col">
+                <div className="bg-[#0b0e0c]/50 border border-white/10 rounded-lg flex flex-col">
                   <div className="overflow-y-auto h-[100px] p-3 prompt-scrollbar">
-                    <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
+                    <p className="font-mono text-[11px] leading-relaxed text-white/58 whitespace-pre-wrap break-words">
                       {item.prompt}
                     </p>
                   </div>
                   
-                  <div className="border-t border-zinc-800/50 p-2 flex justify-end bg-zinc-900/40">
+                  <div className="border-t border-white/10 p-2 flex justify-end bg-[#0d110e]/40">
                     <button
                       onClick={() => handleCopy(item._id, item.prompt)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-md text-zinc-400 hover:text-white transition-colors border border-zinc-700 text-xs font-medium"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-[#111512] hover:bg-white/10 rounded-md text-white/58 hover:text-white transition-colors border border-white/15 text-xs font-medium"
                       title="Copiar prompt"
                     >
                       {copiedId === item._id ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-500" />
-                          <span className="text-emerald-500">Copiado</span>
+                          <Check className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-primary">Copiado</span>
                         </>
                       ) : (
                         <>
@@ -174,7 +174,7 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
         </div>
 
         {/* Swipe hint — mobile only, fades after first scroll */}
-        <p className={`sm:hidden text-center text-[11px] text-zinc-500 mt-1 transition-opacity duration-500 ${canScrollLeft ? 'opacity-0' : 'opacity-100'}`}>
+        <p className={`sm:hidden text-center text-[11px] text-white/45 mt-1 transition-opacity duration-500 ${canScrollLeft ? 'opacity-0' : 'opacity-100'}`}>
           ← Desliza para ver más →
         </p>
       </div>

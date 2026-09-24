@@ -33,7 +33,7 @@ const faqItems = [
 
 export function FAQ() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-950">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0b0e0c]">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-cyan-400 mb-4 bg-cyan-500/10 px-4 py-1.5 rounded-full text-sm font-semibold">
@@ -50,12 +50,12 @@ export function FAQ() {
             <AccordionItem
               key={i}
               value={`faq-${i}`}
-              className="border border-zinc-800 rounded-xl px-6 py-2 bg-zinc-900/50 hover:border-cyan-500/30 transition-all data-[state=open]:border-cyan-500/30"
+              className="border border-white/10 rounded-xl px-6 py-2 bg-[#0d110e]/60 hover:border-cyan-500/30 transition-all data-[state=open]:border-cyan-500/30"
             >
               <AccordionTrigger className="text-left text-lg font-semibold text-white hover:text-cyan-400 hover:no-underline py-4">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="text-zinc-400 pb-4 leading-relaxed text-base">
+              <AccordionContent className="text-white/58 pb-4 leading-relaxed text-base">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>

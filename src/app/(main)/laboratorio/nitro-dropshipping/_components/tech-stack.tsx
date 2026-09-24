@@ -4,42 +4,42 @@ const steps = [
   {
     num: "01",
     icon: Sparkles,
-    title: "La Inteligencia Artificial diseña tu tienda",
-    desc: "Le describes a la IA qué producto vendes y ella genera una landing page profesional, única y optimizada psicológicamente para vender. Tú solo apruebas el resultado.",
+    title: "La IA ayuda a proponer la interfaz",
+    desc: "Describes el producto y construyes una primera propuesta de landing con asistencia de IA. Después revisas mensaje, accesibilidad, componentes y comportamiento antes de publicarla.",
     tags: ["v0.dev", "IA Generativa", "React UI"],
-    time: "30 min",
+    time: "Tiempo variable",
   },
   {
     num: "02",
     icon: Globe,
-    title: "Despliegue gratuito en infraestructura Enterprise",
-    desc: "Un solo clic y tu tienda está online a nivel global. Usamos la misma infraestructura que las Fortune 500, con hosting gratuito y velocidad de carga instantánea.",
+    title: "Despliegue sobre infraestructura cloud",
+    desc: "Publicas la tienda sobre una plataforma cloud y revisas dominio, variables y rendimiento. Los costos y límites dependen del proveedor y del uso.",
     tags: ["Vercel Edge", "Deploy", "Next.js"],
-    time: "20 min",
+    time: "Tiempo variable",
   },
   {
     num: "03",
     icon: ShoppingCart,
-    title: "Recibes pedidos 100% libres de comisiones",
-    desc: "Sistema nativo de contraentrega que guarda pedidos automáticamente en tu base de datos cloud. Sin pasarelas usureras, sin porcentaje por venta. Todo tu margen es tuyo.",
+    title: "Registras pedidos en tu propio flujo",
+    desc: "Un formulario de contraentrega puede guardar pedidos en la base de datos. Debes contemplar costos de infraestructura, logística, devoluciones y servicios conectados.",
     tags: ["Supabase", "Pedidos", "COD"],
-    time: "40 min",
+    time: "Tiempo variable",
   },
   {
     num: "04",
     icon: Bot,
-    title: "Un vendedor IA atiende a tus clientes 24/7",
-    desc: "Un agente autónomo inteligente que responde dudas técnicas, maneja objeciones y convence a tu cliente en WhatsApp. Él cierra ventas mientras tú duermes o tomas café.",
+    title: "Diseñas una asistencia conversacional",
+    desc: "Exploras cómo responder consultas frecuentes y cuándo escalar a una persona. El alcance depende del canal, los datos y la implementación disponible.",
     tags: ["Gemini AI", "WhatsApp", "Autómata"],
-    time: "30 min",
+    time: "Tiempo variable",
   },
   {
     num: "05",
     icon: RefreshCw,
-    title: "Pivoteas radicalmente a coste Cero",
-    desc: "¿El producto no vende tras 2 días de prueba? Cambias de producto, la IA regenera todo el contenido y relanzas sin perder dinero en suscripciones. Tu ecosistema es inmortal.",
+    title: "Reutilizas la base para una nueva prueba",
+    desc: "Si cambia el producto, puedes adaptar componentes y contenido sobre la misma estructura. Cada prueba sigue requiriendo revisión, medición y costos operativos propios.",
     tags: ["Pivoteo Ágil", "Zero Cost", "Resiliencia"],
-    time: "5 min",
+    time: "Tiempo variable",
   },
 ]
 
@@ -55,8 +55,7 @@ export function TechStack() {
           <span className="text-primary">EN 5 PASOS CON IA.</span>
         </h2>
         <p className="text-foreground/70 text-base md:text-lg max-w-2xl mb-12 md:mb-16 leading-relaxed text-pretty">
-          La Inteligencia Artificial hace el 90% del trabajo técnico pesado. Tú solo sigues el paso a paso en video, aplicas el modelo de negocio y controlas las estrategias.
-          Asi de fácil. Asi de rápido.
+          La inteligencia artificial puede acelerar partes del trabajo técnico, pero cada entrega necesita criterio, pruebas y control de versiones. El programa presenta un recorrido guiado para entender esas decisiones.
         </p>
 
         {/* Steps */}

@@ -1,201 +1,188 @@
-import dynamic from "next/dynamic"
-import Link from "next/link"
-import { Metadata } from "next"
-import { NitroBanner } from "@/components/nitro-banner"
-import { ServicesGrid } from "@/components/services-grid"
-import { NitroBusinessGrid } from "@/components/nitro-business-grid"
-import { AboutSection } from "@/components/about-section"
-import { ContactForm } from "@/components/ui/contact-form"
-import { FlaskConical, BookOpen, Youtube, ArrowRight } from "lucide-react"
-import { LatestPostsSection } from "@/components/landing/latest-posts-section"
-import { ChatMockup } from "@/components/nitrobot/chat-mockup"
-import { heroConversation } from "@/components/nitrobot/conversations"
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { LatestPostsSection } from "@/components/landing/latest-posts-section";
+import { NewsletterSection } from "@/components/commercial/newsletter-section";
+import { NitroCompletePreview } from "@/components/commercial/nitro-complete-preview";
+import { nitroCompleteModules, primaryCta, solutions } from "@/lib/commercial-content";
 
 export const metadata: Metadata = {
-  title: 'Juan Arango | Ecommerce, Automatización e IA para LATAM',
-  description: 'Ayudo a empresas de Colombia y Latinoamérica a vender más con ecommerce avanzado, automatización e IA. Soy Juan Arango: 15 años de experiencia real.',
-  alternates: {
-    canonical: 'https://www.juanarangoecommerce.com'
-  },
-  openGraph: {
-    title: 'Juan Arango | Ecommerce, Automatización e IA para LATAM',
-    description: 'Ayudo a empresas de Colombia y Latinoamérica a vender más con ecommerce avanzado, automatización e IA. Soy Juan Arango: 15 años de experiencia real.',
-    url: 'https://www.juanarangoecommerce.com',
-    siteName: 'Juan Arango Ecommerce',
-    type: 'website',
-    locale: 'es_CO',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Juan Arango | Ecommerce, Automatización e IA para LATAM',
-    description: 'Ayudo a empresas de Colombia y Latinoamérica a vender más con ecommerce avanzado, automatización e IA. Soy Juan Arango: 15 años de experiencia real.',
-  }
-}
+  title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
+  description: "Soy Juan Arango. Construí Nitro Complete, un sistema que vende por WhatsApp con tu catálogo real, confirma pedidos y acompaña la entrega. También te asesoro para hacer crecer tu ecommerce.",
+  alternates: { canonical: "https://www.juanarangoecommerce.com" },
+  openGraph: { title: "Juan Arango · NITRO ECOM", description: "Tu WhatsApp vende, confirma y hace seguimiento. Tú diriges.", url: "https://www.juanarangoecommerce.com", type: "website", locale: "es_CO" },
+};
 
-// NitroBanner: Importado estáticamente para que el Hero (LCP element) esté en el HTML inicial.
-// Esto elimina el skeleton de carga que retrasaba el LCP en móviles.
+// Momentos donde hoy se pierde una venta que ya estaba empezada. Cada uno
+// corresponde a un módulo real de Nitro Complete (ver nitroCompleteModules).
+const gaps = [
+  { pain: "Escribe a las 10 p. m.", text: "Nadie responde hasta el día siguiente y el cliente compra en otra tienda.", fix: "El asesor responde con tu catálogo, a cualquier hora." },
+  { pain: "Pide contraentrega", text: "Despachas sin confirmar y el pedido vuelve con el flete pagado.", fix: "El comprador confirma con un botón antes del despacho." },
+  { pain: "Pregunta dónde va su pedido", text: "Tu equipo pasa la tarde copiando guías en chats.", fix: "Aviso de despacho, guía y pregunta de entrega automáticos." },
+  { pain: "Dice «luego te confirmo»", text: "La cotización queda en el chat y nadie vuelve a escribir.", fix: "Seguimiento y, con permiso, un segundo intento medido." },
+] as const;
 
-const AnimatedBanner = dynamic(
-  () => import("@/components/ui/animated-banner").then((mod) => mod.AnimatedBanner)
-)
+const steps = [
+  { title: "Evaluamos tu operación", text: "Catálogo, volumen, forma de pago y equipo. Si no encaja, te lo digo antes de venderte nada." },
+  { title: "Conectamos tu WhatsApp", text: "Con Shopify o con el catálogo de Nitro, y las plantillas que Meta debe aprobar." },
+  { title: "Entrenamos a tu asesor", text: "Tono, reglas, lo que puede negociar y cuándo debe pasar el chat a una persona." },
+  { title: "Salimos con control", text: "Lo encendemos por partes, revisamos conversaciones reales y ajustamos contigo." },
+] as const;
 
-// "Lo construyo en público" — la prueba honesta que reemplaza a los testimonios anónimos
-const proofLinks = [
-  {
-    icon: FlaskConical,
-    title: "El Laboratorio",
-    desc: "Proyectos reales — incluido NitroBot — con sus decisiones, sus errores y sus números.",
-    href: "/laboratorio",
-    cta: "Entrar al laboratorio"
-  },
-  {
-    icon: BookOpen,
-    title: "El Blog",
-    desc: "Lo que aprendo construyendo, explicado para que lo apliques en tu negocio.",
-    href: "/blog",
-    cta: "Leer el blog"
-  },
-  {
-    icon: Youtube,
-    title: "YouTube",
-    desc: "Me ves trabajar: implementaciones, pruebas de herramientas y resultados en pantalla.",
-    href: "https://www.youtube.com/@NitroEcom",
-    cta: "Ver el canal",
-    external: true
-  }
-]
+const alternatives = solutions.filter((solution) => solution.slug !== "nitro-complete");
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen font-sans selection:bg-primary selection:text-primary-foreground">
-      {/* Impact.com Site Verification */}
-      <p className="sr-only">Impact-Site-Verification: edd0ee3e-a913-4b07-8829-d13195efdd99</p>
-
-      {/* Notification Bar */}
-      <div className="w-full bg-azul-estructura/40 border-b border-primary/20 py-1.5 text-center relative z-40 backdrop-blur-sm">
-        <Link
-          href="/nitrobot"
-          className="text-xs md:text-sm text-primary hover:text-naranja-suave transition-colors font-medium flex items-center justify-center gap-2"
-        >
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"/>
-          Nuevo: NitroBot — ventas y atención por WhatsApp con IA
-          <span aria-hidden="true" className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
-        </Link>
-      </div>
-
-      {/* Aurora Background */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-negro-profundo">
-        {/* Blobs - hidden on mobile for LCP performance, animated on desktop */}
-        <div className="hidden md:block absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px] animate-aurora-1 opacity-20" />
-        <div className="hidden md:block absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-azul-estructura/40 blur-[100px] animate-aurora-2 opacity-20" />
-      </div>
-
-      <main className="flex-1 flex flex-col">
-        {/* 1. Hero */}
-        <NitroBanner />
-
-        {/* 2. NitroBot — el producto estrella, en vivo */}
-        <section className="py-12 md:py-20 px-6">
-          <div className="container mx-auto max-w-7xl">
-            <div className="rounded-3xl border border-transparent [background:linear-gradient(#0c0c0c,#0c0c0c)_padding-box,var(--gradiente-nitrobot)_border-box] p-8 md:p-14">
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-5">
-                    NitroBot · Ventas y atención por WhatsApp con IA
-                  </p>
-                  <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-6 text-balance">
-                    Tu mejor vendedor responde en segundos.{" "}
-                    <span className="text-primary">Míralo en acción.</span>
-                  </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-[55ch]">
-                    NitroBot atiende, asesora y cierra ventas por WhatsApp con IA entrenada en tu
-                    catálogo y en tu forma de hablar. Esta conversación es el producto funcionando.
-                  </p>
-                  <Link
-                    href="/nitrobot"
-                    className="inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-bold text-white [background:var(--gradiente-nitrobot)] shadow-lg shadow-primary/25 transition-transform hover:scale-[1.02]"
-                  >
-                    Conoce a NitroBot
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
-                </div>
-                <div className="flex justify-center">
-                  <ChatMockup messages={heroConversation} loop />
-                </div>
-              </div>
+    <div className="overflow-hidden bg-background text-foreground">
+      {/* Hero: marca personal + producto principal */}
+      <section className="relative px-5 pb-16 pt-28 sm:pb-20 lg:px-8 lg:pb-24 lg:pt-40" data-nitro-orb="idle">
+        <div className="pointer-events-none absolute right-[6%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
+        <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
+          <div className="min-w-0 text-center lg:text-left">
+            <h1 className="text-balance text-[clamp(2.6rem,6.2vw,5.25rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white">
+              Tu WhatsApp vende, confirma y hace seguimiento. <span className="text-primary">Tú diriges.</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/62 lg:mx-0">
+              Soy Juan Arango. Después de 15 años operando ecommerce en Latinoamérica construí <strong className="font-semibold text-white">Nitro Complete</strong>: un asesor con IA que atiende con tu catálogo real y un sistema que acompaña cada pedido hasta la entrega.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+              <Button asChild size="lg" className="group h-13 rounded-full px-7 text-base font-bold"><Link href="/nitro-complete">Conocer Nitro Complete <ArrowRight className="nitro-cta-arrow" /></Link></Button>
+              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href={primaryCta.href}>{primaryCta.label}</Link></Button>
             </div>
+            <p className="mt-5 text-xs text-white/40">Funciona con Shopify o sin tienda online · Implementación acompañada</p>
           </div>
-        </section>
-
-        {/* 3. Quién te habla */}
-        <AboutSection />
-
-        {/* 3. El ecosistema NITRO */}
-        <ServicesGrid />
-
-        {/* 4. Soluciones por industria */}
-        <NitroBusinessGrid />
-
-        {/* Animated Banner from External Source - Desktop Only */}
-        <div className="hidden md:block">
-          <AnimatedBanner />
+          <NitroCompletePreview />
         </div>
+      </section>
 
-        {/* 5. La prueba: Lo construyo en público (reemplaza a los testimonios) */}
-        <section className="py-12 md:py-24 px-6 bg-secondary/30">
-          <div className="container mx-auto max-w-7xl">
-            <div className="max-w-3xl mb-16">
-              <p className="font-dm-mono text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-4">
-                La prueba
-              </p>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-balance">
-                Lo construyo en público
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Te muestro lo que construyo, con sus números, mientras lo construyo.
-                Si quieres saber cómo trabajo: mírame trabajar.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {proofLinks.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all flex flex-col"
-                >
-                  <div className="p-3 bg-primary/10 rounded-lg w-fit mb-6">
-                    <item.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed flex-1">{item.desc}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-primary font-medium">
-                    {item.cta}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              ))}
-            </div>
+      {/* Dónde se pierde la venta: sección clara (identidad "negro y blancos") */}
+      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="flow">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">
+              La venta no termina cuando el cliente <span className="text-alert-text">te escribe.</span>
+            </h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">
+              La mayoría de las ventas por WhatsApp no se pierden por falta de tráfico, sino en lo que pasa después del primer mensaje. Nitro Complete cubre esos momentos.
+            </p>
           </div>
-        </section>
-
-        {/* 6. Contacto */}
-        <div id="contacto" className="py-12 md:py-24 px-6">
-          <div className="container mx-auto max-w-4xl">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Hablemos de tu operación</h2>
-              <p className="text-xl text-muted-foreground">
-                Cuéntame en qué punto está tu negocio. Te digo qué haría yo — sin costo y sin compromiso.
-              </p>
-            </div>
-            <ContactForm />
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {gaps.map((gap) => (
+              <article key={gap.pain} className="flex flex-col rounded-2xl border border-line bg-white p-6">
+                <p className="text-lg font-semibold tracking-tight">«{gap.pain}»</p>
+                <p className="mt-3 text-sm leading-6 text-ink/60">{gap.text}</p>
+                <p className="mt-auto flex gap-2.5 border-t border-line pt-4 text-sm font-medium leading-6 text-ink">
+                  <span className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-primary"><Check className="size-3 text-ink" aria-hidden="true" /></span>
+                  {gap.fix}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Latest Blog Posts */}
-        <LatestPostsSection />
-      </main>
+      {/* Nitro Complete: el sistema */}
+      <section className="relative px-5 py-20 lg:px-8 lg:py-28" id="nitro-complete" data-nitro-orb="ecosystem">
+        <div className="relative mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">
+              Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
+            </h2>
+            <div className="text-center lg:text-left">
+              <p className="mx-auto max-w-lg text-base leading-7 text-white/58 lg:mx-0">Cada parte trabaja en un momento distinto del pedido. Tu equipo entra cuando hace falta criterio y ve todo desde un solo panel.</p>
+              <Link href="/nitro-complete" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">Ver cómo funciona <ArrowRight className="size-4" /></Link>
+            </div>
+          </div>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
+            {nitroCompleteModules.map(({ key, moment, title, text, icon: Icon }) => (
+              <article key={key} className="bg-background p-7 sm:p-8">
+                <span className="nitro-icon-mark flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary"><Icon className="nitro-icon-glyph size-5" /></span>
+                <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-white/40">{moment}</p>
+                <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/55">{text}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-5 text-center text-xs leading-5 text-white/38 lg:text-left">Algunas funciones dependen de tu catálogo, de plantillas aprobadas por Meta o del permiso de tus compradores. Lo revisamos en la evaluación.</p>
+        </div>
+      </section>
+
+      {/* Implementación acompañada */}
+      <section className="border-y border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+          <div className="text-center lg:sticky lg:top-28 lg:text-left">
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">No te entrego un bot. <span className="text-primary">Lo dejo vendiendo.</span></h2>
+            <p className="mx-auto mt-5 max-w-md text-base leading-7 text-white/55 lg:mx-0">La implementación la hago contigo: configuramos, probamos con conversaciones reales y encendemos cada parte cuando está lista.</p>
+            <Button asChild size="lg" className="group mt-8 h-13 rounded-full px-7 text-base font-bold"><Link href={primaryCta.href}>{primaryCta.label} <ArrowRight className="nitro-cta-arrow" /></Link></Button>
+          </div>
+          <ol className="grid gap-4 sm:grid-cols-2">
+            {steps.map((step, index) => (
+              <li key={step.title} className="rounded-2xl border border-white/8 bg-background p-7">
+                <span className="flex size-8 items-center justify-center rounded-full border border-primary/40 font-mono text-xs text-primary">{index + 1}</span>
+                <h3 className="mt-6 text-lg font-semibold text-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/52">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Otras formas de trabajar juntos */}
+      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="diagnostic">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">¿Todavía no es momento de automatizar? <span className="text-primary">Empecemos por otro lado.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/55 lg:mx-0 lg:justify-self-end lg:text-left">Si tu ecommerce necesita orden, una oferta más clara o una página que convierta, también te acompaño.</p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {alternatives.map((solution) => (
+              <Link key={solution.slug} href={solution.href} className="group flex flex-col rounded-3xl border border-white/10 bg-superficie-nitro p-7 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary/40 focus-visible:-translate-y-1 focus-visible:border-primary focus-visible:outline-none sm:p-9">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="nitro-icon-mark flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary"><solution.icon className="nitro-icon-glyph size-6" /></span>
+                  <ArrowRight className="mt-2 size-5 text-white/25 transition-[color,transform] group-hover:translate-x-1 group-hover:text-primary" aria-hidden="true" />
+                </div>
+                <p className="mt-7 font-mono text-[11px] uppercase tracking-[0.12em] text-white/40">{solution.eyebrow}</p>
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white">{solution.title}</h3>
+                <p className="mt-3 text-base leading-7 text-white/75">{solution.result}</p>
+                <ul className="mt-6 space-y-2.5 border-t border-white/9 pt-6">
+                  {solution.fitPoints.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-white/55"><Check className="mt-1 size-3.5 shrink-0 text-primary" />{item}</li>)}
+                </ul>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quién está detrás */}
+      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="about">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.7fr_1.3fr]">
+          <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] bg-ink">
+            <Image src="https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto,w_800/v1781237424/Juan_arango_Ecommerce_r96gjj.png" alt="Juan Arango, especialista en ecommerce y automatización" width={800} height={1000} sizes="(max-width: 1024px) 90vw, 400px" className="h-auto w-full" />
+          </div>
+          <div className="text-center lg:text-left">
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Lo que te propongo <span className="text-nitro-text">sale de operar negocios reales.</span></h2>
+            <p className="mx-auto mt-6 max-w-2xl text-left text-lg leading-8 text-ink/65 lg:mx-0">Llevo 15 años en ecommerce: vendiendo en marketplaces, lanzando marcas propias y montando tiendas para otros. Nitro Complete nació de ver cuántas ventas se pierden en el chat y en el despacho, no en el anuncio.</p>
+            <p className="mx-auto mt-4 max-w-2xl text-left text-lg leading-8 text-ink/65 lg:mx-0">NITRO ECOM es la estructura con la que lo implemento. Desde Pereira, para negocios de Colombia y Latinoamérica.</p>
+            <Button asChild size="lg" className="mt-8 h-13 rounded-full bg-ink px-7 text-base font-bold text-white hover:bg-ink/85"><Link href="/sobre-mi">Conocer mi historia <ArrowRight /></Link></Button>
+          </div>
+        </div>
+      </section>
+
+      <LatestPostsSection />
+
+      <NewsletterSection />
+
+      <section className="px-5 pb-20 pt-4 lg:px-8 lg:pb-24" data-nitro-orb="diagnostic">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-[2rem] border border-primary/25 bg-superficie-nitro px-7 py-10 text-center sm:px-12 lg:flex-row lg:text-left">
+          <div>
+            <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">Comprueba si Nitro Complete <span className="text-primary">encaja con tu negocio.</span></h2>
+            <p className="mt-3 text-base text-white/55">Recibes una recomendación inmediata, con precios visibles y sin llamada obligatoria.</p>
+          </div>
+          <Button asChild size="lg" className="h-13 w-full shrink-0 rounded-full px-7 text-base font-bold sm:w-auto"><Link href={primaryCta.href}>{primaryCta.label} <ArrowRight /></Link></Button>
+        </div>
+      </section>
     </div>
-  )
+  );
 }

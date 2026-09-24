@@ -49,9 +49,9 @@ export function BlogAudioPlayer({ playlist, title = "Escuchar artículo" }: Blog
   const togglePlay = () => setIsPlaying(!isPlaying)
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 rounded-xl border border-zinc-200 dark:border-emerald-500/20 bg-white/10 dark:bg-zinc-900/50 backdrop-blur-md shadow-xl relative overflow-hidden group">
+    <div className="w-full max-w-2xl mx-auto p-4 rounded-xl border border-white/9 dark:border-primary/20 bg-[#0d110e]/60 backdrop-blur-md shadow-xl relative overflow-hidden group">
       {/* Background Glow - Hidden on mobile for performance */}
-      <div className="hidden sm:block absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden sm:block absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Audio Element Hidden */}
       <audio
@@ -66,21 +66,21 @@ export function BlogAudioPlayer({ playlist, title = "Escuchar artículo" }: Blog
         {/* Play/Pause Button */}
         <button
           onClick={togglePlay}
-          className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-emerald-500/20"
+          className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-ink flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
         >
           {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-1" />}
         </button>
 
         <div className="flex-1 space-y-2">
-           <div className="flex justify-between items-center text-xs font-medium text-zinc-600 dark:text-emerald-400 tracking-wider uppercase">
+           <div className="flex justify-between items-center text-xs font-medium text-white/38 dark:text-primary tracking-wider uppercase">
              <span>{title}</span>
              <span>Parte {currentTrackIndex + 1} de {playlist.length}</span>
            </div>
            
            {/* Progress Bar */}
-           <div className="h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden w-full relative">
+           <div className="h-1.5 bg-[#111512] rounded-full overflow-hidden w-full relative">
               <motion.div 
-                className="h-full bg-emerald-500 relative"
+                className="h-full bg-primary relative"
                 style={{ width: `${progress}%` }}
                 layoutId="progress"
               >
@@ -95,7 +95,7 @@ export function BlogAudioPlayer({ playlist, title = "Escuchar artículo" }: Blog
             {[1, 2, 3, 4].map((i) => (
                 <motion.div
                     key={i}
-                    className="w-1 bg-emerald-500/50 rounded-full"
+                    className="w-1 bg-primary/50 rounded-full"
                     animate={isPlaying ? { height: ["20%", "80%", "40%"] } : { height: "20%" }}
                     transition={{
                         repeat: Infinity,

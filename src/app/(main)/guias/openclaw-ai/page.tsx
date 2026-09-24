@@ -70,7 +70,7 @@ function ConceptCard({ title, icon: Icon, children }: { title: string; icon: any
         </div>
         <h3 className="text-lg font-semibold text-white">{title}</h3>
       </div>
-      <div className="text-sm text-zinc-400 leading-relaxed space-y-2">{children}</div>
+      <div className="text-sm text-white/58 leading-relaxed space-y-2">{children}</div>
     </div>
   )
 }
@@ -131,7 +131,7 @@ export default async function OpenClawGuidePage() {
                   desde cero.
                 </h1>
 
-                <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl leading-relaxed">
+                <p className="text-lg md:text-xl text-white/58 mb-10 max-w-2xl leading-relaxed">
                   Ya seas un principiante curioso o un desarrollador experimentado, esta guía interactiva te llevará paso a paso para instalar, configurar y desplegar agentes autónomos. Descubre cómo potenciar tu IA con Skills y automatizar tu trabajo.
                 </p>
 
@@ -171,7 +171,7 @@ export default async function OpenClawGuidePage() {
               {/* ── ¿QUÉ ES? ── */}
               <section id="que-es" className="scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">¿Qué es OpenClaw AI?</h2>
-                <div className="text-zinc-300 leading-relaxed space-y-5 text-base md:text-lg">
+                <div className="text-white/78 leading-relaxed space-y-5 text-base md:text-lg">
                   <p>
                     <strong className="text-white">OpenClaw AI</strong> es un framework de código abierto diseñado para crear, gestionar y desplegar <strong className="text-white">agentes de inteligencia artificial autónomos</strong>.
                   </p>
@@ -184,7 +184,7 @@ export default async function OpenClawGuidePage() {
                     <h4 className="text-[#e05a3a] font-semibold flex items-center gap-2 mb-3 text-base">
                       <Info size={18} /> La diferencia clave
                     </h4>
-                    <p className="text-sm text-zinc-300">
+                    <p className="text-sm text-white/78">
                       <strong className="text-white">Chatbot normal:</strong> &quot;Aquí tienes el código.&quot;
                       (Tú debes copiarlo, guardarlo y ejecutarlo).<br /><br />
                       <strong className="text-white">OpenClaw AI:</strong> &quot;He creado el script, lo guardé, lo ejecuté, encontré el error, lo corregí, y aquí tienes el resultado final.&quot;
@@ -201,7 +201,7 @@ export default async function OpenClawGuidePage() {
                       <div key={title} className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-[#e05a3a]/30 transition-colors">
                         <Icon className="text-[#e05a3a] mb-4" size={30} />
                         <h3 className="text-base font-semibold text-white mb-2">{title}</h3>
-                        <p className="text-sm text-zinc-400 leading-relaxed">{desc}</p>
+                        <p className="text-sm text-white/58 leading-relaxed">{desc}</p>
                       </div>
                     ))}
                   </div>
@@ -211,12 +211,12 @@ export default async function OpenClawGuidePage() {
               {/* ── CONCEPTOS BÁSICOS ── */}
               <section id="conceptos" className="scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Conceptos Básicos para Principiantes</h2>
-                <p className="text-zinc-400 mb-8 text-base leading-relaxed">
+                <p className="text-white/58 mb-8 text-base leading-relaxed">
                   Si es tu primera vez trabajando con herramientas de desarrollo o IA avanzada, aquí tienes un glosario rápido.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <ConceptCard icon={Terminal} title="Terminal / Consola">
-                    <p>Una pantalla donde escribes comandos de texto. En Windows se llama <strong className="text-zinc-200">PowerShell</strong>; en Mac/Linux, <strong className="text-zinc-200">Terminal</strong>.</p>
+                    <p>Una pantalla donde escribes comandos de texto. En Windows se llama <strong className="text-white/84">PowerShell</strong>; en Mac/Linux, <strong className="text-white/84">Terminal</strong>.</p>
                   </ConceptCard>
                   <ConceptCard icon={Lock} title="API Key (Clave API)">
                     <p>Una contraseña secreta que te dan empresas como Google o OpenAI para que OpenClaw se conecte a sus modelos de IA.</p>
@@ -234,7 +234,7 @@ export default async function OpenClawGuidePage() {
               {/* ── RIESGOS ── */}
               <section id="advertencias" className="scroll-mt-24">
                 <SectionHeader icon={AlertTriangle} title="Riesgos y Seguridad" iconColor="text-amber-400" bgColor="bg-amber-500/10" borderColor="border-amber-500/20" />
-                <p className="text-zinc-300 mb-8 text-base leading-relaxed">
+                <p className="text-white/78 mb-8 text-base leading-relaxed">
                   OpenClaw AI no es un simple generador de texto; es un agente con capacidad de acción real en tu sistema. <strong className="text-white">Lee esto antes de instalarlo.</strong>
                 </p>
                 <div className="space-y-5">
@@ -266,8 +266,8 @@ export default async function OpenClawGuidePage() {
                         </div>
                         <div>
                           <h3 className={`text-lg font-semibold text-${c} mb-2`}>{title}</h3>
-                          <p className="text-zinc-300 text-sm leading-relaxed mb-2">{body}</p>
-                          <p className="text-zinc-400 text-xs"><strong className="text-zinc-300">Solución:</strong> {fix}</p>
+                          <p className="text-white/78 text-sm leading-relaxed mb-2">{body}</p>
+                          <p className="text-white/58 text-xs"><strong className="text-white/78">Solución:</strong> {fix}</p>
                         </div>
                       </div>
                     )
@@ -278,7 +278,7 @@ export default async function OpenClawGuidePage() {
               {/* ── INSTALACIÓN ── */}
               <section id="instalacion" className="scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Guía de Instalación</h2>
-                <p className="text-zinc-400 mb-8 text-base leading-relaxed">
+                <p className="text-white/58 mb-8 text-base leading-relaxed">
                   Sigue estos pasos para tener OpenClaw AI corriendo en tu máquina en menos de 5 minutos.
                 </p>
 
@@ -288,7 +288,7 @@ export default async function OpenClawGuidePage() {
                   <h3 className="text-lg font-semibold text-white mb-5 flex items-center gap-3">
                     <CheckCircle2 className="text-[#e05a3a]" size={22} /> Requisitos Previos
                   </h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-5 text-zinc-300">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-5 text-white/78">
                     {[
                       { href: "https://nodejs.org/", name: "Node.js (v18+)", desc: "Motor que ejecuta el código principal de OpenClaw." },
                       { href: "https://www.python.org/downloads/", name: "Python (v3.10+)", desc: "Necesario para scripts de análisis de datos." },
@@ -302,7 +302,7 @@ export default async function OpenClawGuidePage() {
                             {item.name} <ExternalLink size={13} />
                           </a>
                         </div>
-                        <span className="text-xs text-zinc-500 ml-3.5">{item.desc}</span>
+                        <span className="text-xs text-white/45 ml-3.5">{item.desc}</span>
                       </li>
                     ))}
                   </ul>
@@ -314,7 +314,7 @@ export default async function OpenClawGuidePage() {
                     <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-3">
                       <StepNumber n={1} /> Clonar e Instalar
                     </h3>
-                    <p className="text-zinc-400 mb-1 text-sm leading-relaxed">
+                    <p className="text-white/58 mb-1 text-sm leading-relaxed">
                       Abre tu terminal y copia los comandos según tu sistema operativo.
                     </p>
                     <OpenClawInstallationTabs />
@@ -325,7 +325,7 @@ export default async function OpenClawGuidePage() {
                     <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-3">
                       <StepNumber n={2} /> Configuración de Entorno (.env)
                     </h3>
-                    <p className="text-zinc-400 mb-2 text-sm leading-relaxed">
+                    <p className="text-white/58 mb-2 text-sm leading-relaxed">
                       El paso anterior creó un archivo <code className="text-[#e05a3a] bg-[#e05a3a]/10 px-1.5 py-0.5 rounded text-xs">.env</code>. Ábrelo con tu editor y añade tu API Key.
                     </p>
                     <OpenClawCodeBlock
@@ -354,12 +354,12 @@ ALLOW_SHELL_EXECUTION=true`}
                     <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-3">
                       <StepNumber n={3} /> Iniciar el Agente
                     </h3>
-                    <p className="text-zinc-400 mb-2 text-sm leading-relaxed">
+                    <p className="text-white/58 mb-2 text-sm leading-relaxed">
                       Vuelve a tu terminal y ejecuta el comando de inicio.
                     </p>
                     <OpenClawCodeBlock language="bash" code="npm run start" />
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-1">
-                      <p className="text-sm text-zinc-400">
+                      <p className="text-sm text-white/58">
                         <strong className="text-white">¡Felicidades!</strong> Si ves el logo de OpenClaw en tu terminal, ya puedes escribirle tareas. Prueba con:{" "}
                         <code className="text-[#e05a3a] bg-[#e05a3a]/10 px-2 py-0.5 rounded text-xs">Crea un archivo llamado hola.txt que diga &apos;Hola Mundo&apos;</code>
                       </p>
@@ -371,13 +371,13 @@ ALLOW_SHELL_EXECUTION=true`}
               {/* ── SKILLS ── */}
               <section id="skills" className="scroll-mt-24">
                 <SectionHeader icon={Wrench} title="Skills (Habilidades)" iconColor="text-purple-400" bgColor="bg-purple-500/10" borderColor="border-purple-500/20" />
-                <p className="text-zinc-300 mb-8 text-base leading-relaxed">
+                <p className="text-white/78 mb-8 text-base leading-relaxed">
                   La verdadera magia de OpenClaw radica en sus <strong className="text-white">Skills</strong> — herramientas o &quot;superpoderes&quot; que le añades al agente.
                 </p>
 
                 <div className="bg-white/5 border border-white/10 p-7 rounded-2xl mb-7">
                   <h3 className="text-lg font-semibold text-white mb-3">¿Cómo funcionan las Skills?</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-5">
+                  <p className="text-white/58 text-sm leading-relaxed mb-5">
                     Una Skill es un archivo de código en la carpeta <code className="text-[#e05a3a] bg-[#e05a3a]/10 px-1.5 py-0.5 rounded text-xs">/skills</code> que define una función específica. El agente revisa su &quot;caja de herramientas&quot; y decide cuál usar.
                   </p>
                   <h4 className="text-purple-400 font-semibold mb-3 text-sm">Skills preinstaladas:</h4>
@@ -391,8 +391,8 @@ ALLOW_SHELL_EXECUTION=true`}
                       <div key={name} className="flex items-start gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5">
                         <Icon className={`${color} mt-0.5 shrink-0`} size={18} />
                         <div>
-                          <strong className="text-zinc-200 block text-sm">{name}</strong>
-                          <span className="text-xs text-zinc-500">{desc}</span>
+                          <strong className="text-white/84 block text-sm">{name}</strong>
+                          <span className="text-xs text-white/45">{desc}</span>
                         </div>
                       </div>
                     ))}
@@ -401,7 +401,7 @@ ALLOW_SHELL_EXECUTION=true`}
 
                 <div className="bg-[#0a0a0a] border border-white/10 p-7 rounded-2xl">
                   <h3 className="text-lg font-semibold text-white mb-3">Creando tu propia Skill</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-2">
+                  <p className="text-white/58 text-sm leading-relaxed mb-2">
                     Por ejemplo, si quieres que el agente envíe mensajes por Slack:
                   </p>
                   <OpenClawCodeBlock
@@ -428,7 +428,7 @@ ALLOW_SHELL_EXECUTION=true`}
               {/* ── EJEMPLOS ── */}
               <section id="ejemplos" className="scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ejemplos de Uso (Prompts)</h2>
-                <p className="text-zinc-400 mb-8 text-base leading-relaxed">¿No sabes qué pedirle? Aquí tienes ejemplos desde lo más básico hasta flujos avanzados.</p>
+                <p className="text-white/58 mb-8 text-base leading-relaxed">¿No sabes qué pedirle? Aquí tienes ejemplos desde lo más básico hasta flujos avanzados.</p>
 
                 <div className="space-y-8">
                   {[
@@ -459,7 +459,7 @@ ALLOW_SHELL_EXECUTION=true`}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {items.map((item, i) => (
                           <div key={i} className="bg-[#0a0a0a] border border-white/10 p-5 rounded-2xl">
-                            <p className="text-zinc-200 text-sm leading-relaxed">&quot;{item}&quot;</p>
+                            <p className="text-white/84 text-sm leading-relaxed">&quot;{item}&quot;</p>
                           </div>
                         ))}
                       </div>
@@ -471,7 +471,7 @@ ALLOW_SHELL_EXECUTION=true`}
               {/* ── CONSEJOS PRO ── */}
               <section id="consejos-pro" className="scroll-mt-24">
                 <SectionHeader icon={Lightbulb} title="Consejos Pro y Optimización" iconColor="text-yellow-400" bgColor="bg-yellow-400/10" borderColor="border-yellow-400/20" />
-                <p className="text-zinc-400 mb-8 text-base leading-relaxed">
+                <p className="text-white/58 mb-8 text-base leading-relaxed">
                   Para dominar OpenClaw AI, aplica estas estrategias utilizadas por desarrolladores expertos.
                 </p>
 
@@ -498,7 +498,7 @@ ALLOW_SHELL_EXECUTION=true`}
                   ].map(({ title, body, code, lang }) => (
                     <div key={title} className="bg-white/5 border border-white/10 p-7 rounded-2xl hover:bg-white/[0.07] transition-colors">
                       <h3 className="text-base font-semibold text-white mb-3">{title}</h3>
-                      <p className="text-sm text-zinc-400 leading-relaxed mb-3">{body}</p>
+                      <p className="text-sm text-white/58 leading-relaxed mb-3">{body}</p>
                       {code && lang && <OpenClawCodeBlock code={code} language={lang} />}
                     </div>
                   ))}
@@ -521,7 +521,7 @@ ALLOW_SHELL_EXECUTION=true`}
                 <div className="mt-16 pt-8 border-t border-white/10">
                   <Link
                     href="/guias"
-                    className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-[#e05a3a] transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-white/45 hover:text-[#e05a3a] transition-colors"
                   >
                     ← Volver a Guías
                   </Link>

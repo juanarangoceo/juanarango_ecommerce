@@ -11,9 +11,9 @@ export const CATEGORY_CONFIG: Record<
 > = {
   imagenes: {
     label: "🖼️ Imágenes",
-    color: "text-purple-300",
-    bg: "bg-purple-500/20",
-    border: "border-purple-500/30",
+    color: "text-primary",
+    bg: "bg-primary/20",
+    border: "border-primary/30",
   },
   apps: {
     label: "📱 Apps",
@@ -23,9 +23,9 @@ export const CATEGORY_CONFIG: Record<
   },
   desarrollo: {
     label: "💻 Desarrollo",
-    color: "text-emerald-300",
-    bg: "bg-emerald-500/20",
-    border: "border-emerald-500/30",
+    color: "text-primary",
+    bg: "bg-primary/20",
+    border: "border-primary/30",
   },
   marketing: {
     label: "📣 Marketing",
@@ -144,9 +144,9 @@ export function PromptCard({
   };
 
   return (
-    <div className="group relative flex flex-col bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-300 hover:border-zinc-700 hover:shadow-xl hover:shadow-black/30 hover:-translate-y-0.5">
+    <div className="group relative flex flex-col bg-[#0d110e]/60 border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/15 hover:shadow-xl hover:shadow-black/30 hover:-translate-y-0.5">
       {/* ── Image ─────────────────────────────── */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-800 flex-shrink-0">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#111512] flex-shrink-0">
         {prompt.imageUrl ? (
           <Image
             src={prompt.imageUrl}
@@ -157,13 +157,13 @@ export function PromptCard({
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-zinc-600 text-sm">
+          <div className="w-full h-full flex items-center justify-center text-white/38 text-sm">
             Sin imagen
           </div>
         )}
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d110e]/80 via-transparent to-transparent" />
 
         {/* Pills row on image */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
@@ -177,8 +177,8 @@ export function PromptCard({
           )}
 
           {/* Tool badge */}
-          <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono bg-black/60 backdrop-blur-md border border-white/10 text-zinc-300 tracking-wider uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+          <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono bg-black/60 backdrop-blur-md border border-white/10 text-white/78 tracking-wider uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
             {prompt.tool}
           </span>
         </div>
@@ -192,15 +192,15 @@ export function PromptCard({
         </h3>
 
         {/* Prompt text block */}
-        <div className="relative flex-1 bg-zinc-950/60 border border-zinc-800/60 rounded-xl overflow-hidden flex flex-col">
+        <div className="relative flex-1 bg-[#0b0e0c]/60 border border-white/10 rounded-xl overflow-hidden flex flex-col">
           <div className="flex-1 max-h-[96px] overflow-y-auto p-3 prompt-scrollbar">
-            <p className="font-mono text-[11px] leading-relaxed text-zinc-400 whitespace-pre-wrap break-words">
+            <p className="font-mono text-[11px] leading-relaxed text-white/58 whitespace-pre-wrap break-words">
               {prompt.prompt}
             </p>
           </div>
           {prompt.instructions && (
-            <div className="bg-emerald-500/10 border-t border-emerald-500/20 px-3 py-2 flex-shrink-0">
-              <p className="text-[10px] text-emerald-400/90 font-medium leading-relaxed">
+            <div className="bg-primary/10 border-t border-primary/20 px-3 py-2 flex-shrink-0">
+              <p className="text-[10px] text-primary/90 font-medium leading-relaxed">
                 <span className="font-bold">💡 Cómo usar:</span> {prompt.instructions}
               </p>
             </div>
@@ -217,7 +217,7 @@ export function PromptCard({
             className={`group/like flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
               liked
                 ? "bg-rose-500/15 border-rose-500/30 text-rose-400 hover:bg-rose-500/25"
-                : "bg-zinc-800/60 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 hover:border-zinc-600"
+                : "bg-[#111512]/60 border-white/15 text-white/58 hover:bg-[#111512] hover:text-white/84 hover:border-white/25"
             }`}
           >
             <Heart
@@ -233,13 +233,13 @@ export function PromptCard({
           {/* Copy button */}
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-emerald-500/10 border border-zinc-700 hover:border-emerald-500/30 rounded-full text-xs font-medium text-zinc-400 hover:text-emerald-400 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#111512] hover:bg-primary/10 border border-white/15 hover:border-primary/30 rounded-full text-xs font-medium text-white/58 hover:text-primary transition-all duration-200"
             title="Copiar prompt"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
-                <span className="text-emerald-500">Copiado</span>
+                <Check className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Copiado</span>
               </>
             ) : (
               <>

@@ -6,7 +6,7 @@ export const LEGAL_ENTITY = {
   name: "Juan Arango",
   brand: "NITRO ECOM",
   site: "www.juanarangoecommerce.com",
-  email: "hola@juanarangoecommerce.com",
+  email: "juanarangoecommerce@gmail.com",
   location: "Pereira, Risaralda, Colombia",
 };
 

@@ -65,7 +65,7 @@ export function OpenClawSidebar() {
                 href={`#${s.id}`}
                 onClick={() => setMenuOpen(false)}
                 className={`text-xl font-medium transition-colors ${
-                  active === s.id ? "text-[#e05a3a]" : "text-zinc-400 hover:text-white"
+                  active === s.id ? "text-[#e05a3a]" : "text-white/58 hover:text-white"
                 }`}
               >
                 {s.label}
@@ -87,7 +87,7 @@ export function OpenClawSidebar() {
             priority
             className="rounded-lg mb-3"
           />
-          <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-mono">Guía Oficial 2026</p>
+          <p className="text-[10px] text-white/45 uppercase tracking-widest font-mono">Guía Oficial 2026</p>
         </div>
 
         <nav className="flex flex-col space-y-1 flex-1">
@@ -98,7 +98,7 @@ export function OpenClawSidebar() {
               className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 active === s.id
                   ? "bg-[#e05a3a]/10 text-[#e05a3a] border border-[#e05a3a]/20"
-                  : "text-zinc-400 hover:text-zinc-100 hover:bg-white/5 border border-transparent"
+                  : "text-white/58 hover:text-white hover:bg-white/5 border border-transparent"
               }`}
             >
               {s.label}
@@ -111,7 +111,7 @@ export function OpenClawSidebar() {
             href="https://openclaw.ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-zinc-500 hover:text-[#e05a3a] transition-colors"
+            className="flex items-center gap-2 text-xs text-white/45 hover:text-[#e05a3a] transition-colors"
           >
             <Globe size={14} />
             <span>openclaw.ai</span>

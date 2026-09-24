@@ -80,14 +80,14 @@ export default async function BlogPage({
   }));
 
   return (
-    <main className="container mx-auto px-4 py-20 min-h-screen">
+    <div className="mx-auto min-h-screen max-w-7xl px-5 pb-24 pt-32 lg:px-8 lg:pt-44">
       {/* Header */}
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
-          Nitro Tech Blog
+      <div className="mx-auto mb-12 max-w-4xl text-center lg:mb-16">
+        <h1 className="text-balance font-display text-[clamp(2.8rem,7vw,6.5rem)] font-bold leading-[.96] tracking-[-0.05em] text-white">
+          Ideas para construir un negocio digital <span className="text-primary">más claro.</span>
         </h1>
-        <p className="text-xl text-muted-foreground">
-          Perspectivas sobre E-commerce, Tecnología y Escalamiento.
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/55">
+          Análisis y guías sobre ecommerce, tecnología e IA aplicada a decisiones reales.
         </p>
       </div>
 
@@ -111,8 +111,8 @@ export default async function BlogPage({
             className={`shrink-0 px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 flex items-center gap-1.5
               ${
                 cat.slug === 'prompts'
-                  ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40'
-                  : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/30'
+                  ? 'bg-primary/8 text-primary border-primary/20 hover:bg-primary/12 hover:border-primary/40'
+                  : 'bg-[#0d110e] text-white/55 border-white/9 hover:bg-primary/8 hover:text-primary hover:border-primary/30'
               }`
             }
           >
@@ -168,12 +168,12 @@ export default async function BlogPage({
             <NitroCtaCard />
             
             {/* Newsletter */}
-            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+            <div className="rounded-2xl border border-white/9 bg-[#0d110e] p-6">
               <NewsletterForm />
             </div>
           </div>
         </aside>
       </div>
-    </main>
+    </div>
   );
 }

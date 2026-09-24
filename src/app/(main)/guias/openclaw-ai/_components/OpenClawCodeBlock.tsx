@@ -15,10 +15,10 @@ export function OpenClawCodeBlock({ code, language }: { code: string; language: 
   return (
     <div className="relative rounded-xl overflow-hidden bg-[#0a0a0a] border border-white/10 my-6">
       <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
-        <span className="text-xs font-mono text-zinc-400">{language}</span>
+        <span className="text-xs font-mono text-white/58">{language}</span>
         <button
           onClick={copy}
-          className="text-zinc-400 hover:text-white transition-colors p-1"
+          className="text-white/58 hover:text-white transition-colors p-1"
           aria-label="Copiar código"
         >
           {copied
@@ -28,7 +28,7 @@ export function OpenClawCodeBlock({ code, language }: { code: string; language: 
         </button>
       </div>
       <div className="p-4 overflow-x-auto">
-        <pre className="text-sm font-mono text-zinc-300 whitespace-pre">
+        <pre className="text-sm font-mono text-white/78 whitespace-pre">
           <code>{code}</code>
         </pre>
       </div>

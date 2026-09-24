@@ -32,13 +32,13 @@ export async function CityExplorerSection() {
   }
 
   return (
-    <section className="py-20 bg-zinc-950/50 border-y border-white/5">
+    <section className="py-20 bg-[#0b0e0c]/50 border-y border-white/5">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Explora Soluciones por <span className="text-primary">Ciudad</span>
           </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-white/58 max-w-2xl mx-auto">
             Descubre cómo NitroCommerce impulsa negocios en diferentes ciudades y sectores
           </p>
         </div>
@@ -50,7 +50,7 @@ export async function CityExplorerSection() {
               href={`/soluciones/nitro-commerce/${page.slug}`}
               className="group"
             >
-              <SpotlightCard className="p-6 bg-zinc-900/50 border-white/5 hover:border-primary/30 transition-all duration-300 h-full">
+              <SpotlightCard className="p-6 bg-[#0d110e]/60 border-white/5 hover:border-primary/30 transition-all duration-300 h-full">
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                     <MapPin className="w-5 h-5" />
@@ -59,7 +59,7 @@ export async function CityExplorerSection() {
                     <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
                       {page.ciudad}
                     </h3>
-                    <p className="text-sm text-zinc-400 mb-3">
+                    <p className="text-sm text-white/58 mb-3">
                       {page.nicho} • {page.departamento}
                     </p>
                     <div className="flex items-center gap-2 text-primary text-sm font-medium">

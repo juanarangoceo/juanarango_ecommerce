@@ -30,7 +30,7 @@ export function LatestNewsColumn({
       className={`rounded-2xl border p-5 sm:p-6 ${
         isDark
           ? "bg-white/5 border-white/10"
-          : "bg-white border-slate-200 shadow-sm"
+          : "bg-white border-white/9 shadow-sm"
       }`}
     >
       <div className="flex items-center gap-3 mb-6">
@@ -43,7 +43,7 @@ export function LatestNewsColumn({
         </div>
         <h3
           className={`font-bold text-lg ${
-            isDark ? "text-white" : "text-slate-900"
+            isDark ? "text-white" : "text-white"
           }`}
         >
           Últimas Noticias
@@ -57,19 +57,19 @@ export function LatestNewsColumn({
               key={post._id}
               href={`/blog/${post.slug.current}`}
               className={`group flex flex-col gap-2 pb-5 border-b border-dashed last:border-0 last:pb-0 ${
-                isDark ? "border-white/10" : "border-slate-200"
+                isDark ? "border-white/10" : "border-white/9"
               }`}
             >
               <h4
                 className={`font-semibold text-sm line-clamp-3 leading-snug group-hover:underline ${
-                  isDark ? "text-zinc-200 group-hover:text-[#e05a3a]" : "text-slate-800 group-hover:text-[#95BF47]"
+                  isDark ? "text-white/84 group-hover:text-[#e05a3a]" : "text-white group-hover:text-[#95BF47]"
                 } transition-colors`}
               >
                 {post.title}
               </h4>
               <div className="flex items-center gap-1.5 mt-1">
-                <Calendar size={13} className={isDark ? "text-zinc-500" : "text-slate-400"} />
-                <span className={`text-xs ${isDark ? "text-zinc-500" : "text-slate-500"}`}>
+                <Calendar size={13} className={isDark ? "text-white/45" : "text-white/58"} />
+                <span className={`text-xs ${isDark ? "text-white/45" : "text-white/45"}`}>
                   {post.publishedAt
                     ? format(new Date(post.publishedAt), "dd MMM yyyy", { locale: es })
                     : format(new Date(post._createdAt), "dd MMM yyyy", { locale: es })}
@@ -79,7 +79,7 @@ export function LatestNewsColumn({
           ))
         ) : (
           <div className="py-6 text-center">
-            <p className={`text-sm ${isDark ? "text-zinc-500" : "text-slate-500"}`}>
+            <p className={`text-sm ${isDark ? "text-white/45" : "text-white/45"}`}>
               No hay noticias recientes en esta categoría por el momento.
             </p>
           </div>
@@ -91,8 +91,8 @@ export function LatestNewsColumn({
           href={tagLink}
           className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
             isDark
-              ? "text-zinc-400 hover:text-[#e05a3a]"
-              : "text-slate-600 hover:text-[#95BF47]"
+              ? "text-white/58 hover:text-[#e05a3a]"
+              : "text-white/38 hover:text-[#95BF47]"
           }`}
         >
           Ver todos los artículos

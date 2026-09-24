@@ -1,299 +1,51 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Mail,
-  Zap,
-  ArrowRight,
-  CheckCircle2,
-  Loader2,
-  TrendingUp,
-  BookOpen,
-  Shield,
-  Sparkles,
-  Clock,
-} from "lucide-react";
-import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, BookOpenText, Check, Mail, ScanSearch, Sparkles, Wrench } from "lucide-react";
+import { NewsletterForm } from "@/components/newsletter-form";
 
-// ─── Social Proof Data ───────────────────────────────────────────────────────
-const benefits = [
-  {
-    icon: TrendingUp,
-    title: "Estrategias de Ecommerce",
-    desc: "Tácticas probadas para escalar ventas, mejorar conversión y construir operaciones sólidas.",
-    color: "text-primary",
-    bg: "bg-primary/10 border-primary/20",
-  },
-  {
-    icon: Zap,
-    title: "Herramientas de IA Curadas",
-    desc: "Las mejores apps y automatizaciones que uso para ahorrar cientos de horas cada mes.",
-    color: "text-amber-400",
-    bg: "bg-amber-500/10 border-amber-500/20",
-  },
-  {
-    icon: BookOpen,
-    title: "Guías y Recursos Exclusivos",
-    desc: "Acceso anticipado a guías como Shopify 2024, MCP, Claude Code y más antes de publicarse.",
-    color: "text-violet-400",
-    bg: "bg-violet-500/10 border-violet-500/20",
-  },
-  {
-    icon: Shield,
-    title: "Sin Spam. Jamás.",
-    desc: "Solo envío cuando tengo algo que realmente vale tu tiempo. Puedes darte de baja en 1 clic.",
-    color: "text-blue-400",
-    bg: "bg-blue-500/10 border-blue-500/20",
-  },
-];
+export const metadata: Metadata = {
+  title: "Newsletter de ecommerce, automatización e IA aplicada",
+  description: "Decisiones, pruebas y guías de Juan Arango para aplicar ecommerce, automatización e IA con criterio.",
+  alternates: { canonical: "https://www.juanarangoecommerce.com/newsletter" },
+};
 
-const included = [
-  "Análisis de tendencias de IA aplicadas al negocio",
-  "Casos reales con números de clientes escalando",
-  "Prompts probados para marketing y operaciones",
-  "Reseñas honestas de herramientas nuevas",
-  "Alertas tempranas de cambios en algoritmos",
-  "Acceso anticipado a guías y recursos gratuitos",
-];
+const contents = [
+  { icon: ScanSearch, title: "Decisiones explicadas", text: "Qué evaluar antes de elegir una herramienta, cambiar un recorrido o automatizar un proceso." },
+  { icon: Wrench, title: "Herramientas puestas a prueba", text: "Lo que una plataforma puede resolver, sus límites y el contexto en el que tiene sentido usarla." },
+  { icon: BookOpenText, title: "Guías aplicables", text: "Ideas, prompts y recursos para llevar un aprendizaje a la operación real." },
+  { icon: Sparkles, title: "Aprendizajes de construcción", text: "Decisiones que aparecen mientras diseño ecommerce, automatizaciones y productos Nitro." },
+] as const;
 
-// ─── Newsletter Form ──────────────────────────────────────────────────────────
-function HeroNewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+const principles = [
+  "Una idea central por envío.",
+  "Enlaces y contexto para profundizar.",
+  "Sin resultados inventados ni urgencia artificial.",
+  "Puedes cancelar la suscripción cuando quieras.",
+] as const;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStatus("loading");
-    setMessage("");
-    const formData = new FormData();
-    formData.append("email", email);
-    const result = await subscribeToNewsletter(formData);
-    if (result.success) {
-      setStatus("success");
-      setMessage(result.message || "¡Suscripción exitosa!");
-      setEmail("");
-    } else {
-      setStatus("error");
-      setMessage(result.error || "Algo salió mal.");
-    }
-  };
-
-  return (
-    <AnimatePresence mode="wait">
-      {status === "success" ? (
-        <motion.div
-          key="success"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-4 py-8"
-        >
-          <div className="w-16 h-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-            <CheckCircle2 className="w-8 h-8 text-primary" />
-          </div>
-          <h3 className="text-2xl font-bold text-white">¡Ya estás dentro! 🎉</h3>
-          <p className="text-zinc-400 text-center max-w-sm">{message}</p>
-          <Link
-            href="/guias"
-            className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-naranja-suave transition-colors"
-          >
-            Mientras tanto, explora las Guías Gratuitas
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
-      ) : (
-        <motion.form
-          key="form"
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="w-full flex flex-col sm:flex-row gap-3"
-        >
-          <div className="relative flex-1">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
-            <input
-              type="email"
-              placeholder="tucorreo@ejemplo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={status === "loading"}
-              required
-              className="w-full pl-11 pr-4 py-4 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-base"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={status === "loading" || !email}
-            className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg shadow-primary/25 hover:shadow-primary/40"
-          >
-            {status === "loading" ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                Quiero recibirlo primero
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </motion.form>
-      )}
-      {status === "error" && (
-        <p className="text-red-400 text-sm mt-2">{message}</p>
-      )}
-    </AnimatePresence>
-  );
-}
-
-// ─── Page Component ──────────────────────────────────────────────────────────
 export default function NewsletterPage() {
   return (
-    <div className="min-h-screen bg-[#050505] relative overflow-x-hidden">
-      {/* Background aurora */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-violet-900/8 blur-[120px]" />
-      </div>
-
-      <div className="relative z-10">
-        {/* ── HERO ─────────────────────────────────────────────────────────── */}
-        <section className="pt-32 pb-20 px-6">
-          <div className="container mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-6">
-              Lo nuevo en IA y ecommerce,{" "}
-              <span className="text-primary">
-                primero aquí
-              </span>
-            </h1>
-
-            <p className="text-xl text-zinc-400 leading-relaxed mb-10 max-w-2xl mx-auto">
-              Cada semana te cuento qué salió nuevo en IA y ecommerce, qué probé yo mismo y qué vale la pena aplicar en tu negocio.
-            </p>
-
-            {/* Datos sin fuente verificable eliminados (regla: prueba antes que promesa) */}
-            <div className="flex items-center justify-center gap-8 mb-10 flex-wrap">
-              <div className="flex items-center gap-2 text-zinc-400">
-                <Clock className="w-4 h-4 text-primary" />
-                <span className="font-bold text-white">Semanal</span>
-                <span className="text-sm">Frecuencia</span>
-              </div>
-            </div>
-
-            {/* Hero Form */}
-            <div className="bg-zinc-950/80 border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
-              <HeroNewsletterForm />
-              <p className="text-xs text-zinc-600 mt-4 text-center">
-                Al suscribirte aceptas nuestros{" "}
-                <Link href="/legal/terminos" className="text-zinc-500 hover:text-primary underline underline-offset-2 transition-colors">
-                  Términos y Condiciones
-                </Link>
-                . Cancelación en 1 clic, siempre.
-              </p>
-            </div>
+    <div className="overflow-hidden bg-background text-foreground">
+      <section className="relative px-5 pb-18 pt-32 lg:px-8 lg:pb-24 lg:pt-44">
+        <div className="pointer-events-none absolute left-1/2 top-20 size-96 -translate-x-1/2 rounded-full bg-primary/[.055] blur-[120px]" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.02fr_.98fr] lg:items-center lg:gap-16">
+          <div className="text-center lg:text-left">
+            <h1 className="font-display text-[clamp(3.2rem,6.6vw,6.4rem)] font-bold leading-[.94] tracking-[-.055em] text-white">Ideas para aplicar tecnología con <span className="text-primary">mejor criterio.</span></h1>
+            <p className="mx-auto mt-7 max-w-2xl text-left text-lg leading-8 text-white/58 lg:mx-0">Comparto lo que aprendo construyendo ecommerce, automatizaciones y productos con IA: decisiones, pruebas y guías que puedas llevar a tu negocio.</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-3 text-xs text-white/42 lg:justify-start"><span className="flex items-center gap-2"><Check className="size-4 text-primary" />Sin frecuencia forzada</span><span className="flex items-center gap-2"><Check className="size-4 text-primary" />Sin spam</span><span className="flex items-center gap-2"><Check className="size-4 text-primary" />Salida en cualquier momento</span></div>
           </div>
-        </section>
+          <div className="relative rounded-[1.75rem] border border-primary/18 bg-[#0d110e] p-6 shadow-[0_30px_90px_rgba(0,0,0,.35)] sm:p-8"><span className="flex size-12 items-center justify-center rounded-2xl bg-primary/9 text-primary"><Mail className="size-6" /></span><h2 className="mt-7 text-2xl font-bold text-white">Recibe la próxima edición.</h2><p className="mt-3 text-sm leading-6 text-white/48">Solo escribiré cuando haya una idea que merezca llegar a tu bandeja.</p><div className="mt-7"><NewsletterForm variant="inline" /></div></div>
+        </div>
+      </section>
 
-        {/* ── QUÉ VAS A RECIBIR ────────────────────────────────────────── */}
-        <section className="py-20 px-6">
-          <div className="container mx-auto max-w-5xl">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                ¿Qué recibirás exactamente?
-              </h2>
-              <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-                No es un email más lleno de noticias que ya viste. Es inteligencia curada aplicada a tu negocio.
-              </p>
-            </div>
+      <section className="border-y border-white/7 bg-[#0b0e0c] px-5 py-18 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-7 lg:grid-cols-[1fr_.8fr] lg:items-end"><h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl">Qué puedes encontrar <span className="text-primary">en cada lectura.</span></h2><p className="max-w-xl text-base leading-7 text-white/52">No es un resumen de titulares. El objetivo es ayudarte a entender una decisión y darte un punto de partida para aplicarla.</p></div>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-[1.75rem] border border-white/8 bg-white/8 sm:grid-cols-2 lg:mt-16">{contents.map(({ icon: Icon, title, text }) => <article key={title} className="bg-[#0d110e] p-7 sm:p-9"><Icon className="size-6 text-primary" /><h3 className="mt-8 text-xl font-bold text-white">{title}</h3><p className="mt-3 text-sm leading-6 text-white/48">{text}</p></article>)}</div>
+        </div>
+      </section>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {benefits.map((b) => (
-                <div
-                  key={b.title}
-                  className={`flex gap-5 p-6 rounded-2xl border bg-zinc-900/50 ${b.bg} hover:bg-zinc-900/80 transition-all duration-300`}
-                >
-                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${b.bg} border`}>
-                    <b.icon className={`w-6 h-6 ${b.color}`} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white text-lg mb-1">{b.title}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{b.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── INCLUIDO EN CADA EDICIÓN ─────────────────────────────────── */}
-        <section className="py-20 px-6 bg-zinc-950/50">
-          <div className="container mx-auto max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Incluido en cada edición
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                  Inteligencia que otros guardan para sí mismos
-                </h2>
-                <p className="text-zinc-400 leading-relaxed">
-                  Después de años construyendo sistemas digitales y trabajar con decenas de negocios, sé qué información mueve la aguja. Y la comparto aquí primero.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {included.map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mt-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-primary" />
-                    </div>
-                    <span className="text-zinc-300 text-sm leading-relaxed">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── CTA FINAL ────────────────────────────────────────────────── */}
-        <section className="py-24 px-6">
-          <div className="container mx-auto max-w-2xl">
-            <div className="relative rounded-3xl overflow-hidden border border-primary/20 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-10 md:p-14 text-center shadow-2xl">
-              {/* Glow effects */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-primary/10 blur-3xl rounded-full pointer-events-none" />
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-primary/8 blur-2xl rounded-full pointer-events-none" />
-
-              <div className="relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center mx-auto mb-6">
-                  <Mail className="w-8 h-8 text-primary" />
-                </div>
-
-                <h2 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
-                  Únete ahora. Es gratis.
-                </h2>
-                <p className="text-zinc-400 mb-8 leading-relaxed">
-                  Lo nuevo, primero aquí: qué salió en IA y ecommerce, qué probé yo mismo y qué vale la pena aplicar en tu negocio.
-                </p>
-
-                <HeroNewsletterForm />
-              </div>
-            </div>
-
-            <p className="text-center text-zinc-600 text-sm mt-6">
-              ¿Ya tienes todo bajo control?{" "}
-              <Link href="/blog" className="text-zinc-500 hover:text-primary transition-colors underline underline-offset-2">
-                Lee el blog
-              </Link>{" "}
-              ·{" "}
-              <Link href="/guias" className="text-zinc-500 hover:text-primary transition-colors underline underline-offset-2">
-                Explora las guías
-              </Link>
-            </p>
-          </div>
-        </section>
-      </div>
+      <section className="px-5 py-18 lg:px-8 lg:py-24"><div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div className="text-center lg:text-left"><h2 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl">Tu bandeja no necesita más ruido.</h2><p className="mt-5 text-left text-base leading-7 text-white/52">Esta newsletter conserva el mismo criterio del sitio: explicar lo suficiente para tomar una mejor decisión, sin convertir cada novedad en una urgencia.</p></div><ul className="grid gap-3">{principles.map((item) => <li key={item} className="flex items-center gap-3 rounded-2xl border border-white/9 bg-[#0d110e] p-5 text-sm text-white/60"><Check className="size-4 shrink-0 text-primary" />{item}</li>)}</ul></div><div className="mx-auto mt-12 flex max-w-7xl justify-center lg:justify-end"><Link href="/blog" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary">Prefiero explorar el blog <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></Link></div></section>
     </div>
   );
 }

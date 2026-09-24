@@ -60,30 +60,32 @@ export function ConversionPopup() {
           isClosing ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
         }`}
       >
-        <div className="bg-gradient-to-br from-blue-950 via-slate-900 to-black rounded-2xl shadow-2xl border border-blue-500/20 overflow-hidden">
+        <div className="relative overflow-hidden rounded-[1.75rem] border border-primary/18 bg-[#0b0f0c] shadow-[0_24px_80px_rgba(0,0,0,0.26)]">
+          <span className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+          <div className="pointer-events-none absolute -right-16 -top-20 size-64 rounded-full bg-primary/[0.09] blur-[90px]" />
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+            className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             aria-label="Cerrar"
           >
             <X size={18} />
           </button>
 
           {/* Content */}
-          <div className="p-8 text-center">
+          <div className="relative p-8 text-center">
             {/* Icon */}
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
-              <Sparkles size={32} className="text-blue-400" />
+            <div className="mb-6 inline-flex size-16 items-center justify-center rounded-2xl bg-primary/9 text-primary">
+              <Sparkles size={32} />
             </div>
 
             {/* Headline */}
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              ¿Listo para crear tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-amber-500">próximo proyecto</span>?
+            <h3 className="mb-4 text-balance font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
+              ¿Quieres ver tu marca en <span className="text-primary">una demo real?</span>
             </h3>
 
             {/* Description */}
-            <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+            <p className="mb-8 text-lg leading-relaxed text-white/58">
               Prueba cómo se vería tu sitio web inmobiliario con tu marca y colores. 
               <strong className="text-white"> Toma solo 30 segundos.</strong>
             </p>
@@ -93,30 +95,27 @@ export function ConversionPopup() {
               <Button
                 onClick={handleScrollToDemo}
                 size="lg"
-                className="w-full h-14 text-lg font-bold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-xl shadow-blue-500/20"
+                className="h-14 w-full rounded-full text-lg font-bold shadow-xl shadow-primary/20"
               >
-                <Sparkles className="mr-2 w-5 h-5" />
-                Crear Mi Demo Gratis
-                <ArrowDown className="ml-2 w-5 h-5" />
+                <Sparkles className="mr-2 size-5" />
+                Crear mi demo gratis
+                <ArrowDown className="ml-2 size-5" />
               </Button>
               <Button
                 onClick={handleClose}
                 size="lg"
                 variant="ghost"
-                className="w-full text-zinc-400 hover:text-white hover:bg-white/5"
+                className="w-full rounded-full text-white/58 hover:bg-white/5 hover:text-white"
               >
                 Tal vez después
               </Button>
             </div>
 
             {/* Trust Badge */}
-            <p className="text-zinc-600 text-xs mt-6">
-              ✨ Sin registro • 🚀 Instantáneo • 💯 Gratis
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/38">
+              Sin registro · Instantáneo · Gratis
             </p>
           </div>
-
-          {/* Decorative Gradient */}
-          <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-400 to-amber-500"></div>
         </div>
       </div>
     </>

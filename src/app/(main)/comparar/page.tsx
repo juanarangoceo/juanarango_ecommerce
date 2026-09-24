@@ -38,31 +38,30 @@ export default async function CompararPage() {
   const comparisons = await client.fetch(ALL_COMPARISONS_QUERY)
 
   return (
-    <div className="bg-white dark:bg-zinc-950 min-h-screen">
+    <div className="min-h-screen pb-24">
       {/* Hero */}
-      <header className="container mx-auto px-4 pt-32 pb-12 max-w-5xl">
-        <nav className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
-          <Link href="/" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+      <header className="mx-auto max-w-5xl px-5 pb-14 pt-32 text-center lg:px-8 lg:pb-20 lg:pt-44">
+        <nav className="mb-8 flex items-center justify-center gap-2 text-sm text-white/38">
+          <Link href="/" className="hover:text-white transition-colors">
             Inicio
           </Link>
           <span>/</span>
-          <span className="text-zinc-900 dark:text-zinc-100">Comparativas</span>
+          <span className="text-white">Comparativas</span>
         </nav>
 
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center shadow-lg">
-            <Swords className="w-7 h-7 text-white" />
+        <div className="flex flex-col items-center gap-5">
+          <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/9 text-primary">
+            <Swords className="size-7" />
           </div>
           <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
-              Comparativas de Apps IA
+            <h1 className="text-balance font-display text-[clamp(2.8rem,7vw,5.8rem)] font-bold leading-[.97] tracking-[-0.05em] text-white">
+              Compara antes de <span className="text-primary">sumar otra herramienta.</span>
             </h1>
           </div>
         </div>
 
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
-          Comparaciones detalladas lado a lado entre las mejores herramientas de inteligencia artificial. 
-          Descubre cuál se adapta mejor a tus necesidades.
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/55">
+          Revisa funciones, precios declarados y diferencias de uso para elegir con más contexto.
         </p>
       </header>
 
@@ -74,7 +73,7 @@ export default async function CompararPage() {
               <Link
                 key={comp._id}
                 href={`/comparar/${comp.slug?.current}`}
-                className="group flex flex-col rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-6 transition-all hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/9 bg-[#0d110e] p-6 transition-[border-color,transform,background-color] hover:-translate-y-1 hover:border-primary/35 hover:bg-[#101611]"
               >
                 {/* VS Header */}
                 <div className="flex items-center gap-3 mb-4">
@@ -83,7 +82,7 @@ export default async function CompararPage() {
                       {comp.app1.appName?.charAt(0)}
                     </div>
                   )}
-                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">VS</span>
+                  <span className="text-xs font-bold text-white/58 uppercase tracking-wider">VS</span>
                   {comp.app2 && (
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm ${comp.app2.iconBg || 'bg-blue-500'}`}>
                       {comp.app2.appName?.charAt(0)}
@@ -92,12 +91,12 @@ export default async function CompararPage() {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 mb-2">
+                <h2 className="mb-2 line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">
                   {comp.title || `${comp.app1?.appName} vs ${comp.app2?.appName}`}
                 </h2>
 
                 {/* Description */}
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 mb-4">
+                <p className="text-sm text-white/58 line-clamp-2 mb-4">
                   {comp.metaDescription || comp.verdict}
                 </p>
 
@@ -106,7 +105,7 @@ export default async function CompararPage() {
                   {[comp.app1, comp.app2].map((app: any, i: number) =>
                     app ? (
                       <div key={i} className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-zinc-700 dark:text-zinc-300">{app.appName}</span>
+                        <span className="font-medium text-white/78">{app.appName}</span>
                         <div className="flex items-center gap-2">
                           {app.rating && <StarRating rating={app.rating} className="scale-90" />}
                           <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
@@ -123,13 +122,13 @@ export default async function CompararPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-auto flex items-center justify-between pt-3 border-t border-zinc-200 dark:border-zinc-800">
-                  <span className="text-xs text-zinc-500">
+                <div className="mt-auto flex items-center justify-between pt-3 border-t border-white/10">
+                  <span className="text-xs text-white/45">
                     {comp.publishedAt
                       ? new Date(comp.publishedAt).toLocaleDateString("es-ES", { year: "numeric", month: "short", day: "numeric" })
                       : ""}
                   </span>
-                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="flex items-center gap-1 text-xs font-medium text-primary transition-opacity">
                     Ver comparativa <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
@@ -137,12 +136,12 @@ export default async function CompararPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700">
-            <Swords className="w-12 h-12 text-zinc-400 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+          <div className="text-center py-20 rounded-xl border border-dashed border-white/15">
+            <Swords className="w-12 h-12 text-white/58 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-white/78 mb-2">
               Próximamente
             </h2>
-            <p className="text-zinc-500 dark:text-zinc-400">
+            <p className="text-white/58">
               Estamos preparando comparativas detalladas de las mejores apps de IA.
             </p>
           </div>
@@ -151,17 +150,17 @@ export default async function CompararPage() {
         {/* Cross-link to IA Apps */}
         <Link
           href="/app-tools"
-          className="group mt-10 flex items-center gap-4 rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-gradient-to-r from-emerald-50 to-white dark:from-emerald-950/30 dark:to-zinc-900 p-5 md:p-6 transition-all hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
+          className="group mt-10 flex items-center gap-4 rounded-2xl border border-primary/18 bg-[#0d110e] p-5 transition-colors hover:border-primary/40 md:p-6"
         >
-          <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20">
-            <Trophy className="w-6 h-6 text-white" />
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/9 text-primary">
+            <Trophy className="size-6" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-              🏆 Ver el Ranking Completo de Apps IA
+            <h3 className="text-base md:text-lg font-bold text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              Explorar la biblioteca completa de herramientas
             </h3>
-            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
-              +25 herramientas analizadas con rating, precios y reviews detalladas.
+            <p className="text-xs md:text-sm text-white/58 mt-0.5">
+              Rankings, fichas y contexto de uso reunidos en un solo lugar.
             </p>
           </div>
           <ArrowRight className="w-5 h-5 text-emerald-500 shrink-0 transition-transform group-hover:translate-x-1" />

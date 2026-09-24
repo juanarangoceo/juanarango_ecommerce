@@ -14,15 +14,15 @@ const faqs = [
   },
   {
     q: "¿Qué tan fácil es implementar el método si empiezo hoy?",
-    a: "Tan fácil que si consumes el material al comprar, puedes tener tu ecosistema en pie hoy mismo. Literalmente describes el producto, aprietas un botón, la IA genera el layout y Vercel lo lanza a un dominio de internet de forma instantánea. Tomará unas 3-4 horas si vas lento.",
+    a: "El material recorre diseño, datos y despliegue paso a paso. El tiempo depende de tu experiencia, el producto y las integraciones; la IA acelera partes del trabajo, pero sigue siendo necesario revisar y probar lo construido.",
   },
   {
     q: "¿Qué pasa si quiero migrar a otra plataforma (Shopify) después de escalar?",
-    a: "Puedes y debes hacerlo cuando tu volumen operativo sea sofocante. La mentalidad Nitro es dominar la fase de validación de mercado quemando la mínima pción de capital ($0 en servidores). Cuando tu caja sea sólida, con un equipo y un volumen brutal, ya migras.",
+    a: "Puedes migrar cuando la operación lo justifique. La decisión debe considerar volumen, equipo, mantenimiento, integraciones y costo total; no existe un umbral universal para todos los negocios.",
   },
   {
     q: "¿Esto funciona para Drophippling global o solo local?",
-    a: "La infraestructura tecnológica no distingue países. El back-office que implementas nativo y la tienda son tuyos, operables desde Australia hasta Argentina. Dentro, recomendamos enfocarnos en Cash on Delivery (Contraentrega) porque en LatAm y España tiene la fricción más baja, garantizándote mayores cierres.",
+    a: "La infraestructura tecnológica puede operarse desde distintos países. El back-office y la tienda quedan bajo tu control. En algunos mercados la contraentrega es una alternativa frecuente, pero su conveniencia debe validarse según logística, devoluciones, costos y comportamiento real del cliente.",
   },
   {
     q: "¿Puedo aplicar Nitro si ya tengo mi tienda en Shopify?",
@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "¿Y qué pasa si hago todo y no me funciona?",
-    a: "Estás blindado. Cuentas con una garantía técnica de acero de 7 días. Si ves todos los videos, sigues las pantallas paso por paso y tu tienda no queda subida y ultra veloz... nos envías un mail. Ese mismo día cancelamos el cobro de tu tarjeta. Queremos vendedores, no víctimas.",
+    a: "El programa enseña el proceso, pero no puede garantizar ventas ni un resultado comercial. Antes de comprar conviene revisar el temario, los requisitos técnicos y las condiciones vigentes de soporte o devolución.",
   },
 ]
 

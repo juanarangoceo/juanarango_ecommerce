@@ -3,13 +3,24 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Sistema NITRO: negro profundo + naranja nitro (ver narrativa-web.md) */
-  --negro-profundo: #0A0A0A;
-  --naranja-nitro: #E8520A;
+  /* Sistema NITRO 2026: grafito, verde de acción y naranja reservado a NitroBot. */
+  --negro-profundo: #0B0D0B;
+  --superficie-nitro: #131613;
+  --verde-nitro: #B7FF2A; /* identidad Nitro oficial (nitro_bot/docs/brand/identidad-nitro.md) */
+  --verde-profundo: #123D1D;
+  --naranja-nitro: #FF6A13; /* acento: algo espera o pide atención */
   --azul-estructura: #1A2744;
   --blanco-puro: #FFFFFF;
   --naranja-suave: #FF9B6A; /* solo apoyo en gradientes, nunca color principal */
-  --gradiente-nitrobot: linear-gradient(135deg, #E8520A, #FF9B6A); /* EXCLUSIVO de /nitrobot y la card NitroBot en home */
+  --gradiente-nitrobot: linear-gradient(135deg, #FF6A13, #FF9B6A);
+  /* Superficies claras de la marca Nitro: "negro y blancos" */
+  --ink: #111311;
+  --ground: #F6F8F1;
+  --line: #E2E6DA;
+  --nitro-text: #3A6200;
+  --nitro-soft: #F1FFD6;
+  --alert-soft: #FFF1E7;
+  --alert-text: #B84500;
 
   --background: var(--negro-profundo);
   --foreground: oklch(0.98 0 0);
@@ -17,20 +28,20 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: var(--naranja-nitro);
-  --primary-foreground: var(--blanco-puro);
+  --primary: var(--verde-nitro);
+  --primary-foreground: #111311;
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.2 0 0);
   --muted-foreground: #a1a1aa; /* Zinc 400 - Safe contrast for accessibility (AA compliant on black) */
-  --accent: var(--naranja-nitro);
-  --accent-foreground: var(--blanco-puro);
+  --accent: var(--verde-nitro);
+  --accent-foreground: #111311;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.25 0 0);
   --input: oklch(0.2 0 0);
-  --ring: var(--naranja-nitro);
-  --chart-1: var(--naranja-nitro);
+  --ring: var(--verde-nitro);
+  --chart-1: var(--verde-nitro);
   --chart-2: oklch(0.6 0.15 220);
   --chart-3: oklch(0.55 0 0);
   --chart-4: oklch(0.7 0.18 160);
@@ -60,27 +71,27 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: var(--naranja-nitro);
-  --primary-foreground: var(--blanco-puro);
+  --primary: var(--verde-nitro);
+  --primary-foreground: #111311;
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.2 0 0);
   --muted-foreground: oklch(0.55 0 0);
-  --accent: var(--naranja-nitro);
-  --accent-foreground: var(--blanco-puro);
+  --accent: var(--verde-nitro);
+  --accent-foreground: #111311;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.25 0 0);
   --input: oklch(0.2 0 0);
-  --ring: var(--naranja-nitro);
-  --chart-1: var(--naranja-nitro);
+  --ring: var(--verde-nitro);
+  --chart-1: var(--verde-nitro);
   --chart-2: oklch(0.6 0.15 220);
   --chart-3: oklch(0.55 0 0);
   --chart-4: oklch(0.7 0.18 160);
   --chart-5: oklch(0.65 0.2 280);
   --sidebar: oklch(0.1 0 0);
   --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: var(--naranja-nitro);
+  --sidebar-primary: var(--verde-nitro);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.15 0 0);
   --sidebar-accent-foreground: oklch(0.98 0 0);
@@ -129,8 +140,22 @@
   --color-naranja-nitro: var(--naranja-nitro);
   --color-azul-estructura: var(--azul-estructura);
   --color-naranja-suave: var(--naranja-suave);
-  --font-display: var(--font-display);
-  --font-dm-mono: var(--font-dm-mono);
+  --color-verde-nitro: var(--verde-nitro);
+  --color-verde-profundo: var(--verde-profundo);
+  --color-superficie-nitro: var(--superficie-nitro);
+  --color-ink: var(--ink);
+  --color-ground: var(--ground);
+  --color-line: var(--line);
+  --color-nitro-text: var(--nitro-text);
+  --color-nitro-soft: var(--nitro-soft);
+  --color-alert: var(--naranja-nitro);
+  --color-alert-soft: var(--alert-soft);
+  --color-alert-text: var(--alert-text);
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-display: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Syne", "Syne Fallback", "Geist", sans-serif;
+  --font-dm-mono: "DM Mono", "DM Mono Fallback", ui-monospace, monospace;
 }
 
 @layer base {
@@ -139,6 +164,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
   }
   html {
     scroll-behavior: auto !important;
@@ -146,6 +172,33 @@
   h1, h2, h3 {
     font-family: var(--font-display), var(--font-geist-sans), sans-serif;
   }
+  ::selection {
+    background: var(--verde-nitro);
+    color: #111311;
+  }
+}
+
+/* Base compartida para todas las rutas públicas. Las páginas pueden conservar
+   una identidad de producto, pero parten del mismo lienzo grafito de la home. */
+.nitro-site-content,
+.nitro-landing-content {
+  min-height: 100vh;
+  overflow-x: clip;
+  background:
+    radial-gradient(circle at 12% 5%, rgb(183 255 42 / 0.035), transparent 24rem),
+    var(--negro-profundo);
+  color: var(--foreground);
+}
+
+.nitro-site-content :where(a, button, input, textarea, select):focus-visible,
+.nitro-landing-content :where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid rgb(183 255 42 / 0.68);
+  outline-offset: 3px;
+}
+
+.nitro-site-content :where(section, article, aside),
+.nitro-landing-content :where(section, article, aside) {
+  scroll-margin-top: 6rem;
 }
 
 /* NitroBot: puntos de "escribiendo..." (micro-firma del producto) */
@@ -164,7 +217,285 @@
   animation: typing-dot 1.2s infinite ease-in-out;
 }
 
+/* Firma de movimiento NITRO: una señal breve activa el sistema de izquierda a derecha. */
+@keyframes nitro-panel-scan {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+
+@keyframes nitro-solution-tab-enter {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nitro-solution-detail-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nitro-status-pulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.18;
+    transform: scale(2.8);
+  }
+}
+
+@keyframes nitro-caret-blink {
+  0%, 45% {
+    opacity: 1;
+  }
+  46%, 100% {
+    opacity: 0;
+  }
+}
+
+.nitro-type-caret {
+  display: inline-block;
+  width: 0.055em;
+  height: 0.82em;
+  margin-right: -0.055em;
+  margin-left: 0.07em;
+  border-radius: 999px;
+  background: var(--verde-nitro);
+  vertical-align: -0.02em;
+  animation: nitro-caret-blink 620ms steps(1, end) infinite;
+}
+
+.nitro-panel-signal {
+  transform: translateX(-110%);
+}
+
+.nitro-motion-active .nitro-panel-signal {
+  animation: nitro-panel-scan 1050ms 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.nitro-solution-tab {
+  opacity: 0.48;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nitro-motion-active .nitro-solution-tab {
+  animation: nitro-solution-tab-enter 420ms 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.nitro-motion-active .nitro-solution-tab[data-solution="landing"] {
+  animation-delay: 420ms;
+}
+
+.nitro-motion-active .nitro-solution-tab[data-solution="bot"] {
+  animation-delay: 520ms;
+}
+
+.nitro-solution-tab:hover,
+.nitro-solution-tab:focus-visible,
+.nitro-solution-tab-is-active {
+  border-color: color-mix(in srgb, var(--verde-nitro) 42%, transparent);
+  background-color: rgba(183, 255, 42, 0.07);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.24), 0 0 24px rgba(183, 255, 42, 0.045);
+}
+
+.nitro-solution-detail {
+  animation: nitro-solution-detail-enter 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.nitro-status-dot {
+  position: relative;
+}
+
+.nitro-status-dot::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--verde-nitro);
+  content: "";
+}
+
+.nitro-motion-active .nitro-status-dot::after {
+  animation: nitro-status-pulse 2.4s 1.2s ease-in-out infinite;
+}
+
+.nitro-cta-arrow {
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.group:hover .nitro-cta-arrow,
+.group:focus-visible .nitro-cta-arrow {
+  transform: translateX(4px);
+}
+
+.nitro-brand-mark {
+  transition:
+    filter 260ms ease,
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.group:hover .nitro-brand-mark,
+.group:focus-visible .nitro-brand-mark {
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--verde-nitro) 45%, transparent));
+  transform: rotate(-5deg) scale(1.06);
+}
+
+.nitro-icon-mark {
+  position: relative;
+  isolation: isolate;
+  transition:
+    background-color 240ms ease,
+    color 240ms ease,
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nitro-icon-mark::before {
+  position: absolute;
+  inset: -4px;
+  z-index: -1;
+  border: 1px solid var(--verde-nitro);
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+  transform: scale(0.78);
+}
+
+.nitro-icon-glyph {
+  transition:
+    filter 240ms ease,
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nitro-icon-mark.nitro-icon-visible {
+  animation: nitro-icon-arrive 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.group:hover .nitro-icon-mark,
+.group:focus-within .nitro-icon-mark {
+  transform: translateY(-2px) rotate(-3deg);
+}
+
+.group:hover .nitro-icon-mark::before,
+.group:focus-within .nitro-icon-mark::before {
+  animation: nitro-icon-charge 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.group:hover .nitro-icon-glyph,
+.group:focus-within .nitro-icon-glyph {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--verde-nitro) 65%, transparent));
+  transform: scale(1.08) rotate(3deg);
+}
+
+@keyframes nitro-icon-charge {
+  0% {
+    opacity: 0;
+    transform: scale(0.78);
+  }
+  45% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.22);
+  }
+}
+
+@keyframes nitro-icon-arrive {
+  from {
+    opacity: 0.35;
+    transform: translateY(7px) scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nitro-route-signal {
+  opacity: var(--nitro-route-opacity, 0);
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--verde-nitro) 70%, transparent));
+  transform: translate3d(var(--nitro-route-x, 0px), -50%, 0) translateX(-50%);
+  transition: opacity 120ms linear;
+  will-change: transform;
+}
+
+.nitro-route-fill {
+  transform: scaleX(var(--nitro-route-progress, 0));
+  will-change: transform;
+}
+
+.nitro-route-status {
+  opacity: var(--nitro-route-status-opacity, 0.35);
+  transition: opacity 180ms ease;
+}
+
+.nitro-route-node {
+  transition:
+    border-color 240ms ease,
+    color 240ms ease,
+    transform 240ms ease;
+}
+
+.nitro-route-node::after {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--verde-nitro);
+  border-radius: 1rem;
+  content: "";
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.nitro-route-node.nitro-route-node-is-active {
+  border-color: color-mix(in srgb, var(--verde-nitro) 55%, transparent);
+  color: var(--verde-nitro);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.nitro-route-node.nitro-route-node-is-active::after {
+  animation: nitro-route-node-ring 460ms ease-out both;
+}
+
+@keyframes nitro-route-node-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  45% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.22);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
   .typing-dot {
     animation: none;
     opacity: 0.6;

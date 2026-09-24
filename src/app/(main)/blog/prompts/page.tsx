@@ -67,7 +67,7 @@ export default async function PromptsPage() {
       <div className="mb-10">
         <Link
           href="/blog"
-          className="inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors mb-6 group"
+          className="inline-flex items-center text-sm font-medium text-white/45 hover:text-white/78 transition-colors mb-6 group"
         >
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
           Volver al Blog
@@ -80,7 +80,7 @@ export default async function PromptsPage() {
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
             Galería de <span className="text-primary">prompts</span>
           </h1>
-          <p className="text-zinc-400 text-lg">
+          <p className="text-white/58 text-lg">
             Prompts listos para usar: cópialos, dales like y comparte tu favorito.
           </p>
         </div>
@@ -95,10 +95,10 @@ export default async function PromptsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <Terminal className="w-12 h-12 text-primary mb-4 opacity-50" />
-              <p className="text-xl text-zinc-400 mb-2">
+              <p className="text-xl text-white/58 mb-2">
                 Aún no hay prompts publicados.
               </p>
-              <p className="text-sm text-zinc-600">
+              <p className="text-sm text-white/38">
                 Vuelve pronto — estamos preparando la colección.
               </p>
             </div>
@@ -109,14 +109,14 @@ export default async function PromptsPage() {
         <aside className="lg:col-span-4">
           <div className="lg:sticky lg:top-24 space-y-6">
             {/* Prompts Stats Banner */}
-            <div className="relative overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-950/80 via-zinc-900/90 to-zinc-900/80 p-5">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-superficie-nitro/80 via-[#0d110e]/90 to-[#0d110e]/80 p-5">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
               <div className="relative flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/15 border border-purple-500/20 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-purple-400" />
+                <div className="w-10 h-10 rounded-lg bg-primary/15 border border-primary/20 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-purple-400/80">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-primary/80">
                     Colección
                   </span>
                   <p className="text-sm font-bold text-white leading-tight">
@@ -124,7 +124,7 @@ export default async function PromptsPage() {
                   </p>
                 </div>
               </div>
-              <p className="relative text-xs text-zinc-400 leading-relaxed">
+              <p className="relative text-xs text-white/58 leading-relaxed">
                 Creados y probados con las mejores herramientas de IA.
                 Actualizado semanalmente.
               </p>
@@ -137,7 +137,7 @@ export default async function PromptsPage() {
             <NitroCtaCard />
 
             {/* Newsletter */}
-            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+            <div className="bg-[#0d110e]/60 border border-white/10 rounded-xl p-6">
               <NewsletterForm />
             </div>
           </div>

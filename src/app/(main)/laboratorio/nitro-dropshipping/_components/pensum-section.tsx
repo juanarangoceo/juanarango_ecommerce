@@ -96,11 +96,11 @@ const phases = [
       },
       {
         title: "Control de Versiones y Propiedad",
-        desc: "Te enseñamos a guardar tu código en un repositorio propio. Si un producto muere, clonas tu estructura y lanzas el siguiente en 5 minutos."
+        desc: "Te enseñamos a guardar tu código en un repositorio propio para conservar versiones, reutilizar la estructura y adaptar el proyecto con trazabilidad."
       },
       {
         title: "Despliegue Edge (Carga en Milisegundos)",
-        desc: "Subiremos tu tienda a una red global gratuita. Tu web cargará más rápido que cualquier tienda tradicional, garantizando que el tráfico de tus anuncios de TikTok o Meta no rebote por lentitud."
+        desc: "Publicaremos tu tienda sobre una red global y revisaremos su rendimiento. Una base técnica rápida reduce fricción, pero el comportamiento del tráfico también depende de la oferta, la campaña y el dispositivo."
       }
     ]
   }

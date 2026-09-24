@@ -167,7 +167,7 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
           </div>
         </div>
         <h3 className="text-2xl font-black text-white">¡Estás dentro del laboratorio! 🧪</h3>
-        <p className="text-zinc-400 max-w-sm leading-relaxed">{message}</p>
+        <p className="text-white/58 max-w-sm leading-relaxed">{message}</p>
         <div className="flex gap-3 mt-2 flex-wrap justify-center">
           <Link href="/guias" className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
             Explora las Guías Gratuitas <ArrowRight className="w-4 h-4" />
@@ -184,25 +184,25 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Nombre completo *</label>
+          <label className="block text-xs font-bold text-white/58 uppercase tracking-wider mb-1.5">Nombre completo *</label>
           <input
             name="name"
             type="text"
             placeholder="Tu nombre"
             required
             disabled={status === "loading"}
-            className="w-full px-4 py-3 bg-zinc-900/80 border border-zinc-700 focus:border-cyan-500 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
+            className="w-full px-4 py-3 bg-[#0d110e]/80 border border-white/15 focus:border-cyan-500 rounded-xl text-white placeholder:text-white/38 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
           />
         </div>
         <div>
-          <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Email *</label>
+          <label className="block text-xs font-bold text-white/58 uppercase tracking-wider mb-1.5">Email *</label>
           <input
             name="email"
             type="email"
             placeholder="tucorreo@ejemplo.com"
             required
             disabled={status === "loading"}
-            className="w-full px-4 py-3 bg-zinc-900/80 border border-zinc-700 focus:border-cyan-500 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
+            className="w-full px-4 py-3 bg-[#0d110e]/80 border border-white/15 focus:border-cyan-500 rounded-xl text-white placeholder:text-white/38 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
           />
         </div>
       </div>
@@ -211,11 +211,11 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
         <>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">¿Qué tipo de negocio tienes?</label>
+              <label className="block text-xs font-bold text-white/58 uppercase tracking-wider mb-1.5">¿Qué tipo de negocio tienes?</label>
               <select
                 name="business_type"
                 disabled={status === "loading"}
-                className="w-full px-4 py-3 bg-zinc-900/80 border border-zinc-700 focus:border-cyan-500 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
+                className="w-full px-4 py-3 bg-[#0d110e]/80 border border-white/15 focus:border-cyan-500 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
               >
                 <option value="">Selecciona una opción</option>
                 <option value="ecommerce">Tienda Ecommerce</option>
@@ -227,11 +227,11 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Facturación mensual actual</label>
+              <label className="block text-xs font-bold text-white/58 uppercase tracking-wider mb-1.5">Facturación mensual actual</label>
               <select
                 name="monthly_revenue"
                 disabled={status === "loading"}
-                className="w-full px-4 py-3 bg-zinc-900/80 border border-zinc-700 focus:border-cyan-500 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
+                className="w-full px-4 py-3 bg-[#0d110e]/80 border border-white/15 focus:border-cyan-500 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
               >
                 <option value="">Selecciona un rango</option>
                 <option value="starting">Apenas empezando</option>
@@ -243,13 +243,13 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">¿Qué quieres aprender o escalar? <span className="text-zinc-600 normal-case font-normal">(opcional)</span></label>
+            <label className="block text-xs font-bold text-white/58 uppercase tracking-wider mb-1.5">¿Qué quieres aprender o escalar? <span className="text-white/38 normal-case font-normal">(opcional)</span></label>
             <textarea
               name="message"
               rows={3}
               placeholder="Cuéntame tu situación actual y qué esperas del Laboratorio..."
               disabled={status === "loading"}
-              className="w-full px-4 py-3 bg-zinc-900/80 border border-zinc-700 focus:border-cyan-500 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm resize-none"
+              className="w-full px-4 py-3 bg-[#0d110e]/80 border border-white/15 focus:border-cyan-500 rounded-xl text-white placeholder:text-white/38 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm resize-none"
             />
           </div>
         </>
@@ -279,7 +279,7 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
           </>
         )}
       </button>
-      <p className="text-xs text-zinc-600 text-center">
+      <p className="text-xs text-white/38 text-center">
         100% gratuito registrarse · Sin spam · Cancelación en cualquier momento
       </p>
     </form>
@@ -291,13 +291,13 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`border rounded-2xl transition-all duration-300 ${open ? "border-cyan-500/30 bg-cyan-950/20" : "border-zinc-800 bg-zinc-900/40"}`}>
+    <div className={`border rounded-2xl transition-all duration-300 ${open ? "border-cyan-500/30 bg-cyan-950/20" : "border-white/10 bg-[#0d110e]/40"}`}>
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
       >
         <span className={`font-bold text-base transition-colors ${open ? "text-cyan-300" : "text-white"}`}>{q}</span>
-        {open ? <ChevronUp className="w-5 h-5 text-cyan-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-zinc-500 flex-shrink-0" />}
+        {open ? <ChevronUp className="w-5 h-5 text-cyan-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-white/45 flex-shrink-0" />}
       </button>
       <AnimatePresence>
         {open && (
@@ -308,7 +308,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <p className="px-6 pb-5 text-zinc-400 leading-relaxed text-sm">{a}</p>
+            <p className="px-6 pb-5 text-white/58 leading-relaxed text-sm">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -412,7 +412,7 @@ export function LaboratorioPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-zinc-400 leading-relaxed mb-4 max-w-3xl mx-auto"
+              className="text-xl md:text-2xl text-white/58 leading-relaxed mb-4 max-w-3xl mx-auto"
             >
               Únete a una comunidad diseñada para construir juntos. En este{" "}
               <NeonText color="cyan">laboratorio activo</NeonText>{" "}
@@ -423,7 +423,7 @@ export function LaboratorioPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-base text-zinc-600 mb-10"
+              className="text-base text-white/38 mb-10"
             >
               Por Juan Arango · Experto en Ecommerce y Escalamiento Digital
             </motion.p>
@@ -450,7 +450,7 @@ export function LaboratorioPage() {
               </button>
               <a
                 href="#que-encontraras"
-                className="inline-flex items-center gap-2 px-6 py-4 font-semibold text-sm rounded-xl border border-zinc-700 text-zinc-300 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-4 font-semibold text-sm rounded-xl border border-white/15 text-white/78 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
               >
                 <Play className="w-4 h-4" />
                 Ver qué incluye
@@ -464,7 +464,7 @@ export function LaboratorioPage() {
         {/* ╔══════════════════════════════════════════════════════════════╗
             ║  THE METHOD                                                    ║
             ╚══════════════════════════════════════════════════════════════╝ */}
-        <section className="py-20 px-6 border-y border-zinc-900">
+        <section className="py-20 px-6 border-y border-white/9">
           <div className="container mx-auto max-w-4xl">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -473,10 +473,10 @@ export function LaboratorioPage() {
                   Construye tú mismo<br />
                   <NeonText color="fuchsia">con el Método NP3.</NeonText>
                 </h2>
-                <p className="text-zinc-400 leading-relaxed mb-4">
+                <p className="text-white/58 leading-relaxed mb-4">
                   El verdadero aprendizaje empieza cuando experimentas en la práctica. Hemos creado una comunidad activa enfocada en la creación, donde tú mismo implementas sistemas modulares para escalar tus operaciones.
                 </p>
-                <p className="text-zinc-400 leading-relaxed">
+                <p className="text-white/58 leading-relaxed">
                   Con el método <strong className="text-white">NP3</strong> (Nicho, Prompts, Planes y Productos), te acompañamos en la construcción estructural de tus propios activos digitales escalables desde cero, acortando la curva de prueba y error.
                 </p>
               </div>
@@ -490,7 +490,7 @@ export function LaboratorioPage() {
                 ].map((p) => (
                   <div key={p} className="flex items-start gap-3 p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/10">
                     <span className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs font-bold mt-0.5">✓</span>
-                    <span className="text-zinc-300 text-sm">{p}</span>
+                    <span className="text-white/78 text-sm">{p}</span>
                   </div>
                 ))}
               </div>
@@ -508,7 +508,7 @@ export function LaboratorioPage() {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 Seis líneas de experimentación
               </h2>
-              <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+              <p className="text-white/58 text-lg max-w-2xl mx-auto">
                 Cada experimento es una oportunidad de crecimiento, diseñada para implementar de forma inmediata.
               </p>
             </div>
@@ -518,7 +518,7 @@ export function LaboratorioPage() {
                 <motion.div
                   key={p.title}
                   whileHover={{ y: -4 }}
-                  className={`relative rounded-2xl border ${p.border} bg-zinc-950/60 p-6 overflow-hidden group transition-all duration-300 hover:${p.glow} hover:shadow-lg`}
+                  className={`relative rounded-2xl border ${p.border} bg-[#0b0e0c]/60 p-6 overflow-hidden group transition-all duration-300 hover:${p.glow} hover:shadow-lg`}
                 >
                   <div className={`absolute top-0 right-0 w-24 h-24 blur-3xl rounded-full ${p.iconBg} opacity-50 group-hover:opacity-100 transition-opacity`} />
                   <span className={`inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${p.tag} mb-4`}>
@@ -529,7 +529,7 @@ export function LaboratorioPage() {
                     <p.icon className={`w-6 h-6 ${p.iconColor}`} />
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">{p.title}</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{p.desc}</p>
+                  <p className="text-white/45 text-sm leading-relaxed">{p.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -539,7 +539,7 @@ export function LaboratorioPage() {
         {/* ╔══════════════════════════════════════════════════════════════╗
             ║  VS COMPARISON                                                 ║
             ╚══════════════════════════════════════════════════════════════╝ */}
-        <section className="py-20 px-6 bg-zinc-950/50 border-y border-zinc-900">
+        <section className="py-20 px-6 bg-[#0b0e0c]/50 border-y border-white/9">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -552,12 +552,12 @@ export function LaboratorioPage() {
                   key={col.label}
                   className={`rounded-2xl border p-6 ${
                     i === 0
-                      ? "border-zinc-800 bg-zinc-900/40"
+                      ? "border-white/10 bg-[#0d110e]/40"
                       : "border-cyan-500/30 bg-gradient-to-br from-cyan-950/30 to-fuchsia-950/20"
                   }`}
                   style={i === 1 ? { boxShadow: "0 0 40px rgba(6,182,212,0.1)" } : {}}
                 >
-                  <h3 className={`font-bold text-base mb-5 ${i === 0 ? "text-zinc-500" : "text-cyan-300"}`}>
+                  <h3 className={`font-bold text-base mb-5 ${i === 0 ? "text-white/45" : "text-cyan-300"}`}>
                     {i === 1 && "✦ "}
                     {col.label}
                   </h3>
@@ -566,12 +566,12 @@ export function LaboratorioPage() {
                       <li key={item} className="flex items-center gap-3">
                         <span className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold ${
                           i === 0
-                            ? "bg-zinc-800 text-zinc-400"
+                            ? "bg-[#111512] text-white/58"
                             : "bg-cyan-500/15 text-cyan-400"
                         }`}>
                           {i === 0 ? "•" : "✓"}
                         </span>
-                        <span className={`text-sm ${i === 0 ? "text-zinc-500" : "text-zinc-300"}`}>{item}</span>
+                        <span className={`text-sm ${i === 0 ? "text-white/45" : "text-white/78"}`}>{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -586,17 +586,17 @@ export function LaboratorioPage() {
             ╚══════════════════════════════════════════════════════════════╝ */}
         <section className="py-24 px-6">
           <div className="container mx-auto max-w-4xl">
-            <div className="relative rounded-3xl border border-zinc-800 bg-zinc-950/80 p-8 md:p-12 overflow-hidden">
+            <div className="relative rounded-3xl border border-white/10 bg-[#0b0e0c]/80 p-8 md:p-12 overflow-hidden">
               <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
               <div className="absolute bottom-0 right-0 w-48 h-48 bg-fuchsia-500/5 blur-3xl rounded-full pointer-events-none" />
 
               <div className="relative grid md:grid-cols-2 gap-10 items-center">
                 <div>
                   <h2 className="text-3xl font-bold text-white mb-4">Juan Arango</h2>
-                  <p className="text-zinc-400 leading-relaxed mb-4">
+                  <p className="text-white/58 leading-relaxed mb-4">
                     Experto en Ecommerce y Escalamiento Digital con más de 15 años experimentando y construyendo sistemas para empresas en Colombia y LATAM.
                   </p>
-                  <p className="text-zinc-400 leading-relaxed mb-6">
+                  <p className="text-white/58 leading-relaxed mb-6">
                     A través del tiempo, he comprobado que la mejor manera de escalar es experimentando tú mismo. El Laboratorio es el ecosistema donde comparto resultados, metodologías en tiempo real y aprendemos mutuamente estructurando procesos escalables.
                   </p>
                   <div className="grid grid-cols-3 gap-4">
@@ -607,7 +607,7 @@ export function LaboratorioPage() {
                     ].map((s) => (
                       <div key={s.lab} className="text-center">
                         <p className="text-2xl font-bold text-cyan-400">{s.val}</p>
-                        <p className="text-[11px] text-zinc-600 leading-tight mt-0.5">{s.lab}</p>
+                        <p className="text-[11px] text-white/38 leading-tight mt-0.5">{s.lab}</p>
                       </div>
                     ))}
                   </div>
@@ -615,7 +615,7 @@ export function LaboratorioPage() {
                 <div className="flex justify-center">
                   <div className="relative w-52 h-52">
                     <div className="absolute inset-0 rounded-full" style={{ background: "conic-gradient(from 0deg, #22d3ee, #a855f7, #ec4899, #22d3ee)", padding: "2px" }}>
-                      <div className="w-full h-full rounded-full bg-zinc-950 flex items-center justify-center">
+                      <div className="w-full h-full rounded-full bg-[#0b0e0c] flex items-center justify-center">
                         <div className="text-center">
                           <FlaskConical className="w-16 h-16 mx-auto mb-2 text-cyan-400" style={{ filter: "drop-shadow(0 0 15px rgba(34,211,238,0.5))" }} />
                           <p className="text-xs font-black text-white tracking-widest uppercase">Lab Director</p>
@@ -653,7 +653,7 @@ export function LaboratorioPage() {
                 <br />
                 <NeonText color="cyan">comunidad</NeonText>
               </h2>
-              <p className="text-zinc-400 text-lg max-w-xl mx-auto">
+              <p className="text-white/58 text-lg max-w-xl mx-auto">
                 Trabajaremos juntos, paso a paso, aplicando nuevas soluciones en nuestro entorno colaborativo.
               </p>
             </div>
@@ -678,7 +678,7 @@ export function LaboratorioPage() {
                 { icon: "⚡", text: "Acceso\nprioritario" },
                 { icon: "🎯", text: "Precio especial\nde lanzamiento" },
               ].map((n) => (
-                <div key={n.text} className="text-xs text-zinc-600 leading-tight whitespace-pre-line">
+                <div key={n.text} className="text-xs text-white/38 leading-tight whitespace-pre-line">
                   <span className="block text-lg mb-1">{n.icon}</span>
                   {n.text}
                 </div>
@@ -690,7 +690,7 @@ export function LaboratorioPage() {
         {/* ╔══════════════════════════════════════════════════════════════╗
             ║  FAQ                                                           ║
             ╚══════════════════════════════════════════════════════════════╝ */}
-        <section className="py-20 px-6 border-t border-zinc-900">
+        <section className="py-20 px-6 border-t border-white/9">
           <div className="container mx-auto max-w-3xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -706,13 +706,13 @@ export function LaboratorioPage() {
         {/* ╔══════════════════════════════════════════════════════════════╗
             ║  FINAL CTA                                                     ║
             ╚══════════════════════════════════════════════════════════════╝ */}
-        <section className="py-24 px-6 border-t border-zinc-900">
+        <section className="py-24 px-6 border-t border-white/9">
           <div className="container mx-auto max-w-3xl text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
               Construyamos algo<br />
               <NeonText color="fuchsia">juntos hoy</NeonText>
             </h2>
-            <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-white/58 text-lg mb-10 max-w-xl mx-auto">
               Súmate a la creación de proyectos y empieza a dominar la experimentación continua para estructurar y escalar mejor las ideas con el Laboratorio.
             </p>
             <button
@@ -727,13 +727,13 @@ export function LaboratorioPage() {
               Registrarme ahora
               <ArrowRight className="w-5 h-5" />
             </button>
-            <p className="text-zinc-700 text-sm mt-6">
+            <p className="text-white/78 text-sm mt-6">
               ¿Tienes preguntas?{" "}
-              <Link href="/blog" className="text-zinc-600 hover:text-cyan-400 transition-colors underline underline-offset-2">
+              <Link href="/blog" className="text-white/38 hover:text-cyan-400 transition-colors underline underline-offset-2">
                 Lee el blog
               </Link>
               {" · "}
-              <Link href="/newsletter" className="text-zinc-600 hover:text-fuchsia-400 transition-colors underline underline-offset-2">
+              <Link href="/newsletter" className="text-white/38 hover:text-fuchsia-400 transition-colors underline underline-offset-2">
                 Únete a la newsletter
               </Link>
             </p>

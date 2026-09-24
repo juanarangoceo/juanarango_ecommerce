@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Juan Arango Ecommerce
 
-## Getting Started
+Sitio comercial y editorial de **Juan Arango / Nitro Ecom**. Presenta las
+soluciones Nitro, publica contenido sobre ecommerce e inteligencia artificial y
+aloja landings específicas para adquisición de clientes.
 
-First, run the development server:
+## Stack
+
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Sanity, Supabase y
+Vercel. Algunas funciones integran Cloudinary, Resend, Telegram, Meta, Cal.com,
+Gemini, OpenAI e Inngest.
+
+## Desarrollo local
+
+Instala dependencias y abre el servidor en el puerto usado por el túnel SSH:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev -- -p 4321
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sitio principal: `http://localhost:4321`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Landing VSL de NitroBot: `http://localhost:4321/nitrobot/vsl`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Validación
 
-## Learn More
+```bash
+npx eslint <archivos-modificados>
+npx tsc --noEmit
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+El script `npm run lint` es heredado y aún apunta a `next lint`, retirado en la
+versión actual de Next.js. Usa `npx eslint` hasta que se corrija explícitamente.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentación
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Empieza por [`AGENTS.md`](AGENTS.md) si eres un agente o por
+[`docs/README.md`](docs/README.md) si buscas el mapa del proyecto.
 
-## Deploy on Vercel
+- Estado vivo: [`docs/pendientes.md`](docs/pendientes.md)
+- Arquitectura: [`docs/arquitectura.md`](docs/arquitectura.md)
+- Desarrollo y despliegue: [`docs/desarrollo-y-despliegue.md`](docs/desarrollo-y-despliegue.md)
+- Producto NitroBot: [`docs/producto/nitrobot.md`](docs/producto/nitrobot.md)
+- Bitácora: [`docs/bitacora/`](docs/bitacora/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Las variables de entorno son locales o de Vercel y nunca deben escribirse en la
+documentación con sus valores.

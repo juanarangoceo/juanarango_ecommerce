@@ -21,14 +21,14 @@ export function AdvertisingBanner({ ad, className }: AdvertisingBannerProps) {
   return (
     <div className={cn("w-full my-8", className)}>
       <div className="flex flex-col gap-1 items-start">
-        <span className="text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-600 font-medium px-1">
+        <span className="text-[10px] uppercase tracking-wider text-white/38 font-medium px-1">
           Publicidad
         </span>
         <Link
           href={ad.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full relative rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:opacity-95 transition-opacity"
+          className="block w-full relative rounded-lg overflow-hidden border border-white/10 hover:opacity-95 transition-opacity"
         >
           {/* Mobile Image (< 768px) - 672x560 (approx 6:5) */}
           <div className="block md:hidden relative w-full aspect-[6/5]">

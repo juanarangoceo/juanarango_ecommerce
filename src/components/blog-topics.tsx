@@ -32,7 +32,7 @@ export function BlogTopics({ topics }: BlogTopicsProps) {
 
   return (
     <div className="w-full mb-8">
-      <ScrollArea className="w-full whitespace-nowrap rounded-md border border-white/5 bg-zinc-900/30 p-1">
+      <ScrollArea className="w-full whitespace-nowrap rounded-md border border-white/5 bg-[#0d110e]/30 p-1">
         <div className="flex w-max space-x-2 p-2">
           {/* 'All' / Clear filter button */}
           <button

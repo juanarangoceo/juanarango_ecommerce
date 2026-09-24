@@ -15,7 +15,7 @@ export function CTASection() {
           Cada mes que pasa sin vender, Shopify si cobró su mensualidad por adelantado.
           Ese es dinero que podrías haber invertido en testear un anuncio ganador.{" "}
           <strong className="text-foreground mt-4 block">
-            Rompe la cadena mensual hoy. Construye tu tienda nivel Enterprise a $0.
+            Evalúa el costo total, el mantenimiento y el control que necesitas antes de elegir una plataforma.
           </strong>
         </p>
 
@@ -30,10 +30,10 @@ export function CTASection() {
 
         <div className="mt-8 font-mono text-[10px] md:text-xs text-foreground/40 uppercase tracking-widest flex flex-wrap justify-center gap-4 border border-border px-6 py-3 bg-card/50">
           <span>PAGO ÚNICO</span>
-          <span className="text-primary">///</span>
+          <span className="text-primary">{"///"}</span>
           <span>ACCESO DE POR VIDA</span>
-          <span className="text-primary">///</span>
-          <span>GARANTÍA DE 7 DÍAS</span>
+          <span className="text-primary">{"///"}</span>
+          <span>ALCANCE DOCUMENTADO</span>
         </div>
       </div>
     </section>

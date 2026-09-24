@@ -66,7 +66,7 @@ export function OpenClawInstallationTabs() {
             key={tab.id}
             onClick={() => setActive(tab.id)}
             className={`px-4 py-2 text-sm font-medium transition-colors relative whitespace-nowrap ${
-              active === tab.id ? "text-[#e05a3a]" : "text-zinc-400 hover:text-zinc-200"
+              active === tab.id ? "text-[#e05a3a]" : "text-white/58 hover:text-white/84"
             }`}
           >
             {tab.label}

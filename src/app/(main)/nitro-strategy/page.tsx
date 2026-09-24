@@ -1,30 +1,9 @@
-import { Hero } from "@/components/nitro-strategy/hero"
-import { PainPoints } from "@/components/nitro-strategy/pain-points"
-import { Services } from "@/components/nitro-strategy/services"
-import { About } from "@/components/nitro-strategy/about"
-import { Methodology } from "@/components/nitro-strategy/methodology"
-import { FAQ } from "@/components/nitro-strategy/faq"
-import { UrgencyBanner } from "@/components/nitro-strategy/urgency-banner"
-import { CTAForm } from "@/components/nitro-strategy/cta-form"
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
+import { Network } from "lucide-react";
+import { SolutionPage } from "@/components/commercial/solution-page";
 
-export const metadata: Metadata = {
-  title: 'Consultoría en Arquitectura Headless y Escalamiento | Nitro Strategy',
-  description: 'Consultoría de alto nivel para empresas que necesitan escalar. Consultoría en arquitectura headless, automatización con IA y optimización de infraestructura.',
-  keywords: ['arquitectura headless', 'escalamiento e-commerce', 'automatización IA', 'consultoría técnica', 'Juan Arango'],
-}
+export const metadata: Metadata = { title: "Nitro Strategy", description: "Acompañamiento técnico y comercial para ordenar decisiones de arquitectura, automatización y operación digital.", alternates: { canonical: "https://www.juanarangoecommerce.com/nitro-strategy" } };
 
 export default function NitroStrategyPage() {
-  return (
-    <main className="min-h-screen bg-background">
-      <Hero />
-      <PainPoints />
-      <Services />
-      <About />
-      <Methodology />
-      <FAQ />
-      <UrgencyBanner />
-      <CTAForm />
-    </main>
-  )
+  return <SolutionPage eyebrow="Arquitectura · Automatización · Dirección" title="Nitro Strategy" promise="Convierte decisiones técnicas dispersas en una dirección compartida." description="Trabajo con tu equipo para entender restricciones, dependencias y prioridades antes de elegir arquitectura, automatizaciones o proveedores." icon={Network} outcomes={["Mapa de sistemas, responsables y dependencias relevantes.", "Decisiones técnicas conectadas con una necesidad del negocio.", "Riesgos y etapas de implementación visibles para el equipo.", "Documentación que permite revisar y sostener lo construido."]} suitableFor={["La operación depende de varias herramientas y nadie ve el recorrido completo.", "Debes tomar una decisión técnica con impacto en varias áreas.", "Existe un equipo que participará en la implementación y validación."]} notFor={["Buscas una garantía de resultados sin acceso al contexto real.", "La necesidad puede resolverse con una pieza aislada y claramente definida.", "No hay responsables disponibles para validar decisiones y operación."]} steps={[{ title: "Descubrimiento", description: "Reunimos objetivos, restricciones, sistemas y responsables." }, { title: "Diseño", description: "Planteamos opciones, dependencias y criterios de decisión." }, { title: "Ejecución", description: "Implementamos o acompañamos entregas pequeñas y verificables." }, { title: "Transferencia", description: "Documentamos decisiones y dejamos al equipo con control." }]} />;
 }

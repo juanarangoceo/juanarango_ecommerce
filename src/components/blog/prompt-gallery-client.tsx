@@ -72,13 +72,13 @@ export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClient
                   ? cfg
                     ? `${cfg.bg} ${cfg.border} ${cfg.color} shadow-sm`
                     : "bg-white/10 border-white/20 text-white shadow-sm"
-                  : "bg-zinc-900 border-zinc-700 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200 hover:border-zinc-600"
+                  : "bg-[#0d110e] border-white/15 text-white/58 hover:bg-[#111512] hover:text-white/84 hover:border-white/25"
               }`}
             >
               {cat.label}
               <span
                 className={`ml-2 text-[10px] font-bold tabular-nums px-1.5 py-0.5 rounded-full ${
-                  isActive ? "bg-white/20 text-white" : "bg-zinc-800 text-zinc-500"
+                  isActive ? "bg-white/20 text-white" : "bg-[#111512] text-white/45"
                 }`}
               >
                 {cat.value === "todos"
@@ -121,12 +121,12 @@ export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClient
                 size="sm"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="border-zinc-700 hover:bg-zinc-800 h-9 px-3 disabled:opacity-40"
+                className="border-white/15 hover:bg-[#111512] h-9 px-3 disabled:opacity-40"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
                 Anterior
               </Button>
-              <span className="text-sm text-zinc-400">
+              <span className="text-sm text-white/58">
                 Página <span className="text-white font-semibold">{currentPage}</span> de{" "}
                 <span className="text-white font-semibold">{totalPages}</span>
               </span>
@@ -135,7 +135,7 @@ export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClient
                 size="sm"
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="border-zinc-700 hover:bg-zinc-800 h-9 px-3 disabled:opacity-40"
+                className="border-white/15 hover:bg-[#111512] h-9 px-3 disabled:opacity-40"
               >
                 Siguiente
                 <ChevronRight className="w-4 h-4 ml-1" />
@@ -144,11 +144,11 @@ export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClient
           )}
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-zinc-900/40 rounded-2xl border border-zinc-800">
-          <p className="text-lg text-zinc-400 mb-1">No hay prompts en esta categoría aún.</p>
+        <div className="flex flex-col items-center justify-center py-20 text-center bg-[#0d110e]/40 rounded-2xl border border-white/10">
+          <p className="text-lg text-white/58 mb-1">No hay prompts en esta categoría aún.</p>
           <button
             onClick={() => handleCategoryChange("todos")}
-            className="mt-3 text-sm text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors"
+            className="mt-3 text-sm text-primary hover:text-primary underline underline-offset-2 transition-colors"
           >
             Ver todos los prompts
           </button>

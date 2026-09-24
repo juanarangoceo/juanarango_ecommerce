@@ -28,7 +28,7 @@ export function NitroCtaButton() {
           </Button>
         </Link>
       </div>
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-white/45">
         Sin costo y sin compromiso. Te digo qué haría yo con tu operación.
       </p>
     </div>

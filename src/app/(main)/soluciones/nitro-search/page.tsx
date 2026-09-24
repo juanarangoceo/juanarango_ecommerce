@@ -1,36 +1,9 @@
-import { Metadata } from 'next';
-import { CTAForm } from '@/components/nitro-search/cta-form';
-import { Hero } from '@/components/nitro-search/hero';
-import { Features } from '@/components/nitro-search/features';
-import { Process } from '@/components/nitro-search/process';
-import { FAQ } from '@/components/nitro-search/faq';
-import { NewsletterForm } from '@/components/newsletter-form';
+import type { Metadata } from "next";
+import { SearchCheck } from "lucide-react";
+import { SolutionPage } from "@/components/commercial/solution-page";
 
-export const metadata: Metadata = {
-  title: 'Nitro Search | Posicionamiento SEO e Inteligencia Artificial',
-  description: 'Auditoría SEO, optimización SGE (Search Generative Experience) y crecimiento orgánico para e-commerce y empresas.',
-  keywords: ['agencia SEO', 'SEO para ecommerce', 'posicionamiento SGE', 'SEO técnico', 'auditoría web', 'Juan Arango SEO'],
-  alternates: {
-    canonical: 'https://www.juanarangoecommerce.com/soluciones/nitro-search'
-  }
-};
+export const metadata: Metadata = { title: "Nitro Search", description: "Diagnóstico e implementación de mejoras de búsqueda orgánica para sitios y ecommerce.", alternates: { canonical: "https://www.juanarangoecommerce.com/soluciones/nitro-search" } };
 
 export default function NitroSearchPage() {
-  return (
-    <main className="min-h-screen bg-background">
-      <Hero />
-      <Features />
-      <Process />
-      <FAQ />
-      
-      <CTAForm />
-
-      {/* ===== NEWSLETTER SUBSCRIPTION ===== */}
-      <section className="py-20 px-6 bg-black border-t border-white/5">
-        <div className="container mx-auto max-w-xl">
-          <NewsletterForm />
-        </div>
-      </section>
-    </main>
-  );
+  return <SolutionPage eyebrow="Contenido · Técnica · Medición" title="Nitro Search" promise="Haz que buscadores y personas entiendan mejor lo que ofreces." description="Revisamos estructura, contenido, indexación y medición para convertir hallazgos técnicos en un plan que tu equipo pueda implementar y sostener." icon={SearchCheck} outcomes={["Problemas técnicos y editoriales separados por prioridad.", "Arquitectura de contenidos vinculada con búsquedas relevantes para el negocio.", "Recomendaciones implementables, con responsables y dependencias claras.", "Medición para observar cambios sin atribuir resultados que no se pueden demostrar."]} suitableFor={["Tu sitio tiene contenido, pero no existe una estrategia clara para organizarlo.", "Necesitas revisar problemas de indexación, estructura o rendimiento.", "Puedes sostener mejoras técnicas y editoriales después del diagnóstico."]} notFor={["Buscas posiciones garantizadas o resultados inmediatos.", "No hay acceso a datos, contenido ni responsables del sitio.", "La prioridad actual es una campaña de captación de corto plazo."]} steps={[{ title: "Inventario", description: "Revisamos páginas, consultas, medición y estado técnico disponible." }, { title: "Prioridad", description: "Separamos problemas críticos, oportunidades y trabajo editorial." }, { title: "Implementación", description: "Corregimos o acompañamos las mejoras acordadas por etapas." }, { title: "Seguimiento", description: "Observamos indexación y comportamiento con el contexto necesario." }]} />;
 }

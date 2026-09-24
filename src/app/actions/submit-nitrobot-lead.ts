@@ -1,150 +1,147 @@
-"use server";
+"use server"
 
-import { createClient } from "@supabase/supabase-js";
-import { Resend } from "resend";
+import { NitroBotIntakeError, sendNitroBotLead } from "@/lib/nitrobot-intake"
+import { inngest } from "@/lib/inngest/client"
+import {
+  NITROBOT_CONSENT_VERSION,
+  NITROBOT_LEAD_CONTRACT_VERSION,
+  NITROBOT_PRIVACY_VERSION,
+  type NitroBotLeadPayload,
+  type NitroBotSubmitResult,
+} from "@/lib/nitrobot-lead"
 
-/**
- * Lead calificado de NitroBot.
- *
- * A diferencia del formulario genérico, este captura señales de calificación
- * (volumen de WhatsApp, quién atiende hoy, objetivo) para que podamos ver de
- * inmediato si quien escribe es nuestro cliente ideal. Reutiliza la tabla
- * `leads` existente: el detalle estructurado va en `interest` y `message`,
- * sin necesidad de migración.
- */
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+const allowed = {
+  businessType: ["productos", "servicios", "mixto", "otro"],
+  platform: ["shopify", "catalogo_nitro", "woocommerce", "otra", "sin_catalogo"],
+  catalogSize: ["1_25", "26_100", "101_500", "501_plus", "sin_catalogo"],
+  dailyConversations: ["under_20", "20_50", "50_150", "over_150", "unknown"],
+  monthlyOrders: ["under_30", "30_100", "101_300", "301_plus", "unknown"],
+  whoAttends: ["owner", "one_person", "team", "nobody_fixed"],
+  primaryPain: ["response_time", "quoting", "incomplete_data", "follow_up", "team_capacity", "other"],
+  implementationTiming: ["under_30_days", "one_to_three_months", "exploring"],
+} as const
 
-/** Califica el fit del lead según el volumen de conversaciones (valores exactos del formulario). */
-function calcularFit(volume: string): { etiqueta: string; emoji: string } {
-  switch (volume) {
-    case "Más de 150":
-      return { etiqueta: "Cliente ideal — alto volumen", emoji: "🔥" };
-    case "50 a 150":
-      return { etiqueta: "Buen fit", emoji: "✅" };
-    case "20 a 50":
-      return { etiqueta: "Fit medio", emoji: "🟢" };
-    default:
-      return { etiqueta: "A evaluar — volumen bajo", emoji: "🟡" };
+function text(formData: FormData, key: string, max = 180) {
+  return String(formData.get(key) ?? "").trim().slice(0, max)
+}
+
+function pick<K extends keyof typeof allowed>(formData: FormData, key: K) {
+  const value = text(formData, key)
+  const options = allowed[key] as readonly string[]
+  return options.includes(value) ? (value as (typeof allowed)[K][number]) : null
+}
+
+function attribution(formData: FormData) {
+  const raw = text(formData, "attribution", 2_000)
+  if (!raw) return {}
+  try {
+    const parsed = JSON.parse(raw) as unknown
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {}
+    return Object.fromEntries(
+      Object.entries(parsed)
+        .filter(([, value]) => typeof value === "string")
+        .slice(0, 7)
+        .map(([key, value]) => [key.slice(0, 40), String(value).slice(0, 300)]),
+    )
+  } catch {
+    return {}
   }
 }
 
-export async function submitNitrobotLead(formData: FormData) {
-  const get = (k: string) => ((formData.get(k) as string) || "").trim();
+async function queueLead(payload: NitroBotLeadPayload, idempotencyKey: string, lastError: string) {
+  try {
+    await inngest.send({
+      name: "nitrobot/lead.retry",
+      data: { payload, idempotencyKey, lastError: lastError.slice(0, 500) },
+    })
+    return true
+  } catch (error) {
+    console.error("[nitrobot-form] Inngest no pudo aceptar el reintento:", error)
+    return false
+  }
+}
 
-  const name = get("name");
-  const company = get("company");
-  const whatsapp = get("whatsapp");
-  const email = get("email");
-  const sector = get("sector");
-  const volume = get("volume");
-  const whoAttends = get("whoAttends");
-  const goal = get("goal");
-
-  if (!name || !whatsapp || !email) {
-    return { error: "Faltan campos requeridos (nombre, WhatsApp y email)." };
+export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSubmitResult> {
+  if (text(formData, "website")) return { ok: false, error: "No pudimos validar la solicitud." }
+  const startedAt = Number(text(formData, "startedAt", 30))
+  if (!Number.isFinite(startedAt) || Date.now() - startedAt < 3_000) {
+    return { ok: false, error: "Revisa la información e intenta de nuevo." }
   }
 
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    console.error("Missing Supabase Configuration");
-    return { error: "Error de configuración del servidor (Supabase Keys missing)." };
+  const idempotencyKey = text(formData, "idempotencyKey", 50)
+  const businessType = pick(formData, "businessType")
+  const platform = pick(formData, "platform")
+  const catalogSize = pick(formData, "catalogSize")
+  const dailyConversations = pick(formData, "dailyConversations")
+  const monthlyOrders = pick(formData, "monthlyOrders")
+  const whoAttends = pick(formData, "whoAttends")
+  const primaryPain = pick(formData, "primaryPain")
+  const implementationTiming = pick(formData, "implementationTiming")
+  const name = text(formData, "name", 100)
+  const phone = text(formData, "phone", 40)
+  const email = text(formData, "email", 180).toLowerCase()
+  const consent = formData.get("consent") === "true"
+
+  if (!UUID_RE.test(idempotencyKey) || !name || phone.replace(/\D/g, "").length < 8) {
+    return { ok: false, error: "Completa tu nombre y un WhatsApp válido." }
+  }
+  if (email && !/^\S+@\S+\.\S+$/.test(email)) return { ok: false, error: "Revisa tu correo electrónico." }
+  if (!businessType || !platform || !catalogSize || !dailyConversations || !monthlyOrders || !whoAttends || !primaryPain || !implementationTiming) {
+    return { ok: false, error: "Faltan respuestas para evaluar tu operación." }
+  }
+  if (!consent) return { ok: false, error: "Necesitamos tu autorización para contactarte." }
+
+  const payload: NitroBotLeadPayload = {
+    contractVersion: NITROBOT_LEAD_CONTRACT_VERSION,
+    source: text(formData, "source", 100) || "nitrobot_organic",
+    landingPath: text(formData, "landingPath", 200) || "/nitrobot/conectar",
+    name,
+    company: text(formData, "company", 140) || undefined,
+    phone,
+    email: email || undefined,
+    country: "CO",
+    city: text(formData, "city", 100) || undefined,
+    businessType,
+    platform,
+    catalogSize,
+    dailyConversations,
+    monthlyOrders,
+    whoAttends,
+    primaryPain,
+    hasHandoffPerson: formData.get("hasHandoffPerson") === "true",
+    implementationTiming,
+    catalogReady: formData.get("catalogReady") === "true",
+    goal: text(formData, "goal", 240) || undefined,
+    attribution: attribution(formData),
+    consent: true,
+    consentVersion: NITROBOT_CONSENT_VERSION,
+    privacyVersion: NITROBOT_PRIVACY_VERSION,
+    submittedAt: new Date().toISOString(),
+    isTest: process.env.VERCEL_ENV !== "production",
   }
 
-  const fit = calcularFit(volume);
-
-  // Resumen estructurado para guardar en la tabla `leads` (campo `message`).
-  const interest = `NitroBot · ${goal || "Sin objetivo definido"}`;
-  const message = [
-    `📱 WhatsApp: ${whatsapp}`,
-    `🏭 Sector: ${sector || "No especificado"}`,
-    `💬 Volumen diario de WhatsApp: ${volume || "No especificado"}`,
-    `🙋 Quién atiende hoy: ${whoAttends || "No especificado"}`,
-    `🎯 Objetivo con NitroBot: ${goal || "No especificado"}`,
-    `${fit.emoji} Calificación: ${fit.etiqueta}`,
-  ].join("\n");
+  if (process.env.ENABLE_NITROBOT_LEAD_SUBMISSIONS !== "true") {
+    return { ok: false, error: "El formulario está temporalmente en modo de revisión." }
+  }
 
   try {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
-    );
-
-    const { error: dbError } = await supabase.from("leads").insert({
-      name,
-      email,
-      company,
-      interest,
-      message,
-    });
-
-    if (dbError) {
-      console.error("Supabase Error:", dbError);
-      return { error: "Error guardando en base de datos." };
+    const result = await sendNitroBotLead(payload, idempotencyKey)
+    return { ok: true, delivery: "delivered", result }
+  } catch (firstError) {
+    if (!(firstError instanceof NitroBotIntakeError) || !firstError.retryable) {
+      console.error("[nitrobot-form] rechazo no reintentable:", firstError)
+      return { ok: false, error: "No pudimos validar la solicitud. Revisa los datos e intenta de nuevo." }
     }
-
-    // Notificación a Telegram — específica de NitroBot, con calificación destacada.
-    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-      const telegramMsg = `
-🤖 *NUEVO LEAD · NITROBOT*
-
-${fit.emoji} *${fit.etiqueta}*
-
-👤 *Nombre:* ${name}
-🏢 *Negocio:* ${company || "No especificado"}
-📱 *WhatsApp:* ${whatsapp}
-📧 *Email:* ${email}
-
-🏭 *Sector:* ${sector || "No especificado"}
-💬 *Volumen WhatsApp/día:* ${volume || "No especificado"}
-🙋 *Atiende hoy:* ${whoAttends || "No especificado"}
-🎯 *Objetivo:* ${goal || "No especificado"}
-
-⏰ ${new Date().toLocaleString("es-CO", { timeZone: "America/Bogota" })}
-      `.trim();
-
-      try {
-        const res = await fetch(
-          `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              chat_id: process.env.TELEGRAM_CHAT_ID,
-              text: telegramMsg,
-              parse_mode: "Markdown",
-            }),
-          }
-        );
-        if (!res.ok) console.error("Telegram API Error:", await res.json());
-      } catch (telegramError) {
-        console.error("Error enviando a Telegram:", telegramError);
-      }
+    try {
+      const result = await sendNitroBotLead(payload, idempotencyKey)
+      return { ok: true, delivery: "delivered", result }
+    } catch (secondError) {
+      const message = secondError instanceof Error ? secondError.message : "Fallo de entrega"
+      const queued = await queueLead(payload, idempotencyKey, message)
+      if (queued) return { ok: true, delivery: "queued" }
+      console.error("[nitrobot-form] entrega y cola fallaron:", message)
+      return { ok: false, error: "No pudimos recibir la solicitud. Intenta de nuevo en unos minutos." }
     }
-
-    // Email de confirmación — orientado a WhatsApp (el canal del producto).
-    if (process.env.RESEND_API_KEY) {
-      try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-          from: "Nitro Ecom <onboarding@resend.dev>",
-          to: [email],
-          subject: "🤖 Recibimos tu solicitud de NitroBot",
-          html: `
-            <h1>¡Hola ${name.split(" ")[0]}!</h1>
-            <p>Recibí tu solicitud para implementar <strong>NitroBot</strong> en ${company || "tu negocio"}.</p>
-            <p>Voy a revisar tu operación y te escribo personalmente por WhatsApp al <strong>${whatsapp}</strong> para coordinar tu diagnóstico (sin costo).</p>
-            <p>Objetivo que me compartiste: <strong>${goal || "mejorar tu atención por WhatsApp"}</strong>.</p>
-            <br/>
-            <p>Nos hablamos pronto,</p>
-            <p>Juan Arango — NITRO ECOM</p>
-          `,
-        });
-      } catch (emailError) {
-        console.error("Error sending email:", emailError);
-      }
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Submit Exception:", error);
-    return { error: "Error inesperado procesando tu solicitud." };
   }
 }

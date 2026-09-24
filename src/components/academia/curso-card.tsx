@@ -132,7 +132,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                 priority
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-zinc-700 text-sm">
+              <div className="w-full h-full flex items-center justify-center text-white/78 text-sm">
                 Sin imagen
               </div>
             )}
@@ -172,7 +172,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
         {curso.titulo}
       </DialogTitle>
       
-      <DialogDescription className="text-zinc-300 text-base leading-relaxed font-medium">
+      <DialogDescription className="text-white/78 text-base leading-relaxed font-medium">
         {curso.descripcionCorta}
       </DialogDescription>
 
@@ -180,13 +180,13 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
       {(curso.tiempoEstudio || curso.nivel) && (
         <div className="flex flex-wrap gap-2">
           {curso.tiempoEstudio && (
-            <span className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium text-zinc-300">
+            <span className="flex items-center gap-1.5 bg-[#0b0e0c] px-3 py-1.5 rounded-lg border border-white/10 text-xs font-medium text-white/78">
               <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               {curso.tiempoEstudio}
             </span>
           )}
           {curso.nivel && (
-            <span className="flex items-center gap-1.5 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium text-zinc-300">
+            <span className="flex items-center gap-1.5 bg-[#0b0e0c] px-3 py-1.5 rounded-lg border border-white/10 text-xs font-medium text-white/78">
               <BarChart className="w-3.5 h-3.5 text-blue-400 shrink-0" />
               {getNivelLabel(curso.nivel)}
             </span>
@@ -195,36 +195,36 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
       )}
 
       {/* Accordion para revelar contenido progresivo */}
-      <div className="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-950/30">
+      <div className="border border-white/10 rounded-xl overflow-hidden bg-[#0b0e0c]/30">
         <Accordion type="single" collapsible className="w-full">
           
           {/* Información General & Perfil */}
           {(curso.descripcionLarga || curso.publicoObjetivo) && (
-            <AccordionItem value="info" className="border-b border-zinc-800">
+            <AccordionItem value="info" className="border-b border-white/10">
               <AccordionTrigger className="px-5 py-4 text-sm font-bold text-white hover:text-primary transition-colors hover:no-underline">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-primary" />
                   Detalles de este material
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-5 pb-5 pt-1 border-t border-zinc-800/50 bg-zinc-950/50">
+              <AccordionContent className="px-5 pb-5 pt-1 border-t border-white/10 bg-[#0b0e0c]/50">
                 <div className="flex flex-col gap-6 pt-3">
                   {curso.publicoObjetivo && (
                     <div>
                       <p className="text-[10px] uppercase tracking-widest font-bold text-primary mb-2 flex items-center gap-1.5">
                         <Users className="w-3.5 h-3.5" /> ¿Para quién es?
                       </p>
-                      <p className="text-sm text-zinc-300 leading-relaxed whitespace-pre-line border-l border-primary/20 pl-3">
+                      <p className="text-sm text-white/78 leading-relaxed whitespace-pre-line border-l border-primary/20 pl-3">
                         {curso.publicoObjetivo}
                       </p>
                     </div>
                   )}
                   {curso.descripcionLarga && (
                     <div>
-                      <p className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-2">
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-white/45 mb-2">
                         Descripción completa
                       </p>
-                      <p className="text-sm text-zinc-300 leading-relaxed whitespace-pre-line">
+                      <p className="text-sm text-white/78 leading-relaxed whitespace-pre-line">
                         {curso.descripcionLarga}
                       </p>
                     </div>
@@ -236,17 +236,17 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
 
           {/* Temario / Metodología */}
           {curso.temario && curso.temario.length > 0 && (
-            <AccordionItem value="metodologia" className="border-b border-zinc-800">
+            <AccordionItem value="metodologia" className="border-b border-white/10">
               <AccordionTrigger className="px-5 py-4 text-sm font-bold text-white hover:text-primary transition-colors hover:no-underline">
                 <div className="flex items-center gap-2">
                   <Check className="w-4 h-4 text-primary" />
                   El método / Lo que lograrás
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-5 pb-5 pt-4 border-t border-zinc-800/50 bg-zinc-950/50">
+              <AccordionContent className="px-5 pb-5 pt-4 border-t border-white/10 bg-[#0b0e0c]/50">
                 <ul className="grid sm:grid-cols-2 gap-3">
                   {curso.temario.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-sm text-zinc-300">
+                    <li key={idx} className="flex items-start gap-2.5 text-sm text-white/78">
                       <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
@@ -261,33 +261,33 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
             <AccordionItem value="contenido" className="border-none">
               <AccordionTrigger className="px-5 py-4 text-sm font-bold text-white hover:text-primary transition-colors hover:no-underline">
                 <div className="flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-zinc-400 group-data-[state=open]:text-primary" />
+                  <Lock className="w-4 h-4 text-white/58 group-data-[state=open]:text-primary" />
                   Programa y Extras Desbloqueables
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-0 pb-0 pt-0 border-t border-zinc-800/50 bg-zinc-950/30">
-                <div className="divide-y divide-zinc-800/60">
+              <AccordionContent className="px-0 pb-0 pt-0 border-t border-white/10 bg-[#0b0e0c]/30">
+                <div className="divide-y divide-white/10">
                   {curso.contenido.map((modulo, idx) => {
                     const isLocked = idx >= UNLOCKED_MODULES;
                     return (
-                      <div key={idx} className={`px-5 py-4 transition-colors ${isLocked ? 'bg-zinc-950/60' : 'bg-transparent'}`}>
+                      <div key={idx} className={`px-5 py-4 transition-colors ${isLocked ? 'bg-[#0b0e0c]/60' : 'bg-transparent'}`}>
                         <div className="flex items-center justify-between gap-3 mb-2">
                           <div className="flex items-center gap-2">
                             {isLocked ? (
-                              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-zinc-800 border border-zinc-700 shrink-0">
-                                <Lock className="w-2.5 h-2.5 text-zinc-500" />
+                              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[#111512] border border-white/15 shrink-0">
+                                <Lock className="w-2.5 h-2.5 text-white/45" />
                               </span>
                             ) : (
                               <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 border border-primary/20 shrink-0 text-[10px] font-black text-primary">
                                 {idx + 1}
                               </span>
                             )}
-                            <p className={`text-sm font-bold ${isLocked ? 'text-zinc-500 blur-[2px] select-none' : 'text-white'}`}>
+                            <p className={`text-sm font-bold ${isLocked ? 'text-white/45 blur-[2px] select-none' : 'text-white'}`}>
                               {modulo.titulo}
                             </p>
                           </div>
                           {isLocked && (
-                            <span className="text-[9px] uppercase tracking-widest bg-zinc-800 text-zinc-500 px-2 py-0.5 rounded-sm border border-zinc-700 shrink-0">
+                            <span className="text-[9px] uppercase tracking-widest bg-[#111512] text-white/45 px-2 py-0.5 rounded-sm border border-white/15 shrink-0">
                               Bloqueado
                             </span>
                           )}
@@ -296,7 +296,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                         {modulo.lecciones && modulo.lecciones.length > 0 && (
                           <ul className="ml-7 space-y-1">
                             {modulo.lecciones.map((leccion, lIdx) => (
-                              <li key={lIdx} className={`text-xs flex items-center gap-1.5 ${isLocked ? 'text-zinc-600 blur-[2px] select-none' : 'text-zinc-400'}`}>
+                              <li key={lIdx} className={`text-xs flex items-center gap-1.5 ${isLocked ? 'text-white/38 blur-[2px] select-none' : 'text-white/58'}`}>
                                 <span className="w-1 h-1 rounded-full bg-current shrink-0" />
                                 {leccion}
                               </li>
@@ -309,7 +309,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                 </div>
 
                 {curso.contenido.length > UNLOCKED_MODULES && (
-                  <div className="px-5 py-4 bg-gradient-to-b from-zinc-950/0 to-zinc-950 text-center border-t border-zinc-800">
+                  <div className="px-5 py-4 bg-gradient-to-b from-[#0b0e0c]/0 to-[#0b0e0c] text-center border-t border-white/10">
                     <p className="text-[11px] uppercase tracking-wider font-bold text-emerald-500/80 mb-1">
                       🔐 {curso.contenido.length - UNLOCKED_MODULES} elementos más se desbloquean con tu compra
                     </p>
@@ -322,9 +322,9 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
       </div>
 
       {/* BLOQUE DE COMPRA */}
-      <div className="mt-2 rounded-2xl border border-zinc-800 bg-zinc-950/50">
+      <div className="mt-2 rounded-2xl border border-white/10 bg-[#0b0e0c]/50">
         {curso.mensajeUrgencia && (
-          <div className="flex items-center justify-center gap-2 px-4 py-2 bg-amber-500/10 border-b border-zinc-800">
+          <div className="flex items-center justify-center gap-2 px-4 py-2 bg-amber-500/10 border-b border-white/10">
             <span className="text-amber-400 text-xs font-bold tracking-wide text-center">
               {curso.mensajeUrgencia}
             </span>
@@ -341,13 +341,13 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                       </span>
                     )}
                     {curso.valorTotal && (
-                      <span className="text-zinc-500">Valor real: <span className="line-through">{formatMoney(curso.valorTotal)}</span></span>
+                      <span className="text-white/45">Valor real: <span className="line-through">{formatMoney(curso.valorTotal)}</span></span>
                     )}
                   </div>
               )}
               <div className="flex flex-wrap items-center justify-center gap-3">
                 {curso.precioAnterior && (
-                  <span className="text-xl text-zinc-500 line-through font-medium">
+                  <span className="text-xl text-white/45 line-through font-medium">
                     {formatMoney(curso.precioAnterior)}
                   </span>
                 )}
@@ -356,7 +356,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                     <span className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none">
                       {formatMoney(curso.precio)}
                     </span>
-                    <span className="text-sm font-bold text-zinc-500">USD</span>
+                    <span className="text-sm font-bold text-white/45">USD</span>
                   </div>
                 )}
                 {curso.precioAnterior && curso.precio !== undefined && (
@@ -365,21 +365,21 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                   </span>
                 )}
               </div>
-              <p className="text-[10px] uppercase tracking-widest font-bold text-zinc-600">
+              <p className="text-[10px] uppercase tracking-widest font-bold text-white/38">
                 Inversión única · Acceso de por vida
               </p>
             </div>
           ) : (
             <div className="text-center">
               <span className="text-5xl font-black text-white tracking-tighter">Gratis</span>
-              <p className="text-[11px] uppercase tracking-widest font-bold text-zinc-500 mt-2">Acceso inmediato</p>
+              <p className="text-[11px] uppercase tracking-widest font-bold text-white/45 mt-2">Acceso inmediato</p>
             </div>
           )}
 
           {isProximamente ? (
             <button
               onClick={() => setIsEarlyAccessModalOpen(true)}
-              className="w-full max-w-sm bg-white hover:bg-zinc-100 text-black text-base font-black py-3 px-8 rounded-xl transition-all"
+              className="w-full max-w-sm bg-white hover:bg-[#111512] text-black text-base font-black py-3 px-8 rounded-xl transition-all"
             >
               Reservar mi Lugar Ahora
             </button>
@@ -395,16 +395,16 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                 <Lock className="w-5 h-5 shrink-0" />
                 Desbloquear Ahora
               </Link>
-              <div className="flex items-center justify-center gap-4 flex-wrap w-full border-t border-zinc-800/80 pt-4">
-                <span className="flex items-center gap-1.5 text-[11px] text-zinc-400 font-medium">
-                  <Lock className="w-3.5 h-3.5 text-zinc-500" /> Pago seguro
+              <div className="flex items-center justify-center gap-4 flex-wrap w-full border-t border-white/10 pt-4">
+                <span className="flex items-center gap-1.5 text-[11px] text-white/58 font-medium">
+                  <Lock className="w-3.5 h-3.5 text-white/45" /> Pago seguro
                 </span>
-                <span className="flex items-center gap-1.5 text-[11px] text-zinc-400 font-medium">
+                <span className="flex items-center gap-1.5 text-[11px] text-white/58 font-medium">
                   <span className="text-primary text-[10px]">●</span> Inmediato
                 </span>
                 {curso.garantia && (
-                  <span className="flex items-center gap-1.5 text-[11px] text-zinc-400 font-medium">
-                    <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" /> {curso.garantia}
+                  <span className="flex items-center gap-1.5 text-[11px] text-white/58 font-medium">
+                    <ShieldCheck className="w-3.5 h-3.5 text-white/45" /> {curso.garantia}
                   </span>
                 )}
               </div>
@@ -424,10 +424,10 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
         {/* SMALL GRID CARD */}
         <DialogTrigger asChild>
           <div
-            className={`w-full flex flex-col rounded-2xl overflow-hidden bg-zinc-900 border transition-all duration-300 group cursor-pointer hover:-translate-y-1 hover:shadow-xl ${
+            className={`w-full flex flex-col rounded-2xl overflow-hidden bg-[#0d110e] border transition-all duration-300 group cursor-pointer hover:-translate-y-1 hover:shadow-xl ${
               curso.destacado
                 ? 'border-primary/40 ring-1 ring-primary/20 shadow-primary/10 hover:shadow-primary/20'
-                : 'border-zinc-800 hover:border-zinc-700'
+                : 'border-white/10 hover:border-white/15'
             }`}
           >
             {/* Aspect Ratio Container for Card */}
@@ -442,7 +442,7 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                   priority={curso.destacado}
                 />
               ) : (
-                <div className="text-sm text-zinc-600">Sin imagen</div>
+                <div className="text-sm text-white/38">Sin imagen</div>
               )}
               
               {/* Badge Overlay */}
@@ -466,12 +466,12 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
                 {curso.titulo}
               </h3>
               
-              <p className="text-zinc-400 text-sm leading-relaxed mb-4 line-clamp-3">
+              <p className="text-white/58 text-sm leading-relaxed mb-4 line-clamp-3">
                 {curso.descripcionCorta}
               </p>
 
-              <div className="mt-auto pt-4 border-t border-zinc-800/80 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-zinc-400 text-xs font-medium">
+              <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-white/58 text-xs font-medium">
                   <Info className="w-3.5 h-3.5" />
                   Ver más info
                 </div>
@@ -490,8 +490,8 @@ export function CursoCard({ curso }: { curso: CursoNode }) {
         </DialogTrigger>
 
         {/* LARGE MODAL */}
-        <DialogContent className="z-[9999] max-w-4xl w-[95vw] max-h-[85vh] overflow-y-auto bg-zinc-950 flex flex-col p-1 border border-zinc-800 rounded-2xl shadow-3xl [&>button]:top-4 [&>button]:right-5 [&>button]:bg-black/50 [&>button]:p-2 [&>button]:text-white hover:[&>button]:bg-black [&>button]:z-[110] [&>button]:rounded-full backdrop-blur-none">
-          <div className="w-full bg-zinc-950 rounded-xl p-4 md:p-8 flex flex-col gap-6">
+        <DialogContent className="z-[9999] max-w-4xl w-[95vw] max-h-[85vh] overflow-y-auto bg-[#0b0e0c] flex flex-col p-1 border border-white/10 rounded-2xl shadow-3xl [&>button]:top-4 [&>button]:right-5 [&>button]:bg-black/50 [&>button]:p-2 [&>button]:text-white hover:[&>button]:bg-black [&>button]:z-[110] [&>button]:rounded-full backdrop-blur-none">
+          <div className="w-full bg-[#0b0e0c] rounded-xl p-4 md:p-8 flex flex-col gap-6">
             <CourseDetails />
           </div>
         </DialogContent>

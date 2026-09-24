@@ -30,7 +30,7 @@ export function StarRating({
           if (i === fullStars && hasHalf) {
             return (
               <div key={i} className="relative">
-                <Star className="size-3.5 text-zinc-600" aria-hidden="true" />
+                <Star className="size-3.5 text-white/38" aria-hidden="true" />
                 <div className="absolute inset-0 overflow-hidden w-[50%]">
                   <Star
                     className="size-3.5 fill-amber-400 text-amber-400"
@@ -43,7 +43,7 @@ export function StarRating({
           return (
             <Star
               key={i}
-              className="size-3.5 text-zinc-600"
+              className="size-3.5 text-white/38"
               aria-hidden="true"
             />
           )

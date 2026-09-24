@@ -58,7 +58,7 @@ export function HeroBanner({ app }: { app: AppToolSanity }) {
             <h2 className="text-2xl font-bold text-foreground md:text-4xl text-balance">
               {app.appName}
             </h2>
-            <p className="max-w-xl text-base text-zinc-300 leading-relaxed">
+            <p className="max-w-xl text-base text-white/78 leading-relaxed">
               {app.longDescription ? app.longDescription.slice(0, 180) + '...' : app.description}
             </p>
           </div>

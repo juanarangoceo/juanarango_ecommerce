@@ -91,7 +91,7 @@ export function ChatMockup({ messages, loop = false, title = "NitroBot", classNa
   return (
     <div
       ref={containerRef}
-      className={`relative w-[300px] sm:w-[330px] rounded-[2.75rem] border-[6px] border-zinc-800 bg-zinc-900 shadow-2xl shadow-black/60 overflow-hidden ${className}`}
+      className={`relative w-[300px] sm:w-[330px] rounded-[2.75rem] border-[6px] border-white/10 bg-[#0d110e] shadow-2xl shadow-black/60 overflow-hidden ${className}`}
       role="img"
       aria-label={`Conversación de ejemplo con ${title}: ${messages.map((m) => `${m.from === "bot" ? "NitroBot" : "Cliente"}: ${m.text}`).join(" — ")}`}
     >
@@ -102,7 +102,7 @@ export function ChatMockup({ messages, loop = false, title = "NitroBot", classNa
         </div>
         <div className="min-w-0">
           <p className="text-sm font-semibold text-white truncate">{title}</p>
-          <p className="text-[11px] text-zinc-400 font-dm-mono h-4">
+          <p className="text-[11px] text-white/58 font-dm-mono h-4">
             {botTyping ? "escribiendo..." : "en línea"}
           </p>
         </div>
@@ -124,7 +124,7 @@ export function ChatMockup({ messages, loop = false, title = "NitroBot", classNa
               className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-[13px] leading-relaxed whitespace-pre-line ${
                 msg.from === "cliente"
                   ? "bg-[#005C4B] text-white rounded-br-md"
-                  : "bg-[#1F2C33] text-zinc-100 font-dm-mono rounded-bl-md"
+                  : "bg-[#1F2C33] text-white font-dm-mono rounded-bl-md"
               }`}
             >
               {msg.text}
@@ -136,7 +136,7 @@ export function ChatMockup({ messages, loop = false, title = "NitroBot", classNa
           <div className={`flex ${nextFrom === "cliente" ? "justify-end" : "justify-start"}`}>
             <div
               className={`rounded-2xl px-4 py-3 ${
-                nextFrom === "cliente" ? "bg-[#005C4B] text-white" : "bg-[#1F2C33] text-zinc-300"
+                nextFrom === "cliente" ? "bg-[#005C4B] text-white" : "bg-[#1F2C33] text-white/78"
               }`}
             >
               <TypingDots />

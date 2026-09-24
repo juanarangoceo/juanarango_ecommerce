@@ -69,15 +69,15 @@ export function ShareButtons({ title }: ShareButtonsProps) {
   ]
 
   return (
-    <div className="my-10 py-8 border-t border-b border-zinc-100 dark:border-zinc-800">
+    <div className="my-10 py-8 border-t border-b border-white/10">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-5">
         <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
           <Share2 className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">¿Te fue útil este artículo?</p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Compártelo y ayuda a otros a encontrarlo</p>
+          <p className="text-sm font-semibold text-white">¿Te fue útil este artículo?</p>
+          <p className="text-xs text-white/58">Compártelo y ayuda a otros a encontrarlo</p>
         </div>
       </div>
 
@@ -91,13 +91,7 @@ export function ShareButtons({ title }: ShareButtonsProps) {
             rel="noopener noreferrer"
             aria-label={`Compartir en ${label}`}
             title={`Compartir en ${label}`}
-            className={`
-              inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-3.5 sm:py-2 rounded-lg text-sm font-medium
-              border border-zinc-200 dark:border-zinc-700
-              text-zinc-700 dark:text-zinc-300
-              bg-white dark:bg-zinc-900
-              transition-all duration-200
-              ${color}
+            className={` inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-3.5 sm:py-2 rounded-lg text-sm font-medium border border-white/15 text-white/78 bg-[#0d110e] transition-all duration-200 ${color}
             `}
           >
             <Icon className="w-4 h-4 shrink-0" />
@@ -115,7 +109,7 @@ export function ShareButtons({ title }: ShareButtonsProps) {
             border transition-all duration-200
             ${copied
               ? "bg-primary/10 border-primary/40 text-primary"
-              : "border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 bg-white dark:bg-zinc-900 hover:bg-primary/5 hover:text-primary hover:border-primary/30"
+              : "border-white/9 dark:border-white/15 text-white dark:text-white/78 bg-white dark:bg-[#0d110e] hover:bg-primary/5 hover:text-primary hover:border-primary/30"
             }
           `}
         >

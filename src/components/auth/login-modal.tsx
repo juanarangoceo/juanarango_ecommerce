@@ -49,11 +49,11 @@ export function LoginModal({
       className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="relative w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/60 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-[#0b0e0c] border border-white/10 rounded-2xl shadow-2xl shadow-black/60 animate-in zoom-in-95 duration-200">
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors p-1"
+          className="absolute top-4 right-4 text-white/45 hover:text-white transition-colors p-1"
           aria-label="Cerrar"
         >
           <X className="w-5 h-5" />
@@ -68,21 +68,21 @@ export function LoginModal({
           {!sent ? (
             <>
               <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>
-              <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
+              <p className="text-white/58 text-sm mb-6 leading-relaxed">
                 Ingresa tu email y te enviamos un link mágico — sin contraseñas,
                 sin complicaciones.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/45" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tu@email.com"
-                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500/60 focus:ring-1 focus:ring-purple-500/30 transition-all"
+                    className="w-full bg-[#0d110e] border border-white/15 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-white/38 focus:outline-none focus:border-purple-500/60 focus:ring-1 focus:ring-purple-500/30 transition-all"
                   />
                 </div>
 
@@ -106,7 +106,7 @@ export function LoginModal({
                 </button>
               </form>
 
-              <p className="mt-4 text-[11px] text-zinc-600 text-center leading-relaxed">
+              <p className="mt-4 text-[11px] text-white/38 text-center leading-relaxed">
                 Al ingresar aceptas recibir contenido exclusivo sobre IA,
                 prompts y herramientas digitales. Sin spam.
               </p>
@@ -118,7 +118,7 @@ export function LoginModal({
               <h2 className="text-xl font-bold text-white mb-2">
                 ¡Link enviado! 🎉
               </h2>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-white/58 text-sm leading-relaxed">
                 Revisa tu bandeja de entrada en{" "}
                 <span className="text-white font-medium">{email}</span>. Haz
                 clic en el link y quedarás conectado automáticamente.

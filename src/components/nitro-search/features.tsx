@@ -50,13 +50,13 @@ const features = [
 
 export function Features() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-950">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0b0e0c]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Ecosistema SEO <span className="text-emerald-400">Integral</span>
           </h2>
-          <p className="text-lg text-zinc-400">
+          <p className="text-lg text-white/58">
             El SEO moderno ya no es solo sobre repetir palabras clave. Es sobre autoridad, intención de búsqueda, experiencia de usuario y adaptarse a la Inteligencia Artificial.
           </p>
         </div>
@@ -69,13 +69,13 @@ export function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 hover:border-zinc-700 transition-colors group"
+              className="bg-[#0d110e] border border-white/10 rounded-3xl p-8 hover:border-white/15 transition-colors group"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${feature.bg} ${feature.color} group-hover:scale-110 transition-transform`}>
                 {feature.icon}
               </div>
               <h3 className="text-xl font-bold text-white mb-4 leading-tight">{feature.title}</h3>
-              <p className="text-zinc-400 leading-relaxed text-sm">
+              <p className="text-white/58 leading-relaxed text-sm">
                 {feature.description}
               </p>
             </motion.div>

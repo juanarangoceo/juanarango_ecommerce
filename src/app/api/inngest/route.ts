@@ -5,6 +5,7 @@ import {
   newsletterOrchestrator,
   newsletterEmailWorker,
 } from '@/lib/inngest/newsletter-functions'
+import { nitroBotLeadRetry } from '@/lib/inngest/nitrobot-lead-functions'
 
 export const maxDuration = 300 // 5 min para Vercel
 
@@ -14,5 +15,6 @@ export const { GET, POST, PUT } = serve({
     newsletterSchedulerCron,
     newsletterOrchestrator,
     newsletterEmailWorker,
+    nitroBotLeadRetry,
   ],
 })

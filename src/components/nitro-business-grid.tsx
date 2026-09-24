@@ -37,12 +37,12 @@ export function NitroBusinessGrid() {
   ]
 
   return (
-    <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-zinc-950/50 flex flex-col items-center">
+    <section id="negocios" className="py-12 md:py-24 px-6 relative z-0 bg-[#0b0e0c]/50 flex flex-col items-center">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-16">
             <span className="text-primary font-dm-mono tracking-widest text-sm uppercase mb-2 block">Soluciones por industria</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">Nitro Negocios</h2>
-            <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
+            <p className="text-xl text-white/58 max-w-2xl text-pretty leading-relaxed">
                 Adapto el sistema a cómo vende tu industria, con tecnología hecha a la medida de tu operación.
             </p>
         </div>
@@ -72,7 +72,7 @@ export function NitroBusinessGrid() {
                       biz.color === 'primary' ? 'bg-primary/10 text-primary' : 
                       biz.color === 'blue' ? 'bg-blue-500/10 text-blue-400' : 
                       biz.color === 'orange' ? 'bg-orange-500/10 text-orange-400' : 
-                      'bg-white/5 text-slate-400'
+                      'bg-white/5 text-white/58'
                     }`}>
                       <biz.icon className="w-8 h-8" />
                     </div>
@@ -87,7 +87,7 @@ export function NitroBusinessGrid() {
                     {biz.title}
                   </h3>
                   
-                  <p className="text-zinc-400 mb-8 leading-relaxed text-pretty text-sm flex-1">
+                  <p className="text-white/58 mb-8 leading-relaxed text-pretty text-sm flex-1">
                     {biz.desc}
                   </p>
                   
@@ -108,7 +108,7 @@ export function NitroBusinessGrid() {
         <div className="w-full flex justify-center mt-6">
           <Link 
             href="/soluciones/b2b" 
-            className="group inline-flex items-center justify-center bg-zinc-900 border border-zinc-800 hover:border-primary/50 hover:bg-zinc-800 text-white font-medium py-3 px-8 rounded-full transition-all"
+            className="group inline-flex items-center justify-center bg-[#0d110e] border border-white/10 hover:border-primary/50 hover:bg-[#111512] text-white font-medium py-3 px-8 rounded-full transition-all"
           >
             Ver Todas las Soluciones B2B
             <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 text-primary" />

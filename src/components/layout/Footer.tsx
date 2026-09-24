@@ -70,8 +70,8 @@ export function Footer() {
             <h4 className="font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="mailto:hola@juanarangoecommerce.com" className="hover:text-primary transition-colors">
-                  hola@juanarangoecommerce.com
+                <a href="mailto:juanarangoecommerce@gmail.com" className="hover:text-primary transition-colors">
+                  juanarangoecommerce@gmail.com
                 </a>
               </li>
             </ul>

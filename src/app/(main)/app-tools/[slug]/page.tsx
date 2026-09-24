@@ -63,7 +63,7 @@ export async function generateMetadata(
       follow: true,
     },
     alternates: {
-      canonical: `https://juanarango.com/app-tools/${app.slug.current}`,
+      canonical: `https://www.juanarangoecommerce.com/app-tools/${app.slug.current}`,
     },
   }
 }
@@ -116,12 +116,12 @@ export default async function AppToolDetailPage(
               </h1>
               <div className="flex items-center gap-2 flex-wrap">
                 <PricingBadge pricing={app.pricing} />
-                <span className="rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-zinc-300">
+                <span className="rounded-md border border-border bg-secondary/50 px-2 py-0.5 text-xs text-white/78">
                   {getCategoryLabel(app.category)}
                 </span>
               </div>
               {app.rating && <StarRating rating={app.rating} className="mt-1" />}
-              <p className="text-base text-zinc-300 leading-relaxed max-w-xl">
+              <p className="text-base text-white/78 leading-relaxed max-w-xl">
                 {app.description}
               </p>
             </div>
@@ -133,7 +133,7 @@ export default async function AppToolDetailPage(
               <h2 className="text-xl font-semibold text-foreground mb-4">
                 ¿Qué es {app.appName}?
               </h2>
-              <p className="text-base text-zinc-300 leading-relaxed whitespace-pre-line">
+              <p className="text-base text-white/78 leading-relaxed whitespace-pre-line">
                 {app.longDescription}
               </p>
             </section>
@@ -152,7 +152,7 @@ export default async function AppToolDetailPage(
                     className="flex items-start gap-3 rounded-lg border border-border bg-card p-4"
                   >
                     <CheckCircle className="mt-0.5 size-5 shrink-0 text-primary" />
-                    <p className="text-base text-zinc-200">{feature}</p>
+                    <p className="text-base text-white/84">{feature}</p>
                   </div>
                 ))}
               </div>
@@ -172,7 +172,7 @@ export default async function AppToolDetailPage(
                     {app.pros.map((pro, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2.5 text-base text-zinc-200"
+                        className="flex items-start gap-2.5 text-base text-white/84"
                       >
                         <CheckCircle className="mt-0.5 size-4 shrink-0 text-emerald-400" />
                         {pro}
@@ -192,7 +192,7 @@ export default async function AppToolDetailPage(
                     {app.cons.map((con, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2.5 text-base text-zinc-200"
+                        className="flex items-start gap-2.5 text-base text-white/84"
                       >
                         <XCircle className="mt-0.5 size-4 shrink-0 text-rose-400" />
                         {con}

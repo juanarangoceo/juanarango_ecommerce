@@ -7,7 +7,7 @@ import dynamic from "next/dynamic"
 // Dynamic Cal import with skeleton loader
 const Cal = dynamic(() => import("@calcom/embed-react").then((mod) => mod.default), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-slate-900/50 animate-pulse flex items-center justify-center text-muted-foreground p-8">Cargando Calendario...</div>
+  loading: () => <div className="w-full h-full bg-[#0d110e]/50 animate-pulse flex items-center justify-center text-muted-foreground p-8">Cargando Calendario...</div>
 })
 
 export function BookingSection() {
@@ -22,7 +22,7 @@ export function BookingSection() {
         </p>
         
         <motion.div 
-           className="w-full h-[650px] bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
+           className="w-full h-[650px] bg-[#0d110e]/50 border border-white/10 rounded-2xl overflow-hidden glassmorphism shadow-2xl relative"
            initial={{ opacity: 0, borderColor: "rgba(255,255,255,0.1)" }}
            whileInView={{ 
              opacity: 1, 

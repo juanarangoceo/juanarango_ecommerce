@@ -19,7 +19,7 @@ export function AffiliateBanner({ title, image, url, className = "" }: Affiliate
         href={url} 
         target="_blank" 
         rel="nofollow noopener noreferrer" // SEO best practice for affiliate links
-        className="block group relative overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all duration-300"
+        className="block group relative overflow-hidden rounded-xl border border-white/10 shadow-sm hover:shadow-md transition-all duration-300"
       >
         <div className="relative w-full aspect-square md:aspect-[4/5] lg:aspect-square">
             <Image
@@ -34,8 +34,8 @@ export function AffiliateBanner({ title, image, url, className = "" }: Affiliate
                 PUBLICIDAD
             </div>
         </div>
-        <div className="p-3 bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800 text-center">
-             <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400 group-hover:underline decoration-emerald-500/50 underline-offset-4">
+        <div className="p-3 bg-[#0d110e] border-t border-white/10 text-center">
+             <span className="text-sm font-medium text-primary dark:text-primary group-hover:underline decoration-primary/50 underline-offset-4">
                 Ver Oferta &rarr;
              </span>
         </div>

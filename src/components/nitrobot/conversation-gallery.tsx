@@ -23,7 +23,7 @@ export function ConversationGallery() {
             className={`px-4 py-2 rounded-full text-sm font-dm-mono uppercase tracking-wider transition-all border ${
               c.id === activeId
                 ? "border-primary text-primary bg-primary/10"
-                : "border-white/10 text-zinc-400 hover:border-white/30 hover:text-white"
+                : "border-white/10 text-white/58 hover:border-white/30 hover:text-white"
             }`}
           >
             {c.label}

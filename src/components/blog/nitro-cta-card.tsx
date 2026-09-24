@@ -1,43 +1,32 @@
 import Link from "next/link";
-import { Zap, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Check } from "lucide-react";
+import { primaryCta } from "@/lib/commercial-content";
+
+// CTA lateral del blog: lleva el tráfico orgánico al producto principal.
+const points = ["Responde con tu catálogo real", "Confirma pedidos contraentrega", "Avisa el envío y hace seguimiento"] as const;
 
 export function NitroCtaCard() {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-zinc-800 shadow-xl group">
-      {/* Background Effects */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-      
-      <div className="relative p-6 sm:p-8 flex flex-col items-start text-left">
-        {/* Icon / Badge */}
-        <div className="inline-flex items-center justify-center p-2.5 rounded-xl bg-green-500/10 text-green-400 mb-6 group-hover:bg-green-500/20 transition-colors">
-          <Zap className="w-6 h-6 fill-current" />
-        </div>
-
-        {/* Text Content */}
-        <h3 className="text-2xl font-bold text-white mb-3">
-          ¿Listo para <span className="text-green-400">escalar sin límites?</span>
+    <div className="relative overflow-hidden rounded-2xl border border-line bg-ground text-ink">
+      <div className="p-6 sm:p-7">
+        <p className="text-sm font-semibold">Nitro Complete</p>
+        <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight">
+          ¿Vendes por WhatsApp? <span className="text-nitro-text">Que el chat no se quede en chat.</span>
         </h3>
-        
-        <p className="text-zinc-400 mb-8 leading-relaxed">
-          Infraestructura digital de alto rendimiento. Tiendas que convierten, sistemas que automatizan y estrategia que escala tu negocio.
-        </p>
-
-        {/* CTA Button */}
-        <Link href="/#contacto" className="w-full">
-          <Button 
-            className="w-full h-12 bg-green-500 hover:bg-green-400 text-black font-bold text-base shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] transition-all duration-300 group/btn"
-          >
-            Agenda tu diagnóstico gratis
-            <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
-          </Button>
+        <ul className="mt-5 space-y-2.5">
+          {points.map((point) => (
+            <li key={point} className="flex gap-2.5 text-sm text-ink/70">
+              <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-primary"><Check className="size-3" aria-hidden="true" /></span>
+              {point}
+            </li>
+          ))}
+        </ul>
+        <Link href="/nitro-complete" className="group mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-bold text-white transition hover:bg-ink/85">
+          Conocer Nitro Complete <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
-        
-        {/* Social Proof / Tiny Footer */}
-        <p className="mt-4 text-xs text-center text-zinc-500 w-full">
-          ⚡ +50 negocios escalados con infraestructura Nitro
-        </p>
+        <Link href={primaryCta.href} className="mt-3 block text-center text-xs font-medium text-ink/55 underline-offset-4 hover:text-ink hover:underline">
+          O comprueba si encaja con tu negocio
+        </Link>
       </div>
     </div>
   );

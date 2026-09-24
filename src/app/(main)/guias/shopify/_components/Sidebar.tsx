@@ -22,9 +22,7 @@ export function Sidebar({ steps, activeStepId, onSelectStep, isOpen, setIsOpen }
 
       {/* Sidebar Container */}
       <aside 
-        className={`
-          fixed lg:sticky lg:top-24 top-0 left-0 z-40 h-screen lg:h-[calc(100vh-6rem)] w-72 bg-white border-r border-slate-200 shadow-xl lg:shadow-none transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        className={` fixed lg:sticky lg:top-24 top-0 left-0 z-40 h-screen lg:h-[calc(100vh-6rem)] w-72 bg-white border-r border-slate-200 shadow-xl lg:shadow-none transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
         {/* Header - Visible on both desktop & mobile */}

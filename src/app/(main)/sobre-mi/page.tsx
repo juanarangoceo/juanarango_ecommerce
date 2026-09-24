@@ -8,9 +8,5 @@ export const metadata = constructMetadata({
 });
 
 export default function SobreMiPage() {
-  return (
-    <main className="pt-20">
-      <AboutSection />
-    </main>
-  );
+  return <AboutSection />;
 }

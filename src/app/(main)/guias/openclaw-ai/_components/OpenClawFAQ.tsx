@@ -17,11 +17,11 @@ function AccordionItem({ question, answer }: AccordionItemProps) {
         className="flex justify-between items-center w-full py-4 text-left group"
         aria-expanded={open}
       >
-        <span className="font-medium text-base md:text-lg text-zinc-200 group-hover:text-[#e05a3a] transition-colors pr-4">
+        <span className="font-medium text-base md:text-lg text-white/84 group-hover:text-[#e05a3a] transition-colors pr-4">
           {question}
         </span>
         <ChevronDown
-          className={`shrink-0 text-zinc-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 text-white/58 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           size={20}
         />
       </button>
@@ -29,7 +29,7 @@ function AccordionItem({ question, answer }: AccordionItemProps) {
         className={`grid transition-all duration-200 ease-in-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
       >
         <div className="overflow-hidden">
-          <div className="pb-4 text-zinc-400 leading-relaxed text-sm md:text-base">
+          <div className="pb-4 text-white/58 leading-relaxed text-sm md:text-base">
             {answer}
           </div>
         </div>

@@ -34,11 +34,11 @@ export function HeroSection() {
             </div>
             <div className="flex items-center gap-2 border border-border bg-background px-3 py-1.5">
               <ShoppingBag className="w-3.5 h-3.5 text-foreground/50" />
-              <span className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-widest font-bold">Tiendas a $0 / mes</span>
+              <span className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-widest font-bold">Stack cloud modular</span>
             </div>
             <div className="flex items-center gap-2 border border-border bg-background px-3 py-1.5">
               <Zap className="w-3.5 h-3.5 text-foreground/50" />
-              <span className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-widest font-bold">Deploy en &lt;1h</span>
+              <span className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-widest font-bold">Despliegue guiado</span>
             </div>
           </div>
         </div>
@@ -46,12 +46,11 @@ export function HeroSection() {
         {/* Subheadline */}
         <div className="max-w-2xl mb-8 md:mb-10 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
           <p className="text-foreground text-lg md:text-xl lg:text-2xl leading-relaxed font-semibold mb-4 text-pretty">
-            Tu primera venta antes de gastar en suscripciones. Garantizado.
-            <span className="text-primary"> Sin tocar una línea de código.</span>
+            Construye un prototipo de tienda y entiende cada pieza del sistema.
+            <span className="text-primary"> Con IA como apoyo, no como garantía.</span>
           </p>
           <p className="text-foreground/60 text-base md:text-lg leading-relaxed text-pretty">
-            Sin mensualidades. Sin comisiones en Shopify. 100% personalizable y escalable.
-            Valida productos ganadores con IA sin quemar dinero en plataformas costosas.
+            Explora una alternativa basada en código propio y servicios cloud. Los costos, límites y resultados dependen del proveedor, el uso y la operación real.
           </p>
         </div>
 
@@ -62,7 +61,7 @@ export function HeroSection() {
             className="btn-glitch inline-flex items-center gap-3 bg-destructive text-destructive-foreground font-mono text-xs md:text-sm font-bold uppercase tracking-wider py-4 md:py-5 px-8 md:px-10 hover:bg-destructive/90 transition-colors shadow-[0_0_30px_rgba(255,45,45,0.2)] hover:shadow-[0_0_50px_rgba(255,45,45,0.4)]"
           >
             <Zap className="w-4 h-4" />
-            RESERVAR TIENDA A $0
+            CONOCER EL PROGRAMA
             <ArrowRight className="w-4 h-4" />
           </a>
           <div className="flex flex-col gap-1">
@@ -90,10 +89,10 @@ export function HeroSection() {
           {/* Stats */}
           <div className="lg:col-span-3 grid grid-cols-2 gap-px bg-border border border-border h-full">
             {[
-              { value: "$0", label: "Costo operativo mensual", sub: "Hosting, base de datos y deploy incluidos gratis" },
-              { value: "<1s", label: "Velocidad de carga", sub: "Tiendas ultra rápidas que convierten más" },
-              { value: "0%", label: "Comisión por venta", sub: "Todo lo que vendes es 100% tuyo" },
-              { value: "~3h", label: "Para tu primera tienda", sub: "Tomando café y haciendo pausas con IA" },
+              { value: "UI", label: "Interfaz editable", sub: "Componentes que puedes revisar y adaptar" },
+              { value: "WEB", label: "Despliegue cloud", sub: "Publicación sobre infraestructura configurable" },
+              { value: "DATA", label: "Datos bajo control", sub: "Modelo y almacenamiento documentados" },
+              { value: "IA", label: "Asistencia de construcción", sub: "Apoyo para diseñar, programar y revisar" },
             ].map((stat) => (
               <div
                 key={stat.label}

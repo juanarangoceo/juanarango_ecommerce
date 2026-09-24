@@ -61,19 +61,19 @@ export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockPr
         {/* Header */}
         <div className={`flex items-center justify-between px-4 md:px-6 py-3 rounded-t-lg border border-b-0 ${
             isPrompt 
-              ? 'bg-purple-900/20 border-purple-500/30' 
-              : 'bg-zinc-900 dark:bg-zinc-950 border-zinc-800'
+              ? 'bg-primary/5 border-primary/30'
+              : 'bg-[#0d110e] dark:bg-[#0b0e0c] border-white/10'
           }`}>
           <div className="flex items-center gap-3">
             {title && (
-              <span className={`text-sm font-medium ${isPrompt ? 'text-purple-200' : 'text-zinc-300'}`}>
+              <span className={`text-sm font-medium ${isPrompt ? 'text-primary' : 'text-white/78'}`}>
                 {title}
               </span>
             )}
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium border ${
                 isPrompt
-                  ? 'bg-purple-500/10 text-purple-300 border-purple-500/20'
-                  : 'bg-green-500/10 text-green-400 border-green-500/20'
+                  ? 'bg-primary/10 text-primary border-primary/20'
+                  : 'bg-primary/10 text-primary border-primary/20'
             }`}>
               {isPrompt && <Zap className="w-3 h-3" />}
               {isPrompt ? 'Prompt' : language}
@@ -82,13 +82,13 @@ export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockPr
           
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-zinc-300 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-md transition-all duration-200 border border-zinc-700 hover:border-zinc-600"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white/78 hover:text-white bg-[#111512] hover:bg-white/10 rounded-md transition-all duration-200 border border-white/15 hover:border-white/25"
             aria-label="Copy code"
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 text-green-400" />
-                <span className="text-green-400">Copiado!</span>
+                <Check className="w-4 h-4 text-primary" />
+                <span className="text-primary">Copiado!</span>
               </>
             ) : (
               <>
@@ -100,7 +100,7 @@ export function CopyableCodeBlock({ title, language, code }: CopyableCodeBlockPr
         </div>
 
         {/* Code Block */}
-        <div className="relative bg-zinc-950 dark:bg-black rounded-b-lg border border-t-0 border-zinc-800 overflow-hidden">
+        <div className="relative bg-black rounded-b-lg border border-t-0 border-white/10 overflow-hidden">
            <SyntaxHighlighter
               language={language.toLowerCase()}
               style={vscDarkPlus}

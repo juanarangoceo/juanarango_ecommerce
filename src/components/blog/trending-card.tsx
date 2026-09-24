@@ -26,13 +26,13 @@ export async function TrendingCard() {
   }
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm p-6 transition-all hover:border-emerald-500/30">
+    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d110e]/60 backdrop-blur-sm p-6 transition-all hover:border-primary/30">
       {/* Glow Effect */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all duration-500" />
+      <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500" />
       
       {/* Header */}
       <div className="flex items-center gap-2 mb-6 relative z-10">
-        <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+        <div className="p-2 rounded-lg bg-primary/10 text-primary">
           <TrendingUp className="w-5 h-5" />
         </div>
         <h3 className="font-bold text-lg text-white tracking-tight">
@@ -46,12 +46,12 @@ export async function TrendingCard() {
           <li key={index}>
             <Link 
               href={`/blog/${item.slug}`}
-              className="group/item flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-emerald-500/10 hover:border-emerald-500/20 border border-transparent transition-all duration-200"
+              className="group/item flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all duration-200"
             >
-              <span className="text-sm font-medium text-zinc-300 group-hover/item:text-emerald-400 transition-colors line-clamp-1">
+              <span className="text-sm font-medium text-white/78 group-hover/item:text-primary transition-colors line-clamp-1">
                 {item.topic}
               </span>
-              <ArrowUpRight className="w-4 h-4 text-zinc-600 group-hover/item:text-emerald-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200" />
+              <ArrowUpRight className="w-4 h-4 text-white/38 group-hover/item:text-primary opacity-0 group-hover/item:opacity-100 transition-all duration-200" />
             </Link>
           </li>
         ))}

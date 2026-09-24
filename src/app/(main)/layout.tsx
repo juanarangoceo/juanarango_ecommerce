@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne, DM_Mono } from "next/font/google";
-import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SiteHeader } from "@/components/commercial/site-header";
+import { IconMotionObserver } from "@/components/commercial/icon-motion-observer";
+import { SiteFooter } from "@/components/commercial/site-footer";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { constructMetadata } from "@/lib/utils";
-import { NewsletterPopupLoader } from "@/components/newsletter-popup-loader";
 import { AuthProvider } from "@/contexts/AuthContext";
 import "../globals.css";
 
@@ -24,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 const syne = Syne({
-  variable: "--font-display",
+  variable: "--font-wordmark",
   subsets: ["latin"],
   weight: ["700", "800"],
   display: "swap",
@@ -96,7 +95,7 @@ const organizationSchema = {
       },
       contactPoint: {
         "@type": "ContactPoint",
-        email: "hola@juanarangoecommerce.com",
+        email: "juanarangoecommerce@gmail.com",
         telephone: "+573146681896",
         contactType: "customer service",
         areaServed: "CO",
@@ -139,14 +138,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark scroll-smooth">
+    <html lang="es" className={`dark scroll-smooth ${geistSans.variable} ${geistMono.variable} ${syne.variable} ${dmMono.variable}`}>
       <head>
         {/* Performance: DNS prefetch for deferred scripts */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${dmMono.variable} antialiased bg-background text-foreground flex flex-col min-h-screen`}
-      >
+      <body className="min-h-screen bg-background text-foreground antialiased">
         {/* Schema Markup: Organization + WebSite - native script for SSR */}
         <script
           type="application/ld+json"
@@ -154,28 +151,13 @@ export default function RootLayout({
         />
         
         <AuthProvider>
-          <Navbar />
-          <main className="flex-1 flex flex-col pb-[72px] md:pb-0">
-            {children}
-          </main>
-          <MobileBottomNav />
-          <Footer />
-          {/* Newsletter Popup - lazy loaded, zero SSR cost */}
-          <NewsletterPopupLoader />
+          <SiteHeader />
+          <IconMotionObserver />
+          <main className="nitro-site-content">{children}</main>
+          <SiteFooter />
+          <DynamicChatWidget />
         </AuthProvider>
-        {/* <DynamicChatWidget /> Deshabilitado temporalmente */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-J2RT4C9YPR"
-          strategy="lazyOnload"
-        />
-        <Script id="gtag-init" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-J2RT4C9YPR');
-          `}
-        </Script>
+        <GoogleAnalytics gaId="G-J2RT4C9YPR" />
       </body>
     </html>
   );

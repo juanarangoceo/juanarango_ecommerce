@@ -20,7 +20,7 @@ export function NitroBanner() {
             <span className="block text-primary mt-2">Ahora construyo los sistemas que venden por ti.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-zinc-400 mb-10 leading-relaxed text-pretty max-w-[65ch]">
+          <p className="text-lg md:text-xl text-white/58 mb-10 leading-relaxed text-pretty max-w-[65ch]">
             Soy Juan Arango. Ayudo a empresas de Colombia y Latinoamérica a automatizar su operación y escalar
             sus ventas con arquitectura avanzada e inteligencia artificial. Te muestro cómo funciona
             antes de que me contrates.

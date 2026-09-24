@@ -35,7 +35,7 @@ export async function OtherCitiesSection({ currentSlug }: OtherCitiesProps) {
   }
 
   return (
-    <section className="py-16 bg-zinc-950/30 border-y border-white/5">
+    <section className="py-16 bg-[#0b0e0c]/30 border-y border-white/5">
       <div className="container mx-auto px-6">
         <h2 className="text-2xl font-bold mb-8 text-center">
           También disponible en otras <span className="text-primary">ciudades</span>
@@ -46,7 +46,7 @@ export async function OtherCitiesSection({ currentSlug }: OtherCitiesProps) {
             <Link
               key={page.slug}
               href={`/soluciones/nitro-commerce/${page.slug}`}
-              className="group p-4 rounded-lg bg-zinc-900/50 border border-white/5 hover:border-primary/30 transition-all duration-300"
+              className="group p-4 rounded-lg bg-[#0d110e]/60 border border-white/5 hover:border-primary/30 transition-all duration-300"
             >
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-primary" />
@@ -54,7 +54,7 @@ export async function OtherCitiesSection({ currentSlug }: OtherCitiesProps) {
                   <h3 className="font-semibold group-hover:text-primary transition-colors">
                     {page.ciudad}
                   </h3>
-                  <p className="text-sm text-zinc-500">{page.nicho}</p>
+                  <p className="text-sm text-white/45">{page.nicho}</p>
                 </div>
               </div>
             </Link>

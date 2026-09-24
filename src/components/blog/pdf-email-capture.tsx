@@ -107,7 +107,7 @@ export function PdfEmailCapture({
               <p className="text-[15px] font-bold leading-snug text-white sm:text-base">
                 {hookTitle}
               </p>
-              <p className="mt-1 text-[13px] leading-relaxed text-zinc-400 sm:text-sm">
+              <p className="mt-1 text-[13px] leading-relaxed text-white/58 sm:text-sm">
                 {hookDescription}
               </p>
             </div>
@@ -130,7 +130,7 @@ export function PdfEmailCapture({
                 >
                   <div className="relative flex-1">
                     <Mail
-                      className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500"
+                      className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/45"
                     />
                     <input
                       ref={inputRef}
@@ -140,7 +140,7 @@ export function PdfEmailCapture({
                       placeholder="tu@email.com"
                       required
                       disabled={state === 'loading'}
-                      className="w-full rounded-xl py-2.5 pl-9 pr-4 text-sm text-white placeholder-zinc-600 outline-none transition-all duration-200 disabled:opacity-50"
+                      className="w-full rounded-xl py-2.5 pl-9 pr-4 text-sm text-white placeholder-white/38 outline-none transition-all duration-200 disabled:opacity-50"
                       style={{
                         background: '#1a1a1a',
                         border: '1px solid #303030',
@@ -229,7 +229,7 @@ export function PdfEmailCapture({
                     <p className="text-sm font-medium text-red-300">{message}</p>
                     <button
                       onClick={reset}
-                      className="shrink-0 text-xs font-semibold text-zinc-400 underline-offset-2 hover:text-white hover:underline"
+                      className="shrink-0 text-xs font-semibold text-white/58 underline-offset-2 hover:text-white hover:underline"
                     >
                       Reintentar
                     </button>
@@ -241,7 +241,7 @@ export function PdfEmailCapture({
 
             {/* Hint text */}
             {(state === 'idle' || state === 'loading') && (
-              <p className="mt-2 text-center text-[11px] text-zinc-600 sm:text-left">
+              <p className="mt-2 text-center text-[11px] text-white/38 sm:text-left">
                 Sin spam. Solo tu resumen en PDF, una vez.
               </p>
             )}

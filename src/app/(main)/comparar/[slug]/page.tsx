@@ -96,24 +96,24 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="bg-white dark:bg-zinc-950 min-h-screen">
+      <div className="bg-[#0b0e0c] min-h-screen">
         {/* ===== HERO ===== */}
         <header className="container mx-auto px-4 pt-28 md:pt-32 pb-8 max-w-5xl">
-          <nav className="flex items-center gap-2 text-xs text-zinc-500 mb-4">
-            <Link href="/" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Inicio</Link>
+          <nav className="flex items-center gap-2 text-xs text-white/45 mb-4">
+            <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
             <span>/</span>
-            <Link href="/comparar" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Comparativas</Link>
+            <Link href="/comparar" className="hover:text-white transition-colors">Comparativas</Link>
             <span>/</span>
-            <span className="text-zinc-900 dark:text-zinc-100 truncate max-w-[200px]">{app1?.appName} vs {app2?.appName}</span>
+            <span className="text-white truncate max-w-[200px]">{app1?.appName} vs {app2?.appName}</span>
           </nav>
 
-          <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-4 leading-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
             {comparison.title}
           </h1>
 
           {/* Intro text */}
           {comparison.introText && (
-            <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl">
+            <p className="text-base md:text-lg text-white/58 leading-relaxed max-w-3xl">
               {comparison.introText}
             </p>
           )}
@@ -141,7 +141,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                       {app.appName?.charAt(0)}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg font-bold text-zinc-900 dark:text-white truncate">{app.appName}</h2>
+                      <h2 className="text-lg font-bold text-white truncate">{app.appName}</h2>
                       <div className="flex items-center gap-2">
                         {app.rating && <StarRating rating={app.rating} />}
                         <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
@@ -155,7 +155,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                     </div>
                   </div>
 
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-3">
+                  <p className="text-sm text-white/58 leading-relaxed mb-3">
                     {summary || app.description}
                   </p>
 
@@ -175,7 +175,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                     <div className="mt-3 grid grid-cols-2 gap-2">
                       <div className="space-y-1">
                         {(app.pros || []).slice(0, 3).map((pro: string, i: number) => (
-                          <div key={i} className="flex items-start gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400">
+                          <div key={i} className="flex items-start gap-1.5 text-[11px] text-white/58">
                             <CheckCircle2 className="w-3 h-3 text-green-500 mt-0.5 shrink-0" />
                             <span className="line-clamp-1">{pro}</span>
                           </div>
@@ -183,7 +183,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                       </div>
                       <div className="space-y-1">
                         {(app.cons || []).slice(0, 3).map((con: string, i: number) => (
-                          <div key={i} className="flex items-start gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400">
+                          <div key={i} className="flex items-start gap-1.5 text-[11px] text-white/58">
                             <XCircle className="w-3 h-3 text-red-400 mt-0.5 shrink-0" />
                             <span className="line-clamp-1">{con}</span>
                           </div>
@@ -196,7 +196,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                   <div className="mt-3 flex gap-2">
                     <Link
                       href={`/app-tools/${app.slug?.current}`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 transition-colors"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#111512] border border-white/15 text-xs font-medium text-white/78 hover:border-white/15 transition-colors"
                     >
                       Ver Review <ArrowRight className="w-3 h-3" />
                     </Link>
@@ -220,21 +220,21 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
 
           {/* ===== COMPARISON TABLE ===== */}
           {comparison.comparisonTable?.length > 0 && (
-            <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+            <div className="overflow-x-auto rounded-xl border border-white/10 shadow-sm">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-zinc-100 dark:bg-zinc-900">
-                    <th className="text-left px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 text-xs uppercase tracking-wider">Característica</th>
+                  <tr className="bg-[#0d110e]">
+                    <th className="text-left px-4 py-3 font-semibold text-white/78 text-xs uppercase tracking-wider">Característica</th>
                     <th className="text-left px-4 py-3 font-semibold text-emerald-700 dark:text-emerald-400 text-xs">{app1?.appName}</th>
                     <th className="text-left px-4 py-3 font-semibold text-blue-700 dark:text-blue-400 text-xs">{app2?.appName}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                <tbody className="divide-y divide-white/9">
                   {comparison.comparisonTable.map((row: any, i: number) => (
-                    <tr key={i} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
-                      <td className="px-4 py-2.5 font-medium text-zinc-900 dark:text-zinc-100 text-sm">{row.feature}</td>
-                      <td className="px-4 py-2.5 text-zinc-600 dark:text-zinc-400 text-sm">{row.app1Value}</td>
-                      <td className="px-4 py-2.5 text-zinc-600 dark:text-zinc-400 text-sm">{row.app2Value}</td>
+                    <tr key={i} className="hover:bg-[#0d110e]/60 transition-colors">
+                      <td className="px-4 py-2.5 font-medium text-white text-sm">{row.feature}</td>
+                      <td className="px-4 py-2.5 text-white/58 text-sm">{row.app1Value}</td>
+                      <td className="px-4 py-2.5 text-white/58 text-sm">{row.app2Value}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -244,28 +244,20 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
 
           {/* ===== MARKDOWN CONTENT ===== */}
           {comparison.content && (
-            <article className="prose prose-zinc dark:prose-invert prose-sm md:prose-base max-w-none
-              prose-headings:font-bold prose-headings:tracking-tight
-              prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-zinc-100 dark:prose-h2:border-zinc-800
-              prose-h3:text-lg md:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-              prose-p:leading-relaxed prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:mb-3
-              prose-strong:text-zinc-900 dark:prose-strong:text-white
-              prose-ul:list-disc prose-ul:pl-5 prose-ul:my-3
-              prose-li:marker:text-emerald-500 prose-li:mb-1
-            ">
+            <article className="prose prose-zinc dark:prose-invert prose-sm md:prose-base max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-h3:text-lg md:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-p:text-white/58 prose-p:mb-3 prose-strong:text-white prose-ul:list-disc prose-ul:pl-5 prose-ul:my-3 prose-li:marker:text-emerald-500 prose-li:mb-1 ">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  h1: ({node, ...props}) => <h2 className="text-xl md:text-2xl font-bold mt-8 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800" {...props}>{props.children}</h2>,
-                  h2: ({node, ...props}) => <h2 className="text-xl md:text-2xl font-bold mt-8 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800" {...props}>{props.children}</h2>,
+                  h1: ({node, ...props}) => <h2 className="text-xl md:text-2xl font-bold mt-8 mb-4 pb-2 border-b border-white/10" {...props}>{props.children}</h2>,
+                  h2: ({node, ...props}) => <h2 className="text-xl md:text-2xl font-bold mt-8 mb-4 pb-2 border-b border-white/10" {...props}>{props.children}</h2>,
                   h3: ({node, ...props}) => <h3 className="text-lg md:text-xl font-bold mt-6 mb-3" {...props}>{props.children}</h3>,
                   table: ({node, ...props}) => (
-                    <div className="overflow-x-auto my-6 rounded-lg border border-zinc-200 dark:border-zinc-800">
+                    <div className="overflow-x-auto my-6 rounded-lg border border-white/10">
                       <table className="w-full text-left text-sm" {...props}>{props.children}</table>
                     </div>
                   ),
-                  thead: ({node, ...props}) => <thead className="bg-zinc-100 dark:bg-zinc-900 font-semibold" {...props}>{props.children}</thead>,
-                  tbody: ({node, ...props}) => <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800" {...props}>{props.children}</tbody>,
+                  thead: ({node, ...props}) => <thead className="bg-[#0d110e] font-semibold" {...props}>{props.children}</thead>,
+                  tbody: ({node, ...props}) => <tbody className="divide-y divide-white/9" {...props}>{props.children}</tbody>,
                   th: ({node, ...props}) => <th className="px-3 py-2 text-xs" {...props}>{props.children}</th>,
                   td: ({node, ...props}) => <td className="px-3 py-2 text-sm" {...props}>{props.children}</td>,
                 }}
@@ -278,10 +270,10 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
           {/* ===== VERDICT ===== */}
           {comparison.verdict && (
             <div className="rounded-xl border-2 border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20 p-5 md:p-6">
-              <h2 className="text-lg md:text-xl font-bold text-zinc-900 dark:text-white mb-2 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-2">
                 🏆 Veredicto Final
               </h2>
-              <p className="text-sm md:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              <p className="text-sm md:text-base text-white/78 leading-relaxed">
                 {comparison.verdict}
               </p>
             </div>
@@ -289,8 +281,8 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
 
           {/* ===== FAQ ===== */}
           {comparison.faq?.length > 0 && (
-            <div className="pt-6 md:pt-8 border-t border-zinc-100 dark:border-zinc-800">
-              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">
+            <div className="pt-6 md:pt-8 border-t border-white/10">
+              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white">
                 Preguntas Frecuentes
               </h2>
               <Accordion type="single" collapsible className="w-full space-y-3">
@@ -298,12 +290,12 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                   <AccordionItem
                     key={index}
                     value={`item-${index}`}
-                    className="border border-zinc-200 dark:border-zinc-800 rounded-lg px-4 md:px-5 py-1 bg-white dark:bg-zinc-950 hover:border-emerald-500/50 transition-all shadow-sm"
+                    className="border border-white/10 rounded-lg px-4 md:px-5 py-1 bg-[#0b0e0c] hover:border-emerald-500/50 transition-all shadow-sm"
                   >
-                    <AccordionTrigger className="text-left text-sm md:text-base font-semibold text-zinc-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 hover:no-underline py-3">
+                    <AccordionTrigger className="text-left text-sm md:text-base font-semibold text-white hover:text-emerald-600 dark:hover:text-emerald-400 hover:no-underline py-3">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-zinc-600 dark:text-zinc-400 pt-1 pb-3 text-sm leading-relaxed">
+                    <AccordionContent className="text-white/58 pt-1 pb-3 text-sm leading-relaxed">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -319,13 +311,13 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
                 <Link
                   key={app._id}
                   href={`/app-tools/${app.slug?.current}`}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/40 transition-all group"
+                  className="flex items-center gap-2 p-3 rounded-lg border border-white/10 hover:border-emerald-500/40 transition-all group"
                 >
                   <span className={`w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-xs shrink-0 ${app.iconBg || 'bg-emerald-500'}`}>
                     {app.appName?.charAt(0)}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-zinc-900 dark:text-white truncate block">{app.appName}</span>
+                    <span className="text-sm font-medium text-white truncate block">{app.appName}</span>
                     <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       Ver review <ArrowRight className="w-2.5 h-2.5" />
                     </span>

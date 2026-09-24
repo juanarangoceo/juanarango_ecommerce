@@ -35,7 +35,7 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="mt-4 text-xl sm:text-2xl text-zinc-400 max-w-3xl mb-10 leading-relaxed font-light">
+          <p className="mt-4 text-xl sm:text-2xl text-white/58 max-w-3xl mb-10 leading-relaxed font-light">
             Estrategias SEO avanzadas y optimización para la <span className="text-white font-medium">Experiencia Generativa de Búsqueda (SGE)</span> impulsada por Inteligencia Artificial. Haz que tus clientes te encuentren cuando más te necesitan.
           </p>
 
@@ -46,7 +46,7 @@ export function Hero() {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-zinc-700 text-white hover:bg-zinc-800 font-semibold text-lg px-8 h-14 rounded-full transition-all" asChild>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-white/15 text-white hover:bg-[#111512] font-semibold text-lg px-8 h-14 rounded-full transition-all" asChild>
               <Link href="#como-funciona">
                 Descubrir la Metodología
               </Link>
@@ -61,31 +61,31 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto"
         >
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
+          <div className="bg-[#0d110e]/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
             <div className="bg-emerald-500/20 p-3 rounded-lg text-emerald-400">
               <Target className="w-6 h-6" />
             </div>
             <div>
               <p className="text-white font-bold text-xl">+300%</p>
-              <p className="text-zinc-500 text-sm">Incremento promedio en tráfico orgánico calificado.</p>
+              <p className="text-white/45 text-sm">Incremento promedio en tráfico orgánico calificado.</p>
             </div>
           </div>
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
+          <div className="bg-[#0d110e]/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
             <div className="bg-cyan-500/20 p-3 rounded-lg text-cyan-400">
               <Search className="w-6 h-6" />
             </div>
             <div>
               <p className="text-white font-bold text-xl">Top 3</p>
-              <p className="text-zinc-500 text-sm">Posicionamiento en keywords transaccionales clave.</p>
+              <p className="text-white/45 text-sm">Posicionamiento en keywords transaccionales clave.</p>
             </div>
           </div>
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
+          <div className="bg-[#0d110e]/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex items-start gap-4">
             <div className="bg-orange-500/20 p-3 rounded-lg text-orange-400">
               <Zap className="w-6 h-6" />
             </div>
             <div>
               <p className="text-white font-bold text-xl">SGE Ready</p>
-              <p className="text-zinc-500 text-sm">Optimización preparada para el futuro de Google AI.</p>
+              <p className="text-white/45 text-sm">Optimización preparada para el futuro de Google AI.</p>
             </div>
           </div>
         </motion.div>

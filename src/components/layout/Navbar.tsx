@@ -86,13 +86,13 @@ function DesktopDropdown({ label, links, isOpen, onEnter, onLeave, onToggle, onC
       </button>
       {isOpen && (
         <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 min-w-[220px] z-50">
-          <div className="bg-zinc-950 border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
+          <div className="bg-[#0b0e0c] border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
             {links.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={onClose}
-                className={`block px-5 py-3 text-sm font-medium text-zinc-200 hover:text-primary hover:bg-primary/5 transition-all ${
+                className={`block px-5 py-3 text-sm font-medium text-white/84 hover:text-primary hover:bg-primary/5 transition-all ${
                   i < links.length - 1 ? "border-b border-white/5" : ""
                 }`}
               >
@@ -117,7 +117,7 @@ function MobileAccordion({ label, links, isOpen, onToggle, onClose }: {
   return (
     <>
       <button
-        className="flex items-center justify-between text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 w-full text-left"
+        className="flex items-center justify-between text-lg font-medium text-white/84 hover:text-primary transition-colors py-3 border-b border-white/5 w-full text-left"
         onClick={onToggle}
         aria-expanded={isOpen}
       >
@@ -130,7 +130,7 @@ function MobileAccordion({ label, links, isOpen, onToggle, onClose }: {
             <Link
               key={link.href}
               href={link.href}
-              className="block text-base text-zinc-300 hover:text-primary transition-colors py-2 pl-3 border-l-2 border-primary/20 hover:border-primary"
+              className="block text-base text-white/78 hover:text-primary transition-colors py-2 pl-3 border-l-2 border-primary/20 hover:border-primary"
               onClick={onClose}
             >
               {link.label}
@@ -236,13 +236,13 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-2.5">
               <div className="w-px h-5 bg-white/10" />
               <Link href="/blog" onClick={closeAll}>
-                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-zinc-900 text-white border border-zinc-700 hover:bg-primary hover:text-black hover:border-primary">
+                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-[#0d110e] text-white border border-white/15 hover:bg-primary hover:text-black hover:border-primary">
                   <ZapSolidGreen className="w-4 h-4" />
                   Blog
                 </Button>
               </Link>
               <Link href="/newsletter" onClick={closeAll}>
-                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-zinc-900 text-white border border-zinc-700 hover:bg-emerald-500 hover:text-black hover:border-emerald-500">
+                <Button className="gap-1.5 text-sm px-4 py-2 h-auto font-semibold transition-all duration-200 bg-[#0d110e] text-white border border-white/15 hover:bg-emerald-500 hover:text-black hover:border-emerald-500">
                   <Mail className="w-4 h-4" />
                   Newsletter
                 </Button>
@@ -286,10 +286,10 @@ export function Navbar() {
               onToggle={() => setOpenDropdown(openDropdown === "services" ? null : "services")}
               onClose={closeAll}
             />
-            <Link href="/soluciones/b2b" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
+            <Link href="/soluciones/b2b" className="text-lg font-medium text-white/84 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
               B2B
             </Link>
-            <Link href="/guias" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
+            <Link href="/guias" className="text-lg font-medium text-white/84 hover:text-primary transition-colors py-3 border-b border-white/5 block" onClick={closeAll}>
               Guías
             </Link>
             <Link href="/blog" className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors py-3 border-b border-white/5" onClick={closeAll}>
@@ -299,7 +299,7 @@ export function Navbar() {
               <Mail className="w-4 h-4" />
               Newsletter
             </Link>
-            <Link href="/app-tools" className="text-lg font-medium text-zinc-200 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
+            <Link href="/app-tools" className="text-lg font-medium text-white/84 hover:text-primary transition-colors py-3 border-b border-white/5" onClick={closeAll}>
               IA Apps
             </Link>
             <Link href="/laboratorio" onClick={closeAll}>

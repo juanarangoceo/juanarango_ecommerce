@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -14,16 +14,16 @@ export function DynamicChatWidget() {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (pathname?.startsWith("/demos")) return;
 
-    // Defer chat widget loading by 5 seconds to avoid competing with LCP
+    // Defer the visual so it never competes with the route's primary content.
     const timer = setTimeout(() => {
       setShouldLoad(true);
-    }, 5000);
+    }, 1800);
     return () => clearTimeout(timer);
   }, [pathname]);
 
-  if (pathname !== "/") return null;
+  if (pathname?.startsWith("/demos")) return null;
   if (!shouldLoad) return null;
 
   return <ChatWidget />;

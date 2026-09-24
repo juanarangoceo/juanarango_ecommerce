@@ -64,18 +64,18 @@ export function EarlyAccessModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200"
+        className="bg-[#0d110e] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-zinc-800">
+        <div className="flex items-center justify-between p-6 border-b border-white/10">
           <div>
             <h3 className="text-xl font-bold text-white">Acceso Anticipado</h3>
-            <p className="text-sm text-zinc-400 mt-1 line-clamp-1">{cursoTitulo}</p>
+            <p className="text-sm text-white/58 mt-1 line-clamp-1">{cursoTitulo}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-zinc-400 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 rounded-full transition-colors"
+            className="p-2 text-white/58 hover:text-white bg-white/6 hover:bg-[#111512] rounded-full transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -89,24 +89,24 @@ export function EarlyAccessModal({
                 <CheckCircle2 className="w-8 h-8 text-emerald-500" />
               </div>
               <h4 className="text-2xl font-bold text-white mb-2">¡Solicitud  Enviada!</h4>
-              <p className="text-zinc-400 mb-6">
+              <p className="text-white/58 mb-6">
                 Te notificaremos tan pronto como <strong>{cursoTitulo}</strong> esté disponible.
               </p>
               <button
                 onClick={onClose}
-                className="w-full bg-white text-black font-semibold py-3 rounded-xl hover:bg-zinc-200 transition-colors"
+                className="w-full bg-white text-black font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors"
               >
                 Cerrar
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <p className="text-sm text-zinc-400 mb-4">
+              <p className="text-sm text-white/58 mb-4">
                 Déjanos tus datos para ser de los primeros en enterarte y recibir un descuento especial de lanzamiento.
               </p>
 
               <div>
-                <label htmlFor="nombre" className="block text-sm font-medium text-zinc-300 mb-1">Nombre Completo *</label>
+                <label htmlFor="nombre" className="block text-sm font-medium text-white/78 mb-1">Nombre Completo *</label>
                 <input
                   type="text"
                   id="nombre"
@@ -114,13 +114,13 @@ export function EarlyAccessModal({
                   required
                   value={formData.nombre}
                   onChange={handleChange}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full bg-[#0b0e0c] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="Tu nombre"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1">Correo Electrónico *</label>
+                <label htmlFor="email" className="block text-sm font-medium text-white/78 mb-1">Correo Electrónico *</label>
                 <input
                   type="email"
                   id="email"
@@ -128,33 +128,33 @@ export function EarlyAccessModal({
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full bg-[#0b0e0c] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="tu@email.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="whatsapp" className="block text-sm font-medium text-zinc-300 mb-1">WhatsApp (Opcional)</label>
+                <label htmlFor="whatsapp" className="block text-sm font-medium text-white/78 mb-1">WhatsApp (Opcional)</label>
                 <input
                   type="tel"
                   id="whatsapp"
                   name="whatsapp"
                   value={formData.whatsapp}
                   onChange={handleChange}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full bg-[#0b0e0c] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="+57 300..."
                 />
               </div>
 
               <div>
-                <label htmlFor="mensaje" className="block text-sm font-medium text-zinc-300 mb-1">Comentario (Opcional)</label>
+                <label htmlFor="mensaje" className="block text-sm font-medium text-white/78 mb-1">Comentario (Opcional)</label>
                 <textarea
                   id="mensaje"
                   name="mensaje"
                   rows={2}
                   value={formData.mensaje}
                   onChange={handleChange}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  className="w-full bg-[#0b0e0c] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                   placeholder="¿Qué esperas aprender en este curso?"
                 />
               </div>

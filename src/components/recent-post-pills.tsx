@@ -17,7 +17,7 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
       {/* Header */}
       <div className="flex items-center justify-center gap-2 mb-4">
         <TrendingUp className="w-4 h-4 text-emerald-400" />
-        <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
+        <span className="text-xs font-bold text-white/58 uppercase tracking-widest">
           Más recientes
         </span>
       </div>
@@ -30,7 +30,7 @@ export function RecentPostPills({ posts }: RecentPostPillsProps) {
             href={post.category ? `/blog/${post.category}/${post.slug}` : `/blog/${post.slug}`}
             className={cn(
               "inline-flex items-center shrink-0 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200",
-              "bg-zinc-900 text-zinc-300 border border-zinc-700 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/40",
+              "bg-[#0d110e] text-white/78 border border-white/15 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/40",
               "md:max-w-[260px]"
             )}
           >

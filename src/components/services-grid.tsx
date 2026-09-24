@@ -107,7 +107,7 @@ export function ServicesGrid() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance tracking-tight">
             Servicios: <span className="text-primary">el ecosistema NITRO</span>
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl text-pretty leading-relaxed">
+          <p className="text-xl text-white/58 max-w-2xl text-pretty leading-relaxed">
             Cuatro sistemas que trabajan juntos. Te los presento por lo que logran en tu negocio, no por su sofisticación técnica.
           </p>
         </div>
@@ -133,12 +133,12 @@ export function ServicesGrid() {
                   >
                     <service.icon className={`w-8 h-8 ${service.featured ? "text-white" : "text-primary"}`} />
                   </div>
-                  <span className="text-sm text-slate-500 font-dm-mono tracking-widest">{service.id}</span>
+                  <span className="text-sm text-white/45 font-dm-mono tracking-widest">{service.id}</span>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors tracking-tight">
                   {service.title}
                 </h3>
-                <p className="text-zinc-300 mb-8 leading-relaxed text-pretty text-sm flex-1">
+                <p className="text-white/78 mb-8 leading-relaxed text-pretty text-sm flex-1">
                   {service.desc}
                 </p>
                 
@@ -191,7 +191,7 @@ export function ServicesGrid() {
                 {/* Close Button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors z-10"
+                  className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/58 hover:text-white transition-colors z-10"
                 >
                   <X className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
@@ -203,17 +203,17 @@ export function ServicesGrid() {
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">{selectedService.title}</h3>
                 </div>
 
-                <p className="text-base md:text-xl text-zinc-300 leading-relaxed mb-8 md:mb-10">
+                <p className="text-base md:text-xl text-white/78 leading-relaxed mb-8 md:mb-10">
                   {selectedService.desc}
                 </p>
 
                 <div className="mb-8 md:mb-12">
-                  <h4 className="text-xs md:text-sm font-bold text-zinc-500 uppercase tracking-widest mb-4 md:mb-6 border-b border-white/10 pb-2">
+                  <h4 className="text-xs md:text-sm font-bold text-white/45 uppercase tracking-widest mb-4 md:mb-6 border-b border-white/10 pb-2">
                     Características Clave
                   </h4>
                   <ul className="grid gap-3 md:gap-4">
                     {selectedService.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3 text-zinc-300 text-sm md:text-base">
+                      <li key={i} className="flex items-start gap-3 text-white/78 text-sm md:text-base">
                         <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </li>
@@ -231,7 +231,7 @@ export function ServicesGrid() {
                   <Button
                     variant="outline"
                     onClick={handleClose}
-                    className="w-full md:w-auto h-12 md:h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-zinc-400 relative z-10"
+                    className="w-full md:w-auto h-12 md:h-14 px-8 border-white/10 hover:bg-white/5 hover:text-white rounded-full text-white/58 relative z-10"
                   >
                     Cerrar
                   </Button>

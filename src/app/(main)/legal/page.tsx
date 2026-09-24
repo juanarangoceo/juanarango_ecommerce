@@ -43,14 +43,11 @@ const DOCS = [
 
 export default function LegalHubPage() {
   return (
-    <main className="pt-28 md:pt-36 pb-24 px-6">
+    <div className="px-5 pb-24 pt-32 lg:px-8 lg:pt-44">
       <div className="container mx-auto max-w-4xl">
-        <header className="text-center mb-12 md:mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-primary font-[family-name:var(--font-dm-mono)] mb-4">
-            Centro Legal · {LEGAL_ENTITY.brand}
-          </p>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">
-            Transparencia y confianza
+        <header className="mb-12 text-center md:mb-16">
+          <h1 className="text-balance font-display text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[.97] tracking-[-0.05em] text-white">
+            Información clara para una relación <span className="text-primary">transparente.</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Aquí encuentras todos nuestros documentos legales. Queremos que sepas exactamente
@@ -65,7 +62,7 @@ export default function LegalHubPage() {
               <Link
                 key={doc.href}
                 href={doc.href}
-                className="group flex flex-col rounded-2xl border border-border/50 bg-card/40 p-6 md:p-7 hover:border-primary/50 hover:bg-card/70 transition-all"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/9 bg-[#0d110e] p-6 transition-colors hover:border-primary/40 md:p-7"
               >
                 <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <Icon className="w-5 h-5 text-primary" />
@@ -88,6 +85,6 @@ export default function LegalHubPage() {
           {LEGAL_ENTITY.location}.
         </p>
       </div>
-    </main>
+    </div>
   );
 }

@@ -93,7 +93,7 @@ export function NewsletterPopup() {
         {/* Gradient top border */}
         <div className="h-1 w-full bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500" />
 
-        <div className="bg-zinc-950 border border-zinc-800/80 sm:rounded-b-2xl px-6 py-8 relative overflow-hidden">
+        <div className="bg-[#0b0e0c] border border-white/10 sm:rounded-b-2xl px-6 py-8 relative overflow-hidden">
           {/* Background glow */}
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -108,7 +108,7 @@ export function NewsletterPopup() {
               </div>
               <div>
                 <p className="text-xl font-bold text-white">¡Ya estás dentro!</p>
-                <p className="text-zinc-400 text-sm mt-1">{message}</p>
+                <p className="text-white/58 text-sm mt-1">{message}</p>
               </div>
             </div>
           ) : (
@@ -126,13 +126,13 @@ export function NewsletterPopup() {
                 <span className="text-emerald-400">Tú no te puedes quedar atrás.</span>
               </h2>
 
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+              <p className="text-white/58 text-sm leading-relaxed mb-6">
                 Recibe cada viernes los mejores prompts, las herramientas que valen la pena y lo que nadie más te está contando sobre IA para negocios.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div className="relative group">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 group-focus-within:text-emerald-400 transition-colors pointer-events-none" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/45 group-focus-within:text-emerald-400 transition-colors pointer-events-none" />
                   <input
                     type="email"
                     placeholder="tucorreo@ejemplo.com"
@@ -140,7 +140,7 @@ export function NewsletterPopup() {
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={status === "loading"}
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm disabled:opacity-50"
+                    className="w-full pl-10 pr-4 py-3 bg-[#0d110e] border border-white/15 rounded-lg text-white placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm disabled:opacity-50"
                   />
                 </div>
 
@@ -167,12 +167,12 @@ export function NewsletterPopup() {
               <button
                 onClick={dismiss}
                 type="button"
-                className="w-full mt-3 text-zinc-400 hover:text-white text-sm font-medium py-2 rounded-lg transition-colors hover:bg-zinc-800"
+                className="w-full mt-3 text-white/58 hover:text-white text-sm font-medium py-2 rounded-lg transition-colors hover:bg-[#111512]"
               >
                 No gracias, quiero seguir leyendo
               </button>
 
-              <p className="text-zinc-600 text-xs text-center mt-3">
+              <p className="text-white/38 text-xs text-center mt-3">
                 Sin spam. Date de baja cuando quieras.
               </p>
             </div>

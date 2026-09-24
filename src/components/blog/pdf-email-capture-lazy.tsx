@@ -8,7 +8,7 @@ const PdfEmailCapture = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="my-8 h-[88px] animate-pulse rounded-2xl bg-zinc-900/60 border border-zinc-800" />
+      <div className="my-8 h-[88px] animate-pulse rounded-2xl bg-[#0d110e]/60 border border-white/10" />
     ),
   }
 )

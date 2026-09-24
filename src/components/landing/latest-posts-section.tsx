@@ -29,21 +29,14 @@ export async function LatestPostsSection() {
   }
 
   return (
-    <section className="py-24 px-6 bg-zinc-950 border-t border-zinc-900">
+    <section className="border-t border-white/9 bg-[#0b0e0c] px-5 pb-16 pt-14 lg:px-8 lg:pb-24 lg:pt-20" data-nitro-orb="ideas">
       <div className="container mx-auto max-w-7xl">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-500">
-              Lo Último en IA y Ecommerce
-            </h2>
-            <p className="text-xl text-zinc-400 max-w-2xl text-pretty">
-              Noticias, guías prácticas y estrategias probadas para vender más en internet con tecnología e IA.
-            </p>
-          </div>
-          <Button asChild variant="outline" className="hidden md:flex gap-2 group border-zinc-800 hover:bg-zinc-900 text-zinc-300">
+        <div className="mb-10 flex items-end justify-between gap-8 lg:mb-12">
+          <h2 className="max-w-4xl text-center font-display text-4xl font-bold tracking-tight text-white md:text-left sm:text-6xl"><span className="text-primary">Ideas útiles</span> antes de comprar otra herramienta.</h2>
+          <Button asChild variant="outline" className="hidden shrink-0 gap-2 border-white/10 text-white/78 hover:bg-[#0d110e] md:flex">
             <Link href="/blog">
               Ver todos los artículos
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="size-4" />
             </Link>
           </Button>
         </div>
@@ -56,8 +49,8 @@ export async function LatestPostsSection() {
           ))}
         </div>
 
-        <div className="mt-12 md:hidden flex justify-center">
-            <Button asChild variant="outline" className="w-full gap-2 group border-zinc-800 hover:bg-zinc-900 text-zinc-300">
+        <div className="mt-10 flex justify-center md:hidden">
+            <Button asChild variant="outline" className="w-full gap-2 group border-white/10 hover:bg-[#0d110e] text-white/78">
                 <Link href="/blog">
                 Ver todos los artículos
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

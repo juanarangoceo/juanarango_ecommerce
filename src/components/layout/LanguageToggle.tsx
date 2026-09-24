@@ -45,11 +45,8 @@ function clearTranslateCookie() {
 
 export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | "mobile" }) {
   const [isEN, setIsEN] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-
     // Inicializar Google Translate
     window.googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement(
@@ -76,13 +73,21 @@ export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | 
     const hasTranslateCookie = document.cookie
       .split(";")
       .some((c) => c.trim().startsWith("googtrans=/es/en"))
-    if (hasTranslateCookie) setIsEN(true)
+    const translatedStateTimer = hasTranslateCookie
+      ? window.setTimeout(() => setIsEN(true), 0)
+      : undefined
+
+    return () => {
+      if (translatedStateTimer !== undefined) window.clearTimeout(translatedStateTimer)
+    }
   }, [])
 
   const triggerTranslation = () => {
     if (!isEN) {
       // ── Traducir a inglés via select oculto de Google Translate ──
+      let attempts = 0
       const attempt = () => {
+        attempts += 1
         const selectEl = document.querySelector(
           ".goog-te-combo"
         ) as HTMLSelectElement | null
@@ -91,7 +96,7 @@ export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | 
           selectEl.value = "en"
           selectEl.dispatchEvent(new Event("change"))
           setIsEN(true)
-        } else {
+        } else if (attempts < 10) {
           // Script aún cargando, reintentar en 400ms
           setTimeout(attempt, 400)
         }
@@ -104,8 +109,6 @@ export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | 
     }
   }
 
-  if (!mounted) return null
-
   // ── Variante Mobile: ícono + sigla apilados (estilo BottomNav) ──
   if (variant === "mobile") {
     return (
@@ -113,7 +116,7 @@ export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | 
         onClick={triggerTranslation}
         aria-label={isEN ? "Switch to Spanish" : "Switch to English"}
         className={`flex flex-col items-center gap-1 transition-all duration-200 ${
-          isEN ? "text-sky-400 scale-110" : "text-white/50 hover:text-white/80"
+          isEN ? "text-primary scale-110" : "text-white/50 hover:text-white/80"
         }`}
       >
         <Globe className="w-6 h-6" />
@@ -136,27 +139,22 @@ export function LanguageToggle({ variant = "desktop" }: { variant?: "desktop" | 
         aria-label={isEN ? "Switch to Spanish" : "Switch to English"}
         title={isEN ? "Ver en Español" : "View in English"}
         className={`
-          flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold
+          flex h-10 items-center gap-1.5 rounded-full px-3 text-xs font-semibold
           border transition-all duration-200 select-none cursor-pointer
           ${
             isEN
-              ? "bg-sky-500/15 border-sky-500/40 text-sky-400 hover:bg-sky-500/25 hover:border-sky-500/60"
-              : "bg-zinc-800/80 border-zinc-700/60 text-zinc-400 hover:bg-zinc-700/80 hover:text-zinc-200 hover:border-zinc-600"
+              ? "bg-primary/10 border-primary/35 text-primary hover:bg-primary/15 hover:border-primary/55"
+              : "bg-[#111512]/80 border-white/15 text-white/58 hover:bg-[#111512]/80 hover:text-white/84 hover:border-white/25"
           }
         `}
       >
         <Globe className="w-3.5 h-3.5 shrink-0" />
-        <span className="hidden sm:inline">
+        <span>
           {/* notranslate evita que Google Translate traduzca "ES" → "IS" */}
           <span className="notranslate" translate="no">
             {isEN ? "ES" : "EN"}
           </span>
         </span>
-        <span
-          className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
-            isEN ? "bg-sky-400 animate-pulse" : "bg-zinc-600"
-          }`}
-        />
       </button>
     </>
   )

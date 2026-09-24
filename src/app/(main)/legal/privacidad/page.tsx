@@ -13,6 +13,7 @@ export default function PrivacidadPage() {
     <LegalShell
       title="Política de Privacidad"
       intro="Tu privacidad nos importa. Aquí te explicamos, sin letra pequeña, qué datos recopilamos, para qué los usamos y qué derechos tienes sobre ellos."
+      updated="1 de septiembre de 2026"
     >
       <h2>1. Responsable del tratamiento</h2>
       <p>
@@ -35,6 +36,12 @@ export default function PrivacidadPage() {
           completas un formulario de contacto, de diagnóstico o de propuesta.
         </li>
         <li>
+          <strong>Datos de operación comercial:</strong> tipo de negocio, plataforma de catálogo,
+          tamaño del catálogo, volumen aproximado de conversaciones y pedidos, forma de atención,
+          dificultades operativas y momento estimado de implementación cuando solicitas la evaluación
+          de NitroBot.
+        </li>
+        <li>
           <strong>Datos de suscripción:</strong> tu correo electrónico cuando te suscribes al
           boletín (newsletter).
         </li>
@@ -48,6 +55,10 @@ export default function PrivacidadPage() {
       <h2>3. Para qué usamos tus datos</h2>
       <ul>
         <li>Responder tus solicitudes de contacto y diagnóstico.</li>
+        <li>
+          Evaluar de forma automatizada y posteriormente humana la compatibilidad operativa con
+          NitroBot, recomendar una capacidad inicial y priorizar el contacto solicitado.
+        </li>
         <li>Prestar y gestionar los servicios que nos contrates.</li>
         <li>Enviarte el contenido y las comunicaciones a las que te suscribiste.</li>
         <li>Mejorar el sitio, nuestros contenidos y la experiencia de usuario.</li>
@@ -55,7 +66,9 @@ export default function PrivacidadPage() {
       </ul>
       <p>
         No tomamos decisiones automatizadas que produzcan efectos jurídicos sobre ti, ni vendemos tus
-        datos personales a terceros.
+        datos personales a terceros. La calificación de compatibilidad de NitroBot es orientativa: no
+        crea una obligación de contratación, no reemplaza la revisión humana y puedes pedir que la
+        revisemos o eliminemos.
       </p>
 
       <h2>4. Encargados y terceros que tratan tus datos</h2>
@@ -65,6 +78,10 @@ export default function PrivacidadPage() {
       </p>
       <ul>
         <li><strong>Supabase</strong> — almacenamiento de base de datos y formularios.</li>
+        <li>
+          <strong>NitroBot</strong> — plataforma privada de NITRO ECOM donde se recibe la evaluación,
+          se registra el seguimiento comercial y se controla el acceso del equipo autorizado.
+        </li>
         <li><strong>Vercel</strong> — alojamiento (hosting) e infraestructura del sitio.</li>
         <li><strong>Sanity</strong> — gestión de contenidos.</li>
         <li><strong>Resend</strong> — envío de correos electrónicos transaccionales y boletines.</li>

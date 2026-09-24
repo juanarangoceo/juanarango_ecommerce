@@ -33,7 +33,7 @@ export function CTAForm() {
                 <span className="text-emerald-400">Tráfico Orgánico</span>
               </h2>
 
-              <p className="text-zinc-400 text-lg mb-8">
+              <p className="text-white/58 text-lg mb-8">
                 Agenda una sesión de diagnóstico sin costo donde analizaremos tu posicionamiento actual, descubriremos oportunidades de palabras clave y trazaremos un plan para dominar Google.
               </p>
 
@@ -46,19 +46,19 @@ export function CTAForm() {
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-                    <span className="text-zinc-300">{item}</span>
+                    <span className="text-white/78">{item}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="flex items-center gap-2 text-sm text-zinc-500">
+              <div className="flex items-center gap-2 text-sm text-white/45">
                 <Shield className="w-4 h-4" />
                 <span>Tu información está protegida y nunca será compartida</span>
               </div>
             </div>
 
             {/* Right - Form */}
-            <div className="p-6 lg:p-8 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm">
+            <div className="p-6 lg:p-8 rounded-xl border border-white/10 bg-[#0d110e]/60 backdrop-blur-sm">
               <ContactForm 
                 interestOptions={[
                   "Auditoría SEO Local", 

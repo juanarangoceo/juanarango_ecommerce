@@ -86,14 +86,14 @@ export function BlogSearch() {
   return (
     <div ref={containerRef} className="relative w-full max-w-3xl mx-auto z-30">
       {/* Label */}
-      <p className="text-center text-base font-semibold text-zinc-300 mb-4 tracking-wide">
+      <p className="text-center text-base font-semibold text-white/78 mb-4 tracking-wide">
         Noticias, guías y estrategias de <span className="text-emerald-400">IA y Ecommerce</span>
       </p>
 
       <div className="relative group perspective-1000">
         <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full opacity-0 group-focus-within:opacity-20 group-hover:opacity-10 transition duration-1000 blur-xl"></div>
-        <div className="relative flex items-center bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 group-focus-within:border-emerald-500/40 group-focus-within:bg-zinc-900/90 group-focus-within:ring-1 group-focus-within:ring-emerald-500/20">
-            <div className="pl-5 pr-3 py-4 text-zinc-400 group-focus-within:text-emerald-400 transition-colors">
+        <div className="relative flex items-center bg-[#0d110e]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 group-focus-within:border-emerald-500/40 group-focus-within:bg-[#0d110e]/90 group-focus-within:ring-1 group-focus-within:ring-emerald-500/20">
+            <div className="pl-5 pr-3 py-4 text-white/58 group-focus-within:text-emerald-400 transition-colors">
                  {isLoading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
                  ) : (
@@ -112,11 +112,11 @@ export function BlogSearch() {
                 if (suggestions.length > 0) setIsOpen(true);
               }}
               placeholder="Busca noticias, guías, herramientas, estrategias..."
-              className="w-full bg-transparent text-base text-white placeholder:text-zinc-500 focus:outline-none py-4 font-normal tracking-normal"
+              className="w-full bg-transparent text-base text-white placeholder:text-white/45 focus:outline-none py-4 font-normal tracking-normal"
             />
             <div className="pr-5 pl-3">
                 <div className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 border border-white/10">
-                    <Command className="w-4 h-4 text-zinc-400" />
+                    <Command className="w-4 h-4 text-white/58" />
                 </div>
             </div>
         </div>
@@ -124,17 +124,17 @@ export function BlogSearch() {
         {/* Helper Text / Badge */}
         <div className="absolute top-full left-0 right-0 mt-3 text-center pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-500">
             {query.length > 0 && query.length < 3 && (
-                <span className="text-xs text-zinc-500 animate-pulse">Teclea un poco más para buscar...</span>
+                <span className="text-xs text-white/45 animate-pulse">Teclea un poco más para buscar...</span>
             )}
         </div>
       </div>
 
       {/* Suggestions Dropdown */}
       {isOpen && (query.length >= 3) && (
-        <div className="absolute top-full left-4 right-4 mt-4 bg-zinc-950/90 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 z-50">
+        <div className="absolute top-full left-4 right-4 mt-4 bg-[#0b0e0c]/90 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 z-50">
             
             {isLoading ? (
-                 <div className="px-6 py-8 text-center text-sm text-zinc-500 flex flex-col items-center gap-3">
+                 <div className="px-6 py-8 text-center text-sm text-white/45 flex flex-col items-center gap-3">
                     <Loader2 className="w-5 h-5 animate-spin text-emerald-500" />
                     <span className="font-light">Explorando base de conocimiento...</span>
                  </div>
@@ -153,11 +153,11 @@ export function BlogSearch() {
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/0 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-500"></div>
                             
-                            <h4 className="text-base font-medium text-zinc-200 group-hover:text-emerald-400 transition-colors relative z-10">
+                            <h4 className="text-base font-medium text-white/84 group-hover:text-emerald-400 transition-colors relative z-10">
                                 {post.title}
                             </h4>
                             {post.excerpt && (
-                                <p className="text-sm text-zinc-500 mt-1 line-clamp-1 truncate font-light relative z-10 group-hover:text-zinc-400">
+                                <p className="text-sm text-white/45 mt-1 line-clamp-1 truncate font-light relative z-10 group-hover:text-white/58">
                                     {post.excerpt}
                                 </p>
                             )}
@@ -166,7 +166,7 @@ export function BlogSearch() {
                     <div className="px-6 py-3 bg-white/5 text-center">
                          <button 
                             onClick={() => handleSearch(query)}
-                            className="text-xs text-zinc-400 hover:text-white transition-colors"
+                            className="text-xs text-white/58 hover:text-white transition-colors"
                          >
                             Ver todos los resultados
                          </button>
@@ -174,10 +174,10 @@ export function BlogSearch() {
                 </div>
             ) : (
                 <div className="px-6 py-8 text-center">
-                    <div className="w-12 h-12 rounded-full bg-zinc-900 mx-auto flex items-center justify-center mb-3">
-                        <Search className="w-5 h-5 text-zinc-600" />
+                    <div className="w-12 h-12 rounded-full bg-[#0d110e] mx-auto flex items-center justify-center mb-3">
+                        <Search className="w-5 h-5 text-white/38" />
                     </div>
-                    <p className="text-sm text-zinc-400">
+                    <p className="text-sm text-white/58">
                         No encontramos nada sobre "<span className="text-white font-medium">{query}</span>"
                     </p>
                 </div>
