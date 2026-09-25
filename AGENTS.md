@@ -54,7 +54,8 @@ consume contenido de Sanity, datos de Supabase y varios servicios externos.
 
 - Next.js 16.1.1 App Router, React 19, TypeScript y Tailwind CSS 4.
 - Sanity para contenido editorial y Studio.
-- Supabase para leads, autenticación y datos de algunas herramientas.
+- Supabase para el CRM propio (`contacts`, `contact_events`), autenticación,
+  búsqueda del blog (`posts`) y páginas locales (`pseo_pages`).
 - Cloudinary para imágenes y video.
 - Resend, Telegram, Meta Pixel, Cal.com e Inngest según el flujo.
 - Gemini y OpenAI en generadores y herramientas internas.
@@ -78,6 +79,7 @@ consume contenido de Sanity, datos de Supabase y varios servicios externos.
 - `src/app/(landing)`: landings de campaña sin navegación ni distracciones.
 - `src/app/(demos)`: demostraciones aisladas.
 - `src/app/(marketing)`: herramientas internas de marketing.
+- `src/app/(admin)`: panel `/admin` (CRM) con layout raíz propio e instalable.
 - `src/app/api`: webhooks, generación, newsletter y automatizaciones.
 - `src/components/nitrobot`: página orgánica, formulario y embudo VSL.
 - `src/components/analytics`: analítica condicionada por variables públicas.
