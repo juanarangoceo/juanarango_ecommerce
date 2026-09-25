@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0D0B" />
+    <meta name="application-name" content="Nitro Admin" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="manifest" href="/admin.webmanifest" />
+    <link rel="icon" href="/icons/admin-192.png" />
+    <title>Nitro Admin</title>
+    <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0B0D0B;color:#B7FF2A;font:600 14px system-ui}</style>
+  </head>
+  <body>
+    <!-- Lanzador estático de la app instalada: Android pide el start_url sin
+         cookies para generar la WebAPK; aquí no hay datos, solo se salta a /admin. -->
+    <p>Abriendo el panel…</p>
+    <script>window.location.replace("/admin");</script>
+  </body>
+</html>

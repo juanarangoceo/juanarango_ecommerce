@@ -658,3 +658,16 @@ body > .skiptranslate {
   box-decoration-break: clone;
   padding: 0 0.06em;
 }
+
+/* Panel /admin: ficha de contacto como hoja inferior (móvil) o lateral (escritorio). */
+@keyframes admin-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes admin-sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes admin-sheet-left { from { transform: translateX(100%); } to { transform: none; } }
+.admin-fade { animation: admin-fade .2s ease-out both; }
+.admin-sheet { animation: admin-sheet-up .32s cubic-bezier(.22, 1, .36, 1) both; }
+@media (min-width: 768px) {
+  .admin-sheet { animation-name: admin-sheet-left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-fade, .admin-sheet { animation: none; }
+}

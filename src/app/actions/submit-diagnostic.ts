@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
+import { captureContact, cleanAttribution } from "@/lib/crm/capture";
 
 export type DiagnosticSubmissionResult = {
   success?: true;
@@ -44,46 +44,19 @@ export async function submitDiagnostic(formData: FormData): Promise<DiagnosticSu
   const live = process.env.ENABLE_DIAGNOSTIC_SUBMISSIONS === "true" || process.env.VERCEL_ENV === "production";
   if (!live) return { success: true, preview: true };
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!supabaseUrl || !serviceKey) return { error: "La captación todavía no está configurada en este entorno." };
-
-  const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
-  const { error } = await supabase.rpc("submit_commercial_diagnostic", {
-    payload: {
-      name,
-      company,
-      email,
-      phone,
-      recommendation,
-      primary_problem: primaryProblem,
-      maturity_level: maturityLevel,
-      answers,
-      attribution,
-    },
+  const captured = await captureContact({
+    email,
+    phone,
+    name,
+    company,
+    form: "diagnostico",
+    summary: `Diagnóstico · ${recommendation}`,
+    data: { recommendation, primary_problem: primaryProblem, maturity_level: maturityLevel, answers },
+    attribution: cleanAttribution(attribution),
+    path: attribution.landing_path,
+    consent,
   });
-
-  if (error) {
-    // Mientras la migración 20260826155922 no esté aplicada, el RPC no existe.
-    // El lead se guarda igual en las columnas originales de `leads`.
-    const { error: fallbackError } = await supabase.from("leads").insert({
-      name,
-      email,
-      company: company || null,
-      interest: `Diagnóstico · ${recommendation}`,
-      message: [
-        `WhatsApp: ${phone}`,
-        `Prioridad: ${primaryProblem}`,
-        `Madurez: ${maturityLevel}`,
-        `Respuestas: ${JSON.stringify(answers)}`,
-        `Atribución: ${JSON.stringify(attribution)}`,
-      ].join("\n"),
-    });
-    if (fallbackError) {
-      console.error("No fue posible guardar el diagnóstico:", error.code, fallbackError.code);
-      return { error: "No pudimos guardar el diagnóstico. Intenta de nuevo." };
-    }
-  }
+  if (!captured) return { error: "No pudimos guardar el diagnóstico. Intenta de nuevo." };
 
   await notifyTelegram([
     "Nuevo diagnóstico en juanarangoecommerce.com",

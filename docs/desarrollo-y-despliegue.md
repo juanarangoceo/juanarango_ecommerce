@@ -63,20 +63,24 @@ contrato `nitrobot-lead-v1` a Nitro Bot y aparece en `/admin/leads`. Los preview
 pueden mantener `ENABLE_NITROBOT_LEAD_SUBMISSIONS` desactivada; producción debe
 tener las tres variables Nitro configuradas y la función de Inngest sincronizada.
 
-### Diagnóstico comercial
+### Diagnóstico comercial y CRM
 
-- `ENABLE_DIAGNOSTIC_SUBMISSIONS`: solo el valor exacto `true` habilita la
-  escritura. Ausente o con cualquier otro valor, la interfaz funciona en modo
-  de previsualización y no persiste datos.
-- `SUPABASE_SERVICE_ROLE_KEY`: se usa exclusivamente en la Server Action para
-  invocar la función transaccional. Nunca debe llegar al navegador.
-
-Antes de activar la variable debe estar aplicada y verificada la migración
-`20260826155922_commercial_diagnostics.sql`. El entorno local puede apuntar al
-proyecto productivo de Supabase; por eso las pruebas visuales deben mantener la
-escritura desactivada.
+- `ENABLE_DIAGNOSTIC_SUBMISSIONS`: solo el valor exacto `true` habilita el
+  envío del diagnóstico fuera de producción.
+- `ENABLE_CRM_WRITES`: fuera de producción `captureContact` no escribe en
+  Supabase salvo con `true`. El entorno local apunta al proyecto productivo:
+  para pruebas visuales, dejarla sin definir.
+- `SUPABASE_SERVICE_ROLE_KEY`: solo servidor (Server Actions, rutas y panel).
+- `RESEND_CRM_SYNC`: con `true` copia cada contacto a Resend y habilita
+  «Enviar a Resend» en los segmentos del panel.
+- `CAL_WEBHOOK_SECRET`: obligatoria en producción; sin ella el webhook de
+  Cal.com responde 503 para que nadie inyecte contactos.
 
 ### Acceso interno
+
+- `ADMIN_DASHBOARD_PASSWORD`: contraseña del panel `/admin`. Sin ella el panel
+  queda cerrado. `ADMIN_SESSION_SECRET` (opcional) firma las sesiones; si no
+  existe se deriva de la contraseña y cambiarla cierra todas las sesiones.
 
 - `AUDIO_GEN_USER` y `AUDIO_GEN_PASSWORD`: Basic Auth de
   `/studio/audio-gen` y firma de la cookie que exigen `/api/audio/*`. Sin

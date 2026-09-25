@@ -175,13 +175,19 @@ export const newsletterOrchestrator = inngest.createFunction(
     const subscribers: Array<{ id: string; email: string; first_name?: string }> =
       await step.run('fetch-subscribers', async () => {
         const supabase = getSupabase()
+        // Fuente: CRM (`contacts`). Solo quien está suscrito a la newsletter.
         const { data, error } = await supabase
-          .from('newsletter_subscribers')
-          .select('id, email, first_name')
-          .eq('unsubscribed', false)
+          .from('contacts')
+          .select('id, email, name')
+          .eq('newsletter_status', 'subscribed')
+          .not('email', 'is', null)
 
         if (error) throw new Error(`Supabase error: ${error.message}`)
-        return data || []
+        return (data || []).map((row) => ({
+          id: row.id as string,
+          email: row.email as string,
+          first_name: (row.name as string | null)?.split(/\s+/)[0] || undefined,
+        }))
       })
 
     if (subscribers.length === 0) {

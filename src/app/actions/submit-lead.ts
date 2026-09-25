@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
+import { captureContact, cleanAttribution } from "@/lib/crm/capture";
 import { Resend } from "resend";
 
 export async function submitLead(formData: FormData) {
@@ -14,35 +14,24 @@ export async function submitLead(formData: FormData) {
     return { error: "Faltan campos requeridos" };
   }
 
-  // Debug: Log environment check (will show in server logs)
-  console.log("Submitting lead:", { name, email, hasSupabase: !!process.env.SUPABASE_SERVICE_ROLE_KEY, hasResend: !!process.env.RESEND_API_KEY });
-
-  // 1. Validate Environment
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    console.error("Missing Supabase Configuration");
-    return { error: "Error de configuración del servidor (Supabase Keys missing)." };
-  }
-
   try {
-    // Initialize Clients dynamically to catch config errors
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
-    );
-    
-    // 2. Save to Supabase
-    const { error: dbError } = await supabase.from("leads").insert({
-      name,
+    // 2. CRM (contacts + contact_events)
+    const attribution = cleanAttribution(formData.get("attribution"));
+    const captured = await captureContact({
       email,
+      name,
       company,
-      interest,
-      message,
+      form: "contacto",
+      summary: interest ? `Contacto · ${interest}` : "Formulario de contacto",
+      data: { interest, message },
+      attribution,
+      path: attribution.landing_path,
     });
 
-    if (dbError) {
-      console.error("Supabase Error:", dbError);
-      return { error: "Error guardando en base de datos. ¿Creaste la tabla 'leads'?" };
+    if (!captured) {
+      return { error: "No pudimos guardar tu solicitud. Intenta de nuevo." };
     }
+    if (captured.contact_id === "preview") return { success: true };
 
     // 3. Send Telegram Notification (IMMEDIATELY after successful DB insert)
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {

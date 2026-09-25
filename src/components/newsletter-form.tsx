@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Loader2, Mail } from "lucide-react";
 import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
+import { readAttribution } from "@/lib/crm/client-attribution";
 
 type NewsletterFormProps = {
   variant?: "card" | "inline";
@@ -23,6 +24,7 @@ export function NewsletterForm({ variant = "card" }: NewsletterFormProps) {
 
     const formData = new FormData();
     formData.append("email", email);
+    formData.append("attribution", readAttribution("newsletter_form"));
     const result = await subscribeToNewsletter(formData);
 
     if (result.success) {

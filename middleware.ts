@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { ADMIN_COOKIE, verifyAdminToken } from '@/lib/admin-session'
 
 // Protege el generador de audio interno. `/studio/audio-gen` pide Basic Auth
 // y, al validar, emite una cookie firmada que es lo único que aceptan las APIs
@@ -35,7 +36,25 @@ async function validSession(req: NextRequest, password: string) {
   return safeEqual(signature, await sign(`audio-gen:${issuedAt}`, password))
 }
 
+// Panel /admin (CRM): sesión firmada de `src/lib/admin-session.ts`. Quedan
+// fuera el login y el lanzador estático de la app instalable, que el navegador
+// pide sin cookies al instalarla.
+async function adminGate(req: NextRequest) {
+  const { pathname } = req.nextUrl
+  if (pathname === '/admin/login' || pathname === '/admin/launch.html') return NextResponse.next()
+  if (await verifyAdminToken(req.cookies.get(ADMIN_COOKIE)?.value)) return NextResponse.next()
+  if (pathname.startsWith('/api/')) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  const login = new URL('/admin/login', req.url)
+  if (pathname !== '/admin') login.searchParams.set('from', pathname)
+  return NextResponse.redirect(login)
+}
+
 export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl
+  if (pathname === '/admin' || pathname.startsWith('/admin/') || pathname.startsWith('/api/admin/crm')) {
+    return adminGate(req)
+  }
+
   const creds = credentials()
   const isApi = req.nextUrl.pathname.startsWith('/api/audio')
 
@@ -85,5 +104,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/studio/audio-gen/:path*', '/api/audio/:path*'],
+  matcher: ['/studio/audio-gen/:path*', '/api/audio/:path*', '/admin', '/admin/:path*', '/api/admin/crm/:path*'],
 }

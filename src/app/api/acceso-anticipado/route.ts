@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase';
+import { captureContact } from '@/lib/crm/capture';
 
 export async function POST(request: Request) {
   try {
@@ -13,29 +13,16 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!supabaseAdmin) {
-      console.error('No se pudo inicializar Supabase Admin.');
-      return NextResponse.json(
-        { error: 'Error del servidor: Configuración de base de datos faltante.' },
-        { status: 500 }
-      );
-    }
+    const captured = await captureContact({
+      email: String(email),
+      name: String(nombre),
+      phone: whatsapp ? String(whatsapp) : null,
+      form: 'acceso_anticipado',
+      summary: `Acceso anticipado · ${String(curso_titulo).slice(0, 120)}`,
+      data: { curso_id: String(curso_id), curso_titulo: String(curso_titulo), message: mensaje ? String(mensaje).slice(0, 2000) : null },
+    });
 
-    const { error } = await supabaseAdmin
-      .from('acceso_anticipado')
-      .insert([
-        {
-          nombre,
-          email,
-          whatsapp: whatsapp || null,
-          curso_id,
-          curso_titulo,
-          mensaje: mensaje || null,
-        }
-      ]);
-
-    if (error) {
-      console.error('Error insertando en Supabase:', error);
+    if (!captured) {
       return NextResponse.json(
         { error: 'Error guardando tu solicitud. Intenta nuevamente.' },
         { status: 500 }

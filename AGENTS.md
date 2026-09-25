@@ -141,6 +141,11 @@ queda como copia prescindible. Las notas siguientes, incluidas las de «Contexto
 previo», describen decisiones de diseño vigentes; donde hablen de «sin commit ni
 despliegue» están superadas.
 
+**CRM propio y panel `/admin` (25-09, pendiente de migración y despliegue):**
+todos los formularios escriben en `contacts`/`contact_events` vía
+`src/lib/crm/capture.ts`; el panel es instalable en el móvil. El orden de
+migraciones y despliegue está en `docs/pendientes.md` (punto 0).
+
 Desde el 25 de septiembre el asistente (Guía Nitro) reposa como el rayo de
 Nitro en píxeles, no como orbe, y las conversaciones de WhatsApp usan tiendas
 ficticias con logo (Alma Botánica, Paso Urbano) vistas desde el teléfono del

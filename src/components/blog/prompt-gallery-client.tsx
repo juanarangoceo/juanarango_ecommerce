@@ -23,7 +23,6 @@ interface Prompt {
 
 interface PromptGalleryClientProps {
   prompts: Prompt[];
-  likeCounts: Record<string, number>;
 }
 
 const CATEGORIES = [
@@ -34,7 +33,7 @@ const CATEGORIES = [
   })),
 ];
 
-export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClientProps) {
+export function PromptGalleryClient({ prompts }: PromptGalleryClientProps) {
   const { user, loading: authLoading } = useAuth();
   const [activeCategory, setActiveCategory] = useState("todos");
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,7 +105,6 @@ export function PromptGalleryClient({ prompts, likeCounts }: PromptGalleryClient
                 <PromptCard
                   key={prompt._id}
                   prompt={prompt}
-                  initialLikeCount={likeCounts[prompt._id] ?? 0}
                   priority={index < 4}
                 />
               );

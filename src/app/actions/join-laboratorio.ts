@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/lib/supabase";
+import { captureContact } from "@/lib/crm/capture";
 
 interface WaitlistResult {
   success: boolean;
@@ -25,23 +25,15 @@ export async function joinLaboratorioWaitlist(
   }
 
   try {
-    const supabase = supabaseAdmin;
-    if (!supabase) {
-      return { success: false, error: "Error interno del servidor." };
-    }
-
-    const { error: dbError } = await supabase
-      .from("laboratorio_waitlist")
-      .insert([{ name, email, business_type: businessType, monthly_revenue: monthlyRevenue, message }]);
-
-    if (dbError) {
-      if (dbError.code === "23505") {
-        return {
-          success: true,
-          message: "¡Ya estás en la lista! Te avisaremos cuando abramos puertas.",
-        };
-      }
-      console.error("Supabase Error:", dbError);
+    const captured = await captureContact({
+      email,
+      name,
+      form: "laboratorio",
+      summary: "Lista de espera del Laboratorio",
+      data: { business_type: businessType, monthly_revenue: monthlyRevenue, message },
+      path: "/laboratorio",
+    });
+    if (!captured) {
       return { success: false, error: "No se pudo registrar tu solicitud. Intenta de nuevo." };
     }
 

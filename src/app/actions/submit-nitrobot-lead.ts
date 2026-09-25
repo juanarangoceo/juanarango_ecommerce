@@ -1,7 +1,9 @@
 "use server"
 
 import { NitroBotIntakeError, sendNitroBotLead } from "@/lib/nitrobot-intake"
+import { after } from "next/server"
 import { inngest } from "@/lib/inngest/client"
+import { captureContact, cleanAttribution } from "@/lib/crm/capture"
 import {
   NITROBOT_CONSENT_VERSION,
   NITROBOT_LEAD_CONTRACT_VERSION,
@@ -60,6 +62,39 @@ async function queueLead(payload: NitroBotLeadPayload, idempotencyKey: string, l
     console.error("[nitrobot-form] Inngest no pudo aceptar el reintento:", error)
     return false
   }
+}
+
+// Copia del prospecto en el CRM propio para segmentar y hacer email marketing.
+// La entrega oficial sigue siendo el panel de Nitro Bot; esto corre después de
+// responder y nunca cambia el resultado del formulario.
+function mirrorToCrm(payload: NitroBotLeadPayload, idempotencyKey: string) {
+  after(() =>
+    captureContact({
+      email: payload.email,
+      phone: payload.phone,
+      name: payload.name,
+      company: payload.company,
+      form: "nitro_complete",
+      summary: `Nitro Complete · ${payload.primaryPain} · ${payload.implementationTiming}`,
+      data: {
+        business_type: payload.businessType,
+        platform: payload.platform,
+        catalog_size: payload.catalogSize,
+        daily_conversations: payload.dailyConversations,
+        monthly_orders: payload.monthlyOrders,
+        who_attends: payload.whoAttends,
+        primary_pain: payload.primaryPain,
+        implementation_timing: payload.implementationTiming,
+        city: payload.city,
+        goal: payload.goal,
+      },
+      attribution: cleanAttribution(payload.attribution),
+      path: payload.landingPath,
+      consent: payload.consent,
+      tags: payload.isTest ? ["prueba"] : [],
+      dedupeKey: `nitrobot:${idempotencyKey}`,
+    }),
+  )
 }
 
 export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSubmitResult> {
@@ -127,6 +162,7 @@ export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSu
 
   try {
     const result = await sendNitroBotLead(payload, idempotencyKey)
+    mirrorToCrm(payload, idempotencyKey)
     return { ok: true, delivery: "delivered", result }
   } catch (firstError) {
     if (!(firstError instanceof NitroBotIntakeError) || !firstError.retryable) {
@@ -135,11 +171,15 @@ export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSu
     }
     try {
       const result = await sendNitroBotLead(payload, idempotencyKey)
+      mirrorToCrm(payload, idempotencyKey)
       return { ok: true, delivery: "delivered", result }
     } catch (secondError) {
       const message = secondError instanceof Error ? secondError.message : "Fallo de entrega"
       const queued = await queueLead(payload, idempotencyKey, message)
-      if (queued) return { ok: true, delivery: "queued" }
+      if (queued) {
+        mirrorToCrm(payload, idempotencyKey)
+        return { ok: true, delivery: "queued" }
+      }
       console.error("[nitrobot-form] entrega y cola fallaron:", message)
       return { ok: false, error: "No pudimos recibir la solicitud. Intenta de nuevo en unos minutos." }
     }

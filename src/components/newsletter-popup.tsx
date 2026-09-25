@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, Mail, Zap, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
 import { subscribeToNewsletter } from "@/app/actions/subscribe-newsletter";
+import { readAttribution } from "@/lib/crm/client-attribution";
 
 const STORAGE_KEY_SUBSCRIBED = "nl_subscribed";
 const STORAGE_KEY_DISMISSED = "nl_dismissed_at";
@@ -52,6 +53,7 @@ export function NewsletterPopup() {
     setStatus("loading");
     const fd = new FormData();
     fd.append("email", email);
+    fd.append("attribution", readAttribution("newsletter_popup"));
 
     const result = await subscribeToNewsletter(fd);
 

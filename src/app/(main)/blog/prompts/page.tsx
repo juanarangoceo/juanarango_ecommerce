@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { constructMetadata } from "@/lib/utils";
-import { supabaseAdmin, supabaseClient } from "@/lib/supabase";
 import { PromptGalleryClient } from "@/components/blog/prompt-gallery-client";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { NitroCtaCard } from "@/components/blog/nitro-cta-card";
@@ -12,7 +11,7 @@ import { Zap, ArrowLeft, Terminal } from "lucide-react";
 export const metadata: Metadata = constructMetadata({
   title: "Galería de Prompts de IA | Juan Arango Ecommerce",
   description:
-    "Descubre prompts listos para usar con Midjourney, DALL·E, ChatGPT y más. Copia, da like y explora nuestra colección de prompts de IA.",
+    "Descubre prompts listos para usar con Midjourney, DALL·E, ChatGPT y más. Copia y explora nuestra colección de prompts de IA.",
   canonical: "https://www.juanarangoecommerce.com/blog/prompts",
 });
 
@@ -44,23 +43,6 @@ export default async function PromptsPage() {
     console.error("Error fetching prompts:", err);
   }
 
-  // ── Fetch like counts from Supabase ───────────────────────────────────
-  let likeCounts: Record<string, number> = {};
-  if (allPrompts.length > 0) {
-    try {
-      const supabase = supabaseAdmin || supabaseClient;
-      const { data } = await supabase
-        .from("prompt_likes")
-        .select("prompt_id, count")
-        .in("prompt_id", allPrompts.map((p) => p._id));
-      (data || []).forEach((row: { prompt_id: string; count: number }) => {
-        likeCounts[row.prompt_id] = row.count;
-      });
-    } catch {
-      // likes fail silently — UI still works, just starts at 0
-    }
-  }
-
   return (
     <main className="container mx-auto px-4 py-20 min-h-screen">
       {/* ── Header ──────────────────────────────────────────────────── */}
@@ -81,7 +63,7 @@ export default async function PromptsPage() {
             Galería de <span className="text-primary">prompts</span>
           </h1>
           <p className="text-white/58 text-lg">
-            Prompts listos para usar: cópialos, dales like y comparte tu favorito.
+            Prompts listos para usar: cópialos y comparte tu favorito.
           </p>
         </div>
       </div>
@@ -91,7 +73,7 @@ export default async function PromptsPage() {
         {/* LEFT: Interactive Gallery (col-8) */}
         <div className="lg:col-span-8">
           {allPrompts.length > 0 ? (
-            <PromptGalleryClient prompts={allPrompts} likeCounts={likeCounts} />
+            <PromptGalleryClient prompts={allPrompts} />
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <Terminal className="w-12 h-12 text-primary mb-4 opacity-50" />

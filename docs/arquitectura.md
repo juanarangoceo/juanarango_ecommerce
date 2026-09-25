@@ -14,6 +14,7 @@ Handlers para integraciones externas.
 | `src/app/(landing)` | Campañas pagadas sin enlaces de salida ni componentes globales de conversión secundaria |
 | `src/app/(demos)` | Demostraciones de producto aisladas |
 | `src/app/(marketing)` | Herramientas internas de marketing |
+| `src/app/(admin)` | Panel `/admin` (CRM propio): contactos, newsletter, formularios y segmentos. Layout raíz aislado e instalable como app |
 | `src/app/api` | Webhooks, generación, newsletter, revalidación y automatizaciones |
 | `src/app/studio` | Sanity Studio embebido |
 
@@ -41,9 +42,37 @@ en una sola transacción usando credenciales exclusivas del servidor.
 ## Contenido y datos
 
 - **Sanity:** blog, contenido editorial, Studio y funciones de generación.
-- **Supabase:** leads, autenticación y datos de herramientas específicas.
+- **Supabase:** CRM propio (`contacts` + `contact_events`), autenticación,
+  `posts` (búsqueda semántica del blog) y `pseo_pages` (páginas locales).
 - **Cloudinary:** imágenes de marca y video VSL.
 - **Notion:** fuentes usadas por algunos flujos editoriales.
+
+## CRM y panel `/admin` (25-09-2026)
+
+Una persona = un contacto (`contacts`, único por email; sin email se empareja
+por teléfono). Cada interacción queda en `contact_events` con su formulario,
+datos, atribución (UTM, página, referrer, ubicación) y `dedupe_key` para
+reintentos. Todos los formularios pasan por `captureContact`
+(`src/lib/crm/capture.ts`), que llama a la RPC `crm_capture`: newsletter,
+diagnóstico, contacto (páginas locales), Laboratorio, acceso anticipado,
+resumen PDF, webhook de Cal.com y una copia de los leads de Nitro Complete
+(la entrega oficial sigue siendo Nitro Bot). La newsletter de Inngest lee los
+suscritos de `contacts` y la baja usa `crm_unsubscribe`.
+
+- Etapas: suscriptor → prospecto → calificado → cliente (o descartado). Un
+  formulario sube a prospecto, una reserva a calificado; nunca baja sola.
+- Puntaje de intención recalculado desde el historial (`crm_event_points`).
+- Segmentos en `src/lib/crm/segments.ts`: mismo criterio en la tabla, el CSV
+  (`/api/admin/crm/export`) y Resend (`src/lib/crm/resend-sync.ts`, opcional
+  con `RESEND_CRM_SYNC=true`). En Resend solo queda suscrito quien aceptó la
+  newsletter.
+- Fuera de producción `captureContact` no escribe salvo `ENABLE_CRM_WRITES=true`.
+- Acceso: contraseña `ADMIN_DASHBOARD_PASSWORD`, cookie firmada
+  (`src/lib/admin-session.ts`), verificada en `middleware.ts`, en el layout del
+  panel y en cada Server Action. Instalable con `public/admin.webmanifest` y el
+  lanzador estático `public/admin/launch.html`.
+- Migraciones: `20260925120000_crm_core.sql`, `20260925120100_crm_import_legacy.sql`
+  (idempotente) y `20260925130000_crm_retire_legacy.sql`.
 
 ## Servicios externos
 

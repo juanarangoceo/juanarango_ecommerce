@@ -4,7 +4,8 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import { GoogleGenAI } from '@google/genai'
 import React from 'react'
 import { client } from '@/sanity/lib/client'
-import { supabaseAdmin } from '@/lib/supabase'
+import { captureContact } from '@/lib/crm/capture'
+import { crmAdminClient } from '@/lib/crm/db'
 import { BlogSummaryPdf } from '@/lib/pdf/blog-summary-pdf'
 import { BlogSummaryEmail } from '@/emails/blog-summary-email'
 import { render as renderEmail } from '@react-email/components'
@@ -40,25 +41,29 @@ function isValidEmail(email: string): boolean {
 
 // ── Anti-spam: check if already requested in last 24h ─────────────────────
 async function hasRecentRequest(email: string, postSlug: string): Promise<boolean> {
-  if (!supabaseAdmin) return false
+  const supabase = crmAdminClient()
+  if (!supabase) return false
   const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
-  const { count } = await supabaseAdmin
-    .from('pdf_summary_leads')
-    .select('*', { count: 'exact', head: true })
-    .eq('email', email.toLowerCase())
-    .eq('post_slug', postSlug)
+  const { count } = await supabase
+    .from('contact_events')
+    .select('id, contacts!inner(email)', { count: 'exact', head: true })
+    .eq('contacts.email', email.toLowerCase())
+    .eq('form', 'resumen_pdf')
+    .eq('data->>post_slug', postSlug)
     .gte('created_at', since)
 
   return (count ?? 0) > 0
 }
 
-// ── Save lead ──────────────────────────────────────────────────────────────
+// ── Save lead (CRM) ────────────────────────────────────────────────────────
 async function saveLead(email: string, postSlug: string, postTitle: string): Promise<void> {
-  if (!supabaseAdmin) return
-  await supabaseAdmin.from('pdf_summary_leads').insert({
-    email: email.toLowerCase(),
-    post_slug: postSlug,
-    post_title: postTitle,
+  await captureContact({
+    email,
+    type: 'lead_magnet',
+    form: 'resumen_pdf',
+    summary: `Resumen PDF · ${postTitle}`,
+    data: { post_slug: postSlug, post_title: postTitle },
+    path: `/blog/${postSlug}`,
   })
 }
 

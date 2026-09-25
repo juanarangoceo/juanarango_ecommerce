@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { submitLead } from "@/app/actions/submit-lead";
+import { readAttribution } from "@/lib/crm/client-attribution";
 
 interface ContactFormProps {
   interestOptions?: string[];
@@ -31,6 +32,7 @@ export function ContactForm({ interestOptions }: ContactFormProps = {}) {
     setLoading(true);
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => data.append(key, value));
+    data.append("attribution", readAttribution("contact_form"));
 
     const result = await submitLead(data);
     setLoading(false);

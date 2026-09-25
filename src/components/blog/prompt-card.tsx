@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Copy, Check, Heart } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 
 // ─── Category Config ───────────────────────────────────────────────────────
 export const CATEGORY_CONFIG: Record<
@@ -59,30 +59,15 @@ interface PromptCardProps {
     category?: string;
     publishedAt?: string;
   };
-  initialLikeCount?: number;
   priority?: boolean;
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────
 export function PromptCard({
   prompt,
-  initialLikeCount = 0,
   priority = false,
 }: PromptCardProps) {
   const [copied, setCopied] = useState(false);
-  const [likeCount, setLikeCount] = useState(initialLikeCount);
-  const [liked, setLiked] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const stored = localStorage.getItem("liked_prompts");
-    if (!stored) return false;
-    try {
-      return JSON.parse(stored).includes(prompt._id);
-    } catch {
-      return false;
-    }
-  });
-  const [likeLoading, setLikeLoading] = useState(false);
-
   const categoryConfig = prompt.category
     ? CATEGORY_CONFIG[prompt.category]
     : null;
@@ -94,52 +79,6 @@ export function PromptCard({
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // fallback
-    }
-  };
-
-  const handleLike = async () => {
-    if (likeLoading) return;
-    setLikeLoading(true);
-
-    const action = liked ? "unlike" : "like";
-    const optimisticCount = liked ? likeCount - 1 : likeCount + 1;
-
-    // Optimistic update
-    setLiked(!liked);
-    setLikeCount(optimisticCount);
-
-    // Update localStorage
-    try {
-      const stored = localStorage.getItem("liked_prompts");
-      const likedList: string[] = stored ? JSON.parse(stored) : [];
-      if (action === "like") {
-        likedList.push(prompt._id);
-      } else {
-        const idx = likedList.indexOf(prompt._id);
-        if (idx !== -1) likedList.splice(idx, 1);
-      }
-      localStorage.setItem("liked_prompts", JSON.stringify(likedList));
-    } catch {
-      // ignore localStorage errors
-    }
-
-    // Call API
-    try {
-      const res = await fetch("/api/prompts/like", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promptId: prompt._id, action }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setLikeCount(data.count ?? optimisticCount);
-      }
-    } catch {
-      // Revert on error
-      setLiked(liked);
-      setLikeCount(likeCount);
-    } finally {
-      setLikeLoading(false);
     }
   };
 
@@ -208,28 +147,7 @@ export function PromptCard({
         </div>
 
         {/* ── Actions ─────────────────────────── */}
-        <div className="flex items-center justify-between pt-1">
-          {/* Like button */}
-          <button
-            onClick={handleLike}
-            disabled={likeLoading}
-            aria-label={liked ? "Quitar like" : "Dar like"}
-            className={`group/like flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
-              liked
-                ? "bg-rose-500/15 border-rose-500/30 text-rose-400 hover:bg-rose-500/25"
-                : "bg-[#111512]/60 border-white/15 text-white/58 hover:bg-[#111512] hover:text-white/84 hover:border-white/25"
-            }`}
-          >
-            <Heart
-              className={`w-4 h-4 transition-all duration-300 ${
-                liked
-                  ? "fill-rose-400 text-rose-400 scale-110"
-                  : "fill-transparent group-hover/like:scale-110"
-              }`}
-            />
-            <span className="tabular-nums">{likeCount}</span>
-          </button>
-
+        <div className="flex items-center justify-end pt-1">
           {/* Copy button */}
           <button
             onClick={handleCopy}

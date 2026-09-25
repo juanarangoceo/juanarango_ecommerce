@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { captureContact } from '@/lib/crm/capture'
 import crypto from 'crypto'
 
 export async function POST(req: Request) {
@@ -24,8 +24,12 @@ export async function POST(req: Request) {
       console.error('[Cal Webhook] Invalid signature')
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
     }
+  } else if (process.env.VERCEL_ENV === 'production') {
+    // Sin secreto cualquiera podría inyectar contactos «calificados» en el CRM.
+    console.error('[Cal Webhook] CAL_WEBHOOK_SECRET no está configurado; webhook cerrado.')
+    return NextResponse.json({ error: 'Webhook not configured' }, { status: 503 })
   } else {
-    console.warn('[Cal Webhook] WARNING: CAL_WEBHOOK_SECRET is not set. Skipping signature verification. This is insecure.')
+    console.warn('[Cal Webhook] CAL_WEBHOOK_SECRET no está configurado (solo se tolera fuera de producción).')
   }
 
   try {
@@ -49,30 +53,26 @@ export async function POST(req: Request) {
 
     console.log('[Cal Webhook] extracted data:', { bookingId, name, email });
 
-    // 2. DATABASE: Use Admin Client
-    if (!supabaseAdmin) {
-      throw new Error("Supabase Admin client is not initialized. Check SUPABASE_SERVICE_ROLE_KEY.")
+    // 2. CRM: la reserva queda en el historial del contacto. El uid de Cal.com
+    // evita duplicados si Cal reintenta el webhook. (Antes escribía en una
+    // tabla `bookings` que nunca existió.)
+    const data = await captureContact({
+      email,
+      name,
+      phone: attendee.phoneNumber ?? null,
+      type: 'booking',
+      form: 'agenda',
+      lifecycle: 'calificado',
+      summary: payload.title ? `Agendó: ${String(payload.title).slice(0, 160)}` : 'Agendó una llamada',
+      data: { booking_id: bookingId, start_time: startTime, end_time: endTime, event_type: payload.type ?? null },
+      dedupeKey: bookingId ? `cal:${bookingId}` : undefined,
+    })
+
+    if (!data) {
+      return NextResponse.json({ error: 'Failed to save booking' }, { status: 500 })
     }
 
-    // Insert into Supabase
-    const { data, error } = await supabaseAdmin
-      .from('bookings')
-      .insert({
-        booking_id: bookingId,
-        customer_name: name,
-        customer_email: email,
-        start_time: startTime,
-        end_time: endTime,
-        created_at: new Date().toISOString(),
-      })
-      .select()
-
-    if (error) {
-      console.error('[Cal Webhook] Supabase Insert Error:', error)
-      return NextResponse.json({ error: 'Failed to save booking', details: error }, { status: 500 })
-    }
-
-    console.log('[Cal Webhook] Success:', data);
+    console.log('[Cal Webhook] Success:', data.contact_id);
     return NextResponse.json({ received: true })
   } catch (error) {
     console.error('[Cal Webhook] Internal Error:', error)

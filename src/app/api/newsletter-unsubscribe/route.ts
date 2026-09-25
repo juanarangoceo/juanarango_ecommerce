@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { crmAdminClient } from '@/lib/crm/db'
+import { syncContactByEmail } from '@/lib/crm/resend-sync'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -8,7 +9,7 @@ export const dynamic = 'force-dynamic'
  * GET /api/newsletter-unsubscribe?email=...
  *
  * Endpoint de desuscripción. El suscriptor hace clic en el link del email
- * y su campo `unsubscribed` se pone en true.
+ * y su contacto del CRM pasa a `newsletter_status = 'unsubscribed'`.
  */
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -22,17 +23,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
+    const supabase = crmAdminClient()
+    if (!supabase) throw new Error('Supabase no configurado')
 
-    const { error } = await supabase
-      .from('newsletter_subscribers')
-      .update({ unsubscribed: true, unsubscribed_at: new Date().toISOString() })
-      .eq('email', email)
+    // La baja queda en el historial del contacto (RPC `crm_unsubscribe`).
+    const { error } = await supabase.rpc('crm_unsubscribe', { p_email: email })
 
     if (error) throw error
+    await syncContactByEmail(email).catch(() => undefined)
 
     return new NextResponse(
       renderPage(

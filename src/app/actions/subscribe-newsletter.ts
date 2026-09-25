@@ -1,11 +1,9 @@
 "use server";
 
 import { Resend } from "resend";
-import { supabaseAdmin } from "@/lib/supabase";
-import { Client } from "@notionhq/client";
+import { captureContact, cleanAttribution } from "@/lib/crm/capture";
 import { NewsletterWelcome } from "@/emails/newsletter-welcome";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface SubscriptionResult {
   success: boolean;
@@ -24,27 +22,29 @@ export async function subscribeToNewsletter(
   }
 
   try {
-    // 2. Insert into Supabase
-    const supabase = supabaseAdmin;
+    // 2. CRM (contacts + contact_events). Una suscripción repetida no reenvía
+    // la bienvenida ni duplica el registro en Notion.
+    const attribution = cleanAttribution(formData.get("attribution"));
+    const captured = await captureContact({
+      email,
+      form: "newsletter",
+      type: "newsletter_subscribe",
+      newsletter: true,
+      consent: true,
+      summary: "Suscripción a la newsletter",
+      attribution,
+      path: attribution.landing_path,
+    });
 
-    if (!supabase) {
-      console.error("Supabase Admin client not initialized");
-      return { success: false, error: "Error interno del servidor (Database)." };
+    if (!captured) {
+      return { success: false, error: "No se pudo guardar tu email. Intenta de nuevo." };
     }
-
-    const { error: dbError } = await supabase
-      .from("newsletter_subscribers")
-      .insert([{ email }]);
-
-    if (dbError) {
-      if (dbError.code === "23505") {
-        return {
-          success: true,
-          message: "¡Ya estás suscrito! Gracias por tu interés.",
-        };
-      }
-      console.error("Supabase Error:", dbError);
-      return { success: false, error: "No se pudo guardar tu email en la base de datos." };
+    // Fuera de producción no se escribe ni se envían correos reales.
+    if (captured.contact_id === "preview") {
+      return { success: true, message: "Modo local: la suscripción no se guardó." };
+    }
+    if (captured.already_subscribed) {
+      return { success: true, message: "¡Ya estás suscrito! Gracias por tu interés." };
     }
 
     // 3. Insert into Notion via fetch (SDK has a bug with child_databases)
@@ -100,6 +100,9 @@ export async function subscribeToNewsletter(
             ? guessedFirst.charAt(0).toUpperCase() + guessedFirst.slice(1).toLowerCase()
             : undefined;
 
+        // El cliente se crea aquí: sin clave, construirlo al cargar el módulo
+        // rompía toda la suscripción, no solo la bienvenida.
+        const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: "Juan Arango <nitro@juanarangoecommerce.com>",
           to: email,
