@@ -12,22 +12,13 @@ La reconstrucción está en producción desde el 24-25 de septiembre de 2026
 
 Prioridad alta:
 
-0. **CRM y panel `/admin` (25-09, sin commit ni despliegue).** El código está
-   listo y probado contra una copia local de los datos. Orden obligatorio:
-   1. Aplicar en Supabase `20260925120000_crm_core.sql` y
-      `20260925120100_crm_import_legacy.sql` (no rompen nada: las tablas
-      viejas siguen).
-   2. Crear en Vercel `ADMIN_DASHBOARD_PASSWORD` (y opcional
-      `ADMIN_SESSION_SECRET`); confirmar `CAL_WEBHOOK_SECRET`.
-   3. Commit y despliegue.
-   4. Volver a correr la importación (recoge lo llegado entre medias) y solo
-      entonces `20260925130000_crm_retire_legacy.sql`, que elimina `leads`,
-      `diagnostic_sessions`, `acceso_anticipado`, `laboratorio_waitlist`,
-      `prompt_likes`, `pdf_summary_leads`, `newsletter_subscribers` y
-      `prospects` (esta sin importar, por decisión del usuario). Respaldo JSON
-      en `/home/juan/respaldos/juanarangoecommerce-supabase-2026-09-25/`.
-   5. Instalar el panel en el teléfono y, cuando se quiera, activar
-      `RESEND_CRM_SYNC=true`.
+0. **CRM y panel `/admin` (en producción desde el 25-09, commit `b0725fd`).**
+   Queda: instalar el panel en el teléfono y entrar con la contraseña
+   `ADMIN_DASHBOARD_PASSWORD` ya existente en Vercel (si no se recuerda,
+   rotarla allí); crear `CAL_WEBHOOK_SECRET` en Vercel y en Cal.com si se
+   quieren registrar reservas (hoy el webhook responde 503); y activar
+   `RESEND_CRM_SYNC=true` cuando se empiece con Resend. Respaldo de las tablas
+   retiradas en `/home/juan/respaldos/juanarangoecommerce-supabase-2026-09-25/`.
 
 1. **Seguridad (tras el cierre del 25-09):** probar en el Studio real, con
    sesión iniciada, los seis botones (etiquetas, comparativas, Telegram de
