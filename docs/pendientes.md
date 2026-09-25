@@ -12,10 +12,11 @@ La reconstrucción está en producción desde el 24-25 de septiembre de 2026
 
 Prioridad alta:
 
-1. **Seguridad:** `NEXT_PUBLIC_SANITY_API_SECRET` sigue configurada en Vercel y
-   la usan `src/sanity/components/{GenerateTagInput,GenerateComparisonInput,TelegramPublishButton,TelegramPromptButton}.tsx`,
-   así que viaja en el JavaScript público del Studio. Rotarla y mover esa
-   autenticación a una ruta de servidor.
+1. **Seguridad (tras el cierre del 25-09):** probar en el Studio real, con
+   sesión iniciada, los seis botones (etiquetas, comparativas, Telegram de
+   posts y prompts, newsletter y correo de prueba) y el generador de audio.
+   Revisar en Resend, OpenAI y Google si hubo consumo anómalo antes del 25-09,
+   cuando esas rutas estaban abiertas.
 2. Borrar el lead de prueba `fd421cd7-28e9-4d9e-9355-464b921314ff`
    («PRUEBA - Claude») de `platform_sales_leads` en Nitro Bot, desde
    `/admin/leads`. Confirmó que `/nitrobot/conectar` entrega a Nitro Complete.

@@ -1,8 +1,10 @@
 import { Stack, Button, Card, Text, Flex, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { useFormValue, useClient } from 'sanity'
+import { useStudioApiFetch } from '../lib/studio-api'
 
 export const GenerateNewsletterFromPostButton = (props: any) => {
+  const apiFetch = useStudioApiFetch()
   const toast = useToast()
   const [loading, setLoading] = useState(false)
 
@@ -29,7 +31,7 @@ export const GenerateNewsletterFromPostButton = (props: any) => {
       // Usar la ruta correcta sin drafts. prefix si es necesario, o enviarlo tal cual
       const cleanDocId = docId.replace('drafts.', '')
       
-      const res = await fetch('/api/newsletter-generate', {
+      const res = await apiFetch('/api/newsletter-generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -73,7 +75,7 @@ export const GenerateNewsletterFromPostButton = (props: any) => {
     } finally {
       setLoading(false)
     }
-  }, [sourcePost, docId, client, toast])
+  }, [sourcePost, docId, client, toast, apiFetch])
 
   if (!sourcePost?._ref) {
     return null // Ocultar el botón si no hay un post seleccionado

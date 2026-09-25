@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "next-sanity";
+import { requireSanityEditor } from "@/lib/sanity-editor-auth";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const googleAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
@@ -16,6 +18,11 @@ export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
+  const auth = await requireSanityEditor(req);
+  if ("error" in auth) return auth.error;
+  const rl = checkRateLimit(`newsletter-generate:${auth.editor.id}`, 10, 60 * 60 * 1000);
+  if (!rl.allowed) return Response.json({ error: `Demasiadas solicitudes. Reintenta en ${rl.retryAfter}s.` }, { status: 429 });
+
   try {
     const { newsletterId, postId } = await req.json();
 

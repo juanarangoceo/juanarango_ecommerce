@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { createClient } from '@sanity/client'
-import { requireInternalAuth } from '@/lib/api-auth'
+import { requireSanityEditor } from "@/lib/sanity-editor-auth";
 import { checkRateLimit } from '@/lib/rate-limit'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -73,12 +73,11 @@ Responde SOLO con el texto del post listo para copiar y pegar. Sin explicaciones
 // POST Handler
 // ─────────────────────────────────────────────
 export async function POST(req: Request) {
-  const authError = requireInternalAuth(req);
-  if (authError) return authError;
+  const auth = await requireSanityEditor(req);
+  if ("error" in auth) return auth.error;
 
-  // Rate limit: 3 requests per 60 minutes per token
-  const token = req.headers.get('Authorization') ?? 'anon';
-  const rl = checkRateLimit(`telegram-publish:${token}`, 3, 60 * 60 * 1000);
+  // Rate limit: 3 publicaciones por hora por usuario del Studio
+  const rl = checkRateLimit(`telegram-publish:${auth.editor.id}`, 3, 60 * 60 * 1000);
   if (!rl.allowed) {
     return NextResponse.json(
       { error: `Demasiadas publicaciones. Reintenta en ${rl.retryAfter}s.` },

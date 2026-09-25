@@ -18,6 +18,11 @@ export default defineConfig({
   projectId,
   dataset,
 
+  // Login por token: el cliente del Studio conoce el token de la sesión y las
+  // herramientas propias lo envían a las APIs del sitio, que lo verifican con
+  // Sanity (src/lib/sanity-editor-auth.ts). Evita secretos NEXT_PUBLIC_.
+  auth: { loginMethod: 'token' },
+
   plugins: [deskTool(), visionTool()],
 
   schema: {

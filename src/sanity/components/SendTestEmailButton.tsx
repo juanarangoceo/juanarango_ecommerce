@@ -10,10 +10,12 @@ import {
 } from '@sanity/ui'
 import { useCallback, useState, useRef } from 'react'
 import { useFormValue } from 'sanity'
+import { useStudioApiFetch } from '../lib/studio-api'
 
 type SendState = 'idle' | 'loading' | 'success' | 'error'
 
 export const SendTestEmailButton = (props: any) => {
+  const apiFetch = useStudioApiFetch()
   const toast = useToast()
   const [state, setState] = useState<SendState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -45,7 +47,7 @@ export const SendTestEmailButton = (props: any) => {
     setErrorMsg('')
 
     try {
-      const res = await fetch('/api/newsletter-test-send', {
+      const res = await apiFetch('/api/newsletter-test-send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -80,7 +82,7 @@ export const SendTestEmailButton = (props: any) => {
         duration: 8000,
       })
     }
-  }, [testEmail, title, previewText, body, ctaButton, isEmailValid, toast])
+  }, [testEmail, title, previewText, body, ctaButton, isEmailValid, toast, apiFetch])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') handleSend()

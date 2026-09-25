@@ -1,8 +1,10 @@
 import { Stack, Button, Card, Text, Label, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { set, useDocumentOperation, useFormValue, useClient } from 'sanity'
+import { useStudioApiFetch } from '../lib/studio-api'
 
 export const GenerateTagInput = (props: any) => {
+  const apiFetch = useStudioApiFetch()
   const { onChange, value } = props
   const toast = useToast()
   
@@ -33,11 +35,10 @@ export const GenerateTagInput = (props: any) => {
       toast.push({ title: "Iniciando IA (Gemini)...", status: 'info' })
 
       // 1. CALL API
-      const res = await fetch('/api/generate-tag-content', {
+      const res = await apiFetch('/api/generate-tag-content', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
         },
         body: JSON.stringify({ tag: tagName }),
       })
@@ -98,7 +99,7 @@ export const GenerateTagInput = (props: any) => {
     } finally {
       setIsGenerating(false)
     }
-  }, [tagName, onChange, client, docId, toast])
+  }, [tagName, onChange, client, docId, toast, apiFetch])
 
   return (
     <Stack space={3}>

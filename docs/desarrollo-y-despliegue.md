@@ -79,8 +79,13 @@ escritura desactivada.
 ### Acceso interno
 
 - `AUDIO_GEN_USER` y `AUDIO_GEN_PASSWORD`: Basic Auth de
-  `/studio/audio-gen`. Son obligatorias en producción porque el middleware
-  actual conserva un fallback inseguro para desarrollo.
+  `/studio/audio-gen` y firma de la cookie que exigen `/api/audio/*`. Sin
+  ellas, la herramienta queda cerrada (también en desarrollo).
+- `INTERNAL_API_SECRET`: rutas de administración manual. Rotada el
+  25-09-2026 porque la anterior estaba publicada en el Studio; en producción y
+  preview está marcada como sensible.
+- Herramientas del Studio: sin secreto propio; usan el token de sesión de
+  Sanity verificado en el servidor (`src/lib/sanity-editor-auth.ts`).
 
 Hay más secretos para webhooks y generadores. Descubrir los nombres desde el
 código, no sus valores, y documentarlos solo cuando la tarea lo requiera.

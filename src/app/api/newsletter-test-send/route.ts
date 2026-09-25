@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { requireSanityEditor } from '@/lib/sanity-editor-auth'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { render } from '@react-email/render'
 import { toHTML } from '@portabletext/to-html'
 import { NewsletterEmail } from '@/emails/newsletter-email'
@@ -16,6 +18,11 @@ const resend = new Resend(process.env.RESEND_API_KEY)
  * Llamado desde el componente SendTestEmailButton en Sanity Studio.
  */
 export async function POST(req: NextRequest) {
+  const auth = await requireSanityEditor(req)
+  if ('error' in auth) return auth.error
+  const rl = checkRateLimit(`newsletter-test:${auth.editor.id}`, 10, 60 * 60 * 1000)
+  if (!rl.allowed) return NextResponse.json({ success: false, error: `Demasiados envíos de prueba. Reintenta en ${rl.retryAfter}s.` }, { status: 429 })
+
   try {
     const body = await req.json()
     const { testEmail, title, previewText, body: portableBody, ctaButton } = body

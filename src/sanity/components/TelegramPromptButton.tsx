@@ -1,10 +1,12 @@
 import { Stack, Button, Card, Text, Spinner, Flex, Badge, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { useFormValue } from 'sanity'
+import { useStudioApiFetch } from '../lib/studio-api'
 
 type PublishState = 'idle' | 'loading' | 'success' | 'error'
 
 export const TelegramPromptButton = (props: any) => {
+  const apiFetch = useStudioApiFetch()
   const toast = useToast()
   const [state, setState] = useState<PublishState>('idle')
   const [lastMessage, setLastMessage] = useState<string>('')
@@ -24,11 +26,10 @@ export const TelegramPromptButton = (props: any) => {
     setLastMessage('')
 
     try {
-      const res = await fetch('/api/telegram-prompt-publish', {
+      const res = await apiFetch('/api/telegram-prompt-publish', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
         },
         body: JSON.stringify({ promptId: cleanId }),
       })
@@ -56,7 +57,7 @@ export const TelegramPromptButton = (props: any) => {
         duration: 8000,
       })
     }
-  }, [docId, toast])
+  }, [docId, toast, apiFetch])
 
   return (
     <Stack space={3}>

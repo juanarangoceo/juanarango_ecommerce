@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-import { requireInternalAuth } from "@/lib/api-auth";
+import { requireSanityEditor } from "@/lib/sanity-editor-auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 // Inicialización de cliente Gemini
@@ -10,12 +10,11 @@ export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
-  const authError = requireInternalAuth(req);
-  if (authError) return authError;
+  const auth = await requireSanityEditor(req);
+  if ("error" in auth) return auth.error;
 
-  // Rate limit: 10 requests per 5 minutes per token
-  const token = req.headers.get('Authorization') ?? 'anon';
-  const rl = checkRateLimit(`generate-tag:${token}`, 10, 5 * 60 * 1000);
+  // Rate limit: 10 solicitudes cada 5 minutos por usuario del Studio
+  const rl = checkRateLimit(`generate-tag:${auth.editor.id}`, 10, 5 * 60 * 1000);
   if (!rl.allowed) {
     return NextResponse.json(
       { error: `Demasiadas solicitudes. Reintenta en ${rl.retryAfter}s.` },

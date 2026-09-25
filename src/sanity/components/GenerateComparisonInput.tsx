@@ -1,8 +1,10 @@
 import { Stack, Button, Card, Text, Label, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { set, useFormValue, useClient } from 'sanity'
+import { useStudioApiFetch } from '../lib/studio-api'
 
 export const GenerateComparisonInput = (props: any) => {
+  const apiFetch = useStudioApiFetch()
   const { onChange, value } = props
   const toast = useToast()
 
@@ -49,11 +51,10 @@ export const GenerateComparisonInput = (props: any) => {
       toast.push({ title: `Generando comparación: ${app1Data.appName} vs ${app2Data.appName}...`, status: 'info' })
 
       // Call the comparison API
-      const res = await fetch('/api/generate-comparison', {
+      const res = await apiFetch('/api/generate-comparison', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_SECRET}`,
         },
         body: JSON.stringify({ app1: app1Data, app2: app2Data }),
       })
@@ -132,7 +133,7 @@ export const GenerateComparisonInput = (props: any) => {
     } finally {
       setIsGenerating(false)
     }
-  }, [app1Ref, app2Ref, client, docId, onChange, value, toast])
+  }, [app1Ref, app2Ref, client, docId, onChange, value, toast, apiFetch])
 
   return (
     <Stack space={3}>

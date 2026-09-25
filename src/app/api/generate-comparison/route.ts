@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
-import { requireInternalAuth } from '@/lib/api-auth'
+import { requireSanityEditor } from '@/lib/sanity-editor-auth'
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY! })
 
 export async function POST(request: NextRequest) {
-  const authError = requireInternalAuth(request);
-  if (authError) return authError;
+  const auth = await requireSanityEditor(request);
+  if ('error' in auth) return auth.error;
 
   try {
     const { app1, app2 } = await request.json()

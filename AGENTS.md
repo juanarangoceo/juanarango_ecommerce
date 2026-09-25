@@ -114,9 +114,18 @@ Las variables viven en Vercel; para sincronizarlas localmente se usa
 normal es automático por Vercel al hacer push. No usar Docker ni un deploy local
 de CLI como camino alternativo sin una decisión explícita.
 
-`middleware.ts` protege `/studio/audio-gen` con Basic Auth, pero conserva un
-fallback `admin/admin` si faltan `AUDIO_GEN_USER` y `AUDIO_GEN_PASSWORD`. Esas
-variables son obligatorias en producción; no tratar el fallback como seguro.
+Autenticación interna (endurecida el 25-09-2026):
+
+- Las herramientas del Studio llaman a las APIs con el token de sesión del
+  usuario de Sanity (`auth.loginMethod: 'token'` en `sanity.config.ts`,
+  helper `src/sanity/lib/studio-api.ts`) y el servidor lo verifica con
+  `requireSanityEditor` (`src/lib/sanity-editor-auth.ts`). Nunca usar
+  secretos `NEXT_PUBLIC_*` para autenticar: quedan en el JavaScript público.
+- `middleware.ts` protege `/studio/audio-gen` con Basic Auth sin respaldo
+  (sin `AUDIO_GEN_USER`/`AUDIO_GEN_PASSWORD` todo queda cerrado) y emite una
+  cookie firmada que exigen las APIs `/api/audio/*`.
+- `INTERNAL_API_SECRET` solo protege rutas de administración manual
+  (`admin/sync`, `revalidate-nitro`, `debug-*`, GET de `sanity-webhook`).
 
 ## Estado actual — 25 de septiembre de 2026
 

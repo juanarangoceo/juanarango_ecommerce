@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@sanity/client'
-import { requireInternalAuth } from '@/lib/api-auth'
+import { requireSanityEditor } from '@/lib/sanity-editor-auth'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export const runtime = 'nodejs'
@@ -8,12 +8,11 @@ export const dynamic = 'force-dynamic'
 export const maxDuration = 30
 
 export async function POST(req: Request) {
-  const authError = requireInternalAuth(req)
-  if (authError) return authError
+  const auth = await requireSanityEditor(req)
+  if ('error' in auth) return auth.error
 
-  // Rate limit: 5 per hour
-  const token = req.headers.get('Authorization') ?? 'anon'
-  const rl = checkRateLimit(`telegram-prompt:${token}`, 5, 60 * 60 * 1000)
+  // Rate limit: 5 por hora por usuario del Studio
+  const rl = checkRateLimit(`telegram-prompt:${auth.editor.id}`, 5, 60 * 60 * 1000)
   if (!rl.allowed) {
     return NextResponse.json(
       { error: `Demasiadas publicaciones. Reintenta en ${rl.retryAfter}s.` },
