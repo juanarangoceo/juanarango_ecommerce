@@ -1,40 +1,54 @@
 # Pendientes
 
-Estado vivo al 24 de septiembre de 2026. Lo terminado se elimina de aquí y se
+Estado vivo al 25 de septiembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
 ## Punto de reanudación para el siguiente agente
 
-Estado al 24 de septiembre de 2026. Nitro Complete es el producto principal
-del sitio (ver bitácora 2026-09). Por decisión del usuario, la reconstrucción
-se consolida en commit y se publica en producción; la migración del
-diagnóstico ya está aplicada en Supabase.
+La reconstrucción está en producción desde el 24-25 de septiembre de 2026
+(`master`, último commit de la sesión `24db9d0`). Se trabaja en
+`/home/juan/juanarangoecommerce`, en `master`. Detalle de lo hecho en
+[`bitacora/2026-09.md`](bitacora/2026-09.md).
 
-Pendiente inmediato:
+Prioridad alta:
 
-1. Aprobación visual del usuario de `/` y `/nitro-complete` con la nueva
-   paleta Nitro (`#B7FF2A`, `#111311`, `#FF6A13`, secciones claras).
-2. Confirmar que `Nitro Complete` es el nombre comercial público y que los
-   planes Nitro 5K/15K/30K y la implementación de $700.000 aplican a Nitro
-   Complete (hoy `/nitrobot` y `/nitro-complete` comparten `nitroCompletePlans`).
-3. Decidir el futuro de `/nitrobot`: mantenerla como página del asesor
-   o redirigirla 301 a `/nitro-complete` después de revisar Search Console.
-   `/nitrobot/conectar` y `/nitrobot/vsl` se conservan por campañas y contrato.
-4. Llevar la paleta y la narrativa a `/soluciones`, NitroCommerce, Nitro
-   Landing, `/sobre-mi`, `/nitrobot` y las plantillas del blog (tarjetas «Leer
-   artículo» conservan un verde azulado heredado).
-5. Sustituir las cifras de ejemplo de `NitroCompletePreview` por capturas reales
-   del panel cuando haya permiso de un cliente, y sumar prueba verificable
-   (casos con permiso y métricas).
-6. Corregir el sitemap: incluye 26 `/blog/tags/*` que responden 404 (también
-   en la versión anterior).
-7. Tras el despliegue: comprobar canonical `www`, sitemap y Search Console.
+1. **Seguridad:** `NEXT_PUBLIC_SANITY_API_SECRET` sigue configurada en Vercel y
+   la usan `src/sanity/components/{GenerateTagInput,GenerateComparisonInput,TelegramPublishButton,TelegramPromptButton}.tsx`,
+   así que viaja en el JavaScript público del Studio. Rotarla y mover esa
+   autenticación a una ruta de servidor.
+2. Borrar el lead de prueba `fd421cd7-28e9-4d9e-9355-464b921314ff`
+   («PRUEBA - Claude») de `platform_sales_leads` en Nitro Bot, desde
+   `/admin/leads`. Confirmó que `/nitrobot/conectar` entrega a Nitro Complete.
+3. Search Console: reenviar el sitemap (540 URLs, todas 200), vigilar la
+   cobertura tras retirar 670 etiquetas `noindex`/404 del sitemap y comprobar
+   el favicon nuevo.
 
-Plan de reemplazo de `juanarangoecommerce.com`: consolidar commit en
-`codex/reconstruccion-web`, preview por la integración Git de Vercel, revisar
-las 25 rutas no-blog del sitemap actual y una muestra del blog en el preview,
-merge a `master` y comprobar canonical `www`, sitemap y Search Console tras el
-despliegue.
+Decisiones comerciales del usuario:
+
+4. Ratificar `Nitro Complete` como nombre público, los planes Nitro 5K/15K/30K,
+   la unidad de consumo y la implementación de $700.000 (hoy publicados).
+5. Decidir el futuro de `/nitrobot`: repite planes y buena parte de la
+   narrativa de `/nitro-complete`. Mantenerla o redirigirla 301 tras revisar
+   Search Console. `/nitrobot/conectar` y `/nitrobot/vsl` se conservan.
+6. Sumar prueba verificable (casos, capturas reales del panel, métricas) solo
+   con permiso del cliente. Las métricas del sitio son una calculadora con
+   supuestos; los datos de producción de Nitro Bot no prueban uplift.
+
+Validación en dispositivos reales:
+
+7. Aprobar en el teléfono del usuario la Guía Nitro (rayo en reposo, ojos al
+   hacer scroll, mensajes proactivos) y las conversaciones de WhatsApp.
+8. Medir FPS y Web Vitals del asistente en un móvil de gama media o baja.
+
+Mantenimiento:
+
+9. Resolver el audit de dependencias en una tarea separada.
+10. Cuando el usuario lo decida, borrar la carpeta
+    `/home/juan/juanarangoecommerce-reconstruccion` y la rama local
+    `respaldo/checkout-principal-2026-09-25` (13 archivos antiguos ya
+    superados por `master`).
+11. Segunda fase del asistente: seguir como guía de respuestas predefinidas o
+    conectarlo a una conversación real. No presentarlo como IA mientras tanto.
 
 ## Embudo comercial de NitroBot — antes de publicar
 
@@ -58,52 +72,6 @@ la implementación propuestas. Antes del despliegue hay que ratificar nombres,
 unidad de consumo, adicional y excepciones de alcance para que la información
 pública coincida con el catálogo comercial definitivo. Estas decisiones no
 cambian la seguridad ni la entrega del prospecto.
-
-## Reconstrucción comercial — antes de integrar a `master`
-
-La reconstrucción completa vive aislada en
-`/home/juan/juanarangoecommerce-reconstruccion`, rama
-`codex/reconstruccion-web`. No se ha creado commit, desplegado ni aplicado la
-migración de Supabase.
-
-1. Aprobar visualmente y ajustar el contenido de inicio, soluciones,
-   industrias, casos y diagnóstico con datos comerciales reales.
-   - La recuperación automatizada del 2 de septiembre verificó home,
-     soluciones, industrias y las plantillas compartidas en escritorio y a
-     390 px, sin overlays ni desbordamiento. Falta la aprobación perceptual del
-     usuario en sus dispositivos.
-   - Confirmar manualmente en escritorio y móvil el progreso ligado al scroll
-     de `CommercialRouteVisual`; no reutilizar ese patrón hasta aprobarlo.
-   - Probar la esfera de píxeles en un teléfono real y aprobar el ritmo de sus
-     transformaciones, el guiño y el retorno al orbe.
-2. Reemplazar las demostraciones declaradas por casos verificables solo cuando
-   existan fuente, permiso y métricas comprobables.
-3. Revisar Search Console y Analytics antes de retirar, redirigir o cambiar la
-   indexación de rutas históricas. La reconstrucción conserva esas rutas.
-4. Revisar y aprobar
-   `supabase/migrations/20260826155922_commercial_diagnostics.sql` antes de
-   aplicarla. Hasta entonces `ENABLE_DIAGNOSTIC_SUBMISSIONS` debe permanecer
-   desactivada.
-5. Rotar `NEXT_PUBLIC_SANITY_API_SECRET` y mover la autenticación de las
-   herramientas internas de Sanity a código exclusivo del servidor. Un secreto
-   nunca debe publicarse con el prefijo `NEXT_PUBLIC_`.
-6. Resolver los hallazgos del audit de dependencias en una tarea separada y
-   controlada; no ejecutar correcciones automáticas mayores junto con esta
-   reconstrucción.
-7. Integrar la rama únicamente después de revisar el diff contra el trabajo
-   local de NitroBot que todavía no tiene commit.
-8. Comprobar consumo y Web Vitals de la esfera en un build de producción y en
-   un móvil de gama media o baja. El reposo a ~26 FPS, los 60 FPS reservados
-   para las transformaciones y la pausa del `canvas` con la pestaña oculta ya
-   están implementados en `src/components/commercial/pixel-sphere.tsx`; falta
-   la medición en un dispositivo real.
-   La medición local anterior mantuvo 60 FPS durante cinco segundos, sin
-   fotogramas de más de 25 ms ni tareas largas. El chunk dinámico asociado pesa
-   aproximadamente 5,6 KB comprimido y se carga 1,8 segundos después del
-   contenido principal.
-9. Decidir la segunda fase del asistente: mantenerlo como orientador de rutas o
-   conectarlo a una conversación real. Hasta entonces no presentarlo como un
-   agente de IA ni añadir un campo que simule enviar mensajes.
 
 ## Lanzamiento de NitroBot — sitio y campañas
 

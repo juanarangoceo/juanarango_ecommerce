@@ -128,6 +128,13 @@ queda como copia prescindible. Las notas siguientes, incluidas las de «Contexto
 previo», describen decisiones de diseño vigentes; donde hablen de «sin commit ni
 despliegue» están superadas.
 
+Desde el 25 de septiembre el asistente (Guía Nitro) reposa como el rayo de
+Nitro en píxeles, no como orbe, y las conversaciones de WhatsApp usan tiendas
+ficticias con logo (Alma Botánica, Paso Urbano) vistas desde el teléfono del
+comprador. Los leads de interés en Nitro Complete entran solo por
+`/nitrobot/conectar` (y el VSL), verificado en producción. Pendientes
+prioritarios en [`docs/pendientes.md`](docs/pendientes.md).
+
 ### 24 de septiembre de 2026
 
 **Nitro Complete es el producto principal del sitio.** La home y el header
