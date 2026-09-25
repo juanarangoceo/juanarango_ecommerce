@@ -126,6 +126,10 @@ Autenticación interna (endurecida el 25-09-2026):
   cookie firmada que exigen las APIs `/api/audio/*`.
 - `INTERNAL_API_SECRET` solo protege rutas de administración manual
   (`admin/sync`, `revalidate-nitro`, `debug-*`, GET de `sanity-webhook`).
+- Vercel tiene Deployment Protection en «todo excepto dominios propios»:
+  solo `juanarangoecommerce.com` y `www` son públicos; las URLs `*.vercel.app`
+  (incluidos despliegues antiguos) piden sesión de Vercel. Webhooks, Inngest y
+  cualquier integración deben apuntar al dominio `www`.
 
 ## Estado actual — 25 de septiembre de 2026
 

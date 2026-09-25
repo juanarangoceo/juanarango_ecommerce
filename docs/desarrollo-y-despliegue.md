@@ -84,6 +84,10 @@ escritura desactivada.
 - `INTERNAL_API_SECRET`: rutas de administración manual. Rotada el
   25-09-2026 porque la anterior estaba publicada en el Studio; en producción y
   preview está marcada como sensible.
+- Deployment Protection de Vercel: «todo excepto dominios propios». Previews
+  y URLs `*.vercel.app` requieren sesión de Vercel; para automatizaciones
+  contra un preview usar el bypass de automatización, no desactivar la
+  protección.
 - Herramientas del Studio: sin secreto propio; usan el token de sesión de
   Sanity verificado en el servidor (`src/lib/sanity-editor-auth.ts`).
 
