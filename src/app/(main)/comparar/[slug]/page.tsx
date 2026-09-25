@@ -47,9 +47,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!comparison) return { title: 'Comparación no encontrada' }
 
   return {
-    title: `${comparison.title} | Juan Arango`,
+    title: comparison.title,
     description: comparison.metaDescription || `Comparación detallada entre ${comparison.app1?.appName} y ${comparison.app2?.appName}`,
     openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
       title: comparison.title,
       description: comparison.metaDescription,
       type: 'article',

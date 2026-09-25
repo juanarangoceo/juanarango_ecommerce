@@ -11,6 +11,7 @@ type SanityContent = {
   posts: { slug: string; category?: string; updatedAt: string; tags?: string[] }[];
   comparisons: { slug: string; updatedAt: string }[];
   apps: { slug: string; updatedAt: string }[];
+  forcedTags: { slug: string; updatedAt: string }[];
 };
 
 async function getPseoRoutes(): Promise<MetadataRoute.Sitemap> {
@@ -46,6 +47,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "posts": *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] {
       "slug": slug.current, category, "updatedAt": _updatedAt, tags
     },
+    "forcedTags": *[_type == "tag" && forzarIndexacion == true && defined(slug.current) && !(_id in path("drafts.**"))] {
+      "slug": slug.current, "updatedAt": _updatedAt
+    },
     "comparisons": *[_type == "appComparison" && defined(slug.current) && !(_id in path("drafts.**"))] {
       "slug": slug.current, "updatedAt": _updatedAt
     },
@@ -63,15 +67,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tags = new Map<string, { count: number; updatedAt: string }>();
   for (const post of content.posts) {
     if (post.category && (!categories.has(post.category) || categories.get(post.category)! < post.updatedAt)) categories.set(post.category, post.updatedAt);
-    for (const tag of post.tags ?? []) {
-      const slug = normalizeTagSlug(tag);
+    // Un artículo cuenta una sola vez por etiqueta aunque la repita con otra grafía.
+    for (const slug of new Set((post.tags ?? []).map(normalizeTagSlug))) {
       const current = tags.get(slug);
       tags.set(slug, { count: (current?.count ?? 0) + 1, updatedAt: !current || current.updatedAt < post.updatedAt ? post.updatedAt : current.updatedAt });
     }
   }
 
   const categoryRoutes = [...categories].map(([slug, updatedAt]) => ({ url: `${baseUrl}/blog/${slug}`, lastModified: new Date(updatedAt), changeFrequency: "weekly" as const, priority: 0.7 }));
-  const tagRoutes = [...tags].filter(([, value]) => value.count >= 3).map(([slug, value]) => ({ url: `${baseUrl}/blog/tags/${slug}`, lastModified: new Date(value.updatedAt), changeFrequency: "monthly" as const, priority: 0.45 }));
+  // Etiquetas indexables: 2 o más artículos distintos, o indexación forzada en Sanity.
+  for (const forced of content.forcedTags ?? []) {
+    const current = tags.get(forced.slug);
+    tags.set(forced.slug, { count: Math.max(current?.count ?? 0, 2), updatedAt: current?.updatedAt ?? forced.updatedAt });
+  }
+  const tagRoutes = [...tags].filter(([, value]) => value.count >= 2).map(([slug, value]) => ({ url: `${baseUrl}/blog/tags/${slug}`, lastModified: new Date(value.updatedAt), changeFrequency: "monthly" as const, priority: 0.45 }));
   const comparisonRoutes = content.comparisons.map((item) => ({ url: `${baseUrl}/comparar/${item.slug}`, lastModified: new Date(item.updatedAt), changeFrequency: "monthly" as const, priority: 0.6 }));
   const appRoutes = content.apps.map((item) => ({ url: `${baseUrl}/app-tools/${item.slug}`, lastModified: new Date(item.updatedAt), changeFrequency: "monthly" as const, priority: 0.55 }));
   const pseoRoutes = await getPseoRoutes();

@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   description:
     "Descubre las mejores apps y herramientas de inteligencia artificial para tu negocio. Ranking actualizado con reseñas, funcionalidades, precios y comparativas.",
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: "Mejores Apps y Herramientas de IA | Biblioteca Completa",
     description:
       "Ranking actualizado de las mejores herramientas de IA para productividad, marketing, diseño, código y más.",

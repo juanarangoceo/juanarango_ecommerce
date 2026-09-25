@@ -15,14 +15,14 @@ type ContextName = "idle" | "flow" | "ecosystem" | "diagnostic" | "about" | "ide
 type SphereContext = { shape: PixelSphereShape; label: string; teaser?: string; opener?: NodeId };
 
 const CONTEXTS: Record<ContextName, SphereContext> = {
-  idle: { shape: "orb", label: "Explora Nitro" },
+  idle: { shape: "bolt", label: "Explora Nitro" },
   flow: { shape: "pulse", label: "Mira cómo cobra vida" },
   ecosystem: { shape: "network", label: "Conecta soluciones" },
   diagnostic: { shape: "chat", label: "Cuéntame qué necesitas" },
   about: { shape: "spark", label: "Conoce cómo te acompaño" },
   ideas: { shape: "spark", label: "Descubre una idea" },
-  conversation: { shape: "ticks", label: "Así responde tu asesor" },
-  calculator: { shape: "bars", label: "Calcula tu caso" },
+  conversation: { shape: "ticks", label: "Así responde tu asesor", teaser: "¿Te gustaría vender así por WhatsApp? Te muestro cómo empezar.", opener: "sell" },
+  calculator: { shape: "bars", label: "Calcula tu caso", teaser: "¿Revisamos estos números con tu caso real?", opener: "plans" },
   pricing: { shape: "chat", label: "Te ayudo a elegir", teaser: "¿Dudas con el plan? Te digo cómo elegirlo.", opener: "plans" },
   faq: { shape: "question", label: "¿Otra pregunta?", teaser: "¿No encuentras tu pregunta? Te oriento.", opener: "root" },
 };
@@ -45,7 +45,7 @@ const GUIDE: Record<NodeId, GuideNode> = {
     ],
   },
   sell: {
-    bot: "Para eso está Nitro Complete: atiende con tu catálogo real, crea el pedido, lo confirma antes del despacho y avisa el envío. Tu equipo entra cuando hace falta.",
+    bot: "Para eso está Nitro Complete: **atiende con tu catálogo real**, **crea el pedido**, **lo confirma antes del despacho** y **avisa el envío**. Tu equipo entra cuando hace falta.",
     links: [
       { label: "Comprobar si encaja", href: "/nitrobot/conectar", primary: true },
       { label: "Ver cómo funciona", href: "/nitro-complete" },
@@ -53,7 +53,7 @@ const GUIDE: Record<NodeId, GuideNode> = {
     choices: [{ label: "¿Cuánto cuesta?", next: "plans" }],
   },
   plans: {
-    bot: "Los tres planes incluyen lo mismo: asesor, pedidos, panel y control humano. Cambia la capacidad mensual. La evaluación te dice cuál encaja con tu volumen, sin llamada obligatoria.",
+    bot: "Los tres planes incluyen lo mismo: **asesor, pedidos, panel y control humano**. Cambia la capacidad mensual. La evaluación te dice cuál encaja con tu volumen, **sin llamada obligatoria**.",
     links: [
       { label: "Evaluar mi operación", href: "/nitrobot/conectar", primary: true },
       { label: "Ver planes y precios", href: "/nitro-complete#planes" },
@@ -82,6 +82,12 @@ type Entry = { id: number; from: "bot" | "user"; text: string; node?: NodeId };
 const SLEEP_AFTER_MS = 25000;
 const LOOK_RADIUS = 280;
 const MAX_TEASERS_PER_PAGE = 2;
+
+function renderRich(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
+    part.startsWith("**") ? <strong key={index} className="font-semibold text-white">{part.slice(2, -2)}</strong> : part,
+  );
+}
 
 function readSeen(): string[] {
   try {
@@ -130,6 +136,7 @@ export function ChatWidget() {
   const scrollBodyRef = useRef<HTMLDivElement>(null);
   const isOpenRef = useRef(false);
   const isAsleepRef = useRef(false);
+  const isNearRef = useRef(false);
 
   useEffect(() => {
     isOpenRef.current = isOpen;
@@ -153,9 +160,10 @@ export function ChatWidget() {
   const showTeaser = useCallback((name: ContextName) => {
     const context = CONTEXTS[name];
     if (!context.teaser || isOpenRef.current || teasersShownRef.current >= MAX_TEASERS_PER_PAGE) return;
-    if (readSeen().includes(name)) return;
+    const key = `${window.location.pathname}:${name}`;
+    if (readSeen().includes(key)) return;
     teasersShownRef.current += 1;
-    markSeen(name);
+    markSeen(key);
     clearTeaserTimers();
     setTeaserContext(name);
     setTeaserPhase("typing");
@@ -198,11 +206,11 @@ export function ChatWidget() {
         setContextName(name);
         const next = CONTEXTS[name];
         if (contextTimerRef.current) window.clearTimeout(contextTimerRef.current);
-        if (next.shape === "orb") {
+        if (next.shape === "bolt") {
           setContextGesture(null);
         } else {
           setContextGesture(next.shape);
-          contextTimerRef.current = window.setTimeout(() => setContextGesture(null), 3600);
+          contextTimerRef.current = window.setTimeout(() => setContextGesture(null), 6000);
         }
         showTeaser(name);
       },
@@ -237,8 +245,13 @@ export function ChatWidget() {
       scheduleSleep();
     };
 
+    let lastY = window.scrollY;
     const handleScroll = () => {
       wake();
+      const y = window.scrollY;
+      // Mientras se desplaza, los ojos miran hacia donde va la página.
+      if (!isNearRef.current) lookRef.current = { x: 0.15, y: y >= lastY ? 1 : -1 };
+      lastY = y;
       if (!isOpenRef.current) setIsScrolling(true);
       if (scrollTimerRef.current) window.clearTimeout(scrollTimerRef.current);
       scrollTimerRef.current = window.setTimeout(() => setIsScrolling(false), 900);
@@ -258,6 +271,7 @@ export function ChatWidget() {
         const distance = Math.hypot(dx, dy);
         const near = distance < LOOK_RADIUS;
         lookRef.current = near ? { x: Math.max(-1, Math.min(1, dx / 160)), y: Math.max(-1, Math.min(1, dy / 160)) } : null;
+        isNearRef.current = near;
         setIsNear((current) => (current === near ? current : near));
       });
     };
@@ -321,11 +335,9 @@ export function ChatWidget() {
         ? "typing"
         : isAsleep
           ? "sleep"
-          : isScrolling
-            ? "pulse"
-            : isNear
-              ? "eyes"
-              : contextGesture ?? "orb";
+          : isScrolling || isNear
+            ? "eyes"
+            : contextGesture ?? "bolt";
 
   const lastBot = [...entries].reverse().find((entry) => entry.from === "bot");
   const teaserText = teaserContext ? CONTEXTS[teaserContext].teaser : null;
@@ -372,7 +384,7 @@ export function ChatWidget() {
                   </div>
                 ) : (
                   <div key={entry.id} className="wa-enter max-w-[92%] rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.035] px-4 py-3">
-                    <p className="text-sm leading-6 text-white/82">{entry.text}</p>
+                    <p className="text-sm leading-6 text-white/78">{renderRich(entry.text)}</p>
                   </div>
                 ),
               )}

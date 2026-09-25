@@ -586,7 +586,7 @@ export function NitroBotForm({
       </h3>
       <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-white/58">
         {delivery === "queued"
-          ? "Guardamos tus datos de forma segura. NitroBot estaba tardando más de lo normal y completará el análisis automáticamente; te contactaremos por WhatsApp."
+          ? "Guardamos tus datos de forma segura. Nitro Complete estaba tardando más de lo normal y completará el análisis automáticamente; te contactaremos por WhatsApp."
           : copy?.body}
       </p>
       {result?.qualification.plan.monthlyPriceCop && (

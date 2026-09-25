@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 
 export type PixelSphereShape =
+  | "bolt"
   | "orb"
   | "pulse"
   | "wink"
@@ -194,11 +195,38 @@ function makeEyes(): Point[] {
 }
 const EYE_PUPIL_COUNT = 8;
 
-// Esfera pequeña y tenue con una «z»: el asistente descansa.
+// Rayo de Nitro (mismo contorno que nitro-mark.tsx) relleno de píxeles. Es el
+// estado de reposo del asistente, a petición del usuario (25-09-2026).
+const BOLT_POLYGON = [
+  [18.4, 2.8], [5.9, 21.1], [14.7, 21.1], [12.4, 37.2], [26.1, 16.4], [17.1, 16.4], [20.3, 2.8],
+] as const;
+
+function insideBolt(x: number, y: number) {
+  let inside = false;
+  for (let i = 0, j = BOLT_POLYGON.length - 1; i < BOLT_POLYGON.length; j = i, i += 1) {
+    const [xi, yi] = BOLT_POLYGON[i];
+    const [xj, yj] = BOLT_POLYGON[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
+function makeBolt(scale = 1.95, offsetX = 44 - 16 * 1.95, offsetY = 44 - 20 * 1.95, alpha = 1): Point[] {
+  const points: Point[] = [];
+  const step = 2.2;
+  for (let y = 1; y <= 39; y += step) {
+    for (let x = 3; x <= 29; x += step) {
+      if (insideBolt(x, y)) {
+        points.push({ x: offsetX + x * scale, y: offsetY + y * scale, alpha: alpha * (0.72 + (1 - y / 40) * 0.28) });
+      }
+    }
+  }
+  return points;
+}
+
+// Rayo pequeño y tenue con una «z»: el asistente descansa.
 function makeSleep(): Point[] {
-  const points: Point[] = makeOrb()
-    .filter((_, index) => index % 2 === 0)
-    .map((point) => ({ x: 40 + (point.x - 44) * 0.62, y: 50 + (point.y - 44) * 0.62, alpha: (point.alpha ?? 1) * 0.45 }));
+  const points: Point[] = makeBolt(1.25, 26, 30, 0.45);
   addLine(points, { x: 58, y: 18 }, { x: 68, y: 18 }, 3);
   addLine(points, { x: 68, y: 18 }, { x: 58, y: 28 }, 3);
   addLine(points, { x: 58, y: 28 }, { x: 68, y: 28 }, 3);
@@ -207,6 +235,7 @@ function makeSleep(): Point[] {
 
 const ORB_POINTS = makeOrb();
 const SHAPES: Record<PixelSphereShape, Point[]> = {
+  bolt: makeBolt(),
   orb: ORB_POINTS,
   pulse: makePulse(),
   wink: makeWink(),
@@ -224,7 +253,7 @@ const SHAPES: Record<PixelSphereShape, Point[]> = {
 
 // Formas que se animan por sí mismas o que descansan: no necesitan 60 FPS
 // salvo durante la transformación.
-const CALM_SHAPES = new Set<PixelSphereShape>(["orb", "sleep"]);
+const CALM_SHAPES = new Set<PixelSphereShape>(["bolt", "orb", "sleep"]);
 
 export function PixelSphere({
   shape,
@@ -275,7 +304,7 @@ export function PixelSphere({
       const scale = width / SIZE;
       const targets = SHAPES[shapeRef.current];
       const current = shapeRef.current;
-      const isOrb = current === "orb";
+      const isOrb = current === "orb" || current === "bolt";
       const pulse = reducedMotion.matches || !isOrb ? 1 : 1 + Math.sin(time / 720) * 0.035;
       const look = lookRef?.current;
       const pupilStart = targets.length - EYE_PUPIL_COUNT;

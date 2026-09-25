@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Guía Definitiva Shopify 2024 | Nitro Ecom',
   description: 'Aprende paso a paso cómo crear y configurar tu tienda Shopify desde cero. Guía completa con prompts de IA, estrategias y configuración.',
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: 'Guía Definitiva Shopify 2024 | Nitro Ecom',
     description: 'La hoja de ruta paso a paso para crear tu imperio en e-commerce con Shopify.',
     url: 'https://nitro-commerce.com/guias/shopify',

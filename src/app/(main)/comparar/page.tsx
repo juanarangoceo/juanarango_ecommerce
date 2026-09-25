@@ -7,9 +7,10 @@ import { ArrowRight, Swords, Trophy } from "lucide-react"
 
 
 export const metadata: Metadata = {
-  title: "Comparativas de Apps IA | Juan Arango",
+  title: "Comparativas de Apps IA",
   description: "Comparaciones detalladas entre las mejores herramientas de inteligencia artificial. Encuentra la app perfecta para ti con nuestras comparativas lado a lado.",
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: "Comparativas de Apps IA",
     description: "Comparaciones detalladas entre las mejores herramientas de inteligencia artificial.",
     type: "website",

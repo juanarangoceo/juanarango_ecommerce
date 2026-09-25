@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     "NitroBot atiende, recomienda productos, cotiza con datos reales y crea pedidos desde WhatsApp. Conecta Shopify o administra tu catálogo directamente.",
   alternates: { canonical: `${SITE_URL}/nitrobot` },
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: "NitroBot | Un sistema de ventas completo dentro de WhatsApp",
     description:
       "Atiende, vende, registra pedidos y escala casos humanos con tu catálogo real.",
@@ -209,9 +210,12 @@ export default function NitroBotPage() {
                 responder chats.
               </h1>
               <p className="mx-auto mt-7 max-w-xl text-left text-lg leading-relaxed text-white/58 lg:mx-0">
-                NitroBot consulta tu catálogo, recomienda, cotiza con cifras
-                reales, recoge los datos y crea el pedido. Tu equipo entra solo
-                cuando hace falta criterio humano.
+                NitroBot{" "}<strong className="nitro-hl">consulta tu catálogo</strong>,{" "}
+                <strong className="nitro-hl">recomienda</strong>,{" "}
+                <strong className="nitro-hl">cotiza con cifras reales</strong>,{" "}
+                <strong className="nitro-hl">recoge los datos</strong> y{" "}
+                <strong className="nitro-hl">crea el pedido</strong>. Tu equipo
+                entra solo cuando hace falta criterio humano.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                 <Cta />

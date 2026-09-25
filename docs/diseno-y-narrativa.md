@@ -191,8 +191,10 @@ Patrones actuales:
   `nitro-icon-mark` y `nitro-icon-glyph`.
 - `CommercialRouteVisual`: recorrido Tráfico → Conversación → Venta ligado al
   scroll y representado por un punto verde, no por el rayo de marca.
-- `PixelSphere`: esfera de píxeles dibujada en `canvas`. El orbe es su estado
-  base; los gestos son temporales y siempre regresan a él. Estados: latido
+- `PixelSphere`: asistente de píxeles dibujado en `canvas`. Desde el 25-09-2026
+  su reposo es el rayo de Nitro en píxeles (`bolt`), por decisión del usuario:
+  sustituye al orbe y es la única excepción a no usar el rayo en motion. Al
+  hacer scroll muestra ojos que miran hacia donde va la página; los gestos son temporales y siempre regresan a él. Estados: latido
   (`pulse`) al hacer scroll, guiño (`wink`) en hover o foco, ojos que siguen al
   puntero (`eyes`) cuando el ratón se acerca, `typing` antes de un mensaje
   proactivo, `sleep` tras 25 s sin actividad, `X` con el panel abierto y formas
@@ -202,16 +204,23 @@ Patrones actuales:
 - `ChatWidget` (Guía Nitro): panel cargado de forma diferida con respuestas
   guiadas y predefinidas, rotulado como tal. Burbujas estilo WhatsApp, indicador
   «escribiendo…» y enlaces solo a rutas reales; no simula una IA ni envía datos.
-  En `pricing` y `faq` puede mostrar como máximo dos mensajes proactivos por
-  página (uno por contexto y sesión) con punto naranja de no leído.
+  En conversación, calculadora, precios y FAQ puede mostrar como máximo dos
+  mensajes proactivos por página (uno por página y contexto en la sesión) con
+  punto naranja de no leído.
 - `NitroCompletePreview`: hero con una conversación ilustrativa de WhatsApp que
   se reproduce sola y, al lado, lo que registra el panel. Sustituye a la tarjeta
   de «valor vendido», que no se entendía.
 - `WhatsAppStory`: venta completa en cinco capítulos (asesor, pedido,
   confirmación, postventa y caso para el equipo). Avanza sola o por clic.
 - `whatsapp-ui.tsx`: teléfono, burbujas, tarjeta de producto, botones de
-  respuesta y `WaTicks`. Todo mensaje enviado por el negocio lleva el doble check
-  de WhatsApp.
+  respuesta y `WaTicks` (trazo de WhatsApp Web). Las conversaciones se ven
+  desde el teléfono del comprador: la tienda con su logo arriba y a la
+  izquierda; el comprador a la derecha con doble check gris que pasa a azul
+  cuando la tienda responde. Tiendas ficticias en `demo-stores.tsx`: Alma
+  Botánica (hero, clienta Sara) y Paso Urbano (historia, clienta Luisa). Cada
+  sección usa un ejemplo distinto.
+- `.nitro-hl` / `.nitro-hl-ink`: resaltado tipo marcador para los beneficios
+  (atiende, crea el pedido, confirma, avisa el envío) dentro de párrafos.
 - `SalesCalculator`: estima conversaciones delegables, horas liberadas y ventas
   que se pierden fuera de horario. Solo usa datos del visitante y supuestos
   visibles y editables; nunca resultados de clientes. Nitro Bot tiene

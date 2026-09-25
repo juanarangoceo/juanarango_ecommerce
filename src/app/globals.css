@@ -640,3 +640,21 @@ body > .skiptranslate {
 @media (prefers-reduced-motion: reduce) {
   .wa-enter { animation: none; }
 }
+
+/* Beneficios resaltados en párrafos: trazo de marcador verde Nitro. */
+.nitro-hl {
+  font-weight: 600;
+  color: #fff;
+  background-image: linear-gradient(transparent 64%, rgba(183, 255, 42, 0.42) 64%, rgba(183, 255, 42, 0.42) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.06em;
+}
+.nitro-hl-ink {
+  font-weight: 600;
+  color: #111311;
+  background-image: linear-gradient(transparent 58%, rgba(183, 255, 42, 0.75) 58%, rgba(183, 255, 42, 0.75) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.06em;
+}

@@ -38,9 +38,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  icons: {
-    icon: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
-  },
+  metadataBase: new URL("https://www.juanarangoecommerce.com"),
 };
 
 export default function LandingLayout({

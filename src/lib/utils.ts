@@ -10,7 +10,6 @@ interface ConstructMetadataProps {
   title?: string
   description?: string
   image?: string
-  icons?: string
   noIndex?: boolean
   canonical?: string
 }
@@ -18,8 +17,7 @@ interface ConstructMetadataProps {
 export function constructMetadata({
   title = 'Juan Arango | E-commerce & Estrategia Digital',
   description = 'Experto en comercio electrónico, desarrollo web y estrategias de crecimiento digital.',
-  image = '/thumbnail.png',
-  icons = '/favicon.ico',
+  image = '/og-nitro.png',
   noIndex = false,
   canonical,
 }: ConstructMetadataProps = {}): Metadata {
@@ -48,7 +46,6 @@ export function constructMetadata({
       images: [image],
       creator: '@juanarangoecommerce',
     },
-    icons,
     metadataBase: new URL('https://www.juanarangoecommerce.com'),
     ...(canonical && {
       alternates: {

@@ -60,13 +60,13 @@ export type NitroBotSubmitResult =
 export const qualificationCopy: Record<QualificationStatus, { eyebrow: string; title: string; body: string }> = {
   prequalified: {
     eyebrow: "Tu operación tiene buen encaje",
-    title: "Estás listo para una conexión con NitroBot",
+    title: "Estás listo para conectar Nitro Complete",
     body: "Tu catálogo, demanda y operación permiten pasar a una revisión de conexión. Juan validará contigo los últimos detalles por WhatsApp.",
   },
   review: {
     eyebrow: "Hay potencial",
     title: "Vamos a revisar tu operación",
-    body: "NitroBot puede encajar, pero necesitamos confirmar volumen, catálogo o integración antes de recomendarte un plan.",
+    body: "Nitro Complete puede encajar, pero necesitamos confirmar volumen, catálogo o integración antes de recomendarte un plan.",
   },
   not_recommended: {
     eyebrow: "Primero conviene ordenar la base",

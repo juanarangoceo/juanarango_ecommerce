@@ -54,6 +54,7 @@ export async function generateMetadata(
       app.description ||
       `Descubre ${app.appName}: funcionalidades, ventajas, desventajas y precio.`,
     openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
       title: `${app.appName} — Reseña Completa`,
       description: app.description,
       url: `https://juanarango.com/app-tools/${app.slug.current}`,

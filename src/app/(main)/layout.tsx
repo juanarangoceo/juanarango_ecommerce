@@ -40,16 +40,8 @@ export const metadata: Metadata = {
   ...constructMetadata({
     title: "Juan Arango - Experto en Ecommerce",
     description: "Ayudo a empresas de Colombia y Latinoamérica a vender más con ecommerce avanzado, automatización e IA. Soy Juan Arango: 15 años de experiencia real.",
-    icons: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
   }),
-  verification: {
-    google: "verification_code_here",
-  },
-  icons: {
-    icon: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
-    shortcut: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
-    apple: "https://res.cloudinary.com/dohwyszdj/image/upload/v1769285570/favicon_htexox.jpg",
-  },
+  // Los iconos salen de src/app/icon.svg, apple-icon.png y favicon.ico.
 };
 
 // Schema Markup: Person (Juan Arango) + Organization (NITRO ECOM) + WebSite

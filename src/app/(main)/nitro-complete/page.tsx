@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "Nitro Complete atiende con tu catálogo real, crea el pedido, lo confirma antes del despacho, avisa el envío y retoma las ventas pendientes. Con Shopify o sin tienda online.",
   alternates: { canonical: `${SITE_URL}/nitro-complete` },
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: "Nitro Complete | Un equipo de ventas completo dentro de tu WhatsApp",
     description: "Asesor con IA, confirmación de pedidos, postventa y seguimiento en un solo sistema, con tu equipo al mando.",
     url: `${SITE_URL}/nitro-complete`,
@@ -94,7 +95,7 @@ export default function NitroCompletePage() {
               Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/62 lg:mx-0">
-              Atiende con tu catálogo real, crea el pedido, lo confirma antes del despacho, avisa el envío y retoma las ventas que quedaron pendientes. Tú ves todo desde un panel y decides cuándo entra tu equipo.
+              <strong className="nitro-hl">Atiende con tu catálogo real</strong>, <strong className="nitro-hl">crea el pedido</strong>, <strong className="nitro-hl">lo confirma antes del despacho</strong>, <strong className="nitro-hl">avisa el envío</strong> y <strong className="nitro-hl">retoma las ventas</strong> que quedaron pendientes. Tú ves todo desde un panel y decides cuándo entra tu equipo.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <PrimaryCta />

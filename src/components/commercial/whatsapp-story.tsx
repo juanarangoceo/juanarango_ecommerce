@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { WaBubble, WaPhone, WaTyping, type WaMessage } from "@/components/commercial/whatsapp-ui";
+import { SneakerArt, pasoUrbano } from "@/components/commercial/demo-stores";
+import { WaPhone, WaThread, WaTyping, type WaMessage } from "@/components/commercial/whatsapp-ui";
 
 // Una venta completa contada en WhatsApp. Cada capítulo corresponde a un
 // módulo de Nitro Complete descrito en la ficha de producto; la conversación
@@ -17,10 +18,10 @@ const chapters: readonly Chapter[] = [
     note: "Recomienda con los datos de tu catálogo. Precio y envío los calcula el sistema, no la IA.",
     messages: [
       { id: "1a", from: "system", text: "Hoy" },
-      { id: "1b", from: "buyer", text: "Buenas noches, vi el morral en Instagram. ¿Le cabe un portátil de 15”?", time: "10:14 p. m." },
-      { id: "1c", from: "business", text: "¡Hola! Sí: tiene compartimento acolchado para portátil de hasta 15,6”. Lo tenemos en negro y en gris.", time: "10:14 p. m.", product: { name: "Morral Nómada 30L", detail: "Negro · Gris", price: "$169.900" } },
-      { id: "1d", from: "buyer", text: "El negro. ¿Cuánto con envío a Pereira?", time: "10:15 p. m." },
-      { id: "1e", from: "business", text: "Con envío a Pereira queda en $189.900 y pagas al recibir. ¿Te lo separo?", time: "10:15 p. m." },
+      { id: "1b", from: "buyer", text: "Buenas noches, ¿los tenis Ruta blancos tienen talla 38?", time: "10:14 p. m." },
+      { id: "1c", from: "business", text: "¡Hola Luisa! Sí, hay talla 38 en blanco. Horman normal, así que tu talla de siempre te queda bien.", time: "10:14 p. m.", product: { name: "Tenis Ruta · Blanco", detail: "Tallas 35 a 42 · disponible", price: "$229.900", art: <SneakerArt /> } },
+      { id: "1d", from: "buyer", text: "¿Cuánto con envío a Cali?", time: "10:15 p. m." },
+      { id: "1e", from: "business", text: "Con envío a Cali quedan en $244.900 y pagas al recibir. ¿Te los separo?", time: "10:15 p. m." },
     ],
   },
   {
@@ -28,8 +29,8 @@ const chapters: readonly Chapter[] = [
     module: "Pedidos",
     note: "El pedido queda en Shopify o en tu panel, con los datos de entrega completos. Nadie copia nada a mano.",
     messages: [
-      { id: "2a", from: "buyer", text: "Sí. Laura Gómez, Cra 8 #21-40, Pereira", time: "10:16 p. m." },
-      { id: "2b", from: "business", text: "Listo, Laura. Pedido creado:\nMorral Nómada 30L negro · $189.900 contraentrega.\nMañana te pido confirmarlo antes del despacho.", time: "10:16 p. m." },
+      { id: "2a", from: "buyer", text: "Sí. Luisa Martínez, Av. 6N #23-15, Cali", time: "10:16 p. m." },
+      { id: "2b", from: "business", text: "Listo, Luisa. Pedido creado:\nTenis Ruta blanco, talla 38 · $244.900 contraentrega.\nMañana te pido confirmarlo antes del despacho.", time: "10:16 p. m." },
     ],
   },
   {
@@ -38,9 +39,9 @@ const chapters: readonly Chapter[] = [
     note: "El comprador confirma con un botón. Despachas pedidos confirmados y no a ciegas.",
     messages: [
       { id: "3a", from: "system", text: "Mañana" },
-      { id: "3b", from: "business", text: "Hola Laura, ¿confirmas tu pedido del morral Nómada por $189.900?", time: "9:02 a. m.", buttons: ["Confirmar pedido", "Cambiar algo"] },
+      { id: "3b", from: "business", text: "Hola Luisa, ¿confirmas tu pedido de los tenis Ruta por $244.900?", time: "9:02 a. m.", buttons: ["Confirmar pedido", "Cambiar algo"] },
       { id: "3c", from: "buyer", text: "Confirmar pedido", time: "9:05 a. m." },
-      { id: "3d", from: "business", text: "¡Confirmado! Te escribo apenas salga con la guía.", time: "9:05 a. m." },
+      { id: "3d", from: "business", text: "¡Confirmado! Te escribo apenas salgan con la guía.", time: "9:05 a. m." },
     ],
   },
   {
@@ -48,10 +49,10 @@ const chapters: readonly Chapter[] = [
     module: "Postventa",
     note: "Aviso de despacho con guía y pregunta de entrega. Tu equipo deja de responder «¿dónde va mi pedido?».",
     messages: [
-      { id: "4a", from: "business", text: "Tu morral ya salió 📦\nGuía: 2140 5566 781", time: "3:40 p. m." },
+      { id: "4a", from: "business", text: "Tus tenis ya salieron 📦\nGuía: 2140 5566 781", time: "3:40 p. m." },
       { id: "4b", from: "system", text: "Viernes" },
-      { id: "4c", from: "business", text: "Hola Laura, ¿te llegó bien el morral?", time: "11:10 a. m." },
-      { id: "4d", from: "buyer", text: "Sí, me encantó 🙌", time: "11:32 a. m." },
+      { id: "4c", from: "business", text: "Hola Luisa, ¿te llegaron bien los tenis?", time: "11:10 a. m." },
+      { id: "4d", from: "buyer", text: "Sí, ya llegaron 🙌", time: "11:32 a. m." },
     ],
   },
   {
@@ -59,7 +60,7 @@ const chapters: readonly Chapter[] = [
     module: "Casos con contexto",
     note: "Cambios, reclamos o casos delicados pasan a una persona con toda la conversación.",
     messages: [
-      { id: "5a", from: "buyer", text: "¿Lo puedo cambiar por el gris? Es para un regalo", time: "11:33 a. m." },
+      { id: "5a", from: "buyer", text: "Me encantaron, pero me quedaron un poco grandes. ¿Los puedo cambiar por talla 37?", time: "11:33 a. m." },
       { id: "5b", from: "business", text: "Claro. Te paso con Andrés, de nuestro equipo, para gestionar el cambio. Ya tiene toda la conversación.", time: "11:33 a. m." },
       { id: "5c", from: "system", text: "Caso asignado a tu equipo" },
     ],
@@ -76,6 +77,7 @@ export function WhatsAppStory() {
   const [autoplay, setAutoplay] = useState(true);
 
   const messages = chapters[chapter].messages;
+  const history = chapters.slice(0, chapter).flatMap((item) => item.messages);
   const visible = reduceMotion ? messages.length : count;
 
   useEffect(() => {
@@ -150,24 +152,15 @@ export function WhatsAppStory() {
 
       <figure className="relative order-1 mx-auto w-full max-w-[23rem] lg:order-none">
         <div className="pointer-events-none absolute -inset-12 rounded-full bg-primary/[0.07] blur-[90px]" aria-hidden="true" />
-        <WaPhone storeName="Tienda Nómada" status={typing ? "escribiendo…" : "en línea"} className="relative">
+        <WaPhone store={pasoUrbano} status={typing ? "escribiendo…" : "en línea"} className="relative">
           <div className="flex h-[24rem] flex-col justify-end sm:h-[30rem] gap-1.5 overflow-hidden px-2.5 py-3" aria-live="polite">
-            {chapters.slice(0, chapter).flatMap((item) => item.messages).map((message) => (
-              <div key={message.id} className="opacity-80">
-                <WaBubble message={message} />
-              </div>
-            ))}
-            {messages.slice(0, visible).map((message) => (
-              <div key={message.id} className="wa-enter">
-                <WaBubble message={message} />
-              </div>
-            ))}
+            <WaThread messages={[...history, ...messages.slice(0, visible)]} dimmed={history.length} />
             {typing ? <WaTyping /> : null}
           </div>
         </WaPhone>
         <figcaption className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
           <WhatsAppLogo className="size-3.5" />
-          Conversación ilustrativa · la postventa depende de tu configuración
+          Ilustrativa · tienda de ejemplo · postventa según configuración
         </figcaption>
       </figure>
     </div>

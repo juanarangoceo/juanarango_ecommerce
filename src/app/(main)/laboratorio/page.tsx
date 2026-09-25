@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Accede a proyectos escalables reales, prompts profesionales y MVPs paso a paso. Juan Arango abre las puertas del Laboratorio Ecom. Regístrate para ser el primero.",
   openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: "Laboratorio Ecom | Proyectos escalables. Prompts pro. Resultados reales.",
     description:
       "No es un curso. Es un laboratorio activo donde aprenderás replicando proyectos reales. Únete a la lista de espera.",

@@ -27,7 +27,7 @@ const TAG_DATA_QUERY = `
       seoTitle,
       seoDescription
     },
-    "posts": *[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current) && !(_id in path("drafts.**"))] | order(coalesce(publishedAt, _createdAt) desc) {
+    "posts": *[_type == "post" && count(tags[@ in $names]) > 0 && defined(slug.current) && !(_id in path("drafts.**"))] | order(coalesce(publishedAt, _createdAt) desc) {
       _id,
       title,
       slug,
@@ -46,13 +46,25 @@ interface Props {
   params: Promise<{ tag: string }>
 }
 
+// Los posts guardan la etiqueta con su nombre original («Atención al cliente»)
+// y la URL usa el slug normalizado. Se buscan todos los nombres cuyo slug
+// coincide para que la página no dé 404 a etiquetas que sí tienen artículos.
+async function resolveTagNames(slug: string, decodedTag: string) {
+  const allTags: string[] = await client.fetch(
+    `array::unique(*[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))].tags[])`
+  );
+  const matches = (allTags ?? []).filter((tag) => typeof tag === "string" && normalizeTagSlug(tag) === slug);
+  return { names: [...new Set([slug, decodedTag, ...matches])], displayName: matches[0] ?? decodedTag };
+}
+
 
 
 export async function generateMetadata(props: Props) {
   const params = await props.params;
   const decodedTag = decodeURIComponent(params.tag);
   const normalizedSlug = normalizeTagSlug(decodedTag);
-  
+  const { names, displayName } = await resolveTagNames(normalizedSlug, decodedTag);
+
   // Fetch just enough data for metadata
   const data = await client.fetch(`
     {
@@ -63,13 +75,13 @@ export async function generateMetadata(props: Props) {
         description,
         forzarIndexacion
       },
-      "postCount": count(*[_type == "post" && ($slug in tags[] || $originalName in tags[]) && defined(slug.current) && !(_id in path("drafts.**"))])
+      "postCount": count(*[_type == "post" && count(tags[@ in $names]) > 0 && defined(slug.current) && !(_id in path("drafts.**"))])
     }
-  `, { slug: normalizedSlug, originalName: decodedTag });
+  `, { slug: normalizedSlug, names });
 
   const { tagDoc, postCount } = data;
-  const displayTitle = tagDoc?.seoTitle || `Posts sobre ${tagDoc?.name || decodedTag} | Blog Nitro Ecom`;
-  const displayDesc = tagDoc?.seoDescription || tagDoc?.description || `Descubre nuestros artículos y guías sobre ${decodedTag} en el blog de Nitro Ecom.`;
+  const displayTitle = tagDoc?.seoTitle || `Posts sobre ${tagDoc?.name || displayName} | Blog Nitro Ecom`;
+  const displayDesc = tagDoc?.seoDescription || tagDoc?.description || `Descubre nuestros artículos y guías sobre ${displayName} en el blog de Nitro Ecom.`;
 
   return constructMetadata({
     title: displayTitle,
@@ -85,9 +97,10 @@ export default async function TagPage(props: Props) {
   const decodedTag = decodeURIComponent(params.tag);
   const normalizedSlug = normalizeTagSlug(decodedTag);
 
-  const { tagDoc, posts } = await client.fetch(TAG_DATA_QUERY, { 
-    slug: normalizedSlug, 
-    originalName: decodedTag 
+  const { names, displayName: resolvedName } = await resolveTagNames(normalizedSlug, decodedTag);
+  const { tagDoc, posts } = await client.fetch(TAG_DATA_QUERY, {
+    slug: normalizedSlug,
+    names,
   });
 
   // If no posts and no tag doc, 404
@@ -95,7 +108,7 @@ export default async function TagPage(props: Props) {
      return notFound();
   }
 
-  const displayName = tagDoc?.name || decodedTag;
+  const displayName = tagDoc?.name || resolvedName;
   const displayH1 = tagDoc?.h1 || displayName;
   
   // If we have a tagDoc description, it's now Markdown. If not, use the fallback text.

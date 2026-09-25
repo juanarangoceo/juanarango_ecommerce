@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
   description: "Soy Juan Arango. Construí Nitro Complete, un sistema que vende por WhatsApp con tu catálogo real, confirma pedidos y acompaña la entrega. También te asesoro para hacer crecer tu ecommerce.",
   alternates: { canonical: "https://www.juanarangoecommerce.com" },
-  openGraph: { title: "Juan Arango · NITRO ECOM", description: "Tu WhatsApp vende, confirma y hace seguimiento. Tú diriges.", url: "https://www.juanarangoecommerce.com", type: "website", locale: "es_CO" },
+  openGraph: {
+    images: [{ url: "/og-nitro.png", width: 1200, height: 630 }], title: "Juan Arango · NITRO ECOM", description: "Tu WhatsApp vende, confirma y hace seguimiento. Tú diriges.", url: "https://www.juanarangoecommerce.com", type: "website", locale: "es_CO" },
 };
 
 // Momentos donde hoy se pierde una venta que ya estaba empezada. Cada uno
@@ -48,7 +49,7 @@ export default function HomePage() {
               Tu WhatsApp vende, confirma y hace seguimiento. <span className="text-primary">Tú diriges.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/62 lg:mx-0">
-              Soy Juan Arango. Después de 15 años operando ecommerce en Latinoamérica construí <strong className="font-semibold text-white">Nitro Complete</strong>: un asesor con IA que atiende con tu catálogo real y un sistema que acompaña cada pedido hasta la entrega.
+              Soy Juan Arango. Después de 15 años operando ecommerce en Latinoamérica construí <strong className="font-semibold text-white">Nitro Complete</strong>: un asesor con IA que <strong className="nitro-hl">atiende con tu catálogo real</strong> y un sistema que <strong className="nitro-hl">acompaña cada pedido hasta la entrega</strong>.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <Button asChild size="lg" className="group h-13 rounded-full px-7 text-base font-bold"><Link href="/nitro-complete">Conocer Nitro Complete <ArrowRight className="nitro-cta-arrow" /></Link></Button>
