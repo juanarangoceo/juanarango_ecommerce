@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { LatestPostsSection } from "@/components/landing/latest-posts-section";
 import { NewsletterSection } from "@/components/commercial/newsletter-section";
 import { NitroCompletePreview } from "@/components/commercial/nitro-complete-preview";
-import { nitroCompleteModules, primaryCta, solutions } from "@/lib/commercial-content";
+import { primaryCta, solutions } from "@/lib/commercial-content";
+import { SalesCalculator } from "@/components/commercial/sales-calculator";
+import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
+import { ShopifyLogo } from "@/components/commercial/brand-logos";
 
 export const metadata: Metadata = {
   title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
@@ -51,7 +54,7 @@ export default function HomePage() {
               <Button asChild size="lg" className="group h-13 rounded-full px-7 text-base font-bold"><Link href="/nitro-complete">Conocer Nitro Complete <ArrowRight className="nitro-cta-arrow" /></Link></Button>
               <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href={primaryCta.href}>{primaryCta.label}</Link></Button>
             </div>
-            <p className="mt-5 text-xs text-white/40">Funciona con Shopify o sin tienda online · Implementación acompañada</p>
+            <p className="mt-5 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-white/45 lg:justify-start">Funciona con <ShopifyLogo className="size-3.5" /> <span className="font-semibold text-white/70">Shopify</span> o sin tienda online · Implementación acompañada</p>
           </div>
           <NitroCompletePreview />
         </div>
@@ -83,29 +86,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Nitro Complete: el sistema */}
-      <section className="relative px-5 py-20 lg:px-8 lg:py-28" id="nitro-complete" data-nitro-orb="ecosystem">
+      {/* Una venta completa en WhatsApp */}
+      <section className="relative px-5 py-20 lg:px-8 lg:py-28" id="nitro-complete" data-nitro-orb="conversation">
         <div className="relative mx-auto max-w-7xl">
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+          <div className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
             <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">
-              Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
+              Mira una venta completa <span className="text-primary">dentro de tu WhatsApp.</span>
             </h2>
             <div className="text-center lg:text-left">
-              <p className="mx-auto max-w-lg text-base leading-7 text-white/58 lg:mx-0">Cada parte trabaja en un momento distinto del pedido. Tu equipo entra cuando hace falta criterio y ve todo desde un solo panel.</p>
-              <Link href="/nitro-complete" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">Ver cómo funciona <ArrowRight className="size-4" /></Link>
+              <p className="mx-auto max-w-lg text-base leading-7 text-white/58 lg:mx-0">De la pregunta a las 10 p. m. hasta la entrega. Cada parte de Nitro Complete trabaja en su momento y tu equipo entra solo cuando hace falta.</p>
+              <Link href="/nitro-complete" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">Ver todo lo que incluye <ArrowRight className="size-4" /></Link>
             </div>
           </div>
-          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
-            {nitroCompleteModules.map(({ key, moment, title, text, icon: Icon }) => (
-              <article key={key} className="bg-background p-7 sm:p-8">
-                <span className="nitro-icon-mark flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary"><Icon className="nitro-icon-glyph size-5" /></span>
-                <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-white/40">{moment}</p>
-                <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/55">{text}</p>
-              </article>
-            ))}
-          </div>
-          <p className="mt-5 text-center text-xs leading-5 text-white/38 lg:text-left">Algunas funciones dependen de tu catálogo, de plantillas aprobadas por Meta o del permiso de tus compradores. Lo revisamos en la evaluación.</p>
+          <WhatsAppStory />
         </div>
       </section>
 
@@ -126,6 +119,17 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Calculadora */}
+      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="calculator">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Calcula lo que hoy <span className="text-nitro-text">se queda en el chat.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Mueve los valores con los datos de tu negocio. Verás cuántas conversaciones puedes delegar y cuántas ventas se pierden por no responder a tiempo.</p>
+          </div>
+          <SalesCalculator />
         </div>
       </section>
 

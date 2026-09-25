@@ -23,6 +23,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { nitroCompleteImplementation, nitroCompletePlans } from "@/lib/commercial-content";
+import { ShopifyLogo } from "@/components/commercial/brand-logos";
+import { WaTicks } from "@/components/commercial/whatsapp-ui";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -126,6 +128,7 @@ function ProductPreview() {
           <div className="space-y-3 border-b border-white/8 bg-[#0a0d0b] p-5 lg:border-b-0 lg:border-r">
             <div className="ml-auto max-w-[84%] rounded-2xl rounded-br-md bg-primary/12 px-4 py-3 text-sm text-white">
               Busco un vestido negro para una cena. ¿Qué me recomiendas?
+              <span className="ml-2 inline-flex translate-y-0.5 items-center gap-1 text-[10px] text-white/45">10:14 p. m. <WaTicks /></span>
             </div>
             <div className="max-w-[88%] rounded-2xl rounded-bl-md bg-white/[.07] px-4 py-3 text-sm leading-relaxed text-white/84">
               Tengo dos opciones disponibles. El Aurora es más formal y el Siena
@@ -133,6 +136,7 @@ function ProductPreview() {
             </div>
             <div className="ml-auto max-w-[84%] rounded-2xl rounded-br-md bg-primary/12 px-4 py-3 text-sm text-white">
               M. Quiero el Aurora, pago contraentrega.
+              <span className="ml-2 inline-flex translate-y-0.5 items-center gap-1 text-[10px] text-white/45">10:16 p. m. <WaTicks /></span>
             </div>
             <div className="max-w-[88%] rounded-2xl rounded-bl-md bg-white/[.07] px-4 py-3 text-sm leading-relaxed text-white/84">
               Perfecto. Ya verifiqué talla M y el total. Confírmame ciudad,
@@ -190,7 +194,7 @@ export default function NitroBotPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <section className="relative px-5 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-40">
+      <section className="relative px-5 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-40" data-nitro-orb="idle">
         <div className="absolute inset-0 bg-grid-white opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_75%)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,.84fr)_minmax(26rem,1fr)] lg:gap-16">
@@ -230,6 +234,7 @@ export default function NitroBotPage() {
       <section
         id="como-funciona"
         className="bg-ground px-5 py-20 text-ink sm:px-6 lg:py-28"
+        data-nitro-orb="flow"
       >
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
@@ -363,7 +368,7 @@ export default function NitroBotPage() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="group rounded-2xl border border-primary/24 bg-primary/7 p-6 text-white">
-              <span className="nitro-icon-mark flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary"><Store className="nitro-icon-glyph h-5 w-5" /></span>
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/[.06]"><ShopifyLogo className="size-6" /></span>
               <h3 className="mt-5 text-xl font-bold">Shopify</h3>
               <p className="mt-2 text-sm leading-relaxed text-white/52">
                 Sincroniza productos y deja los pedidos creados en la tienda.
@@ -380,7 +385,7 @@ export default function NitroBotPage() {
         </div>
       </section>
 
-      <section id="planes" className="px-5 py-20 sm:px-6 lg:py-28">
+      <section id="planes" className="px-5 py-20 sm:px-6 lg:py-28" data-nitro-orb="pricing">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-6xl">
@@ -397,7 +402,7 @@ export default function NitroBotPage() {
         </div>
       </section>
 
-      <section className="border-y border-white/8 bg-white/[.018] px-5 py-20 sm:px-6 lg:py-28">
+      <section className="border-y border-white/8 bg-white/[.018] px-5 py-20 sm:px-6 lg:py-28" data-nitro-orb="faq">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.75fr_1.25fr]">
           <div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
@@ -427,7 +432,7 @@ export default function NitroBotPage() {
         </div>
       </section>
 
-      <section className="px-5 py-24 sm:px-6 lg:py-32">
+      <section className="px-5 py-24 sm:px-6 lg:py-32" data-nitro-orb="diagnostic">
         <div className="mx-auto max-w-5xl rounded-[36px] border border-primary/20 bg-[radial-gradient(circle_at_top_right,rgba(183,255,42,.14),transparent_38%),#0d110e] px-6 py-16 text-center sm:px-12">
           <h2 className="mx-auto max-w-3xl font-display text-4xl font-bold tracking-tight sm:text-6xl">
             Primero comprobamos <span className="text-primary">si encaja.</span>

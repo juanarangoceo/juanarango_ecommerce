@@ -2,7 +2,23 @@
 
 import { useEffect, useRef } from "react";
 
-export type PixelSphereShape = "orb" | "pulse" | "wink" | "network" | "chat" | "spark" | "close";
+export type PixelSphereShape =
+  | "orb"
+  | "pulse"
+  | "wink"
+  | "network"
+  | "chat"
+  | "spark"
+  | "close"
+  | "typing"
+  | "ticks"
+  | "bars"
+  | "question"
+  | "eyes"
+  | "sleep";
+
+/** Desplazamiento normalizado (-1..1) hacia el puntero, para la forma `eyes`. */
+export type LookTarget = { x: number; y: number };
 
 type Point = { x: number; y: number; alpha?: number };
 type Particle = Point & { alpha: number; velocityX: number; velocityY: number };
@@ -115,6 +131,80 @@ function makeClose(): Point[] {
   return points;
 }
 
+// Tres puntos de «escribiendo…». El rebote se aplica al dibujar.
+function makeTyping(): Point[] {
+  const points: Point[] = [];
+  [28, 44, 60].forEach((cx) => {
+    for (let y = -1; y <= 1; y += 1) {
+      for (let x = -1; x <= 1; x += 1) points.push({ x: cx + x * 3.6, y: 46 + y * 3.6, alpha: x === 0 && y === 0 ? 1 : 0.8 });
+    }
+  });
+  return points;
+}
+
+// Doble check de WhatsApp.
+function makeTicks(): Point[] {
+  const points: Point[] = [];
+  addLine(points, { x: 16, y: 46 }, { x: 27, y: 57 }, 4);
+  addLine(points, { x: 27, y: 57 }, { x: 50, y: 31 }, 8);
+  addLine(points, { x: 36, y: 53 }, { x: 40, y: 57 }, 2);
+  addLine(points, { x: 40, y: 57 }, { x: 70, y: 31 }, 9);
+  return points;
+}
+
+// Barras que crecen: la calculadora.
+function makeBars(): Point[] {
+  const points: Point[] = [];
+  [[24, 3], [36, 5], [48, 7], [60, 9]].forEach(([x, height]) => {
+    for (let row = 0; row < height; row += 1) {
+      points.push({ x: x - 2, y: 66 - row * 5 }, { x: x + 2.5, y: 66 - row * 5, alpha: 0.75 });
+    }
+  });
+  return points;
+}
+
+function makeQuestion(): Point[] {
+  const points: Point[] = [];
+  for (let step = 0; step <= 12; step += 1) {
+    const angle = Math.PI * 1.05 + (step / 12) * Math.PI * 1.45;
+    points.push({ x: 44 + Math.cos(angle) * 12, y: 32 + Math.sin(angle) * 12 });
+  }
+  addLine(points, { x: 47, y: 43 }, { x: 44, y: 49 }, 2);
+  addLine(points, { x: 44, y: 49 }, { x: 44, y: 55 }, 2);
+  points.push({ x: 44, y: 65 }, { x: 47.5, y: 65, alpha: 0.7 }, { x: 44, y: 68.5, alpha: 0.7 });
+  return points;
+}
+
+// Dos ojos. Las pupilas (los últimos 8 puntos) se desplazan hacia el puntero.
+const EYE_CENTERS = [{ x: 30, y: 44 }, { x: 58, y: 44 }] as const;
+function makeEyes(): Point[] {
+  const points: Point[] = [];
+  EYE_CENTERS.forEach((center) => {
+    for (let step = 0; step < 14; step += 1) {
+      const angle = (step / 14) * Math.PI * 2;
+      points.push({ x: center.x + Math.cos(angle) * 11, y: center.y + Math.sin(angle) * 13, alpha: 0.6 });
+    }
+  });
+  EYE_CENTERS.forEach((center) => {
+    for (let y = 0; y <= 1; y += 1) {
+      for (let x = 0; x <= 1; x += 1) points.push({ x: center.x - 1.7 + x * 3.4, y: center.y - 1.7 + y * 3.4 });
+    }
+  });
+  return points;
+}
+const EYE_PUPIL_COUNT = 8;
+
+// Esfera pequeña y tenue con una «z»: el asistente descansa.
+function makeSleep(): Point[] {
+  const points: Point[] = makeOrb()
+    .filter((_, index) => index % 2 === 0)
+    .map((point) => ({ x: 40 + (point.x - 44) * 0.62, y: 50 + (point.y - 44) * 0.62, alpha: (point.alpha ?? 1) * 0.45 }));
+  addLine(points, { x: 58, y: 18 }, { x: 68, y: 18 }, 3);
+  addLine(points, { x: 68, y: 18 }, { x: 58, y: 28 }, 3);
+  addLine(points, { x: 58, y: 28 }, { x: 68, y: 28 }, 3);
+  return points;
+}
+
 const ORB_POINTS = makeOrb();
 const SHAPES: Record<PixelSphereShape, Point[]> = {
   orb: ORB_POINTS,
@@ -124,9 +214,27 @@ const SHAPES: Record<PixelSphereShape, Point[]> = {
   chat: makeChat(),
   spark: makeSpark(),
   close: makeClose(),
+  typing: makeTyping(),
+  ticks: makeTicks(),
+  bars: makeBars(),
+  question: makeQuestion(),
+  eyes: makeEyes(),
+  sleep: makeSleep(),
 };
 
-export function PixelSphere({ shape, className = "" }: { shape: PixelSphereShape; className?: string }) {
+// Formas que se animan por sí mismas o que descansan: no necesitan 60 FPS
+// salvo durante la transformación.
+const CALM_SHAPES = new Set<PixelSphereShape>(["orb", "sleep"]);
+
+export function PixelSphere({
+  shape,
+  className = "",
+  lookRef,
+}: {
+  shape: PixelSphereShape;
+  className?: string;
+  lookRef?: React.RefObject<LookTarget | null>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shapeRef = useRef(shape);
   const redrawRef = useRef<(() => void) | null>(null);
@@ -166,8 +274,11 @@ export function PixelSphere({ shape, className = "" }: { shape: PixelSphereShape
     const draw = (time: number) => {
       const scale = width / SIZE;
       const targets = SHAPES[shapeRef.current];
-      const isOrb = shapeRef.current === "orb";
+      const current = shapeRef.current;
+      const isOrb = current === "orb";
       const pulse = reducedMotion.matches || !isOrb ? 1 : 1 + Math.sin(time / 720) * 0.035;
+      const look = lookRef?.current;
+      const pupilStart = targets.length - EYE_PUPIL_COUNT;
       const morphElapsed = time - morphStartedRef.current;
       // El paso de integración se escala con el tiempo real entre fotogramas
       // para que el reposo a 26 FPS conserve el mismo ritmo que a 60 FPS.
@@ -178,8 +289,19 @@ export function PixelSphere({ shape, className = "" }: { shape: PixelSphereShape
       particles.forEach((particle, index) => {
         const hasTarget = index < targets.length;
         const target = targets[index % targets.length];
-        const targetX = 44 + (target.x - 44) * pulse;
-        const targetY = 44 + (target.y - 44) * pulse;
+        let targetX = 44 + (target.x - 44) * pulse;
+        let targetY = 44 + (target.y - 44) * pulse;
+        if (hasTarget && !reducedMotion.matches) {
+          if (current === "typing") {
+            // Cada punto rebota con un desfase, como en WhatsApp.
+            targetY -= Math.max(0, Math.sin(time / 170 - Math.floor(index / 9) * 0.9)) * 6;
+          } else if (current === "eyes" && look && index >= pupilStart) {
+            targetX += look.x * 5.5;
+            targetY += look.y * 6.5;
+          } else if (current === "sleep") {
+            targetY += Math.sin(time / 1400) * 1.2;
+          }
+        }
         const targetAlpha = hasTarget ? (target.alpha ?? 1) : 0;
         const stagger = (index * 47) % 320;
 
@@ -213,7 +335,7 @@ export function PixelSphere({ shape, className = "" }: { shape: PixelSphereShape
 
     // En reposo saltamos fotogramas; durante una transformación dibujamos todos.
     const loop = (time: number) => {
-      const morphing = shapeRef.current !== "orb" || time - morphStartedRef.current < MORPH_DURATION;
+      const morphing = !CALM_SHAPES.has(shapeRef.current) || time - morphStartedRef.current < MORPH_DURATION;
       if (!morphing && lastDrawn && time - lastDrawn < IDLE_FRAME_MS) {
         frameId = window.requestAnimationFrame(loop);
         return;
@@ -258,7 +380,7 @@ export function PixelSphere({ shape, className = "" }: { shape: PixelSphereShape
       observer.disconnect();
       redrawRef.current = null;
     };
-  }, []);
+  }, [lookRef]);
 
   return <canvas ref={canvasRef} data-shape={shape} className={`block size-full ${className}`} aria-hidden="true" />;
 }

@@ -1,67 +1,88 @@
-import { Check, Clock3, PackageCheck, Truck } from "lucide-react";
+"use client";
 
-// Vista ilustrativa de Nitro Complete. Replica la jerarquía real del panel
-// (lo vendido en tinta, lo que espera en naranja, el resto como contexto),
-// pero sus cifras son de ejemplo y así se rotula.
-const timeline = [
-  { icon: Check, label: "Pedido creado", detail: "Morral Nómada 30L · contraentrega", done: true },
-  { icon: PackageCheck, label: "Confirmado por el comprador", detail: "Respondió con el botón «Confirmar»", done: true },
-  { icon: Truck, label: "Despachado", detail: "Guía compartida por WhatsApp", done: true },
-  { icon: Clock3, label: "Entrega", detail: "Preguntaremos si llegó", done: false },
+import { CheckCheck, Moon, PackageCheck } from "lucide-react";
+import { WhatsAppLogo } from "@/components/commercial/brand-logos";
+import { WaBubble, WaPhone, WaTyping, useChatPlayback, type WaMessage } from "@/components/commercial/whatsapp-ui";
+
+// Conversación ilustrativa del hero: una venta real de principio a fin en
+// WhatsApp, y al lado lo que queda registrado en el panel. Solo muestra
+// capacidades de la ficha de producto (catálogo, pedido, confirmación).
+const script: readonly WaMessage[] = [
+  { id: "d1", from: "system", text: "Hoy" },
+  { id: "q", from: "buyer", text: "Hola 👋 ¿tienen el morral Nómada en negro? ¿Cuánto con envío a Pereira?", time: "10:14 p. m." },
+  {
+    id: "a",
+    from: "business",
+    text: "¡Sí! Lo tenemos en negro. Con envío a Pereira queda en $189.900 y pagas contraentrega. ¿Te lo separo?",
+    time: "10:14 p. m.",
+    product: { name: "Morral Nómada 30L", detail: "Negro · disponible", price: "$169.900 + envío" },
+  },
+  { id: "b", from: "buyer", text: "Sí, de una. Lo recibe Laura, Cra 8 #21-40", time: "10:16 p. m." },
+  { id: "c", from: "business", text: "Listo, Laura. Tu pedido quedó creado. Mañana te pido confirmarlo antes del despacho.", time: "10:16 p. m." },
+  { id: "d2", from: "system", text: "Mañana" },
+  { id: "e", from: "business", text: "Hola Laura, ¿confirmas tu pedido del morral Nómada por $189.900?", time: "9:02 a. m.", buttons: ["Confirmar pedido", "Cambiar algo"] },
+  { id: "f", from: "buyer", text: "Confirmar pedido", time: "9:05 a. m." },
+  { id: "g", from: "business", text: "¡Confirmado! Te escribo con la guía apenas salga.", time: "9:05 a. m." },
+];
+
+const events = [
+  { at: 3, icon: Moon, title: "Respondió a las 10:14 p. m.", detail: "Fuera de horario, con tu catálogo" },
+  { at: 5, icon: PackageCheck, title: "Pedido #1043 creado", detail: "Datos de entrega completos" },
+  { at: 8, icon: CheckCheck, title: "Confirmado por el comprador", detail: "Listo para despachar" },
 ] as const;
 
 export function NitroCompletePreview({ className = "" }: { className?: string }) {
+  const { containerRef, visible, typing } = useChatPlayback(script.length, {
+    startAt: 3,
+    isBusiness: (index) => script[index]?.from === "business",
+  });
+  const shown = script.slice(0, visible);
+
   return (
-    <figure className={`relative mx-auto w-full max-w-xl ${className}`} aria-label="Vista ilustrativa del panel de Nitro Complete">
+    <figure ref={containerRef} className={`relative mx-auto w-full max-w-xl ${className}`} aria-label="Conversación ilustrativa de Nitro Complete en WhatsApp">
       <div className="pointer-events-none absolute -inset-10 rounded-full bg-primary/[0.08] blur-[90px]" aria-hidden="true" />
 
-      <div className="relative overflow-hidden rounded-[1.75rem] border border-line bg-ground text-ink shadow-[0_40px_120px_rgba(0,0,0,0.45)]">
-        <div className="flex items-center justify-between border-b border-line bg-white px-5 py-3.5">
-          <div className="flex items-center gap-2.5">
-            <span className="flex size-7 items-center justify-center rounded-lg bg-ink text-[11px] font-black text-primary">N</span>
-            <span className="text-sm font-semibold">Nitro Complete</span>
+      <div className="relative grid items-center gap-4 sm:grid-cols-[minmax(0,1fr)_12.5rem]">
+        <WaPhone storeName="Tienda Nómada" status={typing ? "escribiendo…" : "en línea"} className="mx-auto w-full max-w-[22rem]">
+          <div className="flex h-[22rem] flex-col justify-end sm:h-[25rem] gap-1.5 overflow-hidden px-2.5 py-3" aria-live="polite">
+            {shown.map((message) => (
+              <div key={message.id} className="wa-enter">
+                <WaBubble message={message} />
+              </div>
+            ))}
+            {typing ? <WaTyping /> : null}
           </div>
-          <span className="rounded-full bg-alert px-2.5 py-1 text-[11px] font-bold text-ink">2 te esperan</span>
-        </div>
+        </WaPhone>
 
-        <div className="grid gap-3 p-4 sm:grid-cols-[1.05fr_.95fr] sm:p-5">
-          <div className="rounded-2xl bg-ink p-5 text-white">
-            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/50">Tu asesor vendió hoy</p>
-            <p className="mt-2 text-[34px] font-extrabold leading-none tracking-tight text-primary tabular-nums">$1.284.000</p>
-            <p className="mt-2 text-xs text-white/55">7 pedidos · 3 fuera de horario</p>
-            <div className="mt-5 flex h-10 items-end gap-1.5" aria-hidden="true">
-              {[35, 52, 40, 68, 58, 82, 74].map((h, i) => (
-                <span key={i} className="flex-1 rounded-sm bg-primary/80" style={{ height: `${h}%`, opacity: 0.35 + i * 0.09 }} />
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-2.5">
-            <div className="rounded-2xl rounded-tr-md bg-white p-3 text-[13px] leading-snug shadow-sm ring-1 ring-line">
-              ¿Tienen el morral Nómada en negro? ¿Cuánto vale con envío a Pereira?
-            </div>
-            <div className="ml-4 rounded-2xl rounded-tl-md bg-[#E9F9D2] p-3 text-[13px] leading-snug ring-1 ring-[#d5efb0]">
-              Sí, está disponible en negro. Con envío a Pereira queda en <b>$189.900</b>. ¿Te lo separo?
-            </div>
-            <div className="rounded-xl border border-alert/30 bg-alert-soft px-3 py-2 text-[12px] font-medium text-alert-text">
-              Un comprador pide cambio de talla · pasa a tu equipo
-            </div>
-          </div>
-        </div>
-
-        <ol className="mx-4 mb-4 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:mx-5 sm:mb-5 sm:grid-cols-4">
-          {timeline.map(({ icon: Icon, label, detail, done }) => (
-            <li key={label} className="bg-white p-3">
-              <span className={`flex size-6 items-center justify-center rounded-full ${done ? "bg-primary text-ink" : "bg-ground text-ink/40 ring-1 ring-line"}`}>
-                <Icon className="size-3.5" aria-hidden="true" />
-              </span>
-              <p className="mt-2 text-[12px] font-semibold leading-tight">{label}</p>
-              <p className="mt-1 text-[11px] leading-snug text-ink/50">{detail}</p>
-            </li>
-          ))}
+        <ol className="grid gap-2.5 sm:gap-3" aria-label="Lo que registra el panel">
+          <li className="mb-1 hidden items-center gap-2 text-xs font-semibold text-white/60 sm:flex">
+            <span className="size-1.5 animate-pulse rounded-full bg-primary" aria-hidden="true" />
+            En tu panel Nitro
+          </li>
+          {events.map(({ at, icon: Icon, title, detail }) => {
+            const done = visible >= at;
+            return (
+              <li
+                key={title}
+                className={`flex gap-3 rounded-2xl border p-3 transition-all duration-500 ${done ? "border-primary/30 bg-[#111611] opacity-100" : "border-white/8 bg-white/[.02] opacity-40"}`}
+              >
+                <span className={`flex size-7 shrink-0 items-center justify-center rounded-full transition-colors duration-500 ${done ? "bg-primary text-ink" : "bg-white/8 text-white/40"}`}>
+                  <Icon className="size-3.5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[12.5px] font-semibold leading-tight text-white">{title}</span>
+                  <span className="mt-0.5 block text-[11px] leading-snug text-white/50">{detail}</span>
+                </span>
+              </li>
+            );
+          })}
         </ol>
       </div>
-      <figcaption className="mt-3 text-center text-[11px] text-white/35">Vista ilustrativa · cifras de ejemplo</figcaption>
+
+      <figcaption className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
+        <WhatsAppLogo className="size-3.5" />
+        Conversación ilustrativa en WhatsApp Business
+      </figcaption>
     </figure>
   );
 }

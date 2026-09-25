@@ -118,7 +118,17 @@ de CLI como camino alternativo sin una decisión explícita.
 fallback `admin/admin` si faltan `AUDIO_GEN_USER` y `AUDIO_GEN_PASSWORD`. Esas
 variables son obligatorias en producción; no tratar el fallback como seguro.
 
-## Estado actual — 24 de septiembre de 2026
+## Estado actual — 25 de septiembre de 2026
+
+**La reconstrucción ya está en producción.** `codex/reconstruccion-web` se
+fusionó por avance rápido en `master` y Vercel sirve juanarangoecommerce.com
+desde ahí. La carpeta principal `/home/juan/juanarangoecommerce` vuelve a ser
+el lugar de trabajo (en `master`); `/home/juan/juanarangoecommerce-reconstruccion`
+queda como copia prescindible. Las notas siguientes, incluidas las de «Contexto
+previo», describen decisiones de diseño vigentes; donde hablen de «sin commit ni
+despliegue» están superadas.
+
+### 24 de septiembre de 2026
 
 **Nitro Complete es el producto principal del sitio.** La home y el header
 llevan a `/nitro-complete` y al calificador `/nitrobot/conectar`; consultoría

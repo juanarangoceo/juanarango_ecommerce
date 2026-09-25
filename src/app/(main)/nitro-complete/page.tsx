@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Check, Clock3, Hand, LayoutTemplate, Megaphone, Radar, ShieldCheck, ShoppingBag, SlidersHorizontal, Store } from "lucide-react";
+import { ArrowRight, Check, Clock3, Hand, LayoutTemplate, Megaphone, Radar, ShieldCheck, SlidersHorizontal, Store } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { NitroCompletePreview } from "@/components/commercial/nitro-complete-preview";
+import { SalesCalculator } from "@/components/commercial/sales-calculator";
+import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
+import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
 import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, primaryCta } from "@/lib/commercial-content";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
@@ -86,7 +89,7 @@ export default function NitroCompletePage() {
         <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
         <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
-            <p className="text-sm font-semibold text-white">Nitro Complete</p>
+            <p className="inline-flex items-center gap-2 text-sm font-semibold text-white"><WhatsAppLogo className="size-4" />Nitro Complete para WhatsApp</p>
             <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.8vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white">
               Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
             </h1>
@@ -126,8 +129,19 @@ export default function NitroCompletePage() {
         </div>
       </section>
 
+      {/* Una venta completa */}
+      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="conversation">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Así se ve <span className="text-primary">en el chat de tu cliente.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Elige un momento de la venta o deja que la conversación avance sola.</p>
+          </div>
+          <WhatsAppStory />
+        </div>
+      </section>
+
       {/* Control */}
-      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
+      <section className="border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
           <div className="text-center lg:text-left">
             <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Automatiza lo repetitivo. <span className="text-primary">Conserva el mando.</span></h2>
@@ -153,7 +167,7 @@ export default function NitroCompletePage() {
             <p className="mx-auto mt-4 max-w-md text-base leading-7 text-white/55 lg:mx-0">En ambos casos el asesor consulta información real antes de responder y el pedido queda registrado.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <article className="rounded-2xl border border-white/10 bg-background p-6"><ShoppingBag className="size-5 text-primary" /><h3 className="mt-4 text-lg font-semibold text-white">Con Shopify</h3><p className="mt-2 text-sm leading-6 text-white/52">Sincroniza productos y crea los pedidos directamente en tu tienda.</p></article>
+            <article className="rounded-2xl border border-white/10 bg-background p-6"><ShopifyLogo className="size-6" /><h3 className="mt-4 text-lg font-semibold text-white">Con Shopify</h3><p className="mt-2 text-sm leading-6 text-white/52">Sincroniza productos y crea los pedidos directamente en tu tienda.</p></article>
             <article className="rounded-2xl border border-white/10 bg-background p-6"><Store className="size-5 text-primary" /><h3 className="mt-4 text-lg font-semibold text-white">Sin tienda online</h3><p className="mt-2 text-sm leading-6 text-white/52">Sube tu catálogo a Nitro y gestiona los pedidos desde el panel.</p></article>
           </div>
         </div>
@@ -175,8 +189,19 @@ export default function NitroCompletePage() {
         </div>
       </section>
 
+      {/* Calculadora */}
+      <section className="border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="calculator">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Calcula lo que hoy <span className="text-primary">se queda en el chat.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Con los datos de tu negocio: conversaciones que puedes delegar, horas que liberas y ventas que se pierden por no responder a tiempo.</p>
+          </div>
+          <SalesCalculator />
+        </div>
+      </section>
+
       {/* Planes */}
-      <section id="planes" className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="diagnostic">
+      <section id="planes" className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="pricing">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Elige capacidad, <span className="text-nitro-text">no funciones recortadas.</span></h2>
@@ -212,7 +237,7 @@ export default function NitroCompletePage() {
       </section>
 
       {/* FAQ */}
-      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="content">
+      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="faq">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
           <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Lo que conviene aclarar antes de conectarlo.</h2>
           <Accordion type="single" collapsible className="border-t border-white/10">

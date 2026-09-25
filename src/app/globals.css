@@ -630,3 +630,13 @@ body {
 body > .skiptranslate {
   display: none !important;
 }
+
+/* Entrada de mensajes en las conversaciones ilustrativas de WhatsApp. */
+@keyframes wa-enter {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+.wa-enter { animation: wa-enter .32s cubic-bezier(.22, 1, .36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .wa-enter { animation: none; }
+}

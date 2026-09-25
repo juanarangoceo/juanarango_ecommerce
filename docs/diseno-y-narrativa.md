@@ -192,14 +192,32 @@ Patrones actuales:
 - `CommercialRouteVisual`: recorrido Tráfico → Conversación → Venta ligado al
   scroll y representado por un punto verde, no por el rayo de marca.
 - `PixelSphere`: esfera de píxeles dibujada en `canvas`. El orbe es su estado
-  base; los gestos contextuales son temporales y siempre regresan a él. Usa
-  resorte, inercia y desfase entre partículas para que la forma se descubra
-  progresivamente. El scroll produce un latido circular dentro de la silueta;
-  hover o foco produce un guiño; soluciones, diagnóstico y contenido pueden
-  mostrar red, diálogo o chispa. Al abrir el panel forma una `X`.
-- `ChatWidget`: panel orientador cargado de forma diferida. Enlaza únicamente a
-  rutas reales y no debe simular una conversación ni un envío si no existe un
-  backend conectado.
+  base; los gestos son temporales y siempre regresan a él. Estados: latido
+  (`pulse`) al hacer scroll, guiño (`wink`) en hover o foco, ojos que siguen al
+  puntero (`eyes`) cuando el ratón se acerca, `typing` antes de un mensaje
+  proactivo, `sleep` tras 25 s sin actividad, `X` con el panel abierto y formas
+  de contexto por sección: red, diálogo, chispa, doble check (`ticks`) en
+  conversaciones, barras (`bars`) en la calculadora e interrogante (`question`)
+  en FAQ. Las secciones se marcan con `data-nitro-orb`.
+- `ChatWidget` (Guía Nitro): panel cargado de forma diferida con respuestas
+  guiadas y predefinidas, rotulado como tal. Burbujas estilo WhatsApp, indicador
+  «escribiendo…» y enlaces solo a rutas reales; no simula una IA ni envía datos.
+  En `pricing` y `faq` puede mostrar como máximo dos mensajes proactivos por
+  página (uno por contexto y sesión) con punto naranja de no leído.
+- `NitroCompletePreview`: hero con una conversación ilustrativa de WhatsApp que
+  se reproduce sola y, al lado, lo que registra el panel. Sustituye a la tarjeta
+  de «valor vendido», que no se entendía.
+- `WhatsAppStory`: venta completa en cinco capítulos (asesor, pedido,
+  confirmación, postventa y caso para el equipo). Avanza sola o por clic.
+- `whatsapp-ui.tsx`: teléfono, burbujas, tarjeta de producto, botones de
+  respuesta y `WaTicks`. Todo mensaje enviado por el negocio lleva el doble check
+  de WhatsApp.
+- `SalesCalculator`: estima conversaciones delegables, horas liberadas y ventas
+  que se pierden fuera de horario. Solo usa datos del visitante y supuestos
+  visibles y editables; nunca resultados de clientes. Nitro Bot tiene
+  mediciones reales, pero su propio diagnóstico aclara que no prueban uplift.
+- `brand-logos.tsx`: logotipos de WhatsApp y Shopify (Simple Icons) para indicar
+  compatibilidad, en su color oficial y sin combinarlos con la marca Nitro.
 - `NewsletterSection`: bloque editorial estable de la home. Presenta una idea
   por envío, reutiliza el flujo real de suscripción y enlaza la Política de
   Privacidad; no debe convertirse en un popup invasivo ni prometer una
@@ -222,8 +240,8 @@ técnico de Resend se trata por separado: no debe cambiarse a una dirección de
 Gmail sin verificar antes las restricciones del proveedor y el dominio de
 envío.
 
-`CommercialRouteVisual` y `PixelSphere` continúan **pendientes de confirmación
-visual final** en los dispositivos del usuario. Ambos pasaron pruebas
+`CommercialRouteVisual` y los nuevos estados de `PixelSphere` continúan
+**pendientes de confirmación visual final** en los dispositivos del usuario. Ambos pasaron pruebas
 automatizadas en escritorio y móvil, pero no deben reutilizarse en otras páginas
 hasta confirmar su percepción, ritmo y consumo en hardware real.
 
