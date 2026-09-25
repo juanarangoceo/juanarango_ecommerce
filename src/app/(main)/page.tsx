@@ -21,7 +21,7 @@ const gaps = [
   { pain: "Escribe a las 10 p. m.", text: "Nadie responde hasta el día siguiente y el cliente compra en otra tienda.", fix: "El asesor responde con tu catálogo, a cualquier hora." },
   { pain: "Pide contraentrega", text: "Despachas sin confirmar y el pedido vuelve con el flete pagado.", fix: "El comprador confirma con un botón antes del despacho." },
   { pain: "Pregunta dónde va su pedido", text: "Tu equipo pasa la tarde copiando guías en chats.", fix: "Aviso de despacho, guía y pregunta de entrega automáticos." },
-  { pain: "Dice «luego te confirmo»", text: "La cotización queda en el chat y nadie vuelve a escribir.", fix: "Seguimiento y, con permiso, un segundo intento medido." },
+  { pain: "Dice “luego te confirmo”", text: "La cotización queda en el chat y nadie vuelve a escribir.", fix: "Seguimiento y, con permiso, un segundo intento medido." },
 ] as const;
 
 const steps = [
@@ -65,7 +65,7 @@ export default function HomePage() {
               La venta no termina cuando el cliente <span className="text-alert-text">te escribe.</span>
             </h2>
             <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">
-              La mayoría de las ventas por WhatsApp no se pierden por falta de tráfico, sino en lo que pasa después del primer mensaje. Nitro Complete cubre esos momentos.
+              Muchas ventas por WhatsApp no se pierden por falta de tráfico, sino en lo que pasa después del primer mensaje. Nitro Complete cubre esos momentos.
             </p>
           </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

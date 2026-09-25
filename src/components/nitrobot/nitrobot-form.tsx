@@ -147,12 +147,12 @@ function ChoiceCards({
           type="button"
           onClick={() => onChange(id)}
           aria-pressed={value === id}
-          className={`flex min-h-12 items-center rounded-xl border px-4 py-3 text-left text-sm font-medium transition ${value === id ? "border-emerald-400 bg-emerald-400/10 text-white shadow-[0_0_24px_rgba(52,211,153,.08)]" : "border-white/10 bg-white/[.035] text-white/78 hover:border-white/25 hover:bg-white/[.06]"}`}
+          className={`flex min-h-12 items-center rounded-xl border px-4 py-3 text-left text-sm font-medium transition ${value === id ? "border-primary bg-primary/10 text-white shadow-[0_0_24px_rgba(52,211,153,.08)]" : "border-white/10 bg-white/[.035] text-white/78 hover:border-white/25 hover:bg-white/[.06]"}`}
         >
           <span>{label}</span>
           {value === id && (
             <Check
-              className="ml-auto h-4 w-4 text-emerald-400"
+              className="ml-auto h-4 w-4 text-primary"
               aria-hidden="true"
             />
           )}
@@ -244,7 +244,7 @@ export function NitroBotForm({
   }
 
   const inputClass =
-    "min-h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-base text-white outline-none transition placeholder:text-zinc-600 focus:border-emerald-400/70 focus:ring-2 focus:ring-emerald-400/10";
+    "min-h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-base text-white outline-none transition placeholder:text-zinc-600 focus:border-primary/70 focus:ring-2 focus:ring-primary/10";
   const backButton = (
     <button
       type="button"
@@ -263,7 +263,7 @@ export function NitroBotForm({
       type="button"
       onClick={next}
       disabled={disabled}
-      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-black transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-35"
+      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-black transition hover:bg-[#c8ff5a] disabled:cursor-not-allowed disabled:opacity-35"
     >
       Continuar
       <ArrowRight className="h-4 w-4" />
@@ -279,7 +279,7 @@ export function NitroBotForm({
   const steps = [
     <section key="business" className="space-y-6">
       <header>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-primary">
           Tu negocio
         </p>
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
@@ -321,7 +321,7 @@ export function NitroBotForm({
     </section>,
     <section key="demand" className="space-y-6">
       <header>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-primary">
           Demanda
         </p>
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
@@ -354,7 +354,7 @@ export function NitroBotForm({
     </section>,
     <section key="operation" className="space-y-6">
       <header>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-primary">
           Operación
         </p>
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
@@ -397,7 +397,7 @@ export function NitroBotForm({
     </section>,
     <section key="readiness" className="space-y-6">
       <header>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-primary">
           Preparación
         </p>
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
@@ -439,7 +439,7 @@ export function NitroBotForm({
     </section>,
     <section key="contact" className="space-y-6">
       <header>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[.22em] text-primary">
           Resultado
         </p>
         <h3 className="text-2xl font-bold text-white sm:text-3xl">
@@ -508,7 +508,7 @@ export function NitroBotForm({
           type="checkbox"
           checked={form.consent}
           onChange={(e) => change("consent", e.target.checked)}
-          className="mt-1 h-4 w-4 accent-emerald-400"
+          className="mt-1 h-4 w-4 accent-primary"
         />
         <span>
           Autorizo a Juan Arango / Nitro Ecom a tratar estos datos para evaluar
@@ -543,7 +543,7 @@ export function NitroBotForm({
             form.phone.replace(/\D/g, "").length < 8 ||
             !form.consent
           }
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-emerald-400 px-6 text-sm font-black text-emerald-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-35"
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-black text-ink transition hover:bg-[#c8ff5a] disabled:cursor-not-allowed disabled:opacity-35"
         >
           {loading ? (
             <>
@@ -569,14 +569,14 @@ export function NitroBotForm({
   const copy = status ? qualificationCopy[status] : null;
   const success = (
     <section className="py-5 text-center">
-      <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-400/10 ring-1 ring-emerald-400/25">
+      <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10 ring-1 ring-primary/25">
         {delivery === "queued" ? (
-          <Clock3 className="h-9 w-9 text-emerald-400" />
+          <Clock3 className="h-9 w-9 text-primary" />
         ) : (
-          <ShieldCheck className="h-9 w-9 text-emerald-400" />
+          <ShieldCheck className="h-9 w-9 text-primary" />
         )}
       </div>
-      <p className="text-xs font-bold uppercase tracking-[.22em] text-emerald-400">
+      <p className="text-xs font-bold uppercase tracking-[.22em] text-primary">
         {delivery === "queued" ? "Solicitud recibida" : copy?.eyebrow}
       </p>
       <h3 className="mx-auto mt-3 max-w-xl text-3xl font-black tracking-tight text-white sm:text-4xl">
@@ -606,7 +606,7 @@ export function NitroBotForm({
         </div>
       )}
       <div className="mt-7 flex items-center justify-center gap-2 text-sm text-white/45">
-        <MessageCircle className="h-4 w-4 text-emerald-400" />
+        <MessageCircle className="h-4 w-4 text-primary" />
         El siguiente contacto será personalmente por WhatsApp.
       </div>
     </section>
@@ -629,7 +629,7 @@ export function NitroBotForm({
         {Array.from({ length: TOTAL_STEPS }).map((_, index) => (
           <span
             key={index}
-            className={`h-1 min-w-0 flex-1 rounded-full transition-colors ${index <= step ? "bg-emerald-400" : "bg-white/10"}`}
+            className={`h-1 min-w-0 flex-1 rounded-full transition-colors ${index <= step ? "bg-primary" : "bg-white/10"}`}
           />
         ))}
       </div>

@@ -1,15 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Code2, Rocket, Terminal } from "lucide-react";
+import { ArrowRight, Check, Handshake, Layers3, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConversionCta } from "@/components/commercial/conversion-cta";
 
 const JUAN_PHOTO = "https://res.cloudinary.com/dohwyszdj/image/upload/f_auto,q_auto,w_800/v1781237424/Juan_arango_Ecommerce_r96gjj.png";
 
-const experiences = [
-  { icon: Terminal, title: "Ecommerce y marketing en Latinoamérica", text: "Quince años trabajando entre operación, adquisición, conversión y tecnología aplicada.", signal: "Experiencia entre negocio y tecnología" },
-  { icon: Rocket, title: "Acompañamiento de principio a fin", text: "Entendemos el problema, construimos la solución y la dejamos funcionando con tu equipo.", signal: "Del diagnóstico a la transferencia" },
-  { icon: Code2, title: "NITRO ECOM como estructura de implementación", text: "Estrategia, automatización e infraestructura conectadas alrededor de una necesidad real.", signal: "Dirección, construcción y documentación" },
+// Solo hechos que el sitio ya declara (home y ficha): no añadir cifras ni clientes.
+const track = [
+  "Ventas en marketplaces",
+  "Marcas propias lanzadas",
+  "Tiendas montadas para otros negocios",
+  "Desde Pereira, para Colombia y Latinoamérica",
+] as const;
+
+const principles = [
+  { icon: Store, title: "Primero la operación", text: "Entiendo cómo vendes, despachas y atiendes hoy antes de proponer una herramienta.", signal: "Si no encaja, te lo digo antes de venderte nada" },
+  { icon: Handshake, title: "Acompañamiento de principio a fin", text: "Configuramos, probamos con casos reales y dejamos la solución funcionando con tu equipo.", signal: "Del diagnóstico a la puesta en marcha" },
+  { icon: Layers3, title: "NITRO ECOM como estructura", text: "Estrategia, automatización e infraestructura conectadas alrededor de una necesidad concreta.", signal: "Dirección, construcción y documentación" },
 ] as const;
 
 export function AboutSection() {
@@ -31,11 +39,26 @@ export function AboutSection() {
         </div>
       </section>
 
-      <section className="border-y border-white/7 bg-[#0b0e0c] px-5 py-16 lg:px-8 lg:py-24">
+      {/* Historia de origen: por qué existe Nitro Complete */}
+      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.2fr_.8fr] lg:items-center lg:gap-16">
+          <div>
+            <h2 className="text-balance text-center font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-left">Nitro Complete nació de ver <span className="text-nitro-text">dónde se pierden las ventas.</span></h2>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/65">Una y otra vez vi que el problema no estaba en el anuncio. La venta se perdía después: en un chat que nadie respondió a tiempo, en un pedido contraentrega que nadie confirmó o en un cliente al que nadie volvió a escribir.</p>
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-ink/65">Por eso construí <strong className="font-semibold text-ink">Nitro Complete</strong>: un asesor con IA que atiende con tu catálogo real y un sistema que acompaña cada pedido hasta la entrega. Si tu negocio todavía no debe automatizar, te acompaño con consultoría o con una landing enfocada en tu oferta.</p>
+            <div className="mt-8 flex justify-center lg:justify-start"><Button asChild size="lg" className="h-13 rounded-full bg-ink px-7 text-base font-bold text-white hover:bg-ink/85"><Link href="/nitro-complete">Conocer Nitro Complete <ArrowRight /></Link></Button></div>
+          </div>
+          <ul className="divide-y divide-line rounded-3xl border border-line bg-white px-7 py-2">
+            {track.map((item) => <li key={item} className="flex items-center gap-3 py-5 text-base font-medium"><span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary"><Check className="size-3 text-ink" aria-hidden="true" /></span>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 lg:grid-cols-[1fr_.8fr] lg:items-end"><h2 className="text-balance text-center font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl lg:text-left">Experiencia aplicada a <span className="text-primary">decisiones concretas.</span></h2><p className="mx-auto max-w-xl text-center text-base leading-7 text-white/52 lg:mx-0 lg:text-left">Cada proyecto combina criterio comercial, implementación técnica y transferencia para que el equipo conserve el control.</p></div>
-          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/8 lg:mt-16 md:grid-cols-3">
-            {experiences.map(({ icon: Icon, title, text, signal }) => <article key={title} className="bg-[#0d110e] p-7 sm:p-8"><span className="flex size-12 items-center justify-center rounded-2xl bg-primary/9 text-primary"><Icon className="size-6" /></span><h3 className="mt-8 text-xl font-bold text-white">{title}</h3><p className="mt-3 text-sm leading-6 text-white/50">{text}</p><p className="mt-6 flex items-center gap-2 border-t border-white/8 pt-5 text-xs text-white/45"><Check className="size-4 shrink-0 text-primary" />{signal}</p></article>)}
+          <div className="grid gap-6 lg:grid-cols-[1fr_.8fr] lg:items-end"><h2 className="text-balance text-center font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-left">Así trabajo <span className="text-primary">contigo.</span></h2><p className="mx-auto max-w-xl text-center text-base leading-7 text-white/52 lg:mx-0 lg:text-left">Criterio comercial, implementación técnica y transferencia para que tu equipo conserve el control.</p></div>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/8 md:grid-cols-3">
+            {principles.map(({ icon: Icon, title, text, signal }) => <article key={title} className="bg-[#0d110e] p-7 sm:p-8"><span className="nitro-icon-mark flex size-12 items-center justify-center rounded-2xl bg-primary/9 text-primary"><Icon className="nitro-icon-glyph size-6" /></span><h3 className="mt-8 text-xl font-bold text-white">{title}</h3><p className="mt-3 text-sm leading-6 text-white/50">{text}</p><p className="mt-6 flex items-center gap-2 border-t border-white/8 pt-5 text-xs text-white/45"><Check className="size-4 shrink-0 text-primary" />{signal}</p></article>)}
           </div>
         </div>
       </section>

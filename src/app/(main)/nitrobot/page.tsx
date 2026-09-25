@@ -22,7 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { nitroCompletePlans } from "@/lib/commercial-content";
+import { nitroCompleteImplementation, nitroCompletePlans } from "@/lib/commercial-content";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 const faqs = [
   [
     "¿NitroBot es solo un chatbot?",
-    "No. El chat es la interfaz. Detrás hay catálogo, cálculo server-side, creación de pedidos, seguimiento, escalamiento humano, métricas y control operativo en un panel.",
+    "No. El chat es la interfaz. Detrás hay catálogo real, cálculo de precios en el servidor, creación de pedidos, seguimiento, escalamiento humano, métricas y control operativo en un panel.",
   ],
   [
     "¿Necesito Shopify?",
@@ -65,7 +65,7 @@ const faqs = [
   ],
   [
     "¿Cuánto cuesta la implementación?",
-    "Primero revisamos compatibilidad, volumen, catálogo y alcance de implementación. Con ese contexto se presenta una propuesta clara antes de iniciar.",
+    `La implementación estándar cuesta ${nitroCompleteImplementation} COP, una sola vez. En la evaluación revisamos catálogo, volumen y alcance; si tu caso necesita algo fuera del estándar, lo sabes antes de iniciar.`,
   ],
 ];
 
@@ -174,7 +174,7 @@ function ProductPreview() {
               })}
             </div>
             <div className="mt-5 rounded-xl border border-primary/15 bg-primary/7 p-3 text-center text-xs font-bold text-primary">
-              Conversación → pedido, sin transcribir
+              Del chat al pedido, sin transcribir
             </div>
           </div>
         </div>
@@ -229,20 +229,20 @@ export default function NitroBotPage() {
 
       <section
         id="como-funciona"
-        className="border-y border-white/8 bg-white/[.018] px-5 py-20 sm:px-6 lg:py-28"
+        className="bg-ground px-5 py-20 text-ink sm:px-6 lg:py-28"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <h2 className="font-display text-4xl font-bold tracking-tight sm:text-6xl">
-              La conversación es solo la parte visible.
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-left">
+              La conversación es solo <span className="text-nitro-text">la parte visible.</span>
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/58">
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">
               Cada mensaje activa una operación diseñada para vender con
               control: datos reales, reglas de negocio y trazabilidad para tu
               equipo.
             </p>
           </div>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 md:grid-cols-4">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {[
               [
                 MessageCircle,
@@ -271,15 +271,15 @@ export default function NitroBotPage() {
             ].map(([Icon, n, t, d]) => {
               const I = Icon as typeof MessageCircle;
               return (
-                <article key={String(n)} className="group bg-[#0c0f0d] p-7">
+                <article key={String(n)} className="group bg-white p-7">
                   <div className="flex items-center justify-between">
-                    <span className="nitro-icon-mark flex size-10 items-center justify-center rounded-2xl bg-primary/9 text-primary"><I className="nitro-icon-glyph h-5 w-5" /></span>
-                    <span className="font-mono text-xs text-white/78">
+                    <span className="nitro-icon-mark flex size-10 items-center justify-center rounded-xl bg-ink text-primary"><I className="nitro-icon-glyph h-5 w-5" /></span>
+                    <span className="font-mono text-xs text-ink/45">
                       {String(n)}
                     </span>
                   </div>
-                  <h3 className="mt-12 text-xl font-bold">{String(t)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/45">
+                  <h3 className="mt-10 text-xl font-bold">{String(t)}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/62">
                     {String(d)}
                   </p>
                 </article>
@@ -391,14 +391,14 @@ export default function NitroBotPage() {
             </p>
           </div>
           <div className="mt-14 grid gap-5 lg:grid-cols-3">
-            {plans.map((plan) => <article key={plan.name} className={`relative flex flex-col rounded-3xl border p-7 ${plan.featured ? "border-primary/38 bg-primary/[.065] shadow-[0_0_50px_rgba(183,255,42,.06)]" : "border-white/10 bg-[#0d110e]"}`}>{plan.featured ? <span className="absolute right-5 top-5 rounded-full bg-primary px-3 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-[#111311]">Más elegido</span> : null}<p className="font-mono text-[10px] uppercase tracking-[.18em] text-primary">{plan.name}</p><div className="mt-7 flex items-end gap-2"><span className="text-4xl font-bold tracking-tight text-white">{plan.price}</span><span className="pb-1 text-xs text-white/38">COP / mes</span></div><p className="mt-5 border-t border-white/9 pt-5 text-sm font-semibold text-white/78">{plan.capacity}</p><p className="mt-3 text-sm leading-6 text-white/48">{plan.fit}</p><ul className="mt-6 space-y-3 text-xs leading-5 text-white/58">{["Catálogo conectado o administrado en NitroBot", "Pedidos, conversaciones y escalamiento humano", "Dashboard y acompañamiento de implementación"].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-auto pt-7"><Cta>Encontrar mi plan</Cta></div></article>)}
+            {plans.map((plan) => <article key={plan.name} className={`relative flex flex-col rounded-3xl border p-7 ${plan.featured ? "border-primary/38 bg-primary/[.065] shadow-[0_0_50px_rgba(183,255,42,.06)]" : "border-white/10 bg-[#0d110e]"}`}>{plan.featured ? <span className="absolute right-5 top-5 rounded-full bg-primary px-3 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-[#111311]">Recomendado</span> : null}<p className="font-mono text-[10px] uppercase tracking-[.18em] text-primary">{plan.name}</p><div className="mt-7 flex items-end gap-2"><span className="text-4xl font-bold tracking-tight text-white">{plan.price}</span><span className="pb-1 text-xs text-white/38">COP / mes</span></div><p className="mt-5 border-t border-white/9 pt-5 text-sm font-semibold text-white/78">{plan.capacity}</p><p className="mt-3 text-sm leading-6 text-white/48">{plan.fit}</p><ul className="mt-6 space-y-3 text-xs leading-5 text-white/58">{["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-auto pt-7"><Cta>Ver si es mi plan</Cta></div></article>)}
           </div>
-          <div className="mt-6 grid gap-4 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7"><div><p className="font-semibold text-white">Implementación estándar: $700.000 COP una sola vez.</p><p className="mt-2 text-xs leading-5 text-white/42">El alcance final se confirma antes de iniciar. Plantillas de Meta, campañas, desarrollos a medida e integraciones no soportadas se cotizan aparte.</p></div><p className="rounded-full border border-primary/20 bg-primary/7 px-4 py-2 text-center text-xs font-medium text-primary">Evaluación sin compra automática</p></div>
+          <div className="mt-6 grid gap-4 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7"><div><p className="font-semibold text-white">Implementación estándar: {nitroCompleteImplementation} COP, una sola vez.</p><p className="mt-2 text-xs leading-5 text-white/42">El alcance final se confirma antes de iniciar. Plantillas de Meta, campañas, desarrollos a medida e integraciones no soportadas se cotizan aparte.</p></div><p className="rounded-full border border-primary/20 bg-primary/7 px-4 py-2 text-center text-xs font-medium text-primary">Sin compra automática</p></div>
         </div>
       </section>
 
       <section className="border-y border-white/8 bg-white/[.018] px-5 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[.75fr_1.25fr]">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.75fr_1.25fr]">
           <div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
               Lo que deberías aclarar antes de conectarlo.
@@ -430,14 +430,15 @@ export default function NitroBotPage() {
       <section className="px-5 py-24 sm:px-6 lg:py-32">
         <div className="mx-auto max-w-5xl rounded-[36px] border border-primary/20 bg-[radial-gradient(circle_at_top_right,rgba(183,255,42,.14),transparent_38%),#0d110e] px-6 py-16 text-center sm:px-12">
           <h2 className="mx-auto max-w-3xl font-display text-4xl font-bold tracking-tight sm:text-6xl">
-            Primero comprobamos si NitroBot puede generar valor en tu operación.
+            Primero comprobamos <span className="text-primary">si encaja.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/58">
-            Responde una evaluación corta. Recibirás una recomendación inmediata
-            y, si hay encaje, pasamos a revisar la conexión.
+            Responde una evaluación corta sobre tu catálogo, volumen y equipo.
+            Recibes una recomendación inmediata y, si hay encaje, revisamos
+            juntos la conexión.
           </p>
           <div className="mt-9">
-            <Cta>Comprobar compatibilidad</Cta>
+            <Cta />
           </div>
         </div>
       </section>

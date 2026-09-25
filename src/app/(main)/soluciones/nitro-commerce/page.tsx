@@ -59,11 +59,11 @@ export default function NitroCommercePage() {
         </div>
       </section>
 
-      <section className="border-y border-white/7 bg-[#0b0e0c] px-5 py-18 lg:px-8 lg:py-24">
+      <section className="bg-ground px-5 py-18 text-ink lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 lg:grid-cols-[.82fr_1.18fr] lg:items-end"><div><h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">Cuatro áreas. <span className="text-primary">Una decisión conectada.</span></h2></div><p className="max-w-2xl text-base leading-7 text-white/52 lg:justify-self-end">Una oportunidad comercial puede crear carga operativa; una mejora técnica puede no cambiar la decisión del cliente. Por eso revisamos el sistema completo antes de priorizar.</p></div>
+          <div className="grid gap-6 lg:grid-cols-[.82fr_1.18fr] lg:items-end"><div><h2 className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">Cuatro áreas. <span className="text-nitro-text">Una decisión conectada.</span></h2></div><p className="max-w-2xl text-base leading-7 text-ink/62 lg:justify-self-end">Una oportunidad comercial puede crear carga operativa; una mejora técnica puede no cambiar la decisión del cliente. Por eso revisamos el sistema completo antes de priorizar.</p></div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {opportunityAreas.map(({ icon: Icon, title, text }) => <article key={title} className="group flex gap-5 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:p-7"><span className="nitro-icon-mark flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/9 text-primary"><Icon className="nitro-icon-glyph size-5" /></span><div><h3 className="text-xl font-bold text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-white/48">{text}</p></div></article>)}
+            {opportunityAreas.map(({ icon: Icon, title, text }) => <article key={title} className="group flex gap-5 rounded-3xl border border-line bg-white p-6 sm:p-7"><span className="nitro-icon-mark flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="nitro-icon-glyph size-5" /></span><div><h3 className="text-xl font-bold">{title}</h3><p className="mt-2 text-sm leading-6 text-ink/62">{text}</p></div></article>)}
           </div>
         </div>
       </section>

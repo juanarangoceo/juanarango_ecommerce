@@ -25,7 +25,7 @@ export default function SolutionsPage() {
           <aside className="rounded-[1.75rem] border border-white/10 bg-[#0d110e] p-6 sm:p-7" aria-label="Cómo elegir una solución">
             <div className="flex items-center gap-3 border-b border-white/8 pb-5"><span className="nitro-icon-mark flex size-11 items-center justify-center rounded-2xl bg-primary/9 text-primary"><CircleHelp className="nitro-icon-glyph size-5" /></span><div><h2 className="font-semibold text-white">¿Por dónde empezar?</h2><p className="mt-1 text-xs text-white/42">Relaciona tu oportunidad con el siguiente paso.</p></div></div>
             <div className="mt-3 divide-y divide-white/8">
-              {["Vendes por WhatsApp → Nitro Complete", "Varias áreas por ordenar → NitroCommerce", "Una oferta por lanzar → Nitro Landing"].map((item, index) => <p key={item} className="flex gap-3 py-4 text-sm leading-6 text-white/68"><span className="font-mono text-xs text-primary">0{index + 1}</span>{item}</p>)}
+              {["Vendes por WhatsApp → Nitro Complete", "Varias áreas por ordenar → NitroCommerce", "Una oferta por lanzar → Nitro Landing"].map((item) => <p key={item} className="flex gap-3 py-4 text-sm leading-6 text-white/68"><ArrowRight className="mt-1 size-3.5 shrink-0 text-primary" aria-hidden="true" />{item}</p>)}
             </div>
             <p className="mt-3 flex gap-3 rounded-2xl border border-primary/16 bg-primary/6 p-4 text-xs leading-5 text-white/56"><Layers3 className="mt-0.5 size-4 shrink-0 text-primary" />Si dudas, el diagnóstico te orienta sin sobredimensionar el proyecto.</p>
           </aside>

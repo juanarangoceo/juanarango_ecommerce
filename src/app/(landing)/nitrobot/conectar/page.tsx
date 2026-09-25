@@ -11,6 +11,38 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+function TrustNotes({ className }: { className?: string }) {
+  return (
+    <div className={className}>
+      <ul className="space-y-4 lg:mt-8">
+        {[
+          "Resultado inmediato y sin costo",
+          "Precios visibles, sin llamada obligatoria",
+          "Tus datos llegan al panel privado de Nitro",
+        ].map((item) => (
+          <li
+            key={item}
+            className="flex items-center gap-3 text-sm text-white/78"
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+              <Check className="h-3.5 w-3.5 text-primary" />
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-9 flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[.025] p-4">
+        <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-white/45" />
+        <p className="text-xs leading-relaxed text-white/45">
+          No compartimos tus respuestas con terceros ni las usamos para
+          campañas sin tu autorización. Solo sirven para esta evaluación y
+          el contacto comercial solicitado.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function NitroBotConnectPage() {
   return (
     <main className="min-h-screen overflow-x-clip bg-[#080a09] text-white">
@@ -21,7 +53,8 @@ export default function NitroBotConnectPage() {
             className="inline-flex min-h-11 items-center gap-2 text-sm text-white/45 transition hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            Volver a Nitro Complete
+            <span className="sm:hidden">Volver</span>
+            <span className="hidden sm:inline">Volver a Nitro Complete</span>
           </Link>
           <span className="flex items-center gap-2.5"><span className="flex size-8 items-center justify-center text-primary"><NitroMark className="size-6" /></span><span className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-white/45">Nitro Ecom · Juan Arango</span></span>
         </div>
@@ -43,35 +76,13 @@ export default function NitroBotConnectPage() {
               implementación. Así evitamos sobredimensionar el plan o
               automatizar un proceso que todavía necesita orden.
             </p>
-            <ul className="mt-8 space-y-4">
-              {[
-                "Resultado inmediato y sin costo",
-                "Precios visibles, sin llamada obligatoria",
-                "Tus datos llegan al panel privado de Nitro",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-3 text-sm text-white/78"
-                >
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                    <Check className="h-3.5 w-3.5 text-primary" />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-9 flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[.025] p-4">
-              <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-white/45" />
-              <p className="text-xs leading-relaxed text-white/45">
-                No compartimos tus respuestas con terceros ni las usamos para
-                campañas sin tu autorización. Solo sirven para esta evaluación y
-                el contacto comercial solicitado.
-              </p>
-            </div>
+            <TrustNotes className="hidden lg:block" />
           </aside>
           <div className="relative min-w-0 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d110e] p-5 shadow-2xl shadow-black/40 sm:p-8 lg:p-10"><span className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
             <NitroBotForm source="nitrobot_connect" />
           </div>
+          {/* En móvil el formulario va primero; las garantías quedan debajo. */}
+          <TrustNotes className="lg:hidden" />
         </div>
       </section>
       <footer className="border-t border-white/8 px-5 py-6 text-center text-xs text-white/38">

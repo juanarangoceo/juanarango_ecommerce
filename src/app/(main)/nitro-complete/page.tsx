@@ -165,8 +165,8 @@ export default function NitroCompletePage() {
           <h2 className="text-balance text-center text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl lg:text-left">Cuando quieras vender más, <span className="text-primary">ya está conectado.</span></h2>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {growth.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="rounded-2xl border border-dashed border-white/15 p-6">
-                <div className="flex items-center justify-between"><Icon className="size-5 text-primary" /><span className="text-[11px] font-medium text-white/40">Disponible</span></div>
+              <article key={title} className="rounded-2xl border border-white/10 bg-superficie-nitro p-6">
+                <div className="flex items-center justify-between"><Icon className="size-5 text-primary" /><span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary">Disponible</span></div>
                 <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-white/52">{text}</p>
               </article>
@@ -187,7 +187,7 @@ export default function NitroCompletePage() {
               <article key={plan.name} className={`relative flex flex-col rounded-3xl p-7 sm:p-8 ${plan.featured ? "bg-ink text-white" : "border border-line bg-white"}`}>
                 <div className="flex items-center justify-between">
                   <p className={`font-mono text-xs uppercase tracking-[0.12em] ${plan.featured ? "text-primary" : "text-ink/55"}`}>{plan.name}</p>
-                  {plan.featured ? <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Más elegido</span> : null}
+                  {plan.featured ? <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Recomendado</span> : null}
                 </div>
                 <p className="mt-5 flex items-baseline gap-2"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{plan.price}</span><span className={`text-sm ${plan.featured ? "text-white/50" : "text-ink/50"}`}>COP / mes</span></p>
                 <p className={`mt-4 text-sm font-semibold ${plan.featured ? "text-white" : "text-ink"}`}>{plan.capacity}</p>
@@ -213,7 +213,7 @@ export default function NitroCompletePage() {
 
       {/* FAQ */}
       <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="content">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
           <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Lo que conviene aclarar antes de conectarlo.</h2>
           <Accordion type="single" collapsible className="border-t border-white/10">
             {faqs.map(([question, answer]) => (

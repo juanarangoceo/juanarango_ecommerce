@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { BlogCard } from "@/components/blog/blog-card";
 import { client } from "@/sanity/lib/client";
 
+// La home es comercial: muestra artículos de ventas, WhatsApp y ecommerce
+// en lugar de las noticias generales de IA más recientes.
 const LATEST_POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
   && !(_id in path("drafts.**"))
+  && (category == "ecommerce" || title match "WhatsApp" || title match "Shopify" || title match "ventas" || title match "ecommerce")
 ]|order(coalesce(publishedAt, _createdAt) desc)[0...3] {
   _id,
   title,
@@ -32,7 +35,7 @@ export async function LatestPostsSection() {
     <section className="border-t border-white/9 bg-[#0b0e0c] px-5 pb-16 pt-14 lg:px-8 lg:pb-24 lg:pt-20" data-nitro-orb="ideas">
       <div className="container mx-auto max-w-7xl">
         <div className="mb-10 flex items-end justify-between gap-8 lg:mb-12">
-          <h2 className="max-w-4xl text-center font-display text-4xl font-bold tracking-tight text-white md:text-left sm:text-6xl"><span className="text-primary">Ideas útiles</span> antes de comprar otra herramienta.</h2>
+          <h2 className="max-w-4xl text-center font-display text-4xl font-bold tracking-tight text-white md:text-left sm:text-6xl"><span className="text-primary">Ideas para vender mejor</span> antes de comprar otra herramienta.</h2>
           <Button asChild variant="outline" className="hidden shrink-0 gap-2 border-white/10 text-white/78 hover:bg-[#0d110e] md:flex">
             <Link href="/blog">
               Ver todos los artículos
