@@ -115,7 +115,9 @@ export default function EliminacionDeDatosPage() {
       <p>
         Además de la eliminación, puedes conocer, actualizar y rectificar tus datos, y revocar la
         autorización para tratarlos. Si consideras que no atendimos bien tu solicitud, puedes acudir
-        a la <strong>Superintendencia de Industria y Comercio</strong> (www.sic.gov.co).
+        a la <strong>Superintendencia de Industria y Comercio</strong> (www.sic.gov.co). El detalle de
+        cómo tratamos los datos está en la{" "}
+        <a href="/nitro-complete/privacidad">política de privacidad de Nitro Complete</a>.
       </p>
     </LegalShell>
   );
