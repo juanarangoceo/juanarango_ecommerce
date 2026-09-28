@@ -8,6 +8,7 @@ import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
 import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, primaryCta } from "@/lib/commercial-content";
+import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -257,6 +258,26 @@ export default function NitroCompletePage() {
           <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">Primero comprobamos <span className="text-primary">si encaja.</span></h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/55">Responde una evaluación corta sobre tu catálogo, volumen y equipo. Recibes una recomendación inmediata y, si hay encaje, revisamos juntos la conexión.</p>
           <div className="mt-8 flex justify-center"><PrimaryCta /></div>
+        </div>
+      </section>
+
+      {/* Titular del producto (NIT-57): tiene que ser inequívoco para Meta y
+          para quien ejerce sus derechos. El footer global sigue siendo del sitio. */}
+      <section className="px-5 pb-16 lg:px-8" aria-labelledby="nitro-complete-titular">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 px-6 py-6 text-sm leading-6 text-white/58">
+          <h2 id="nitro-complete-titular" className="font-semibold text-white">Quién presta Nitro Complete</h2>
+          <p className="mt-2">
+            Nitro Complete es un producto de <strong className="text-white">{NITRO_COMPLETE_ENTITY.name}</strong>, NIT{" "}
+            {NITRO_COMPLETE_ENTITY.nit}, {NITRO_COMPLETE_ENTITY.location}. Contacto:{" "}
+            <a href={`mailto:${NITRO_COMPLETE_ENTITY.email}`} className="text-white underline decoration-primary/60 underline-offset-4">{NITRO_COMPLETE_ENTITY.email}</a>{" "}
+            · WhatsApp{" "}
+            <a href={NITRO_COMPLETE_ENTITY.whatsappLink} className="text-white underline decoration-primary/60 underline-offset-4">{NITRO_COMPLETE_ENTITY.whatsapp}</a>.
+          </p>
+          <p className="mt-2">
+            <Link href="/nitro-complete/privacidad" className="text-primary hover:underline">Política de privacidad de Nitro Complete</Link>
+            {" · "}
+            <Link href="/nitro-complete/eliminacion-de-datos" className="text-primary hover:underline">Eliminación de datos de usuario</Link>
+          </p>
         </div>
       </section>
     </div>

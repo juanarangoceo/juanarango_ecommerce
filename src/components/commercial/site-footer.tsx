@@ -29,6 +29,15 @@ const groups = [
       ["Aviso legal", "/legal/aviso-legal"],
     ],
   },
+  {
+    // Documentos del PRODUCTO Nitro Complete (titular: TODOPOLIS S.A.S.). Son
+    // los que están registrados en la app de Meta; los de «Legal» cubren el sitio.
+    title: "Nitro Complete",
+    links: [
+      ["Privacidad de Nitro Complete", "/nitro-complete/privacidad"],
+      ["Eliminación de datos", "/nitro-complete/eliminacion-de-datos"],
+    ],
+  },
 ] as const;
 
 export function SiteFooter() {
@@ -46,7 +55,7 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {groups.map((group) => (
             <div key={group.title}>
               <h2 className="text-sm font-semibold text-white">{group.title}</h2>
@@ -63,7 +72,10 @@ export function SiteFooter() {
       </div>
       <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-2 border-t border-white/8 pt-6 text-xs text-white/38 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Juan Arango. Todos los derechos reservados.</p>
-        <p>NITRO ECOM es la estructura de implementación de Juan Arango.</p>
+        <div className="space-y-1 sm:text-right">
+          <p>NITRO ECOM es la estructura de implementación de Juan Arango.</p>
+          <p>Nitro Complete es un producto de TODOPOLIS S.A.S., NIT 901.225.969-6, Pereira, Colombia.</p>
+        </div>
       </div>
     </footer>
   );
