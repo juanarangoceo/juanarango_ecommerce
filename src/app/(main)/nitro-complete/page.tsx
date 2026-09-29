@@ -9,6 +9,7 @@ import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
 import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, primaryCta } from "@/lib/commercial-content";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
+import { nitroAppUrl } from "@/lib/nitrobot-intake";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -103,6 +104,11 @@ export default function NitroCompletePage() {
               <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#planes">Ver planes</Link></Button>
             </div>
             <p className="mt-5 text-xs text-white/40">Evaluación gratuita · Resultado inmediato · Sin llamada obligatoria</p>
+            <p className="mt-3 text-sm text-white/55">
+              ¿Ya lo decidiste? <a href={nitroAppUrl("/registro")} className="font-semibold text-primary hover:underline">Crear mi cuenta</a>
+              {" · "}
+              <a href={nitroAppUrl("/login")} className="text-white/70 hover:text-white hover:underline">Ingresar</a>
+            </p>
           </div>
           <NitroCompletePreview />
         </div>

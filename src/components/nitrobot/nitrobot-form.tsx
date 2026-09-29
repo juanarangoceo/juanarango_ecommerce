@@ -182,6 +182,7 @@ export function NitroBotForm({
   const [error, setError] = useState("");
   const [delivery, setDelivery] = useState<"delivered" | "queued" | null>(null);
   const [result, setResult] = useState<NitroBotIntakeResponse | null>(null);
+  const [accountUrl, setAccountUrl] = useState<string | null>(null);
   const attributionRef = useRef<Record<string, string>>({});
   const idempotencyRef = useRef("");
   const startedAtRef = useRef(0);
@@ -239,6 +240,7 @@ export function NitroBotForm({
     }
     setDelivery(response.delivery);
     setResult(response.result ?? null);
+    setAccountUrl(response.accountUrl ?? null);
     setStep(TOTAL_STEPS);
     onSuccess?.();
   }
@@ -602,6 +604,19 @@ export function NitroBotForm({
             mensajes · $
             {result.qualification.plan.monthlyPriceCop.toLocaleString("es-CO")}{" "}
             COP/mes
+          </p>
+        </div>
+      )}
+      {accountUrl && (
+        <div className="mx-auto mt-7 max-w-sm">
+          <a
+            href={accountUrl}
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-primary/85"
+          >
+            Crear mi cuenta y continuar
+          </a>
+          <p className="mt-3 text-xs leading-relaxed text-white/45">
+            Tu evaluación queda en tu cuenta y empiezas a preparar tu asesor. Nada se activa sin tu aprobación.
           </p>
         </div>
       )}

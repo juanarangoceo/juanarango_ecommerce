@@ -1,6 +1,6 @@
 "use server"
 
-import { NitroBotIntakeError, sendNitroBotLead } from "@/lib/nitrobot-intake"
+import { NitroBotIntakeError, nitroAppUrl, sendNitroBotLead } from "@/lib/nitrobot-intake"
 import { after } from "next/server"
 import { inngest } from "@/lib/inngest/client"
 import { captureContact, cleanAttribution } from "@/lib/crm/capture"
@@ -8,6 +8,7 @@ import {
   NITROBOT_CONSENT_VERSION,
   NITROBOT_LEAD_CONTRACT_VERSION,
   NITROBOT_PRIVACY_VERSION,
+  type NitroBotIntakeResponse,
   type NitroBotLeadPayload,
   type NitroBotSubmitResult,
 } from "@/lib/nitrobot-lead"
@@ -97,6 +98,16 @@ function mirrorToCrm(payload: NitroBotLeadPayload, idempotencyKey: string) {
   )
 }
 
+// Crear la cuenta con la evaluación ya hecha (NIT-70). Con el comprobante, el
+// registro enlaza al prospecto y prellena la ficha; sin él, registro normal. A
+// quien no se le recomienda conectar todavía no se le ofrece.
+function accountUrlFor(result?: NitroBotIntakeResponse): string | undefined {
+  if (result?.qualification.status === "not_recommended") return undefined
+  return result?.accountClaim
+    ? nitroAppUrl(`/registro/continuar?claim=${encodeURIComponent(result.accountClaim)}`)
+    : nitroAppUrl("/registro")
+}
+
 export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSubmitResult> {
   if (text(formData, "website")) return { ok: false, error: "No pudimos validar la solicitud." }
   const startedAt = Number(text(formData, "startedAt", 30))
@@ -163,7 +174,7 @@ export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSu
   try {
     const result = await sendNitroBotLead(payload, idempotencyKey)
     mirrorToCrm(payload, idempotencyKey)
-    return { ok: true, delivery: "delivered", result }
+    return { ok: true, delivery: "delivered", result, accountUrl: accountUrlFor(result) }
   } catch (firstError) {
     if (!(firstError instanceof NitroBotIntakeError) || !firstError.retryable) {
       console.error("[nitrobot-form] rechazo no reintentable:", firstError)
@@ -172,13 +183,13 @@ export async function submitNitrobotLead(formData: FormData): Promise<NitroBotSu
     try {
       const result = await sendNitroBotLead(payload, idempotencyKey)
       mirrorToCrm(payload, idempotencyKey)
-      return { ok: true, delivery: "delivered", result }
+      return { ok: true, delivery: "delivered", result, accountUrl: accountUrlFor(result) }
     } catch (secondError) {
       const message = secondError instanceof Error ? secondError.message : "Fallo de entrega"
       const queued = await queueLead(payload, idempotencyKey, message)
       if (queued) {
         mirrorToCrm(payload, idempotencyKey)
-        return { ok: true, delivery: "queued" }
+        return { ok: true, delivery: "queued", accountUrl: accountUrlFor() }
       }
       console.error("[nitrobot-form] entrega y cola fallaron:", message)
       return { ok: false, error: "No pudimos recibir la solicitud. Intenta de nuevo en unos minutos." }

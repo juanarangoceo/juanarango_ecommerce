@@ -15,6 +15,13 @@ export class NitroBotIntakeError extends Error {
   }
 }
 
+const NITRO_APP_FALLBACK = "https://nitro-bot-coral.vercel.app"
+
+/** Dónde vive la app de Nitro Complete (registro, ingreso y panel). */
+export function nitroAppUrl(path = "") {
+  return `${process.env.NITROBOT_API_URL?.replace(/\/$/, "") || NITRO_APP_FALLBACK}${path}`
+}
+
 function intakeUrl() {
   const base = process.env.NITROBOT_API_URL?.replace(/\/$/, "")
   if (!base) throw new NitroBotIntakeError("NITROBOT_API_URL no configurada", false)

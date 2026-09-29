@@ -51,10 +51,12 @@ export type NitroBotIntakeResponse = {
     risks: string[]
     plan: NitroBotPlan
   }
+  /** Comprobante firmado de Nitro (48 h) para continuar en el registro con esta evaluación. */
+  accountClaim?: string
 }
 
 export type NitroBotSubmitResult =
-  | { ok: true; delivery: "delivered" | "queued"; result?: NitroBotIntakeResponse }
+  | { ok: true; delivery: "delivered" | "queued"; result?: NitroBotIntakeResponse; accountUrl?: string }
   | { ok: false; error: string }
 
 export const qualificationCopy: Record<QualificationStatus, { eyebrow: string; title: string; body: string }> = {
