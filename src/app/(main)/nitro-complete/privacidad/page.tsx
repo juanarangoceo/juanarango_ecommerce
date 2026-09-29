@@ -18,7 +18,7 @@ export default function NitroCompletePrivacidadPage() {
     <LegalShell
       title="Política de privacidad de Nitro Complete"
       intro="Nitro Complete ayuda a tiendas en línea a atender a sus clientes por WhatsApp e Instagram. Aquí explicamos qué datos tratamos al hacerlo, para qué, con quién y cómo ejercer tus derechos."
-      updated="28 de septiembre de 2026"
+      updated="29 de septiembre de 2026"
       entity={E}
       backHref="/nitro-complete"
       backLabel="Nitro Complete"
@@ -120,6 +120,14 @@ export default function NitroCompletePrivacidadPage() {
         respuestas en nota de voz, el texto de la respuesta se convierte en audio con Mistral AI. No
         usamos las conversaciones para entrenar modelos propios.
       </p>
+      <p>
+        Para ordenar el tablero comercial de la tienda (en qué etapa de compra está cada
+        conversación), un modelo de clasificación de TypeSafe AI analiza los últimos mensajes de la
+        conversación. Antes de enviarlos se eliminan los mensajes con direcciones, documentos de
+        identidad, datos bancarios o nombres, y se ocultan teléfonos, correos y enlaces. TypeSafe
+        solo devuelve la etapa estimada, trata los datos como encargado y no los usa para entrenar
+        sus modelos.
+      </p>
 
       <h2>5. Con quién los compartimos</h2>
       <p>Solo con proveedores que actúan como encargados y en lo necesario para el servicio:</p>
@@ -128,6 +136,7 @@ export default function NitroCompletePrivacidadPage() {
         <li><strong>Supabase</strong>: base de datos y almacenamiento privado de archivos.</li>
         <li><strong>Vercel</strong>: alojamiento de la aplicación.</li>
         <li><strong>Google (Gemini)</strong> y <strong>Mistral AI</strong>: generación de respuestas y de voz.</li>
+        <li><strong>TypeSafe AI</strong>: clasificación de la etapa comercial de las conversaciones, con los datos minimizados.</li>
         <li><strong>La plataforma de comercio de la tienda</strong> (por ejemplo, Shopify): donde se registran sus pedidos.</li>
         <li><strong>Resend</strong>: correos al equipo de la tienda cuando un caso necesita una persona.</li>
         <li><strong>Confío</strong>: solo cuando la tienda cobra un pedido por adelantado con enlace de pago.</li>
