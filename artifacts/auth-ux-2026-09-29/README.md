@@ -29,4 +29,6 @@ Usar build y navegador por separado para limitar memoria. El menú se comprobó
 a 1280/360 px: destinos `/login` y `/registro` de la app, sin solapamientos ni
 desbordamientos y cierre con Escape.
 
-Los cambios están locales en ambos repositorios, sin commit ni despliegue.
+Publicados: web `ab30249` y Nitro Bot `70741a6`. `production/` conserva las
+capturas y el reporte de la revisión sobre las URLs públicas. Las capturas
+de esta carpeta documentan la validación local anterior a la publicación.

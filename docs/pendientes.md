@@ -5,12 +5,12 @@ registra en la bitácora correspondiente.
 
 ## Punto de reanudación para el siguiente agente
 
-### Trabajo local completado — 29 de septiembre de 2026
+### Registro/login publicados — 29 de septiembre de 2026
 
 Rediseño de registro/login de Nitro Complete y reemplazo de «Acceder» en el
 menú por «Ingresar» y «Crear cuenta». El usuario autorizó expresamente incluir
-`/home/juan/nitro_bot`. Los cambios siguen locales, sin commit ni despliegue,
-en ambos repositorios. Inventario y validaciones recuperadas al final de
+`/home/juan/nitro_bot`. Publicados por solicitud del usuario: web `ab30249`
+y Nitro Bot `70741a6`. Inventario y validaciones recuperadas al final de
 [`bitacora/2026-09.md`](bitacora/2026-09.md).
 
 Implementación y validación terminadas: 24 comprobaciones de registro/login
@@ -19,8 +19,12 @@ y activación, ESLint, TypeScript y build de Nitro Bot. Menú verificado en
 escritorio y móvil. La web comercial pasó ESLint, TypeScript y build en la
 sesión recuperada; se volvió a verificar su ESLint y el menú sobre ese build.
 Capturas y ensayo reproducible en `artifacts/auth-ux-2026-09-29/`.
-Publicación pendiente de solicitud del usuario. Para validaciones locales,
-ejecutar build y navegador por separado; usar `localhost` con Next dev.
+Producción revisada: menú a 1280/360 px, navegación de la web al registro,
+24 comprobaciones de registro/login con POSTs simulados, smoke de salud/PWA/
+autenticación de Nitro Bot y cero errores en los logs de los nuevos despliegues
+durante la revisión. Nitro Bot pasó sus 1.102 pruebas antes de publicar.
+Para validaciones locales, ejecutar build y navegador por separado; usar
+`localhost` con Next dev.
 
 ### Estado de producción anterior
 

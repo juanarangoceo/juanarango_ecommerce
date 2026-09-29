@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-29",
+  "mode": "producción Vercel; POSTs simulados en navegador",
+  "checks": [
+    "registro-desktop: sin desbordamiento",
+    "registro-desktop: sin overlay",
+    "registro-mobile: sin desbordamiento",
+    "registro-mobile: sin overlay",
+    "Registro: privacidad enlazada",
+    "Google: estado de envío y bloqueo de doble clic",
+    "Registro: contraseña corta rechazada",
+    "Registro: mostrar conserva contraseña",
+    "Registro: privacidad obligatoria",
+    "Registro: envío bloquea doble clic",
+    "Registro: error conserva datos y privacidad",
+    "Registro: error recibe foco y permite reintentar",
+    "Registro: confirmación explica el siguiente paso",
+    "registro-confirmacion-mobile: sin desbordamiento",
+    "registro-confirmacion-mobile: sin overlay",
+    "login-mobile: sin desbordamiento",
+    "login-mobile: sin overlay",
+    "login-desktop: sin desbordamiento",
+    "login-desktop: sin overlay",
+    "Login: enlaces de registro y recuperación",
+    "Login: mostrar y ocultar contraseña",
+    "Login: estado de envío",
+    "Login: error conserva datos y enfoca aviso",
+    "Navegador: sin errores de JavaScript"
+  ],
+  "deployments": {
+    "web": {
+      "commit": "ab30249",
+      "state": "READY",
+      "url": "https://www.juanarangoecommerce.com",
+      "deployment": "juanarangoecommerce-gx6g5skzx-seller360grados-projects.vercel.app"
+    },
+    "nitro_bot": {
+      "commit": "70741a6",
+      "state": "READY",
+      "url": "https://nitro-bot-coral.vercel.app",
+      "deployment": "nitro-od61ysyje-seller360grados-projects.vercel.app"
+    }
+  },
+  "menu": {
+    "desktop_width": 1280,
+    "mobile_width": 360,
+    "account_links_correct": true,
+    "overflow": false,
+    "overlap": false,
+    "web_to_registration_navigation": "PASS",
+    "javascript_errors": 0
+  },
+  "nitro_bot_release_checks": {
+    "unit_tests": "1102/1102",
+    "build": "PASS",
+    "typecheck": "PASS",
+    "health_pwa_auth_smoke": "PASS"
+  },
+  "runtime_error_log_results": {
+    "web": 0,
+    "nitro_bot": 0,
+    "scope": "nuevos despliegues; ventana de revisión"
+  }
+}
