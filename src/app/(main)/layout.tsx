@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/commercial/site-footer";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
 import { constructMetadata } from "@/lib/utils";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { nitroAppUrl } from "@/lib/nitrobot-intake";
 import "../globals.css";
 
 
@@ -143,7 +144,7 @@ export default function RootLayout({
         />
         
         <AuthProvider>
-          <SiteHeader />
+          <SiteHeader registerUrl={nitroAppUrl("/registro")} loginUrl={nitroAppUrl("/login")} />
           <IconMotionObserver />
           <main className="nitro-site-content">{children}</main>
           <SiteFooter />

@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-29",
+  "mode": "build de producción local; POSTs simulados en navegador",
+  "checks": [
+    "registro-desktop: sin desbordamiento",
+    "registro-desktop: sin overlay",
+    "registro-mobile: sin desbordamiento",
+    "registro-mobile: sin overlay",
+    "Registro: privacidad enlazada",
+    "Google: estado de envío y bloqueo de doble clic",
+    "Registro: contraseña corta rechazada",
+    "Registro: mostrar conserva contraseña",
+    "Registro: privacidad obligatoria",
+    "Registro: envío bloquea doble clic",
+    "Registro: error conserva datos y privacidad",
+    "Registro: error recibe foco y permite reintentar",
+    "Registro: confirmación explica el siguiente paso",
+    "registro-confirmacion-mobile: sin desbordamiento",
+    "registro-confirmacion-mobile: sin overlay",
+    "login-mobile: sin desbordamiento",
+    "login-mobile: sin overlay",
+    "login-desktop: sin desbordamiento",
+    "login-desktop: sin overlay",
+    "Login: enlaces de registro y recuperación",
+    "Login: mostrar y ocultar contraseña",
+    "Login: estado de envío",
+    "Login: error conserva datos y enfoca aviso",
+    "Navegador: sin errores de JavaScript"
+  ],
+  "menu": {
+    "desktop_width": 1280,
+    "mobile_width": 360,
+    "urls": "/login y /registro de Nitro Complete",
+    "overflow": false,
+    "overlap": false,
+    "escape_closes": true,
+    "javascript_errors": false
+  },
+  "validation": {
+    "nitro_bot": {
+      "eslint": "PASS",
+      "typescript": "PASS",
+      "build": "PASS",
+      "existing_auth_activation_tests": "13/13"
+    },
+    "commercial_web": {
+      "eslint": "PASS",
+      "typescript": "PASS (sesión recuperada)",
+      "build": "PASS (sesión recuperada, mismos componentes)"
+    }
+  }
+}

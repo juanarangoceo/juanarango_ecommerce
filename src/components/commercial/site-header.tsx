@@ -6,10 +6,14 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NitroMark } from "@/components/commercial/nitro-mark";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
-import { NavUserButton } from "@/components/auth/nav-user-button";
 import { primaryCta, primaryNavigation } from "@/lib/commercial-content";
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  registerUrl: string;
+  loginUrl: string;
+}
+
+export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -34,7 +38,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-5 xl:flex" aria-label="Navegación principal">
           {primaryNavigation.map((item) => (
             <Link key={item.href} href={item.href} className="text-sm text-white/68 transition-colors hover:text-white">
               {item.label}
@@ -44,8 +48,13 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <LanguageToggle />
-          <div className="hidden lg:block">
-            <NavUserButton />
+          <div className="hidden items-center gap-2 xl:flex">
+            <a href={loginUrl} className="inline-flex min-h-10 items-center rounded-full px-3 text-sm font-medium text-white/75 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+              Ingresar
+            </a>
+            <a href={registerUrl} className="inline-flex min-h-10 items-center rounded-full border border-primary/30 bg-primary/5 px-4 text-sm font-semibold text-primary transition-colors hover:border-primary/60 hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+              Crear cuenta
+            </a>
           </div>
           <Button asChild className="hidden h-10 rounded-full px-5 font-semibold sm:inline-flex">
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
@@ -56,7 +65,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             onClick={() => setOpen((current) => !current)}
-            className="inline-flex size-11 items-center justify-center rounded-full border border-white/12 text-white lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-full border border-white/12 text-white xl:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -64,7 +73,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <nav id="mobile-navigation" className="border-t border-white/8 bg-[#0b0d0b] px-5 py-5 lg:hidden" aria-label="Navegación móvil">
+        <nav id="mobile-navigation" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/8 bg-[#0b0d0b] px-5 py-5 xl:hidden" aria-label="Navegación móvil">
           <div className="mx-auto grid max-w-7xl gap-1">
             {primaryNavigation.map((item) => (
               <Link
@@ -77,7 +86,15 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-3 border-t border-white/8 pt-4">
-              <NavUserButton mobile />
+              <p className="px-4 text-sm text-white/45">Tu cuenta de Nitro Complete</p>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <a href={loginUrl} onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center rounded-xl border border-white/12 px-3 text-sm font-medium text-white/80 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-primary">
+                  Ingresar
+                </a>
+                <a href={registerUrl} onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center rounded-xl border border-primary/30 bg-primary/5 px-3 text-sm font-semibold text-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary">
+                  Crear cuenta
+                </a>
+              </div>
             </div>
             <Button asChild className="mt-3 h-12 rounded-xl text-base sm:hidden">
               <Link href={primaryCta.href} onClick={() => setOpen(false)}>{primaryCta.label}</Link>

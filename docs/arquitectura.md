@@ -39,6 +39,16 @@ escribe ni llama a servicios externos. Su persistencia futura se concentra en
 la función PostgreSQL `submit_commercial_diagnostic`, que inserta lead y sesión
 en una sola transacción usando credenciales exclusivas del servidor.
 
+## Acceso a Nitro Complete
+
+El header público ofrece «Ingresar» y «Crear cuenta» en escritorio y móvil.
+Ambos llevan a la cuenta de Nitro Complete, en `/login` y `/registro` de la
+app Nitro Bot. El layout resuelve esas URLs en el servidor con `nitroAppUrl`
+(`src/lib/nitrobot-intake.ts`), usando `NITROBOT_API_URL` o el dominio de
+respaldo de la app; al componente cliente solo llegan las URLs públicas.
+La evaluación sigue disponible como CTA comercial y su vínculo firmado de
+continuación del registro conserva el contrato existente.
+
 ## Contenido y datos
 
 - **Sanity:** blog, contenido editorial, Studio y funciones de generación.
