@@ -27,3 +27,7 @@ SHOTS='#planes .grid' node artifacts/nitro-complete-nit79-2026-09-30/capturas-cd
 
 Argumentos: URL, ancho, alto, prefijo de salida (`-` sin capturas), `1` para
 emular reduced motion y expresiones JS a evaluar.
+
+`produccion/` guarda las capturas de la revisión del 30-09 sobre
+`www.juanarangoecommerce.com`, después de publicar `408fe7a`. `m390-viewport` y
+`d1280-viewport` muestran la tarjeta Nitro 15K resaltada tras «Ver plan».

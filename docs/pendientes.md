@@ -7,8 +7,8 @@ registra en la bitácora correspondiente.
 
 ### Nitro en /nitro-complete (NIT-79) — 30 de septiembre de 2026
 
-Publicado por solicitud del usuario («despliega todo»). Detalle, commit y
-verificación de producción en [`bitacora/2026-09.md`](bitacora/2026-09.md);
+En producción desde el 30-09 (`408fe7a`, PR #2), verificado en el dominio.
+Detalle en [`bitacora/2026-09.md`](bitacora/2026-09.md);
 capturas en `artifacts/nitro-complete-nit79-2026-09-30/`. Queda:
 
 1. Aprobación visual de Juan en su teléfono (hero, tarjetas y CTA final).
