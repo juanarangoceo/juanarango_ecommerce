@@ -2,8 +2,8 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Clock3, MessagesSquare, TrendingUp } from "lucide-react";
-import { primaryCta } from "@/lib/commercial-content";
+import { ArrowDown, ArrowRight, ChevronDown, Clock3, MessagesSquare, TrendingUp } from "lucide-react";
+import { PLAN_RECOMMENDATION_MARGIN, UNITS_PER_CONVERSATION, primaryCta, recommendPlan } from "@/lib/commercial-content";
 
 // Estimación transparente: todo sale de los datos del visitante y de supuestos
 // visibles y editables. No publica resultados de clientes ni promete uplift;
@@ -54,7 +54,8 @@ function Slider({
   );
 }
 
-export function SalesCalculator() {
+/** `plansPath`: página con las tarjetas de planes; vacío si están en la misma. */
+export function SalesCalculator({ plansPath = "" }: { plansPath?: string }) {
   const [chats, setChats] = useState(1500);
   const [ticket, setTicket] = useState(150000);
   const [closeRate, setCloseRate] = useState(8);
@@ -69,6 +70,8 @@ export function SalesCalculator() {
   const recoveredOrders = chats * (offHours / 100) * (lostOffHours / 100) * (closeRate / 100);
   const recoveredValue = recoveredOrders * ticket;
   const newCloseRate = closeRate * (1 + (offHours / 100) * (lostOffHours / 100));
+  const estimatedUnits = chats * UNITS_PER_CONVERSATION * PLAN_RECOMMENDATION_MARGIN;
+  const plan = recommendPlan(chats);
 
   return (
     <div className="grid overflow-hidden rounded-[2rem] border border-white/10 bg-superficie-nitro lg:grid-cols-[1fr_1fr]">
@@ -123,9 +126,24 @@ export function SalesCalculator() {
           Estimación con tus datos y los supuestos visibles, no una promesa de resultados. Supone que los chats que hoy se pierden fuera de horario cerrarían a tu tasa actual si se responden a tiempo. En la evaluación lo revisamos con tus números reales.
         </p>
 
-        <Link href={primaryCta.href} className="group mt-6 inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-[#c8ff5a] lg:mt-auto">
-          Revisarlo con mis números <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-        </Link>
+        <div className="mt-6 lg:mt-auto">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl border border-primary/25 bg-primary/[0.06] px-4 py-3.5">
+            <p className="text-sm text-white/70">
+              {plan ? <>Para tu volumen: <strong className="font-semibold text-white">{plan.name}</strong></> : <strong className="font-semibold text-white">Hablemos de un plan a medida</strong>}
+            </p>
+            {plan ? (
+              <a href={`${plansPath}#plan-${plan.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+                Ver plan <ArrowDown className="size-3.5" aria-hidden="true" />
+              </a>
+            ) : null}
+          </div>
+          <p className="mt-2 text-xs leading-5 text-white/40">
+            ≈ {int.format(estimatedUnits)} turnos al mes: {UNITS_PER_CONVERSATION} por conversación y {pct.format((PLAN_RECOMMENDATION_MARGIN - 1) * 100)}% de margen.
+          </p>
+          <Link href={primaryCta.href} className="group mt-5 inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-[#c8ff5a]">
+            Revisarlo con mis números <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </div>
   );

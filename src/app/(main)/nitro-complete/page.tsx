@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Clock3, Hand, LayoutTemplate, Megaphone, Radar, ShieldCheck, SlidersHorizontal, Store } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { NitroCompletePreview } from "@/components/commercial/nitro-complete-preview";
+import { NitroHero } from "@/components/nitro/nitro-hero";
+import nitroMotion from "@/components/nitro/nitro-live.module.css";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, primaryCta } from "@/lib/commercial-content";
+import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, planConversations, primaryCta } from "@/lib/commercial-content";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
 
@@ -41,6 +43,18 @@ const growth = [
   { icon: Megaphone, title: "Campañas por WhatsApp", text: "Promociones a tus compradores con plantillas aprobadas por Meta." },
   { icon: Radar, title: "Oportunidades", text: "Descubre por qué no compran los clientes que casi compran." },
 ] as const;
+
+// Nitro acompaña cada parte del recorrido que hace el asesor. «Casos para una
+// persona» queda sin Nitro: ese momento es de tu equipo (NIT-79).
+const moduleNitro: Partial<Record<(typeof nitroCompleteModules)[number]["key"], string>> = {
+  asesor: "/nitro/nitro-base-512.webp",
+  confirmacion: "/nitro/nitro-confirmando-512.webp",
+  postventa: "/nitro/nitro-despachando-512.webp",
+  seguimiento: "/nitro/nitro-base-512.webp",
+  panel: "/nitro/nitro-base-512.webp",
+};
+
+const conversationsFormat = new Intl.NumberFormat("es-CO");
 
 const faqs = [
   ["¿Es un chatbot?", "No. El chat es la parte visible. Detrás hay catálogo real, cálculo de precios en el servidor, creación de pedidos, confirmación, postventa, seguimiento, casos para tu equipo y un panel con lo vendido."],
@@ -110,7 +124,7 @@ export default function NitroCompletePage() {
               <a href={nitroAppUrl("/login")} className="text-white/70 hover:text-white hover:underline">Ingresar</a>
             </p>
           </div>
-          <NitroCompletePreview />
+          <NitroHero />
         </div>
       </section>
 
@@ -124,9 +138,14 @@ export default function NitroCompletePage() {
           <ol className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {nitroCompleteModules.map(({ key, moment, title, text, icon: Icon }) => (
               <li key={key} className="rounded-2xl border border-line bg-white p-7">
-                <div className="flex items-center gap-3">
-                  <span className="nitro-icon-mark flex size-10 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="nitro-icon-glyph size-5" /></span>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">{moment}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-h-10 items-center gap-3">
+                    <span className="nitro-icon-mark flex size-10 shrink-0 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="nitro-icon-glyph size-5" /></span>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">{moment}</p>
+                  </div>
+                  {moduleNitro[key] ? (
+                    <Image src={moduleNitro[key]} alt="" width={72} height={72} sizes="(min-width: 820px) 72px, 56px" loading="lazy" className="-mr-2 -mt-3 size-14 shrink-0 object-contain min-[820px]:size-[72px]" />
+                  ) : null}
                 </div>
                 <h3 className="mt-5 text-xl font-semibold tracking-tight">{title}</h3>
                 <p className="mt-3 text-sm leading-6 text-ink/62">{text}</p>
@@ -213,17 +232,18 @@ export default function NitroCompletePage() {
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Elige capacidad, <span className="text-nitro-text">no funciones recortadas.</span></h2>
-            <p className="mt-5 text-base leading-7 text-ink/62">Los tres planes incluyen el asesor, los pedidos, el panel y el control humano. Cambia la capacidad mensual.</p>
+            <p className="mt-5 text-base leading-7 text-ink/62">Los tres planes incluyen el asesor, los pedidos, el panel y el control humano. Cambia la capacidad mensual: un turno es cada respuesta que el asesor envía a un cliente.</p>
           </div>
           <div className="mt-12 grid gap-4 lg:grid-cols-3">
             {nitroCompletePlans.map((plan) => (
-              <article key={plan.name} className={`relative flex flex-col rounded-3xl p-7 sm:p-8 ${plan.featured ? "bg-ink text-white" : "border border-line bg-white"}`}>
+              <article key={plan.name} id={`plan-${plan.slug}`} className={`relative flex scroll-mt-28 flex-col rounded-3xl p-7 outline-3 outline-offset-2 outline-transparent transition-[outline-color] duration-500 target:outline-[var(--verde-nitro)] sm:p-8 ${plan.featured ? "bg-ink text-white" : "border border-line bg-white"}`}>
                 <div className="flex items-center justify-between">
                   <p className={`font-mono text-xs uppercase tracking-[0.12em] ${plan.featured ? "text-primary" : "text-ink/55"}`}>{plan.name}</p>
                   {plan.featured ? <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Recomendado</span> : null}
                 </div>
                 <p className="mt-5 flex items-baseline gap-2"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{plan.price}</span><span className={`text-sm ${plan.featured ? "text-white/50" : "text-ink/50"}`}>COP / mes</span></p>
                 <p className={`mt-4 text-sm font-semibold ${plan.featured ? "text-white" : "text-ink"}`}>{plan.capacity}</p>
+                <p className={`mt-0.5 text-sm ${plan.featured ? "text-primary" : "text-nitro-text"}`}>≈ {conversationsFormat.format(planConversations(plan))} conversaciones de venta al mes</p>
                 <p className={`mt-1 text-sm ${plan.featured ? "text-white/60" : "text-ink/60"}`}>{plan.fit}</p>
                 <ul className={`mt-6 space-y-2.5 border-t pt-6 text-sm ${plan.featured ? "border-white/10 text-white/70" : "border-line text-ink/70"}`}>
                   {["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => (
@@ -261,6 +281,7 @@ export default function NitroCompletePage() {
 
       <section className="px-5 pb-20 lg:px-8 lg:pb-24" data-nitro-orb="diagnostic">
         <div className="mx-auto max-w-4xl rounded-[2rem] border border-primary/25 bg-superficie-nitro px-7 py-12 text-center sm:px-12">
+          <Image src="/nitro/nitro-celebrando-512.webp" alt="" width={160} height={160} sizes="(min-width: 820px) 160px, 120px" loading="lazy" className={`mx-auto mb-4 size-[120px] object-contain min-[820px]:size-40 ${nitroMotion.floating}`} />
           <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">Primero comprobamos <span className="text-primary">si encaja.</span></h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/55">Responde una evaluación corta sobre tu catálogo, volumen y equipo. Recibes una recomendación inmediata y, si hay encaje, revisamos juntos la conexión.</p>
           <div className="mt-8 flex justify-center"><PrimaryCta /></div>

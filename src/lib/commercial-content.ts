@@ -74,10 +74,33 @@ export const nitroCompleteModules = [
 ] as const;
 
 export const nitroCompletePlans = [
-  { name: "Nitro 5K", capacity: "5.000 unidades de consumo", price: "$590.000", fit: "Para una operación pequeña con volumen estable.", featured: false },
-  { name: "Nitro 15K", capacity: "15.000 unidades de consumo", price: "$1.190.000", fit: "Para un equipo comercial en crecimiento.", featured: true },
-  { name: "Nitro 30K", capacity: "30.000 unidades de consumo", price: "$2.200.000", fit: "Para una operación intensiva y mayor volumen.", featured: false },
+  { slug: "nitro-5k", name: "Nitro 5K", units: 5_000, capacity: "5.000 turnos al mes", price: "$590.000", fit: "Para una operación pequeña con volumen estable.", featured: false },
+  { slug: "nitro-15k", name: "Nitro 15K", units: 15_000, capacity: "15.000 turnos al mes", price: "$1.190.000", fit: "Para un equipo comercial en crecimiento.", featured: true },
+  { slug: "nitro-30k", name: "Nitro 30K", units: 30_000, capacity: "30.000 turnos al mes", price: "$2.200.000", fit: "Para una operación intensiva y mayor volumen.", featured: false },
 ] as const;
+
+export type NitroCompletePlan = (typeof nitroCompletePlans)[number];
+
+// La unidad de consumo es el turno: cada respuesta que el asesor envía a un
+// comprador (nitro_bot: términos del servicio y `consume_turn`). El código no
+// define turnos por conversación; se midió en producción (ciclos de sept. 2026,
+// dos tiendas): 2,25 y 2,84 turnos por conversación al día, mediana 3. Juan fijó
+// 3 el 30-09-2026 (NIT-79). Cambiarlo aquí mueve tarjetas y calculadora a la vez.
+export const UNITS_PER_CONVERSATION = 3;
+
+/** Margen de la calculadora sobre el consumo estimado antes de recomendar plan. */
+export const PLAN_RECOMMENDATION_MARGIN = 1.15;
+
+/** Conversaciones de venta al mes que cubre un plan, redondeadas hacia abajo a 50. */
+export function planConversations(plan: NitroCompletePlan) {
+  return Math.floor(plan.units / UNITS_PER_CONVERSATION / 50) * 50;
+}
+
+/** Plan más pequeño que cubre el volumen con margen; null si supera el mayor. */
+export function recommendPlan(monthlyConversations: number): NitroCompletePlan | null {
+  const units = monthlyConversations * UNITS_PER_CONVERSATION * PLAN_RECOMMENDATION_MARGIN;
+  return nitroCompletePlans.find((plan) => plan.units >= units) ?? null;
+}
 
 export const nitroCompleteImplementation = "$700.000";
 

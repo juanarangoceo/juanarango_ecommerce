@@ -148,6 +148,13 @@ todos los formularios escriben en `contacts`/`contact_events` vía
 `src/lib/crm/capture.ts`; el panel es instalable en el móvil. Las tablas antiguas
 de captación ya no existen; lo que falta está en `docs/pendientes.md` (punto 0).
 
+El 30 de septiembre (NIT-79, en producción) `/nitro-complete` incorporó a
+**Nitro**, la mascota del producto: en el hero (`src/components/nitro/`), en
+las tarjetas del recorrido y en el CTA final. También muestra conversaciones equivalentes por plan y una
+recomendación de plan en la calculadora (`UNITS_PER_CONVERSATION = 3`). La
+unidad pública de los planes es el **turno** (cada respuesta del asesor). Las
+reglas de uso del personaje están en `docs/diseno-y-narrativa.md`.
+
 Desde el 25 de septiembre el asistente (Guía Nitro) reposa como el rayo de
 Nitro en píxeles, no como orbe, y las conversaciones de WhatsApp usan tiendas
 ficticias con logo (Alma Botánica, Paso Urbano) vistas desde el teléfono del

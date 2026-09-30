@@ -64,6 +64,29 @@ No usarlo como viñeta, decoración repetida, icono de tarjeta ni señal dentro
 de un motion graphic. La revisión de la home rechazó específicamente su uso en
 el recorrido comercial. La escasez protege su valor como firma de marca.
 
+### Personaje Nitro (30 de septiembre de 2026, NIT-79)
+
+Nitro es la mascota de Nitro Complete: esfera grafito, ojos ovalados verdes,
+diadema con micrófono y banda con rayo. Es el único personaje; no se crean
+variantes ni otros personajes. Assets en `public/nitro/` (poses base,
+saludando, confirmando, despachando y celebrando en 512/1024, e íconos PNG de
+48/96/192) y `public/nitro/live/` (capas del lienzo 980×980 de `NitroLive`, que
+no se redimensionan ni recortan).
+
+- En el copy de la página se sigue diciendo «tu asesor». «Nitro» se usa solo
+  como nombre del personaje (su burbuja y los chips del panel). Nunca «bot» ni
+  «chatbot».
+- La burbuja de Nitro imita WhatsApp: verde oscuro `#005C4B`, logo, hora y
+  doble check. No introducir otros acentos además del verde Nitro.
+- En `/nitro-complete` aparece en el hero (vivo), en las tarjetas del
+  recorrido y en el CTA final. No aparece en «Casos para una persona», que es el
+  momento del equipo humano, ni en «Conserva el mando», precios, FAQ o el
+  bloque legal.
+- Motion: flotación suave, parpadeo y mirada que sigue al cursor. Con
+  `prefers-reduced-motion` no flota, no parpadea solo y no mira por su cuenta.
+  El loop se pausa fuera de pantalla y en reposo.
+- Aún no se propaga a otras páginas ni a la home.
+
 ## Narrativa
 
 ### Principios
@@ -274,7 +297,12 @@ para transformaciones y pausar el canvas cuando la pestaña no esté visible.
 - `src/components/chat-widget.tsx`: comportamiento contextual y panel del
   asistente.
 - `src/components/dynamic-chat-widget.tsx`: carga diferida en el layout público.
-- `src/lib/commercial-content.ts`: mensajes y calificación de soluciones.
+- `src/lib/commercial-content.ts`: mensajes y calificación de soluciones;
+  también planes, `UNITS_PER_CONVERSATION` y `recommendPlan()`.
+- `src/components/nitro/nitro-live.tsx`: Nitro interactivo (capas, mirada,
+  parpadeo, burbuja de WhatsApp y teclado).
+- `src/components/nitro/nitro-hero.tsx`: Nitro con los estados del panel del
+  hero de `/nitro-complete`.
 
 ## Lista de revisión para nuevas páginas
 

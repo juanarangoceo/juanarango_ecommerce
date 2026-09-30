@@ -130,7 +130,7 @@ export default function HomePage() {
             <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Calcula lo que hoy <span className="text-nitro-text">se queda en el chat.</span></h2>
             <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Mueve los valores con los datos de tu negocio. Verás cuántas conversaciones puedes delegar y cuántas ventas se pierden por no responder a tiempo.</p>
           </div>
-          <SalesCalculator />
+          <SalesCalculator plansPath="/nitro-complete" />
         </div>
       </section>
 

@@ -1,9 +1,25 @@
 # Pendientes
 
-Estado vivo al 29 de septiembre de 2026. Lo terminado se elimina de aquí y se
+Estado vivo al 30 de septiembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
 ## Punto de reanudación para el siguiente agente
+
+### Nitro en /nitro-complete (NIT-79) — 30 de septiembre de 2026
+
+Publicado por solicitud del usuario («despliega todo»). Detalle, commit y
+verificación de producción en [`bitacora/2026-09.md`](bitacora/2026-09.md);
+capturas en `artifacts/nitro-complete-nit79-2026-09-30/`. Queda:
+
+1. Aprobación visual de Juan en su teléfono (hero, tarjetas y CTA final).
+2. Cuando existan los assets: logo «Nitro Complete» y `og-nitro.png` con Nitro
+   (bloqueados en el issue).
+3. Revisar `UNITS_PER_CONVERSATION = 3` cuando haya más tiendas en producción.
+   El calificador de Nitro Bot (`lib/commercial/qualification.ts`) recomienda
+   plan con otra escala (menos de 20 chats al día → 5K) y puede recomendar un
+   plan distinto al de la calculadora de la web.
+4. En Nitro Bot, marcar como hecho su pendiente «La web dice “unidades de
+   consumo”: cambiarla a “turnos”» (no se tocó ese repositorio).
 
 ### Registro/login publicados — 29 de septiembre de 2026
 
@@ -57,8 +73,9 @@ Prioridad alta:
 
 Decisiones comerciales del usuario:
 
-4. Ratificar `Nitro Complete` como nombre público, los planes Nitro 5K/15K/30K,
-   la unidad de consumo y la implementación de $700.000 (hoy publicados).
+4. Ratificar `Nitro Complete` como nombre público, los planes Nitro 5K/15K/30K
+   y la implementación de $700.000 (hoy publicados). La unidad ya quedó
+   definida: el turno (30-09).
 5. Decidir el futuro de `/nitrobot`: repite planes y buena parte de la
    narrativa de `/nitro-complete`. Mantenerla o redirigirla 301 tras revisar
    Search Console. `/nitrobot/conectar` y `/nitrobot/vsl` se conservan.
@@ -96,7 +113,7 @@ publicar hay que cerrar estas decisiones comerciales:
    COP.
 3. Confirmar implementación estándar de $700.000 COP y qué condiciones sacan
    un caso de ese alcance.
-4. Definir el nombre comercial exacto de la unidad que descuenta el contador.
+4. ~~Definir el nombre comercial de la unidad~~: es el **turno** (30-09).
 5. Definir precio, vencimiento y comportamiento del bloque adicional de 2.000.
 
 La tabla volvió a `/nitrobot` por decisión del usuario con las mensualidades y
