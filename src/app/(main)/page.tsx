@@ -5,11 +5,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LatestPostsSection } from "@/components/landing/latest-posts-section";
 import { NewsletterSection } from "@/components/commercial/newsletter-section";
-import { NitroCompletePreview } from "@/components/commercial/nitro-complete-preview";
 import { primaryCta, solutions } from "@/lib/commercial-content";
-import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
+import { NitroHero } from "@/components/nitro/nitro-hero";
 
 export const metadata: Metadata = {
   title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
@@ -56,8 +55,12 @@ export default function HomePage() {
               <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href={primaryCta.href}>{primaryCta.label}</Link></Button>
             </div>
             <p className="mt-5 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-white/45 lg:justify-start">Funciona con <ShopifyLogo className="size-3.5" /> <span className="font-semibold text-white/70">Shopify</span> o sin tienda online · Implementación acompañada</p>
+            <p className="mt-6 border-t border-white/8 pt-5 text-sm text-white/55">
+              ¿Buscas asesoría para tu ecommerce?{" "}
+              <Link href="/soluciones/nitro-commerce" className="inline-flex items-center gap-1 font-semibold text-white underline decoration-primary/60 underline-offset-4 hover:text-primary">Conoce la asesoría <ArrowRight className="size-3.5" aria-hidden="true" /></Link>
+            </p>
           </div>
-          <NitroCompletePreview />
+          <NitroHero />
         </div>
       </section>
 
@@ -123,23 +126,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calculadora */}
-      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="calculator">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Calcula lo que hoy <span className="text-nitro-text">se queda en el chat.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Mueve los valores con los datos de tu negocio. Verás cuántas conversaciones puedes delegar y cuántas ventas se pierden por no responder a tiempo.</p>
-          </div>
-          <SalesCalculator plansPath="/nitro-complete" />
-        </div>
-      </section>
-
-      {/* Otras formas de trabajar juntos */}
-      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="diagnostic">
+      {/* Asesoría: la otra forma de trabajar juntos, al mismo nivel */}
+      <section id="asesoria" className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="diagnostic">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">¿Todavía no es momento de automatizar? <span className="text-primary">Empecemos por otro lado.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/55 lg:mx-0 lg:justify-self-end lg:text-left">Si tu ecommerce necesita orden, una oferta más clara o una página que convierta, también te acompaño.</p>
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Si lo que necesitas es dirección, <span className="text-primary">te asesoro.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/55 lg:mx-0 lg:justify-self-end lg:text-left">No todo se resuelve automatizando. Reviso contigo tu ecommerce, elegimos la oportunidad que más pesa y te acompaño a implementarla, o lanzamos una página enfocada en tu oferta.</p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {alternatives.map((solution) => (

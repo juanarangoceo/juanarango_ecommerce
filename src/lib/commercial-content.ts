@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 
 export const primaryNavigation = [
-  { label: "Nitro Complete", href: "/nitro-complete" },
-  { label: "Consultoría", href: "/soluciones/nitro-commerce" },
+  { label: "Nitro Complete", href: "/nitro-complete", featured: true },
+  { label: "Asesoría", href: "/soluciones/nitro-commerce" },
   { label: "Blog", href: "/blog" },
   { label: "Sobre Juan", href: "/sobre-mi" },
 ] as const;
@@ -35,6 +35,8 @@ export const nitroCompleteModules = [
     title: "Un asesor que vende con tu catálogo real",
     text: "Responde, recomienda productos, cotiza con precios y envíos calculados por el sistema, toma los datos de entrega y deja el pedido creado.",
     icon: MessageCircle,
+    how: "Consulta producto, precio y envío en tu catálogo antes de responder, y el total lo calcula el sistema. Toma nombre, dirección y ciudad, y crea el pedido; si tienes Shopify, queda creado en tu tienda.",
+    needs: "Tu catálogo en Shopify o cargado en Nitro, y definir con nosotros el tono del asesor y hasta dónde puede negociar.",
   },
   {
     key: "confirmacion",
@@ -42,6 +44,8 @@ export const nitroCompleteModules = [
     title: "Pedidos contraentrega confirmados",
     text: "Pide al comprador que confirme su pedido con un botón antes de que lo despaches, para enviar con menos dudas.",
     icon: PackageCheck,
+    how: "Envía al comprador el resumen del pedido con tres botones: «Confirmar pedido», «Corregir datos» o «Solicitar cancelación». Lo confirmado queda marcado (en Shopify, con una etiqueta) y lo demás pasa a tu equipo.",
+    needs: "Pedidos contraentrega de Shopify o de Nitro Landing y una plantilla de WhatsApp aprobada por Meta.",
   },
   {
     key: "postventa",
@@ -49,6 +53,8 @@ export const nitroCompleteModules = [
     title: "Postventa que avisa sin que nadie escriba",
     text: "Informa el despacho, comparte la guía y pregunta si el pedido llegó. Tu equipo deja de responder “¿dónde va mi pedido?”.",
     icon: Truck,
+    how: "Cuando el pedido sale, avisa al comprador con la transportadora y la guía, y después le pregunta si lo recibió.",
+    needs: "Registrar el despacho: en Shopify se detecta solo; sin Shopify, desde el panel. Los estados de reparto o entrega se actualizan en el panel o con un archivo CSV.",
   },
   {
     key: "seguimiento",
@@ -56,6 +62,8 @@ export const nitroCompleteModules = [
     title: "Seguimiento y recuperación",
     text: "Retoma conversaciones que quedaron a medias y, con permiso del comprador, vuelve a escribir a quien recibió una cotización y no compró.",
     icon: RefreshCw,
+    how: "Retoma el chat que quedó a medias dentro de las 24 horas que permite WhatsApp, en tu horario de atención. A quien recibió una cotización y no compró le puede enviar un segundo mensaje con la oferta que tú autorices.",
+    needs: "Para el segundo mensaje: permiso del comprador, una plantilla de marketing aprobada por Meta y la oferta definida por producto. Nunca escribe a quien pidió no recibir mensajes.",
   },
   {
     key: "equipo",
@@ -63,6 +71,8 @@ export const nitroCompleteModules = [
     title: "Casos para una persona, con contexto",
     text: "Lo que el asesor no debe resolver pasa a tu equipo con toda la conversación. Nada se queda sin dueño.",
     icon: Users,
+    how: "Si llega un reclamo, un cambio o algo que el asesor no debe decidir, deja de responder en ese chat y abre un caso para tu equipo con la conversación completa.",
+    needs: "Definir quién del equipo atiende los casos. Al resolverlo, devuelven el chat al asesor.",
   },
   {
     key: "panel",
@@ -70,6 +80,8 @@ export const nitroCompleteModules = [
     title: "Un panel que empieza por lo vendido",
     text: "Ves primero lo que vendió tu asesor, después lo que te espera hoy y luego cómo vender más, también desde el celular.",
     icon: LayoutDashboard,
+    how: "Arranca por las ventas del asesor, sigue con lo que requiere atención hoy (casos, confirmaciones, despachos) y termina con oportunidades para vender más.",
+    needs: "Nada adicional: viene con tu cuenta. Cada persona del equipo entra con su usuario y sus permisos.",
   },
 ] as const;
 
@@ -124,7 +136,7 @@ export const solutions = [
   },
   {
     slug: "nitro-commerce",
-    eyebrow: "Consultoría ecommerce",
+    eyebrow: "Asesoría ecommerce",
     title: "NitroCommerce",
     result: "Encuentra la oportunidad que merece atención y hazla realidad.",
     description:

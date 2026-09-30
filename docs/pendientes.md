@@ -5,6 +5,15 @@ registra en la bitácora correspondiente.
 
 ## Punto de reanudación para el siguiente agente
 
+### Home, landing, menú y soluciones — 30 de septiembre de 2026
+
+Implementado y validado localmente en la rama
+`rediseno-nitro-complete-home-2026-10` (detalle en la bitácora). Queda
+aprobarlo en el preview desde el teléfono y publicarlo. Después: revisar si
+`/soluciones/nitro-commerce` necesita el mismo tratamiento de nombre + slogan,
+y conseguir capturas reales del panel con permiso de un cliente para
+reemplazar ilustraciones (lo que más aleja la web de parecer hecha con IA).
+
 ### Nitro en /nitro-complete (NIT-79) — 30 de septiembre de 2026
 
 En producción desde el 30-09 (`408fe7a`, PR #2), verificado en el dominio.

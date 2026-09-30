@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NitroMark } from "@/components/commercial/nitro-mark";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
@@ -39,11 +40,18 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
         </Link>
 
         <nav className="hidden items-center gap-5 xl:flex" aria-label="Navegación principal">
-          {primaryNavigation.map((item) => (
-            <Link key={item.href} href={item.href} className="text-sm text-white/68 transition-colors hover:text-white">
-              {item.label}
-            </Link>
-          ))}
+          {primaryNavigation.map((item) =>
+            "featured" in item ? (
+              <Link key={item.href} href={item.href} className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-primary">
+                <Image src="/nitro/nitro-base-icono-48.png" alt="" width={20} height={20} className="size-5" />
+                {item.label}
+              </Link>
+            ) : (
+              <Link key={item.href} href={item.href} className="text-sm text-white/68 transition-colors hover:text-white">
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -75,16 +83,32 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
       {open ? (
         <nav id="mobile-navigation" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/8 bg-[#0b0d0b] px-5 py-5 xl:hidden" aria-label="Navegación móvil">
           <div className="mx-auto grid max-w-7xl gap-1">
-            {primaryNavigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-base text-white/78 hover:bg-white/5 hover:text-white"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {primaryNavigation.map((item) =>
+              "featured" in item ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="mb-2 flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-3 hover:border-primary/45"
+                >
+                  <Image src="/nitro/nitro-base-icono-96.png" alt="" width={44} height={44} className="size-11 shrink-0" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-base font-semibold text-white">{item.label}</span>
+                    <span className="block text-sm text-white/55">Vende por WhatsApp con tu catálogo</span>
+                  </span>
+                  <ArrowRight className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                </Link>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-4 py-3 text-base text-white/78 hover:bg-white/5 hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
             <div className="mt-3 border-t border-white/8 pt-4">
               <p className="px-4 text-sm text-white/45">Tu cuenta de Nitro Complete</p>
               <div className="mt-3 grid grid-cols-2 gap-3">

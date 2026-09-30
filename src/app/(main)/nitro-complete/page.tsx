@@ -4,12 +4,13 @@ import Link from "next/link";
 import { ArrowRight, Check, Clock3, Hand, LayoutTemplate, Megaphone, Radar, ShieldCheck, SlidersHorizontal, Store } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { NitroCompleteModules } from "@/components/commercial/nitro-complete-modules";
 import { NitroHero } from "@/components/nitro/nitro-hero";
 import nitroMotion from "@/components/nitro/nitro-live.module.css";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { nitroCompleteImplementation, nitroCompleteModules, nitroCompletePlans, planConversations, primaryCta } from "@/lib/commercial-content";
+import { nitroCompleteImplementation, nitroCompletePlans, planConversations, primaryCta } from "@/lib/commercial-content";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
 
@@ -44,15 +45,14 @@ const growth = [
   { icon: Radar, title: "Oportunidades", text: "Descubre por qué no compran los clientes que casi compran." },
 ] as const;
 
-// Nitro acompaña cada parte del recorrido que hace el asesor. «Casos para una
-// persona» queda sin Nitro: ese momento es de tu equipo (NIT-79).
-const moduleNitro: Partial<Record<(typeof nitroCompleteModules)[number]["key"], string>> = {
-  asesor: "/nitro/nitro-base-512.webp",
-  confirmacion: "/nitro/nitro-confirmando-512.webp",
-  postventa: "/nitro/nitro-despachando-512.webp",
-  seguimiento: "/nitro/nitro-base-512.webp",
-  panel: "/nitro/nitro-base-512.webp",
-};
+const shopifyFeatures = [
+  ["Catálogo sincronizado", "Tus productos y precios llegan desde la tienda y se mantienen al día. El asesor responde con lo que tienes publicado."],
+  ["El pedido se crea en tu tienda", "Cuando el cliente compra en el chat, el pedido contraentrega queda en Shopify con sus datos de entrega."],
+  ["Confirmación a la vista", "El pedido que el comprador confirma por WhatsApp queda etiquetado en Shopify antes de despacharlo."],
+  ["Aviso de envío automático", "Al registrar el despacho en Shopify, el comprador recibe la transportadora y la guía por WhatsApp."],
+  ["Carritos abandonados", "Recuerda por WhatsApp a quien dejó el checkout a medias, con el carrito listo para terminar la compra. Requiere plantillas aprobadas por Meta."],
+  ["Botón de WhatsApp en tu tienda", "Abre la conversación con el producto que el cliente está viendo. Lo instalamos en la implementación."],
+] as const;
 
 const conversationsFormat = new Intl.NumberFormat("es-CO");
 
@@ -106,9 +106,16 @@ export default function NitroCompletePage() {
         <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
         <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
-            <p className="inline-flex items-center gap-2 text-sm font-semibold text-white"><WhatsAppLogo className="size-4" />Nitro Complete para WhatsApp</p>
-            <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.8vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white">
-              Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
+            <p className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-white/80 lg:justify-start">
+              <WhatsAppLogo className="size-4" />Para WhatsApp
+              <span className="text-white/30" aria-hidden="true">·</span>
+              <span className="inline-flex items-center gap-1.5">con <ShopifyLogo className="size-3.5" /> Shopify o sin tienda</span>
+            </p>
+            <h1 className="mt-5 text-white">
+              <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
+              <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
+                Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
+              </span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/62 lg:mx-0">
               <strong className="nitro-hl">Atiende con tu catálogo real</strong>, <strong className="nitro-hl">crea el pedido</strong>, <strong className="nitro-hl">lo confirma antes del despacho</strong>, <strong className="nitro-hl">avisa el envío</strong> y <strong className="nitro-hl">retoma las ventas</strong> que quedaron pendientes. Tú ves todo desde un panel y decides cuándo entra tu equipo.
@@ -135,24 +142,35 @@ export default function NitroCompletePage() {
             <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Del primer mensaje <span className="text-nitro-text">a la entrega.</span></h2>
             <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Cada parte trabaja en un momento distinto. Juntas cubren el recorrido en el que hoy se pierden más ventas.</p>
           </div>
-          <ol className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {nitroCompleteModules.map(({ key, moment, title, text, icon: Icon }) => (
-              <li key={key} className="rounded-2xl border border-line bg-white p-7">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-h-10 items-center gap-3">
-                    <span className="nitro-icon-mark flex size-10 shrink-0 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="nitro-icon-glyph size-5" /></span>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">{moment}</p>
-                  </div>
-                  {moduleNitro[key] ? (
-                    <Image src={moduleNitro[key]} alt="" width={72} height={72} sizes="(min-width: 820px) 72px, 56px" loading="lazy" className="-mr-2 -mt-3 size-14 shrink-0 object-contain min-[820px]:size-[72px]" />
-                  ) : null}
+          <NitroCompleteModules />
+          <p className="mt-6 text-center text-xs leading-5 text-ink/50 lg:text-left">La confirmación aplica a pedidos contraentrega de Shopify y de Nitro Landing. Seguimiento y recuperación requieren plantillas aprobadas por Meta y el permiso del comprador.</p>
+        </div>
+      </section>
+
+      {/* Shopify: la integración más completa. Solo capacidades verificadas en
+          nitro_bot (sync, pedidos, etiqueta de Aria, despacho, carritos, botón). */}
+      <section className="border-b border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
+          <div className="text-center lg:sticky lg:top-28 lg:self-start lg:text-left">
+            <ShopifyLogo className="mx-auto size-10 lg:mx-0" />
+            <h2 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Hecho para vender <span className="text-primary">con Shopify.</span></h2>
+            <p className="mx-auto mt-5 max-w-md text-base leading-7 text-white/58 lg:mx-0">Conectas tu tienda y Nitro Complete trabaja con lo que ya tienes: tus productos, tus pedidos y tus envíos. No cambias de plataforma ni duplicas el catálogo.</p>
+            <div className="mx-auto mt-8 flex max-w-md gap-3 rounded-2xl border border-white/10 bg-background p-5 text-left lg:mx-0">
+              <Store className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+              <p className="text-sm leading-6 text-white/58"><strong className="font-semibold text-white">¿Sin tienda online?</strong> Sube tu catálogo a Nitro y gestiona los pedidos desde el panel. El asesor funciona igual.</p>
+            </div>
+          </div>
+          <ol className="divide-y divide-white/8 border-y border-white/8">
+            {shopifyFeatures.map(([title, text], index) => (
+              <li key={title} className="grid grid-cols-[2.5rem_1fr] gap-x-4 py-6">
+                <span className="pt-1 font-mono text-xs text-primary">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-6 text-white/55">{text}</p>
                 </div>
-                <h3 className="mt-5 text-xl font-semibold tracking-tight">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink/62">{text}</p>
               </li>
             ))}
           </ol>
-          <p className="mt-6 text-center text-xs leading-5 text-ink/50 lg:text-left">La confirmación aplica a pedidos contraentrega de Shopify y de Nitro Landing. Seguimiento y recuperación requieren plantillas aprobadas por Meta y el permiso del comprador.</p>
         </div>
       </section>
 
@@ -182,20 +200,6 @@ export default function NitroCompletePage() {
                 <p className="mt-2 text-sm leading-6 text-white/52">{text}</p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Catálogo */}
-      <section className="border-y border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-20" data-nitro-orb="ecosystem">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-          <div className="text-center lg:text-left">
-            <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">Funciona con tu forma de vender.</h2>
-            <p className="mx-auto mt-4 max-w-md text-base leading-7 text-white/55 lg:mx-0">En ambos casos el asesor consulta información real antes de responder y el pedido queda registrado.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <article className="rounded-2xl border border-white/10 bg-background p-6"><ShopifyLogo className="size-6" /><h3 className="mt-4 text-lg font-semibold text-white">Con Shopify</h3><p className="mt-2 text-sm leading-6 text-white/52">Sincroniza productos y crea los pedidos directamente en tu tienda.</p></article>
-            <article className="rounded-2xl border border-white/10 bg-background p-6"><Store className="size-5 text-primary" /><h3 className="mt-4 text-lg font-semibold text-white">Sin tienda online</h3><p className="mt-2 text-sm leading-6 text-white/52">Sube tu catálogo a Nitro y gestiona los pedidos desde el panel.</p></article>
           </div>
         </div>
       </section>

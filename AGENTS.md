@@ -154,6 +154,11 @@ las tarjetas del recorrido y en el CTA final. También muestra conversaciones eq
 recomendación de plan en la calculadora (`UNITS_PER_CONVERSATION = 3`). La
 unidad pública de los planes es el **turno** (cada respuesta del asesor). Las
 reglas de uso del personaje están en `docs/diseno-y-narrativa.md`.
+El mismo día se reorganizó la web en dos caminos, **producto** (Nitro
+Complete) y **asesoría** (NitroCommerce y Nitro Landing): «Asesoría» en el
+menú, home como puerta de entrada con Nitro y sin calculadora, bloque «Hecho
+para vender con Shopify» y tarjetas del recorrido desplegables. Detalle en
+`docs/diseno-y-narrativa.md` («Estructura comercial»).
 
 Desde el 25 de septiembre el asistente (Guía Nitro) reposa como el rayo de
 Nitro en píxeles, no como orbe, y las conversaciones de WhatsApp usan tiendas

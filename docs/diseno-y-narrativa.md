@@ -78,14 +78,34 @@ no se redimensionan ni recortan).
   «chatbot».
 - La burbuja de Nitro imita WhatsApp: verde oscuro `#005C4B`, logo, hora y
   doble check. No introducir otros acentos además del verde Nitro.
-- En `/nitro-complete` aparece en el hero (vivo), en las tarjetas del
-  recorrido y en el CTA final. No aparece en «Casos para una persona», que es el
-  momento del equipo humano, ni en «Conserva el mando», precios, FAQ o el
-  bloque legal.
+- Aparece en el hero de la home y de `/nitro-complete` (vivo), en el CTA final
+  de la landing, en la tarjeta de Nitro Complete de `/soluciones` y como ícono
+  de «Nitro Complete» en el menú. No va en las tarjetas del recorrido (las
+  imágenes repetidas se descartaron el 30-09; ahí van los íconos de línea), ni
+  en «Conserva el mando», precios, FAQ o el bloque legal.
 - Motion: flotación suave, parpadeo y mirada que sigue al cursor. Con
   `prefers-reduced-motion` no flota, no parpadea solo y no mira por su cuenta.
   El loop se pausa fuera de pantalla y en reposo.
-- Aún no se propaga a otras páginas ni a la home.
+- No se propaga a más páginas sin aprobarlo antes.
+
+### Estructura comercial (30 de septiembre de 2026)
+
+- La web tiene dos caminos: **producto** (Nitro Complete) y **asesoría**
+  (NitroCommerce, con Nitro Landing como servicio). En la interfaz se dice
+  «Asesoría», no «Consultoría».
+- La home es la puerta de entrada: el producto va primero y el camino de
+  asesoría es visible desde el hero. La calculadora y el detalle del producto
+  viven en `/nitro-complete`.
+- `/nitro-complete` se presenta con su nombre como H1 y el slogan «Un equipo de
+  ventas completo dentro de tu WhatsApp.»
+- Shopify es la integración protagonista, pero solo con capacidades
+  verificadas en nitro_bot. «Sin tienda online» sigue siendo una ruta válida.
+- Las tarjetas que explican un módulo pueden abrirse al tocarlas («Cómo
+  funciona» / «Qué necesitas»). Una a la vez y siempre con un botón real con
+  `aria-expanded`.
+- Sin glassmorphism ni rejillas idénticas decorativas. Se prefieren listas
+  editoriales numeradas, una tarjeta protagonista con secundarias y contenido
+  real.
 
 ## Narrativa
 
@@ -230,9 +250,9 @@ Patrones actuales:
   En conversación, calculadora, precios y FAQ puede mostrar como máximo dos
   mensajes proactivos por página (uno por página y contexto en la sesión) con
   punto naranja de no leído.
-- `NitroCompletePreview`: hero con una conversación ilustrativa de WhatsApp que
-  se reproduce sola y, al lado, lo que registra el panel. Sustituye a la tarjeta
-  de «valor vendido», que no se entendía.
+- `NitroHero` (`src/components/nitro/nitro-hero.tsx`): Nitro vivo con los
+  estados del panel; hero de la home y de `/nitro-complete`. Reemplazó a
+  `NitroCompletePreview` (teléfono con conversación), eliminado el 30-09.
 - `WhatsAppStory`: venta completa en cinco capítulos (asesor, pedido,
   confirmación, postventa y caso para el equipo). Avanza sola o por clic.
 - `whatsapp-ui.tsx`: teléfono, burbujas, tarjeta de producto, botones de
@@ -302,7 +322,9 @@ para transformaciones y pausar el canvas cuando la pestaña no esté visible.
 - `src/components/nitro/nitro-live.tsx`: Nitro interactivo (capas, mirada,
   parpadeo, burbuja de WhatsApp y teclado).
 - `src/components/nitro/nitro-hero.tsx`: Nitro con los estados del panel del
-  hero de `/nitro-complete`.
+  hero de la home y de `/nitro-complete`.
+- `src/components/commercial/nitro-complete-modules.tsx`: tarjetas del
+  recorrido que se abren al tocarlas.
 
 ## Lista de revisión para nuevas páginas
 

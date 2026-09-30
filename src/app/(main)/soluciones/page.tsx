@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, CircleHelp, Layers3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,8 @@ export default function SolutionsPage() {
         <div className="pointer-events-none absolute left-[10%] top-20 size-72 rounded-full bg-primary/[.055] blur-[110px]" />
         <div className="relative mx-auto grid max-w-7xl gap-9 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,.72fr)] lg:items-center lg:gap-16">
           <div className="text-center lg:text-left">
-            <h1 className="font-display text-[clamp(2.9rem,5.2vw,5.4rem)] font-bold leading-[.96] tracking-[-.05em] text-white">Tres formas de hacer crecer tu negocio, <span className="text-primary">una misma forma de trabajar.</span></h1>
-            <p className="mx-auto mt-6 max-w-2xl text-left text-lg leading-8 text-white/58 lg:mx-0">Nitro Complete <strong className="nitro-hl">vende por WhatsApp</strong> y <strong className="nitro-hl">acompaña cada pedido hasta la entrega</strong>. NitroCommerce ordena tu ecommerce y Nitro Landing enfoca una oferta. En todas te acompaño hasta dejarlo funcionando.</p>
+            <h1 className="font-display text-[clamp(2.9rem,5.2vw,5.4rem)] font-bold leading-[.96] tracking-[-.05em] text-white">Un producto para vender por WhatsApp. <span className="text-primary">Una asesoría para tu ecommerce.</span></h1>
+            <p className="mx-auto mt-6 max-w-2xl text-left text-lg leading-8 text-white/58 lg:mx-0">Nitro Complete es mi producto: <strong className="nitro-hl">vende por WhatsApp</strong> y <strong className="nitro-hl">acompaña cada pedido hasta la entrega</strong>. Si lo que necesitas es ordenar tu ecommerce o lanzar una oferta, te asesoro con NitroCommerce y Nitro Landing. En ambos casos te acompaño hasta dejarlo funcionando.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"><Button asChild size="lg" className="h-13 rounded-full px-7 text-base font-bold"><Link href="/nitro-complete">Conocer Nitro Complete <ArrowRight /></Link></Button><Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="/diagnostico">No sé por dónde empezar</Link></Button></div>
           </div>
           <aside className="rounded-[1.75rem] border border-white/10 bg-[#0d110e] p-6 sm:p-7" aria-label="Cómo elegir una solución">
@@ -33,12 +34,12 @@ export default function SolutionsPage() {
       </section>
       <section className="border-y border-white/7 bg-[#0b0e0c] px-5 py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><h2 className="font-display text-3xl font-bold text-white sm:text-5xl">Compara por la oportunidad que quieres activar.</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-white/48">Cada solución tiene un alcance diferente, pero comparte dirección, implementación y acompañamiento.</p></div></div>
-          <div className="grid gap-5 lg:grid-cols-3">
-          {solutions.map((solution) => (
-            <Link key={solution.slug} href={solution.href} className="group relative isolate flex min-h-[29rem] flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0d110e] p-7 transition-[border-color,background-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-[#101611] focus-visible:-translate-y-1 focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 sm:p-8">
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><h2 className="font-display text-3xl font-bold text-white sm:text-5xl">Compara por la oportunidad que quieres activar.</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-white/48">Nitro Complete es el producto; NitroCommerce y Nitro Landing son asesoría. Todas comparten dirección, implementación y acompañamiento.</p></div></div>
+          <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr]">
+          {solutions.map((solution, index) => (
+            <Link key={solution.slug} href={solution.href} className={`group relative isolate flex flex-col ${index === 0 ? "lg:row-span-2 lg:min-h-[36rem]" : ""} overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0d110e] p-7 transition-[border-color,background-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-[#101611] focus-visible:-translate-y-1 focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 sm:p-8`}>
               <span className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/75 to-transparent" />
-              <div className="flex items-start justify-between gap-4"><span className="nitro-icon-mark flex size-14 items-center justify-center rounded-2xl bg-primary/9 text-primary"><solution.icon className="nitro-icon-glyph size-7" /></span><ArrowRight className="mt-2 size-5 text-white/20 transition-[color,transform] group-hover:translate-x-1 group-hover:text-primary" /></div>
+              <div className="flex items-start justify-between gap-4">{index === 0 ? <Image src="/nitro/nitro-base-512.webp" alt="" width={96} height={96} sizes="96px" className="-ml-2 -mt-2 size-24 object-contain" /> : <span className="nitro-icon-mark flex size-14 items-center justify-center rounded-2xl bg-primary/9 text-primary"><solution.icon className="nitro-icon-glyph size-7" /></span>}<ArrowRight className="mt-2 size-5 text-white/20 transition-[color,transform] group-hover:translate-x-1 group-hover:text-primary" /></div>
               <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">{solution.eyebrow}</p>
               <h2 className="mt-3 text-3xl font-bold text-white">{solution.title}</h2>
               <p className="mt-4 text-lg font-medium leading-7 text-white/84">{solution.result}</p>

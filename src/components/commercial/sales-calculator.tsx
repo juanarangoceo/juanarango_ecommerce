@@ -54,8 +54,7 @@ function Slider({
   );
 }
 
-/** `plansPath`: página con las tarjetas de planes; vacío si están en la misma. */
-export function SalesCalculator({ plansPath = "" }: { plansPath?: string }) {
+export function SalesCalculator() {
   const [chats, setChats] = useState(1500);
   const [ticket, setTicket] = useState(150000);
   const [closeRate, setCloseRate] = useState(8);
@@ -132,7 +131,7 @@ export function SalesCalculator({ plansPath = "" }: { plansPath?: string }) {
               {plan ? <>Para tu volumen: <strong className="font-semibold text-white">{plan.name}</strong></> : <strong className="font-semibold text-white">Hablemos de un plan a medida</strong>}
             </p>
             {plan ? (
-              <a href={`${plansPath}#plan-${plan.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+              <a href={`#plan-${plan.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
                 Ver plan <ArrowDown className="size-3.5" aria-hidden="true" />
               </a>
             ) : null}

@@ -5,7 +5,7 @@ const groups = [
     title: "Soluciones",
     links: [
       ["Nitro Complete", "/nitro-complete"],
-      ["Consultoría ecommerce", "/soluciones/nitro-commerce"],
+      ["Asesoría ecommerce", "/soluciones/nitro-commerce"],
       ["Nitro Landing", "/soluciones/nitro-landing"],
       ["NitroBot", "/nitrobot"],
       ["Diagnóstico", "/diagnostico"],
