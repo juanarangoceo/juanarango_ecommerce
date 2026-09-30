@@ -54,6 +54,19 @@ const shopifyFeatures = [
   ["Botón de WhatsApp en tu tienda", "Abre la conversación con el producto que el cliente está viendo. Lo instalamos en la implementación."],
 ] as const;
 
+// Catálogo nativo (nitro_bot: app/dashboard/catalogo y lib/catalog/upsert.ts).
+// La IA no redacta el catálogo: genera el embedding con el que el asesor
+// encuentra cada producto por significado, no por palabra exacta.
+const nativeCatalog = [
+  "Creas cada producto desde el panel, con sus fotos, precio y descripción.",
+  "Si ya tienes tu lista en Excel, la importas en CSV de una vez.",
+  "La IA aprende cada producto para que el asesor lo encuentre aunque el cliente lo describa con sus palabras.",
+] as const;
+
+// Radar de oportunidades (nitro_bot: docs/modules/sales-radar.md,
+// lib/radar/taxonomy.ts). Solo causas reales de la taxonomía.
+const lostReasons = ["Precio", "Costo de envío", "Tiempo de entrega", "Sin disponibilidad", "Medio de pago", "Garantía o confianza", "Información insuficiente"] as const;
+
 const conversationsFormat = new Intl.NumberFormat("es-CO");
 
 const faqs = [
@@ -155,9 +168,13 @@ export default function NitroCompletePage() {
             <ShopifyLogo className="mx-auto size-10 lg:mx-0" />
             <h2 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Hecho para vender <span className="text-primary">con Shopify.</span></h2>
             <p className="mx-auto mt-5 max-w-md text-base leading-7 text-white/58 lg:mx-0">Conectas tu tienda y Nitro Complete trabaja con lo que ya tienes: tus productos, tus pedidos y tus envíos. No cambias de plataforma ni duplicas el catálogo.</p>
-            <div className="mx-auto mt-8 flex max-w-md gap-3 rounded-2xl border border-white/10 bg-background p-5 text-left lg:mx-0">
-              <Store className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
-              <p className="text-sm leading-6 text-white/58"><strong className="font-semibold text-white">¿Sin tienda online?</strong> Sube tu catálogo a Nitro y gestiona los pedidos desde el panel. El asesor funciona igual.</p>
+            <div className="mx-auto mt-8 max-w-md rounded-2xl border border-white/10 bg-background p-6 text-left lg:mx-0">
+              <p className="flex items-center gap-2.5 text-base font-semibold text-white"><Store className="size-5 shrink-0 text-primary" aria-hidden="true" />¿Sin Shopify? Carga tu catálogo en Nitro.</p>
+              <ul className="mt-4 space-y-2.5 text-sm leading-6 text-white/58">
+                {nativeCatalog.map((item) => (
+                  <li key={item} className="flex gap-2.5"><Check className="mt-1 size-3.5 shrink-0 text-primary" aria-hidden="true" />{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
           <ol className="divide-y divide-white/8 border-y border-white/8">
@@ -182,6 +199,34 @@ export default function NitroCompletePage() {
             <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Elige un momento de la venta o deja que la conversación avance sola.</p>
           </div>
           <WhatsAppStory />
+        </div>
+      </section>
+
+      {/* Por qué no compraron: la ventaja del chat frente a la web */}
+      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="about">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Tu web no te dice por qué se fueron. <span className="text-nitro-text">Tu WhatsApp sí.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Cuando alguien abandona tu tienda, solo sabes que se fue. En el chat, el cliente escribe lo que lo frenó. Nitro Complete lo lee y te lo muestra ordenado.</p>
+          </div>
+          <div className="mt-12 grid gap-4 lg:grid-cols-[.8fr_1.2fr]">
+            <article className="rounded-2xl border border-line bg-white p-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">Solo con tu web</p>
+              <p className="mt-4 text-xl font-semibold tracking-tight">Ves visitas, clics y carritos abandonados.</p>
+              <p className="mt-3 text-sm leading-6 text-ink/60">Sabes cuántos se fueron, pero no si fue el precio, el envío o una duda que nadie respondió. Tienes que adivinar qué cambiar.</p>
+            </article>
+            <article className="rounded-2xl bg-ink p-7 text-white">
+              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-primary">Con Nitro Complete</p>
+              <p className="mt-4 text-xl font-semibold tracking-tight">Ves la causa de cada venta que no se dio.</p>
+              <p className="mt-3 text-sm leading-6 text-white/62">Las conversaciones con intención de compra que llevan siete días sin compra se clasifican por causa, con los mensajes que la muestran. Así sabes cuántas oportunidades del mes se perdieron por la misma razón y qué revisar primero.</p>
+              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Causas que detecta">
+                {lostReasons.map((reason) => (
+                  <li key={reason} className="rounded-full border border-white/12 px-3 py-1 text-xs text-white/75">{reason}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+          <p className="mt-6 text-center text-xs leading-5 text-ink/50 lg:text-left">Lo hace el módulo Oportunidades, que se activa aparte. Muestra oportunidades observadas en tus conversaciones, no ventas garantizadas.</p>
         </div>
       </section>
 
@@ -292,24 +337,19 @@ export default function NitroCompletePage() {
         </div>
       </section>
 
-      {/* Titular del producto (NIT-57): tiene que ser inequívoco para Meta y
-          para quien ejerce sus derechos. El footer global sigue siendo del sitio. */}
-      <section className="px-5 pb-16 lg:px-8" aria-labelledby="nitro-complete-titular">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 px-6 py-6 text-sm leading-6 text-white/58">
-          <h2 id="nitro-complete-titular" className="font-semibold text-white">Quién presta Nitro Complete</h2>
-          <p className="mt-2">
-            Nitro Complete es un producto de <strong className="text-white">{NITRO_COMPLETE_ENTITY.name}</strong>, NIT{" "}
-            {NITRO_COMPLETE_ENTITY.nit}, {NITRO_COMPLETE_ENTITY.location}. Contacto:{" "}
-            <a href={`mailto:${NITRO_COMPLETE_ENTITY.email}`} className="text-white underline decoration-primary/60 underline-offset-4">{NITRO_COMPLETE_ENTITY.email}</a>{" "}
-            · WhatsApp{" "}
-            <a href={NITRO_COMPLETE_ENTITY.whatsappLink} className="text-white underline decoration-primary/60 underline-offset-4">{NITRO_COMPLETE_ENTITY.whatsapp}</a>.
-          </p>
-          <p className="mt-2">
-            <Link href="/nitro-complete/privacidad" className="text-primary hover:underline">Política de privacidad de Nitro Complete</Link>
-            {" · "}
-            <Link href="/nitro-complete/eliminacion-de-datos" className="text-primary hover:underline">Eliminación de datos de usuario</Link>
-          </p>
-        </div>
+      {/* Titular del producto (NIT-57): debe seguir siendo inequívoco para Meta
+          y para quien ejerce sus derechos, pero como nota discreta de cierre. */}
+      <section className="px-5 pb-12 lg:px-8" aria-label="Titular de Nitro Complete">
+        <p className="mx-auto max-w-4xl text-center text-xs leading-5 text-white/40">
+          Nitro Complete es un producto de {NITRO_COMPLETE_ENTITY.name} (NIT {NITRO_COMPLETE_ENTITY.nit}), {NITRO_COMPLETE_ENTITY.location}.{" "}
+          <a href={`mailto:${NITRO_COMPLETE_ENTITY.email}`} className="underline underline-offset-2 hover:text-white/70">{NITRO_COMPLETE_ENTITY.email}</a>
+          {" · "}
+          <a href={NITRO_COMPLETE_ENTITY.whatsappLink} className="underline underline-offset-2 hover:text-white/70">WhatsApp {NITRO_COMPLETE_ENTITY.whatsapp}</a>
+          {" · "}
+          <Link href="/nitro-complete/privacidad" className="underline underline-offset-2 hover:text-white/70">Privacidad</Link>
+          {" · "}
+          <Link href="/nitro-complete/eliminacion-de-datos" className="underline underline-offset-2 hover:text-white/70">Eliminación de datos</Link>
+        </p>
       </section>
     </div>
   );

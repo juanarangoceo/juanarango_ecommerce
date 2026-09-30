@@ -48,7 +48,7 @@ export function SiteFooter() {
           <p className="font-display text-2xl font-bold tracking-tight text-white">JUAN ARANGO</p>
           <p className="mt-2 font-mono text-[10px] tracking-[0.26em] text-primary">NITRO ECOM</p>
           <p className="mt-5 text-sm leading-6 text-white/55">
-            Ventas por WhatsApp con IA y consultoría ecommerce. Tecnología que vende y dirección humana para negocios de Colombia y Latinoamérica.
+            Ventas por WhatsApp con IA y asesoría ecommerce. Tecnología que vende y dirección humana para negocios de Colombia y Latinoamérica.
           </p>
           <a href="mailto:juanarangoecommerce@gmail.com" className="mt-6 inline-block text-sm text-white underline decoration-primary/60 underline-offset-4">
             juanarangoecommerce@gmail.com

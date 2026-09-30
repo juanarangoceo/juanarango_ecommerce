@@ -111,6 +111,10 @@ npm run build
 `npm run lint` todavía apunta al comando retirado `next lint`; usa ESLint
 directamente hasta corregir el script en una tarea separada.
 
+Desde el 30-09 Juan prefiere publicar cambios de la web directamente en
+`master` (sin preview por rama) para ahorrar builds de Vercel, siempre con
+TypeScript, ESLint y build locales en verde.
+
 Las variables viven en Vercel; para sincronizarlas localmente se usa
 `vercel env pull .env.local`. Producción corresponde a `master` y el despliegue
 normal es automático por Vercel al hacer push. No usar Docker ni un deploy local

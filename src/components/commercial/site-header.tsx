@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -42,8 +41,7 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
         <nav className="hidden items-center gap-5 xl:flex" aria-label="Navegación principal">
           {primaryNavigation.map((item) =>
             "featured" in item ? (
-              <Link key={item.href} href={item.href} className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-primary">
-                <Image src="/nitro/nitro-base-icono-48.png" alt="" width={20} height={20} className="size-5" />
+              <Link key={item.href} href={item.href} className="text-sm font-semibold text-white transition-colors hover:text-primary">
                 {item.label}
               </Link>
             ) : (
@@ -89,9 +87,8 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="mb-2 flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-3 hover:border-primary/45"
+                  className="mb-2 flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] px-4 py-3.5 hover:border-primary/45"
                 >
-                  <Image src="/nitro/nitro-base-icono-96.png" alt="" width={44} height={44} className="size-11 shrink-0" />
                   <span className="min-w-0 flex-1">
                     <span className="block text-base font-semibold text-white">{item.label}</span>
                     <span className="block text-sm text-white/55">Vende por WhatsApp con tu catálogo</span>

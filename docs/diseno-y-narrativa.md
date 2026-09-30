@@ -103,6 +103,11 @@ no se redimensionan ni recortan).
 - Las tarjetas que explican un módulo pueden abrirse al tocarlas («Cómo
   funciona» / «Qué necesitas»). Una a la vez y siempre con un botón real con
   `aria-expanded`.
+- Argumento diferencial de la landing: en la web no sabes por qué se fue el
+  cliente; en WhatsApp, Nitro Complete muestra la causa (módulo Oportunidades,
+  que se activa aparte).
+- La titularidad del producto va como nota discreta de cierre («Nitro Complete
+  es un producto de TODOPOLIS S.A.S.»), no como bloque destacado.
 - Sin glassmorphism ni rejillas idénticas decorativas. Se prefieren listas
   editoriales numeradas, una tarjeta protagonista con secundarias y contenido
   real.

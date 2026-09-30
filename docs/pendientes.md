@@ -7,12 +7,12 @@ registra en la bitácora correspondiente.
 
 ### Home, landing, menú y soluciones — 30 de septiembre de 2026
 
-Implementado y validado localmente en la rama
-`rediseno-nitro-complete-home-2026-10` (detalle en la bitácora). Queda
-aprobarlo en el preview desde el teléfono y publicarlo. Después: revisar si
-`/soluciones/nitro-commerce` necesita el mismo tratamiento de nombre + slogan,
-y conseguir capturas reales del panel con permiso de un cliente para
-reemplazar ilustraciones (lo que más aleja la web de parecer hecha con IA).
+En producción (ver bitácora). Queda: aprobar en el teléfono; si Juan quiere
+que la IA ayude de verdad a cargar el catálogo (redactar descripciones desde
+fotos, por ejemplo), es una función nueva de nitro_bot que hoy no existe y no
+debe anunciarse antes; revisar si `/soluciones/nitro-commerce` necesita el
+mismo tratamiento de nombre + slogan; conseguir capturas reales del panel con
+permiso de un cliente.
 
 ### Nitro en /nitro-complete (NIT-79) — 30 de septiembre de 2026
 
