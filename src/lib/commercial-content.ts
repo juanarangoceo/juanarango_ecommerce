@@ -116,6 +116,68 @@ export function recommendPlan(monthlyConversations: number): NitroCompletePlan |
 
 export const nitroCompleteImplementation = "$700.000";
 
+/**
+ * Lo que trae la implementación de un plan (decisión de Juan del 2026-10-01).
+ * Misma lista que nitro_bot (`IMPLEMENTATION_INCLUDES` en
+ * lib/commercial/plans.ts): si cambia allá, se cambia aquí.
+ */
+export const nitroCompleteImplementationIncludes = [
+  "El primer mes del plan, sin costo",
+  "Asesoría personalizada con Juan para dejar el asesor vendiendo",
+  "Conexión de WhatsApp, catálogo y plantillas",
+] as const;
+
+/** Plantillas de WhatsApp incluidas cada mes en los planes (nitro_bot: PLAN_TEMPLATES_PER_CYCLE). */
+export const PLAN_TEMPLATES_PER_CYCLE = 200;
+
+const copFormat = new Intl.NumberFormat("es-CO");
+/** «$1.190.000» a partir del número. */
+export function formatCop(value: number) {
+  return `$${copFormat.format(Math.round(value))}`;
+}
+
+/** Pesos por turno de un plan, sin decimales. */
+export function planUnitPrice(plan: NitroCompletePlan) {
+  return Math.round(Number(plan.price.replace(/[^0-9]/g, "")) / plan.units);
+}
+
+// Modalidad Prepago (NIT-80, decisión de Juan del 2026-10-01). Fuente de verdad:
+// nitro_bot, `platform_settings.outbound_pricing` (starter_kit y turn_packs,
+// migración 20261001200100). Si cambian allá, se cambian aquí.
+export const nitroCompleteStarterKit = {
+  price: "$199.000",
+  units: 500,
+  templates: 100,
+  installHours: 48,
+} as const;
+
+export const nitroCompleteUnitPacks = [
+  { units: 100, priceCop: 16_000 },
+  { units: 250, priceCop: 37_000 },
+  { units: 500, priceCop: 69_000 },
+  { units: 1_000, priceCop: 129_000 },
+  { units: 2_500, priceCop: 299_000 },
+  { units: 5_000, priceCop: 595_000 },
+  { units: 10_000, priceCop: 1_190_000 },
+  { units: 20_000, priceCop: 2_380_000 },
+] as const;
+
+export type NitroCompleteUnitPack = (typeof nitroCompleteUnitPacks)[number];
+
+/** Precio por plantilla de WhatsApp en las dos modalidades (nitro_bot: price_template_cop). */
+export const nitroCompleteTemplatePrice = "$70";
+
+/**
+ * La recarga que cubre `units`: el paquete más pequeño que alcanza. Por encima
+ * del mayor, varias del mayor (lo que sobra no vence).
+ */
+export function packFor(units: number): { pack: NitroCompleteUnitPack; count: number } {
+  const fit = nitroCompleteUnitPacks.find((pack) => pack.units >= units);
+  if (fit) return { pack: fit, count: 1 };
+  const biggest = nitroCompleteUnitPacks[nitroCompleteUnitPacks.length - 1];
+  return { pack: biggest, count: Math.ceil(units / biggest.units) };
+}
+
 export const solutions = [
   {
     slug: "nitro-complete",

@@ -10,7 +10,22 @@ import nitroMotion from "@/components/nitro/nitro-live.module.css";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { nitroCompleteImplementation, nitroCompletePlans, planConversations, primaryCta } from "@/lib/commercial-content";
+import {
+  formatCop,
+  nitroCompleteImplementation,
+  nitroCompleteImplementationIncludes,
+  nitroCompletePlans,
+  nitroCompleteStarterKit,
+  nitroCompleteTemplatePrice,
+  nitroCompleteUnitPacks,
+  PLAN_TEMPLATES_PER_CYCLE,
+  planConversations,
+  planUnitPrice,
+  primaryCta,
+  UNITS_PER_CONVERSATION,
+} from "@/lib/commercial-content";
+import { RechargePlanner } from "@/components/commercial/recharge-planner";
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
 
@@ -75,6 +90,10 @@ const faqs = [
   ["¿Necesito Shopify?", "No. Puedes sincronizar tu tienda Shopify o administrar el catálogo directamente en Nitro. En la evaluación definimos la ruta que te da menos trabajo."],
   ["¿Puede equivocarse con los precios?", "Los precios, envíos y totales no quedan a criterio de la IA: se consultan y calculan desde el sistema antes de responder."],
   ["¿Le escribe a mis clientes sin permiso?", "No. Las respuestas ocurren cuando el cliente escribe. Los mensajes de seguimiento y recuperación usan plantillas aprobadas por Meta, respetan horarios y excluyen a quien pidió no recibir promociones."],
+  ["¿Puedo empezar sin pagar mensualidad?", `Sí. Con Prepago compras el kit de arranque (${nitroCompleteStarterKit.price}: tu número, la instalación y tus primeras unidades y plantillas) y después recargas cuando quieras, desde ${formatCop(nitroCompleteUnitPacks[0].priceCop)}. Sin mensualidad ni fecha de corte, y lo que compras no se vence. Cuando vendas más, un plan mensual te sale más barato por unidad.`],
+  ["¿Qué es una unidad?", `Cada respuesta que tu asesor le envía a un cliente. Si el cliente manda varios mensajes seguidos, el asesor los lee juntos y responde una vez. Una conversación de venta usa en promedio unas ${UNITS_PER_CONVERSATION}.`],
+  ["¿Qué incluye la implementación de un plan?", `Se paga una sola vez (${nitroCompleteImplementation}) e incluye ${nitroCompleteImplementationIncludes.map((i) => i.charAt(0).toLowerCase() + i.slice(1)).join(", ")}. Empiezas a pagar la mensualidad desde el segundo mes.`],
+  ["¿Puedo pasar de recargas a un plan, o al revés?", "Sí, cuando quieras. Si pasas a un plan, lo que te quede de unidades se suma como paquete y no se pierde. Si vuelves a recargas, sigues con tu saldo y sin fecha de corte."],
   ["¿Cuánto tarda la implementación?", "Depende de tu catálogo y de la aprobación de Meta. Te damos el plan concreto después de la evaluación, antes de que pagues."],
 ] as const;
 
@@ -135,9 +154,9 @@ export default function NitroCompletePage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <PrimaryCta />
-              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#planes">Ver planes</Link></Button>
+              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#recarga">Empieza desde {nitroCompleteStarterKit.price}</Link></Button>
             </div>
-            <p className="mt-5 text-xs text-white/40">Evaluación gratuita · Resultado inmediato · Sin llamada obligatoria</p>
+            <p className="mt-5 text-xs text-white/40">Sin mensualidad con recargas · Planes con el primer mes incluido · Evaluación gratuita</p>
             <p className="mt-3 text-sm text-white/55">
               ¿Ya lo decidiste? <a href={nitroAppUrl("/registro")} className="font-semibold text-primary hover:underline">Crear mi cuenta</a>
               {" · "}
@@ -276,12 +295,77 @@ export default function NitroCompletePage() {
         </div>
       </section>
 
-      {/* Planes */}
-      <section id="planes" className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="pricing">
+      {/* Precios, paso 1: la entrada por recarga (NIT-89). Es la puerta que más
+          se destaca: mismo producto, sin mensualidad, y se elige según el uso
+          (atender la tienda o cubrir una campaña). */}
+      <section id="recarga" className="scroll-mt-20 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Elige capacidad, <span className="text-nitro-text">no funciones recortadas.</span></h2>
-            <p className="mt-5 text-base leading-7 text-ink/62">Los tres planes incluyen el asesor, los pedidos, el panel y el control humano. Cambia la capacidad mensual: un turno es cada respuesta que el asesor envía a un cliente.</p>
+            <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">La forma más fácil de empezar</p>
+            <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Empieza con recarga. <span className="text-primary">Sin mensualidad.</span></h2>
+            <p className="mt-5 text-base leading-7 text-white/58">Recargas como recargas el celular: compras unidades para tu asesor cuando las necesitas, a tu medida. Poquito para atender tu tienda o un paquete grande para una campaña de ads agresiva. Lo que compras no se vence.</p>
+          </div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+            <article className="rounded-3xl bg-ink p-7 text-white ring-1 ring-primary/30 sm:p-8">
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Kit de arranque</p>
+                <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Empieza aquí</span>
+              </div>
+              <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-5xl font-extrabold tracking-tight tabular-nums">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">COP, un solo pago</span></p>
+              <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/75">
+                {[
+                  `Tu número de WhatsApp listo e instalación en máximo ${nitroCompleteStarterKit.installHours} horas`,
+                  `${nitroCompleteStarterKit.units.toLocaleString("es-CO")} unidades para tu asesor (≈ ${Math.floor(nitroCompleteStarterKit.units / UNITS_PER_CONVERSATION).toLocaleString("es-CO")} conversaciones)`,
+                  `${nitroCompleteStarterKit.templates} plantillas para confirmar pedidos y avisar envíos`,
+                  "El mismo Nitro Complete: asesor con tu catálogo real, pedidos, confirmaciones y panel",
+                  "Sin mensualidad ni fecha de corte",
+                ].map((item) => (
+                  <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>
+                ))}
+              </ul>
+              <a href={nitroAppUrl("/registro")} className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-primary/85">Empezar con recarga <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a>
+              <p className="mt-3 text-center text-xs text-white/45">Creas tu cuenta, nos cuentas de tu negocio y pagas el kit con Nequi, PSE o Bancolombia.</p>
+            </article>
+            <RechargePlanner signupHref={nitroAppUrl("/registro")} />
+          </div>
+
+          <div className="mt-5 rounded-3xl border border-white/10 p-6 sm:p-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-sm font-semibold text-white">Recargas de unidades: de poquito a una campaña grande</p>
+              <p className="text-xs text-white/45">Plantillas aparte a {nitroCompleteTemplatePrice} cada una</p>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {nitroCompleteUnitPacks.map((pack) => (
+                <div key={pack.units} className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xl font-semibold tabular-nums text-white">{pack.units.toLocaleString("es-CO")}</p>
+                  <p className="text-xs text-white/45">unidades · ≈ {Math.floor(pack.units / UNITS_PER_CONVERSATION).toLocaleString("es-CO")} conversaciones</p>
+                  <p className="mt-2 text-sm font-semibold tabular-nums text-primary">{formatCop(pack.priceCop)}</p>
+                </div>
+              ))}
+            </div>
+            <ul className="mt-5 grid gap-2 text-xs text-white/55 sm:grid-cols-3">
+              {[
+                "Pagas en línea con Nequi, PSE o Bancolombia y se suma sola.",
+                "Si se te acaban, las conversaciones en curso no se cortan.",
+                "Precios en pesos con IVA incluido. Nada se vence.",
+              ].map((item) => (
+                <li key={item} className="flex gap-2"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden="true" />{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Precios, paso 2: los planes. Para quien vende todos los días: el turno
+          sale más barato y la implementación incluye el primer mes y la
+          asesoría con Juan. */}
+      <section id="planes" className="scroll-mt-20 bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="pricing">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-xs uppercase tracking-[0.12em] text-nitro-text">Planes mensuales</p>
+            <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">¿Vendes todos los días? <span className="text-nitro-text">Un plan te sale más barato.</span></h2>
+            <p className="mt-5 text-base leading-7 text-ink/62">El turno baja hasta {formatCop(Math.min(...nitroCompletePlans.map(planUnitPrice)))}, recibes {PLAN_TEMPLATES_PER_CYCLE} plantillas cada mes y empiezas con Juan a tu lado: la implementación incluye tu primer mes y asesoría personalizada.</p>
           </div>
           <div className="mt-12 grid gap-4 lg:grid-cols-3">
             {nitroCompletePlans.map((plan) => (
@@ -291,11 +375,17 @@ export default function NitroCompletePage() {
                   {plan.featured ? <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Recomendado</span> : null}
                 </div>
                 <p className="mt-5 flex items-baseline gap-2"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{plan.price}</span><span className={`text-sm ${plan.featured ? "text-white/50" : "text-ink/50"}`}>COP / mes</span></p>
-                <p className={`mt-4 text-sm font-semibold ${plan.featured ? "text-white" : "text-ink"}`}>{plan.capacity}</p>
+                <p className={`mt-2 inline-flex w-fit rounded-full px-2.5 py-1 text-xs font-semibold ${plan.featured ? "bg-primary/15 text-primary" : "bg-nitro-soft text-nitro-text"}`}>Primer mes incluido en la implementación</p>
+                <p className={`mt-4 text-sm font-semibold ${plan.featured ? "text-white" : "text-ink"}`}>{plan.capacity} · {formatCop(planUnitPrice(plan))} por turno</p>
                 <p className={`mt-0.5 text-sm ${plan.featured ? "text-primary" : "text-nitro-text"}`}>≈ {conversationsFormat.format(planConversations(plan))} conversaciones de venta al mes</p>
                 <p className={`mt-1 text-sm ${plan.featured ? "text-white/60" : "text-ink/60"}`}>{plan.fit}</p>
                 <ul className={`mt-6 space-y-2.5 border-t pt-6 text-sm ${plan.featured ? "border-white/10 text-white/70" : "border-line text-ink/70"}`}>
-                  {["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => (
+                  {[
+                    "Asesor con tu catálogo real, pedidos y panel",
+                    `${PLAN_TEMPLATES_PER_CYCLE} plantillas de WhatsApp cada mes`,
+                    "Campañas, Recovery y Nitro Marketing",
+                    "Asesoría personalizada con Juan y soporte prioritario",
+                  ].map((item) => (
                     <li key={item} className="flex gap-2.5"><Check className={`mt-0.5 size-4 shrink-0 ${plan.featured ? "text-primary" : "text-nitro-text"}`} />{item}</li>
                   ))}
                 </ul>
@@ -303,12 +393,50 @@ export default function NitroCompletePage() {
               </article>
             ))}
           </div>
-          <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-line bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
+
+          <div className="mt-4 grid gap-6 rounded-3xl bg-ink p-7 text-white sm:p-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div>
-              <p className="font-semibold">Implementación estándar: {nitroCompleteImplementation} COP, una sola vez.</p>
-              <p className="mt-1 text-sm text-ink/55">El alcance final se confirma antes de iniciar. Plantillas de Meta, campañas, desarrollos a medida e integraciones no soportadas se cotizan aparte.</p>
+              <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Implementación de los planes</p>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{nitroCompleteImplementation}</span><span className="text-sm text-white/50">COP, una sola vez</span></p>
+              <p className="mt-3 text-sm leading-6 text-white/62">Tu primer mes va incluido: empiezas a pagar la mensualidad desde el segundo. Con {nitroCompletePlans.find((p) => p.featured)?.name}, son {nitroCompletePlans.find((p) => p.featured)?.price} que no pagas.</p>
             </div>
-            <span className="shrink-0 rounded-full bg-nitro-soft px-3 py-1.5 text-xs font-semibold text-nitro-text">Sin compra automática</span>
+            <ul className="space-y-3 text-sm text-white/78">
+              {nitroCompleteImplementationIncludes.map((item) => (
+                <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />{item}</li>
+              ))}
+              <li className="text-xs leading-5 text-white/45">El alcance final se confirma antes de iniciar. Desarrollos a medida e integraciones no soportadas se cotizan aparte.</li>
+            </ul>
+          </div>
+
+          {/* Prepago o plan, en cinco líneas. Solo diferencias reales (nitro_bot:
+              docs/modules/prepago.md). */}
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full min-w-[34rem] border-separate border-spacing-0 overflow-hidden rounded-2xl border border-line bg-white text-left text-sm">
+              <caption className="sr-only">Prepago frente a plan mensual</caption>
+              <thead>
+                <tr className="text-xs uppercase tracking-[0.08em] text-ink/50">
+                  <th scope="col" className="px-5 py-3 font-medium"></th>
+                  <th scope="col" className="px-5 py-3 font-medium">Prepago</th>
+                  <th scope="col" className="px-5 py-3 font-medium text-nitro-text">Plan mensual</th>
+                </tr>
+              </thead>
+              <tbody className="[&_td]:border-t [&_td]:border-line [&_td]:px-5 [&_td]:py-3 [&_th]:border-t [&_th]:border-line [&_th]:px-5 [&_th]:py-3">
+                {[
+                  ["Para empezar", `Kit de ${nitroCompleteStarterKit.price}`, `Implementación de ${nitroCompleteImplementation} con el primer mes incluido`],
+                  ["Cómo pagas", "Recargas cuando quieras, sin fecha de corte", "Mensualidad con fecha de corte"],
+                  ["Precio del turno", `De ${formatCop(Math.min(...nitroCompleteUnitPacks.map((p) => p.priceCop / p.units)))} a ${formatCop(Math.max(...nitroCompleteUnitPacks.map((p) => p.priceCop / p.units)))}`, `Desde ${formatCop(Math.min(...nitroCompletePlans.map(planUnitPrice)))}`],
+                  ["Plantillas", `Las compras a ${nitroCompleteTemplatePrice}`, `${PLAN_TEMPLATES_PER_CYCLE} incluidas cada mes`],
+                  ["Acompañamiento", `Instalación en ${nitroCompleteStarterKit.installHours} horas`, "Asesoría personalizada con Juan"],
+                  ["Ideal para", "Probar, vender a tu ritmo o cubrir una campaña", "Vender todos los días con volumen"],
+                ].map(([label, prepaid, plan]) => (
+                  <tr key={label}>
+                    <th scope="row" className="font-medium text-ink/60">{label}</th>
+                    <td className="text-ink/80">{prepaid}</td>
+                    <td className="font-medium text-ink">{plan}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -334,6 +462,11 @@ export default function NitroCompletePage() {
           <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">Primero comprobamos <span className="text-primary">si encaja.</span></h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/55">Responde una evaluación corta sobre tu catálogo, volumen y equipo. Recibes una recomendación inmediata y, si hay encaje, revisamos juntos la conexión.</p>
           <div className="mt-8 flex justify-center"><PrimaryCta /></div>
+          <p className="mt-6 text-sm text-white/50">
+            ¿Prefieres escribir? <a href={`mailto:${CONTACT_EMAILS.ventas}?subject=${encodeURIComponent("Quiero Nitro Complete")}`} className="font-semibold text-primary hover:underline">{CONTACT_EMAILS.ventas}</a>
+            <span className="mx-2 text-white/25" aria-hidden="true">·</span>
+            ¿Ya eres cliente? <a href={`mailto:${CONTACT_EMAILS.soporte}`} className="font-semibold text-white/75 hover:text-white hover:underline">{CONTACT_EMAILS.soporte}</a>
+          </p>
         </div>
       </section>
 

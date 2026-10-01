@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import {
   Body,
   Button,
@@ -193,7 +194,8 @@ export const NewsletterWelcome = ({
               </Text>
               <Text style={{ color: "#3f3f46", fontSize: "11px", margin: "0" }}>
                 Recibiste este email porque te suscribiste en juanarangoecommerce.com
-                {email && ` (${email})`}. Si no fuiste tú, puedes ignorarlo.
+                {email && ` (${email})`}. Si no fuiste tú, puedes ignorarlo. Para escribirnos o darte de baja:{" "}
+                <a href={`mailto:${CONTACT_EMAILS.newsletter}`} style={{ color: "#52525b" }}>{CONTACT_EMAILS.newsletter}</a>.
               </Text>
             </Section>
 

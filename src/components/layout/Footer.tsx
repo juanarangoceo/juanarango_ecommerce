@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import Link from "next/link"
 
 export function Footer() {
@@ -70,8 +71,8 @@ export function Footer() {
             <h4 className="font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="mailto:juanarangoecommerce@gmail.com" className="hover:text-primary transition-colors">
-                  juanarangoecommerce@gmail.com
+                <a href={`mailto:${CONTACT_EMAILS.contacto}`} className="hover:text-primary transition-colors">
+                  {CONTACT_EMAILS.contacto}
                 </a>
               </li>
             </ul>

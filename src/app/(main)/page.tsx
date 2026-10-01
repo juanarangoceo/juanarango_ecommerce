@@ -5,7 +5,15 @@ import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LatestPostsSection } from "@/components/landing/latest-posts-section";
 import { NewsletterSection } from "@/components/commercial/newsletter-section";
-import { primaryCta, solutions } from "@/lib/commercial-content";
+import {
+  formatCop,
+  nitroCompletePlans,
+  nitroCompleteStarterKit,
+  nitroCompleteUnitPacks,
+  PLAN_TEMPLATES_PER_CYCLE,
+  primaryCta,
+  solutions,
+} from "@/lib/commercial-content";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
 import { NitroHero } from "@/components/nitro/nitro-hero";
@@ -126,6 +134,45 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Dos formas de empezar con Nitro Complete. La recarga va primero: es la
+          entrada más fácil (NIT-89). Precios de lib/commercial-content. */}
+      <section id="precios" className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Empieza a tu medida. <span className="text-primary">Sin mensualidad, si quieres.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Es el mismo Nitro Complete. Recargas cuando lo necesitas, para atender tu tienda o para una campaña grande, o eliges un plan cuando vendes todos los días.</p>
+          </div>
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            <Link href="/nitro-complete#recarga" className="group flex flex-col rounded-3xl bg-ink p-7 ring-1 ring-primary/35 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:ring-primary sm:p-9">
+              <span className="w-fit rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">La forma más fácil de empezar</span>
+              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Con recargas</h3>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">kit de arranque, un solo pago</span></p>
+              <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
+                {[
+                  `Instalación en ${nitroCompleteStarterKit.installHours} horas y ${nitroCompleteStarterKit.units.toLocaleString("es-CO")} unidades para empezar`,
+                  `Recargas desde ${formatCop(nitroCompleteUnitPacks[0].priceCop)}: poquito o para una campaña de ads`,
+                  "Sin mensualidad ni fecha de corte. Lo que compras no vence",
+                ].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}
+              </ul>
+              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-primary">Calcular mi recarga <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            </Link>
+            <Link href="/nitro-complete#planes" className="group flex flex-col rounded-3xl border border-white/10 bg-superficie-nitro p-7 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/40 sm:p-9">
+              <span className="w-fit rounded-full border border-white/15 px-2.5 py-1 text-[11px] font-semibold text-white/70">Para vender todos los días</span>
+              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Con un plan mensual</h3>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompletePlans[0].price}</span><span className="text-sm text-white/50">desde, al mes</span></p>
+              <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
+                {[
+                  "La implementación incluye tu primer mes",
+                  "Asesoría personalizada conmigo para dejarlo vendiendo",
+                  `El turno más barato y ${PLAN_TEMPLATES_PER_CYCLE} plantillas cada mes`,
+                ].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}
+              </ul>
+              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-white group-hover:text-primary">Ver planes <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Asesoría: la otra forma de trabajar juntos, al mismo nivel */}
       <section id="asesoria" className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="diagnostic">
         <div className="mx-auto max-w-7xl">
@@ -175,7 +222,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-[2rem] border border-primary/25 bg-superficie-nitro px-7 py-10 text-center sm:px-12 lg:flex-row lg:text-left">
           <div>
             <h2 className="text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">Comprueba si Nitro Complete <span className="text-primary">encaja con tu negocio.</span></h2>
-            <p className="mt-3 text-base text-white/55">Recibes una recomendación inmediata, con precios visibles y sin llamada obligatoria.</p>
+            <p className="mt-3 text-base text-white/55">Recibes una recomendación inmediata, con precios visibles y sin llamada obligatoria. O empieza ya con recargas desde {nitroCompleteStarterKit.price}.</p>
           </div>
           <Button asChild size="lg" className="h-13 w-full shrink-0 rounded-full px-7 text-base font-bold sm:w-auto"><Link href={primaryCta.href}>{primaryCta.label} <ArrowRight /></Link></Button>
         </div>

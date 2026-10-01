@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { ArrowLeft, Mail } from "lucide-react";
 
 /** Identidad legal compartida por todas las páginas legales. */
@@ -6,7 +7,7 @@ export const LEGAL_ENTITY = {
   name: "Juan Arango",
   brand: "NITRO ECOM",
   site: "www.juanarangoecommerce.com",
-  email: "juanarangoecommerce@gmail.com",
+  email: CONTACT_EMAILS.contacto,
   location: "Pereira, Risaralda, Colombia",
 };
 
@@ -21,7 +22,8 @@ export const NITRO_COMPLETE_ENTITY = {
   nit: "901.225.969-6",
   brand: "Nitro Complete",
   site: "www.juanarangoecommerce.com/nitro-complete",
-  email: "ecompanysascolombia@gmail.com",
+  /** Datos personales y eliminación de datos del producto (también lo ve Meta). */
+  email: CONTACT_EMAILS.privacidad,
   whatsapp: "+57 314 668 1896",
   whatsappLink: "https://wa.me/573146681896",
   location: "Pereira, Risaralda, Colombia",

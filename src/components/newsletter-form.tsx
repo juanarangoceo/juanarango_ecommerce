@@ -1,4 +1,5 @@
 "use client";
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -66,7 +67,7 @@ export function NewsletterForm({ variant = "card" }: NewsletterFormProps) {
           </button>
         </div>
         {status === "error" ? <p className="mt-3 text-sm text-red-400" role="alert">{message}</p> : null}
-        <p className={`text-xs leading-5 text-white/35 ${inline ? "mt-4" : "mt-5 text-center"}`}>Al suscribirte aceptas la <Link href="/legal/privacidad" className="text-white/60 underline decoration-primary/45 underline-offset-2 transition-colors hover:text-primary">Política de Privacidad</Link>. Puedes salir cuando quieras.</p>
+        <p className={`text-xs leading-5 text-white/35 ${inline ? "mt-4" : "mt-5 text-center"}`}>Al suscribirte aceptas la <Link href="/legal/privacidad" className="text-white/60 underline decoration-primary/45 underline-offset-2 transition-colors hover:text-primary">Política de Privacidad</Link>. Puedes salir cuando quieras desde cualquier boletín o escribiendo a <a href={`mailto:${CONTACT_EMAILS.newsletter}`} className="text-white/60 underline decoration-primary/45 underline-offset-2 transition-colors hover:text-primary">{CONTACT_EMAILS.newsletter}</a>.</p>
       </form>
     </div>
   );

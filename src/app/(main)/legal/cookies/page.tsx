@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { constructMetadata } from "@/lib/utils";
 import { LegalShell, LEGAL_ENTITY } from "@/components/legal/legal-shell";
 
@@ -68,7 +69,7 @@ export default function CookiesPage() {
       <p>
         Podemos actualizar esta Política de Cookies cuando cambien las herramientas que utilizamos.
         Publicaremos siempre la versión vigente en esta página. Para cualquier duda, escríbenos a{" "}
-        <a href={`mailto:${LEGAL_ENTITY.email}`}>{LEGAL_ENTITY.email}</a>.
+        <a href={`mailto:${CONTACT_EMAILS.privacidad}`}>{CONTACT_EMAILS.privacidad}</a>.
       </p>
     </LegalShell>
   );

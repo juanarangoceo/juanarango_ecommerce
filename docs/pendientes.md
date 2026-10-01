@@ -3,6 +3,23 @@
 Estado vivo al 30 de septiembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
+## Precios con entrada por recarga y correos del dominio — 1 de octubre de 2026
+
+NIT-89 (bloque «Empieza con recarga», planificador de recarga por uso:
+atender la tienda o campaña de ads), planes con la implementación que
+incluye el primer mes y asesoría con Juan, comparativo Prepago vs Plan,
+sección «Empieza a tu medida» en la home y NIT-93 (ningún Gmail visible;
+todo sale de `src/lib/contact-emails.ts`). Typecheck, ESLint y build en
+verde; sin scroll horizontal a 390 px. Queda:
+
+1. Aprobación visual de Juan en su teléfono (detalle en
+   [`bitacora/2026-10.md`](bitacora/2026-10.md)).
+2. `privacidad` apunta a contacto@ hasta que exista privacidad@ (NIT-92);
+   también es el correo del titular que ve Meta en /nitro-complete/privacidad.
+3. Los precios del kit y de los paquetes se copian a mano de nitro_bot
+   (`platform_settings.outbound_pricing`); la implementación y lo que
+   incluye, de `lib/commercial/plans.ts`.
+
 ## Punto de reanudación para el siguiente agente
 
 ### Home, landing, menú y soluciones — 30 de septiembre de 2026

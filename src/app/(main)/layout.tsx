@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne, DM_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -88,7 +89,7 @@ const organizationSchema = {
       },
       contactPoint: {
         "@type": "ContactPoint",
-        email: "juanarangoecommerce@gmail.com",
+        email: CONTACT_EMAILS.contacto,
         telephone: "+573146681896",
         contactType: "customer service",
         areaServed: "CO",

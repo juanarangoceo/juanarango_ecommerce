@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { constructMetadata } from "@/lib/utils";
 import { LegalShell, LEGAL_ENTITY } from "@/components/legal/legal-shell";
 
@@ -20,7 +21,7 @@ export default function PrivacidadPage() {
         El responsable del tratamiento de tus datos personales es <strong>{LEGAL_ENTITY.name}</strong>,
         quien opera bajo la marca <strong>{LEGAL_ENTITY.brand}</strong>, con domicilio en{" "}
         {LEGAL_ENTITY.location}. Para cualquier asunto relacionado con tus datos puedes escribir a{" "}
-        <a href={`mailto:${LEGAL_ENTITY.email}`}>{LEGAL_ENTITY.email}</a>.
+        <a href={`mailto:${CONTACT_EMAILS.privacidad}`}>{CONTACT_EMAILS.privacidad}</a>.
       </p>
       <p>
         Esta política se rige por la <strong>Ley 1581 de 2012</strong> (Régimen General de Protección
@@ -114,7 +115,7 @@ export default function PrivacidadPage() {
       </ul>
       <p>
         Para ejercer cualquiera de estos derechos, escríbenos a{" "}
-        <a href={`mailto:${LEGAL_ENTITY.email}`}>{LEGAL_ENTITY.email}</a>. Atenderemos tu solicitud en
+        <a href={`mailto:${CONTACT_EMAILS.privacidad}`}>{CONTACT_EMAILS.privacidad}</a>. Atenderemos tu solicitud en
         los plazos previstos por la ley.
       </p>
 

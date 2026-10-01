@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Check, LockKeyhole, Sparkles } from "lucide-react";
@@ -93,6 +94,8 @@ export default function NitroBotConnectPage() {
         >
           Política de privacidad
         </Link>
+        <span className="mx-2">·</span>
+        ¿Prefieres escribir? <a href={`mailto:${CONTACT_EMAILS.ventas}?subject=${encodeURIComponent("Quiero evaluar Nitro Complete")}`} className="text-white/60 underline underline-offset-2 transition hover:text-white/80">{CONTACT_EMAILS.ventas}</a>
         <span className="mx-2">·</span>© {new Date().getFullYear()} Nitro Ecom
       </footer>
     </main>

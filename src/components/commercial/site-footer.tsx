@@ -1,3 +1,4 @@
+import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import Link from "next/link";
 
 const groups = [
@@ -50,9 +51,14 @@ export function SiteFooter() {
           <p className="mt-5 text-sm leading-6 text-white/55">
             Ventas por WhatsApp con IA y asesoría ecommerce. Tecnología que vende y dirección humana para negocios de Colombia y Latinoamérica.
           </p>
-          <a href="mailto:juanarangoecommerce@gmail.com" className="mt-6 inline-block text-sm text-white underline decoration-primary/60 underline-offset-4">
-            juanarangoecommerce@gmail.com
+          <a href={`mailto:${CONTACT_EMAILS.contacto}`} className="mt-6 inline-block text-sm text-white underline decoration-primary/60 underline-offset-4">
+            {CONTACT_EMAILS.contacto}
           </a>
+          <p className="mt-2 text-xs leading-5 text-white/45">
+            Planes y compras: <a href={`mailto:${CONTACT_EMAILS.ventas}`} className="text-white/70 hover:text-primary">{CONTACT_EMAILS.ventas}</a>
+            <br />
+            Clientes: <a href={`mailto:${CONTACT_EMAILS.soporte}`} className="text-white/70 hover:text-primary">{CONTACT_EMAILS.soporte}</a>
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
