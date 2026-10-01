@@ -6,11 +6,12 @@
 // no promete ventas ni resultados.
 
 import { useId, useState } from "react";
-import { ArrowRight, Megaphone, Store } from "lucide-react";
+import { Megaphone, Store } from "lucide-react";
 import {
   UNITS_PER_CONVERSATION,
   formatCop,
   nitroCompletePlans,
+  nitroCompleteStarterKit,
   packFor,
   planUnitPrice,
 } from "@/lib/commercial-content";
@@ -43,19 +44,25 @@ const USES = {
   },
 } as const;
 
-export function RechargePlanner({ signupHref }: { signupHref: string }) {
+export function RechargePlanner() {
   const [use, setUse] = useState<Use>("store");
   const [values, setValues] = useState<Record<Use, number>>({ store: USES.store.initial, campaign: USES.campaign.initial });
   const sliderId = useId();
   const config = USES[use];
   const value = values[use];
+  const kitUnits = nitroCompleteStarterKit.units;
 
-  // Atender: lo que recargarías en un mes. Campaña: la campaña completa.
-  const units = (use === "store" ? value * DAYS_PER_MONTH : value) * UNITS_PER_CONVERSATION;
-  const { pack, count } = packFor(units);
+  // Todos empiezan con el kit; la recarga es lo que viene DESPUÉS.
+  // Atender: un mes a su ritmo, una vez gastado el kit. Campaña: lo que el kit
+  // no alcanza a cubrir (si la lanza apenas empieza).
+  const perDay = value * UNITS_PER_CONVERSATION;
+  const kitDays = use === "store" ? Math.floor(kitUnits / perDay) : null;
+  const units = use === "store" ? perDay * DAYS_PER_MONTH : Math.max(0, value * UNITS_PER_CONVERSATION - kitUnits);
+  const needsRecharge = units > 0;
+  const { pack, count } = packFor(Math.max(units, 1));
   const totalUnits = pack.units * count;
   const totalCop = pack.priceCop * count;
-  const daysItLasts = use === "store" ? Math.floor(totalUnits / (value * UNITS_PER_CONVERSATION)) : null;
+  const daysItLasts = use === "store" ? Math.floor(totalUnits / perDay) : null;
 
   // Si con su ritmo diario un plan sale más barato que recargar, se lo decimos.
   const monthlyRechargeCop = use === "store" ? (units / pack.units) * pack.priceCop : 0;
@@ -65,7 +72,8 @@ export function RechargePlanner({ signupHref }: { signupHref: string }) {
 
   return (
     <div className="rounded-3xl border border-white/10 bg-superficie-nitro p-6 sm:p-8">
-      <p className="text-sm font-semibold text-white">¿Cuánto recargo?</p>
+      <p className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">Paso 2 · Después del kit</p>
+      <p className="mt-2 text-lg font-semibold text-white">Recargas a tu medida. ¿Cuánto?</p>
       <div role="radiogroup" aria-label="Para qué vas a usar la recarga" className="mt-4 grid gap-2 sm:grid-cols-2">
         {(Object.keys(USES) as Use[]).map((key) => {
           const option = USES[key];
@@ -110,18 +118,31 @@ export function RechargePlanner({ signupHref }: { signupHref: string }) {
       </div>
 
       <div className="mt-6 rounded-2xl bg-background p-5" aria-live="polite">
-        <p className="text-xs font-medium uppercase tracking-[0.1em] text-white/45">Tu recarga</p>
-        <p className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-3xl font-semibold tabular-nums tracking-tight text-white">{formatCop(totalCop)}</span>
-          <span className="text-sm text-white/55">
-            {count > 1 ? `${count} × ` : ""}{int.format(pack.units)} unidades
-          </span>
+        <p className="text-sm leading-6 text-white/62">
+          {kitDays != null ? (
+            <>Las {int.format(kitUnits)} unidades de tu kit te alcanzan para <strong className="font-semibold text-white">≈ {int.format(Math.max(kitDays, 1))} {kitDays === 1 ? "día" : "días"}</strong>. Después:</>
+          ) : needsRecharge ? (
+            <>Tu kit cubre las primeras ≈ {int.format(Math.floor(kitUnits / UNITS_PER_CONVERSATION))} conversaciones. Para el resto de la campaña:</>
+          ) : (
+            <>Las {int.format(kitUnits)} unidades de tu kit <strong className="font-semibold text-white">ya cubren esta campaña</strong>. Recargas solo si viene otra.</>
+          )}
         </p>
-        <p className="mt-2 text-sm leading-6 text-white/62">
-          {daysItLasts != null
-            ? <>A tu ritmo te dura <strong className="font-semibold text-white">≈ {int.format(daysItLasts)} días</strong>. Recargas de nuevo cuando quieras.</>
-            : <>Cubre <strong className="font-semibold text-white">≈ {int.format(Math.floor(totalUnits / UNITS_PER_CONVERSATION))} conversaciones</strong>: toda tu campaña. Lo que sobre queda para la próxima.</>}
-        </p>
+        {needsRecharge ? (
+          <>
+            <p className="mt-3 text-xs font-medium uppercase tracking-[0.1em] text-white/45">{use === "store" ? "Recarga para un mes" : "Tu recarga"}</p>
+            <p className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-3xl font-semibold tabular-nums tracking-tight text-white">{formatCop(totalCop)}</span>
+              <span className="text-sm text-white/55">
+                {count > 1 ? `${count} × ` : ""}{int.format(pack.units)} unidades
+              </span>
+            </p>
+            <p className="mt-2 text-sm leading-6 text-white/62">
+              {daysItLasts != null
+                ? <>A tu ritmo te dura <strong className="font-semibold text-white">≈ {int.format(daysItLasts)} días</strong>. Recargas de nuevo cuando quieras.</>
+                : <>Cubre <strong className="font-semibold text-white">≈ {int.format(Math.floor(totalUnits / UNITS_PER_CONVERSATION))} conversaciones</strong> más. Lo que sobre queda para la próxima.</>}
+            </p>
+          </>
+        ) : null}
         {planIsCheaper && plan ? (
           <p className="mt-3 rounded-xl border border-primary/30 bg-primary/[0.07] px-3 py-2.5 text-sm leading-6 text-white/75">
             Con ese ritmo, <strong className="font-semibold text-white">{plan.name}</strong> te sale más barato:{" "}
@@ -134,17 +155,12 @@ export function RechargePlanner({ signupHref }: { signupHref: string }) {
             <a href="#planes" className="font-semibold text-primary hover:underline">Comparar planes</a>
           </p>
         ) : null}
-        <p className="mt-3 text-xs text-white/40">
-          {UNITS_PER_CONVERSATION} unidades por conversación en promedio. Precios con IVA incluido. Lo que compras no vence.
-        </p>
       </div>
 
-      <a
-        href={signupHref}
-        className="group mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-primary/85"
-      >
-        Empezar con el kit <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-      </a>
+      <p className="mt-4 text-xs leading-5 text-white/45">
+        Recargas desde tu panel cuando las necesites, con Nequi, PSE o Bancolombia. {UNITS_PER_CONVERSATION} unidades por conversación en
+        promedio; precios con IVA incluido. Lo que compras no vence.
+      </p>
     </div>
   );
 }

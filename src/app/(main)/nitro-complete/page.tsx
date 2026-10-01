@@ -303,14 +303,14 @@ export default function NitroCompletePage() {
           <div className="mx-auto max-w-3xl text-center">
             <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">La forma más fácil de empezar</p>
             <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Empieza con recarga. <span className="text-primary">Sin mensualidad.</span></h2>
-            <p className="mt-5 text-base leading-7 text-white/58">Recargas como recargas el celular: compras unidades para tu asesor cuando las necesitas, a tu medida. Poquito para atender tu tienda o un paquete grande para una campaña de ads agresiva. Lo que compras no se vence.</p>
+            <p className="mt-5 text-base leading-7 text-white/58">Arrancas con el kit, un solo pago con la instalación y tus primeras unidades. Después recargas como recargas el celular, a tu medida: poquito para atender tu tienda o un paquete grande para una campaña de ads agresiva. Lo que compras no se vence.</p>
           </div>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
             <article className="rounded-3xl bg-ink p-7 text-white ring-1 ring-primary/30 sm:p-8">
               <div className="flex items-center justify-between gap-3">
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Kit de arranque</p>
-                <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Empieza aquí</span>
+                <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Paso 1 · Kit de arranque</p>
+                <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Todos empiezan aquí</span>
               </div>
               <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-5xl font-extrabold tracking-tight tabular-nums">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">COP, un solo pago</span></p>
               <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/75">
@@ -327,12 +327,12 @@ export default function NitroCompletePage() {
               <a href={nitroAppUrl("/registro")} className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-primary/85">Empezar con recarga <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a>
               <p className="mt-3 text-center text-xs text-white/45">Creas tu cuenta, nos cuentas de tu negocio y pagas el kit con Nequi, PSE o Bancolombia.</p>
             </article>
-            <RechargePlanner signupHref={nitroAppUrl("/registro")} />
+            <RechargePlanner />
           </div>
 
           <div className="mt-5 rounded-3xl border border-white/10 p-6 sm:p-8">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <p className="text-sm font-semibold text-white">Recargas de unidades: de poquito a una campaña grande</p>
+              <p className="text-sm font-semibold text-white">Después del kit, recargas de unidades: de poquito a una campaña grande</p>
               <p className="text-xs text-white/45">Plantillas aparte a {nitroCompleteTemplatePrice} cada una</p>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
