@@ -162,9 +162,9 @@ export default function HomePage() {
               <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompletePlans[0].price}</span><span className="text-sm text-white/50">desde, al mes</span></p>
               <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
                 {[
-                  "La implementación incluye tu primer mes",
-                  "Asesoría personalizada conmigo para dejarlo vendiendo",
+                  "Implementación conmigo: lo dejamos vendiendo juntos",
                   `El turno más barato y ${PLAN_TEMPLATES_PER_CYCLE} plantillas cada mes`,
+                  "Campañas, Recovery y soporte prioritario",
                 ].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}
               </ul>
               <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-white group-hover:text-primary">Ver planes <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>

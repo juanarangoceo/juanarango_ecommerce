@@ -5,9 +5,9 @@ registra en la bitácora correspondiente.
 
 ## Precios con entrada por recarga y correos del dominio — 1 de octubre de 2026
 
-NIT-89 (bloque «Empieza con recarga», planificador de recarga por uso:
-atender la tienda o campaña de ads), planes con la implementación que
-incluye el primer mes y asesoría con Juan, comparativo Prepago vs Plan,
+NIT-89 (entrada por el kit de arranque, con los precios de recarga plegados),
+planes con la implementación como asesoría personalizada con Juan (sin meses
+gratis: se retiró el mismo día), comparativo Prepago vs Plan,
 sección «Empieza a tu medida» en la home y NIT-93 (ningún Gmail visible;
 todo sale de `src/lib/contact-emails.ts`). Typecheck, ESLint y build en
 verde; sin scroll horizontal a 390 px. Queda:

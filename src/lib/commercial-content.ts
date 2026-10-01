@@ -117,14 +117,16 @@ export function recommendPlan(monthlyConversations: number): NitroCompletePlan |
 export const nitroCompleteImplementation = "$700.000";
 
 /**
- * Lo que trae la implementación de un plan (decisión de Juan del 2026-10-01).
- * Misma lista que nitro_bot (`IMPLEMENTATION_INCLUDES` en
- * lib/commercial/plans.ts): si cambia allá, se cambia aquí.
+ * Lo que trae la implementación de un plan, en el orden en que ocurre. Misma
+ * lista que nitro_bot (`IMPLEMENTATION_INCLUDES` en lib/commercial/plans.ts):
+ * si cambia allá, se cambia aquí. No incluye meses gratis (se retiró el
+ * 2026-10-01).
  */
 export const nitroCompleteImplementationIncludes = [
-  "El primer mes del plan, sin costo",
-  "Asesoría personalizada con Juan para dejar el asesor vendiendo",
-  "Conexión de WhatsApp, catálogo y plantillas",
+  "Asesoría personalizada con Juan sobre tu operación, tu catálogo y cómo vendes hoy",
+  "Tu asesor entrenado con tu tono, tus reglas y hasta dónde puede negociar",
+  "Conexión de tu WhatsApp, tu catálogo y las plantillas aprobadas por Meta",
+  "Pruebas con conversaciones reales y encendido por partes, ajustando contigo",
 ] as const;
 
 /** Plantillas de WhatsApp incluidas cada mes en los planes (nitro_bot: PLAN_TEMPLATES_PER_CYCLE). */
@@ -167,16 +169,6 @@ export type NitroCompleteUnitPack = (typeof nitroCompleteUnitPacks)[number];
 /** Precio por plantilla de WhatsApp en las dos modalidades (nitro_bot: price_template_cop). */
 export const nitroCompleteTemplatePrice = "$70";
 
-/**
- * La recarga que cubre `units`: el paquete más pequeño que alcanza. Por encima
- * del mayor, varias del mayor (lo que sobra no vence).
- */
-export function packFor(units: number): { pack: NitroCompleteUnitPack; count: number } {
-  const fit = nitroCompleteUnitPacks.find((pack) => pack.units >= units);
-  if (fit) return { pack: fit, count: 1 };
-  const biggest = nitroCompleteUnitPacks[nitroCompleteUnitPacks.length - 1];
-  return { pack: biggest, count: Math.ceil(units / biggest.units) };
-}
 
 export const solutions = [
   {
