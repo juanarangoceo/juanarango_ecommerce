@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne, DM_Mono } from "next/font/google";
 import { MetaPixel } from "@/components/analytics/meta-pixel";
+import { SalesCampaignContext } from "@/components/commercial/sales-campaign-context";
 import "../globals.css";
 
 /**
@@ -55,6 +56,7 @@ export default function LandingLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${dmMono.variable} antialiased bg-background text-foreground min-h-screen`}
       >
+        <SalesCampaignContext />
         <div className="nitro-landing-content">{children}</div>
         <MetaPixel />
       </body>

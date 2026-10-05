@@ -3,6 +3,23 @@
 Estado vivo al 30 de septiembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
+## Contacto de Nitro Complete por WhatsApp — 5 de octubre de 2026
+
+Implementado por pedido de Juan: portada, menú, producto, kit,
+planes, calculadora, Guía Nitro, blog, resultado del diagnóstico, página
+orgánica y VSL. Número de ventas: **+57 311 300 5150**. La evaluación en línea
+queda como alternativa y su resultado continúa por WhatsApp. Revisión visual
+en escritorio y móvil; detalles en `bitacora/2026-10.md`. Ajuste adicional
+para el comprador colombiano: demo y precios antes de los detalles, pesos COP,
+turnos, implementación junto a mensualidad y preguntas sobre número/ficha.
+Se conserva el precio del kit y las reglas de recomendación.
+
+Juan autorizó publicar por el camino habitual de `master` el 5-oct.
+La entrega incluye comprobar el dominio real y la salud de NitroBot. Si Vercel tiene `NEXT_PUBLIC_JUAN_WHATSAPP`,
+verificar que valga `573113005150`; sin override, ese es el destino incorporado
+al código. No aplicar el parche histórico de `bot_super_admin/docs/web` sobre
+esta implementación. Resultado del despliegue y comprobaciones en `bitacora/2026-10.md`.
+
 ## Precios con entrada por recarga y correos del dominio — 1 de octubre de 2026
 
 NIT-89 (entrada por el kit de arranque, con los precios de recarga plegados),

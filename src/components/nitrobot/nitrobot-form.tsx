@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { submitNitrobotLead } from "@/app/actions/submit-nitrobot-lead";
 import {
   qualificationCopy,
@@ -182,7 +183,6 @@ export function NitroBotForm({
   const [error, setError] = useState("");
   const [delivery, setDelivery] = useState<"delivered" | "queued" | null>(null);
   const [result, setResult] = useState<NitroBotIntakeResponse | null>(null);
-  const [accountUrl, setAccountUrl] = useState<string | null>(null);
   const attributionRef = useRef<Record<string, string>>({});
   const idempotencyRef = useRef("");
   const startedAtRef = useRef(0);
@@ -240,7 +240,6 @@ export function NitroBotForm({
     }
     setDelivery(response.delivery);
     setResult(response.result ?? null);
-    setAccountUrl(response.accountUrl ?? null);
     setStep(TOTAL_STEPS);
     onSuccess?.();
   }
@@ -588,7 +587,7 @@ export function NitroBotForm({
       </h3>
       <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-white/58">
         {delivery === "queued"
-          ? "Guardamos tus datos de forma segura. Nitro Complete estaba tardando más de lo normal y completará el análisis automáticamente; te contactaremos por WhatsApp."
+          ? "Guardamos tus datos de forma segura. Nitro Complete estaba tardando más de lo normal y completará el análisis automáticamente; puedes continuar por WhatsApp mientras termina."
           : copy?.body}
       </p>
       {result?.qualification.plan.monthlyPriceCop && (
@@ -601,28 +600,15 @@ export function NitroBotForm({
           </p>
           <p className="mt-1 text-sm text-white/58">
             {result.qualification.plan.includedUnits?.toLocaleString("es-CO")}{" "}
-            mensajes · $
+            turnos · $
             {result.qualification.plan.monthlyPriceCop.toLocaleString("es-CO")}{" "}
             COP/mes
           </p>
         </div>
       )}
-      {accountUrl && (
-        <div className="mx-auto mt-7 max-w-sm">
-          <a
-            href={accountUrl}
-            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-primary/85"
-          >
-            Crear mi cuenta y continuar
-          </a>
-          <p className="mt-3 text-xs leading-relaxed text-white/45">
-            Tu evaluación queda en tu cuenta y empiezas a preparar tu asesor. Nada se activa sin tu aprobación.
-          </p>
-        </div>
-      )}
-      <div className="mt-7 flex items-center justify-center gap-2 text-sm text-white/45">
-        <MessageCircle className="h-4 w-4 text-primary" />
-        El siguiente contacto será personalmente por WhatsApp.
+      <div className="mx-auto mt-7 max-w-sm">
+        <WhatsAppJuanButton context={{ kind: "evaluation" }} placement="evaluation_result" className="w-full">Continuar por WhatsApp</WhatsAppJuanButton>
+        <p className="mt-3 text-xs leading-6 text-white/55">Mi asistente te orienta con el siguiente paso. Juan revisa y autoriza el alta antes de preparar la instalación.</p>
       </div>
     </section>
   );

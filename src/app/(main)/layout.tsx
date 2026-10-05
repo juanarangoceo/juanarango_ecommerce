@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne, DM_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SiteHeader } from "@/components/commercial/site-header";
+import { SalesCampaignContext } from "@/components/commercial/sales-campaign-context";
 import { IconMotionObserver } from "@/components/commercial/icon-motion-observer";
 import { SiteFooter } from "@/components/commercial/site-footer";
 import { DynamicChatWidget } from "@/components/dynamic-chat-widget";
@@ -145,7 +146,8 @@ export default function RootLayout({
         />
         
         <AuthProvider>
-          <SiteHeader registerUrl={nitroAppUrl("/registro")} loginUrl={nitroAppUrl("/login")} />
+          <SalesCampaignContext />
+          <SiteHeader loginUrl={nitroAppUrl("/login")} />
           <IconMotionObserver />
           <main className="nitro-site-content">{children}</main>
           <SiteFooter />

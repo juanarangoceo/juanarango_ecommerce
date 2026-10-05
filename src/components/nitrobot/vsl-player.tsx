@@ -7,7 +7,7 @@ interface VslPlayerProps {
   /** URLs de Cloudinary por calidad. `null` = video aún no configurado. */
   variants: { mobile: string; desktop: string } | null;
   poster: string;
-  /** Segundos de reproducción real necesarios para desbloquear el formulario. */
+  /** Umbral de reproducción real para medir el interés en el video. */
   unlockSeconds: number;
   onFirstPlay?: () => void;
   onUnlock: () => void;
@@ -43,7 +43,6 @@ export function VslPlayer({
   const [muted, setMuted] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [remaining, setRemaining] = useState(unlockSeconds);
 
   // Tiempo realmente visto. Vive en un ref porque se actualiza varias veces por
   // segundo y solo necesitamos el estado para pintar el contador.
@@ -65,7 +64,6 @@ export function VslPlayer({
     if (delta <= 0 || delta > 1.5) return;
 
     watchedRef.current += delta;
-    setRemaining(Math.max(0, Math.ceil(unlockSeconds - watchedRef.current)));
 
     if (!unlockedRef.current && watchedRef.current >= unlockSeconds) {
       unlockedRef.current = true;
@@ -129,11 +127,8 @@ export function VslPlayer({
     return (
       <div className="relative w-full aspect-video rounded-2xl border-2 border-dashed border-border bg-secondary/40 flex flex-col items-center justify-center p-6 text-center">
         <WhatsAppBadge />
-        <p className="text-muted-foreground text-sm max-w-md">
-          Video pendiente. Sube el VSL a Cloudinary y define{" "}
-          <code className="text-primary font-mono text-xs">NEXT_PUBLIC_NITROBOT_VSL_ID</code>{" "}
-          con su public id para que aparezca aquí.
-        </p>
+        <h2 className="mt-6 max-w-md text-xl font-semibold text-white">Todo empieza con una conversación.</h2>
+        <p className="mt-3 max-w-md text-sm leading-6 text-white/65">Un asesor consulta tu catálogo, cotiza con precios reales y registra pedidos. Cuéntanos qué vendes para revisar cómo aplicarlo en tu negocio.</p>
       </div>
     );
   }
@@ -217,13 +212,7 @@ export function VslPlayer({
         )}
       </div>
 
-      {/* Anticipación: qué pasa cuando termine de ver los primeros segundos */}
-      {started && remaining > 0 && (
-        <p className="mt-4 text-center text-sm text-muted-foreground">
-          En <span className="text-primary font-semibold tabular-nums">{remaining}s</span> te
-          muestro cómo pedir tu diagnóstico sin costo.
-        </p>
-      )}
+
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import { primaryCta } from "@/lib/commercial-content";
+import { WhatsAppSalesLink } from "@/components/commercial/whatsapp-sales-link";
 
 // CTA lateral del blog: lleva el tráfico orgánico al producto principal.
 const points = ["Responde con tu catálogo real", "Confirma pedidos contraentrega", "Avisa el envío y hace seguimiento"] as const;
@@ -24,9 +24,9 @@ export function NitroCtaCard() {
         <Link href="/nitro-complete" className="group mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-bold text-white transition hover:bg-ink/85">
           Conocer Nitro Complete <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
-        <Link href={primaryCta.href} className="mt-3 block text-center text-xs font-medium text-ink/55 underline-offset-4 hover:text-ink hover:underline">
-          O comprueba si encaja con tu negocio
-        </Link>
+        <WhatsAppSalesLink context={{ kind: "evaluation" }} placement="blog" className="mt-3 flex min-h-11 items-center justify-center text-center text-xs font-medium text-ink/70 underline underline-offset-4 hover:text-ink focus-visible:outline-2 focus-visible:outline-ink">
+          Revisar mi negocio por WhatsApp
+        </WhatsAppSalesLink>
       </div>
     </div>
   );

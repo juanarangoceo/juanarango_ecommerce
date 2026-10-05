@@ -90,6 +90,38 @@ no se redimensionan ni recortan).
 
 ### Estructura comercial (30 de septiembre de 2026)
 
+Actualización 5-oct-2026: implementación local del contacto de Nitro Complete
+por WhatsApp. Publicación autorizada por Juan el mismo día; evidencia en
+`bitacora/2026-10.md`. El CTA comercial principal lleva al
+vendedor de Juan (**+57 311 300 5150**), con mensaje de interés general, kit,
+plan o calculadora. La evaluación queda como alternativa; la asesoría y el
+soporte conservan sus canales. El menú tiene un solo CTA principal, con acceso
+compacto en móvil, y los cierres explican conversación → elección → ficha y
+alta autorizada. Se dice claramente que atiende el asistente de Juan y que él
+revisa la instalación, sin prometer atención humana inmediata. El visitante
+puede probar una conversación real; no se presenta al vendedor como una demo
+idéntica de todos los módulos del producto. La landing de video permite
+contactar sin esperar reproducción y oculta el reproductor si no hay video.
+
+Corrección de Juan del mismo día: evitar notas y eslóganes sueltos bajo los CTA
+y subtítulos que repitan lo que ya muestra la sección. Si un texto ayuda a
+decidir, integrarlo en la descripción, los pasos o un bloque rotulado de
+condiciones. El recorrido se abre con título y tarjetas; las condiciones se
+consultan en un desplegable. Formulario y Privacidad acompañan al botón como
+acciones secundarias, sin una tira adicional de frases genéricas.
+
+Ajuste para compradores colombianos (5-oct-2026): presentación → conversación
+interactiva → recorrido → kit y planes → detalles de integración y control →
+calculadora → preguntas → contacto. La moneda se rotula como pesos colombianos
+(COP), con separadores locales; el consumo público se llama **turnos** y se
+define dentro del bloque de precios. Se evita jerga como «ticket», «leads»,
+«checkout», «ads» o «Recovery» en estos recorridos. Se muestran $700.000 de
+implementación junto a cada precio mensual, también en portada y `/nitrobot`.
+El comparativo se puede desplegar. Las primeras preguntas explican el número,
+la ficha y los tiempos: el kit usa un número gestionado por Nitro y las 48 h
+cuentan desde pago y ficha completos; conservar un número actual se revisa
+con Meta antes de pagar. La calculadora presenta escenarios estimados.
+
 - La web tiene dos caminos: **producto** (Nitro Complete) y **asesoría**
   (NitroCommerce, con Nitro Landing como servicio). En la interfaz se dice
   «Asesoría», no «Consultoría».
@@ -103,9 +135,9 @@ no se redimensionan ni recortan).
 - Las tarjetas que explican un módulo pueden abrirse al tocarlas («Cómo
   funciona» / «Qué necesitas»). Una a la vez y siempre con un botón real con
   `aria-expanded`.
-- Argumento diferencial de la landing: en la web no sabes por qué se fue el
-  cliente; en WhatsApp, Nitro Complete muestra la causa (módulo Oportunidades,
-  que se activa aparte).
+- Oportunidades aporta motivos identificados en conversaciones y los mensajes
+  que los respaldan. Se activa aparte; no atribuir una causa a todas las
+  ventas perdidas ni prometer resultados.
 - La titularidad del producto va como nota discreta de cierre («Nitro Complete
   es un producto de TODOPOLIS S.A.S.»), no como bloque destacado.
 - Sin glassmorphism ni rejillas idénticas decorativas. Se prefieren listas

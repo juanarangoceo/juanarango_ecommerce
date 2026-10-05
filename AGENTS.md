@@ -139,6 +139,17 @@ Autenticación interna (endurecida el 25-09-2026):
 
 ## Estado actual — 25 de septiembre de 2026
 
+Actualización 5-oct-2026: recorrido de Nitro Complete por WhatsApp implementado
+en `master`. Juan autorizó su publicación el 5-oct; la comprobación del
+dominio y de NitroBot se registra en `docs/bitacora/2026-10.md`.
+Portada, menú, kit/planes, calculadora, guía, blog, resultado del diagnóstico,
+página orgánica, VSL y resultado del formulario llevan al vendedor en
+**+57 311 300 5150**. La evaluación queda como alternativa; asesoría, soporte,
+newsletter y contacto del titular mantienen sus canales. Detalles y evidencia
+en `docs/bitacora/2026-10.md` y estado vivo en `docs/pendientes.md`. El parche
+histórico de `bot_super_admin/docs/web` está superado por esta implementación;
+no volver a aplicarlo. No se modificó NitroBot.
+
 **La reconstrucción ya está en producción.** `codex/reconstruccion-web` se
 fusionó por avance rápido en `master` y Vercel sirve juanarangoecommerce.com
 desde ahí. La carpeta principal `/home/juan/juanarangoecommerce` vuelve a ser

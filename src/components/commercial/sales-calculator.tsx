@@ -1,9 +1,9 @@
 "use client";
 
 import { useId, useState } from "react";
-import Link from "next/link";
-import { ArrowDown, ArrowRight, ChevronDown, Clock3, MessagesSquare, TrendingUp } from "lucide-react";
-import { PLAN_RECOMMENDATION_MARGIN, UNITS_PER_CONVERSATION, primaryCta, recommendPlan } from "@/lib/commercial-content";
+import { ArrowUp, ArrowRight, ChevronDown, Clock3, MessagesSquare, TrendingUp } from "lucide-react";
+import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
+import { PLAN_RECOMMENDATION_MARGIN, UNITS_PER_CONVERSATION, recommendPlan } from "@/lib/commercial-content";
 
 // Estimación transparente: todo sale de los datos del visitante y de supuestos
 // visibles y editables. No publica resultados de clientes ni promete uplift;
@@ -77,7 +77,7 @@ export function SalesCalculator() {
       <div className="space-y-7 p-6 sm:p-9">
         <p className="text-sm font-semibold text-white">Tu operación hoy</p>
         <Slider label="Conversaciones de venta al mes" value={chats} min={100} max={10000} step={100} format={int.format} onChange={setChats} />
-        <Slider label="Ticket promedio" value={ticket} min={30000} max={800000} step={10000} format={cop.format} onChange={setTicket} />
+        <Slider label="Valor promedio de un pedido" hint="En pesos colombianos (COP)." value={ticket} min={30000} max={800000} step={10000} format={cop.format} onChange={setTicket} />
         <Slider label="Chats que hoy terminan en venta" value={closeRate} min={1} max={30} step={0.5} format={(v) => `${pct.format(v)}%`} onChange={setCloseRate} />
         <Slider label="Chats que llegan fuera de horario" value={offHours} min={0} max={70} step={5} format={(v) => `${v}%`} onChange={setOffHours} />
 
@@ -106,23 +106,23 @@ export function SalesCalculator() {
 
         <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/8 bg-white/8">
           <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><MessagesSquare className="size-4 text-primary" aria-hidden="true" />Conversaciones que puedes delegar</dt>
+            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><MessagesSquare className="size-4 text-primary" aria-hidden="true" />Conversaciones que podrías delegar</dt>
             <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-white">{int.format(delegable)} <span className="text-base font-normal text-white/45">al mes</span></dd>
             <dd className="mt-1 text-xs text-white/45">El resto pasa a tu equipo con la conversación completa.</dd>
           </div>
           <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><Clock3 className="size-4 text-primary" aria-hidden="true" />Tiempo que libera tu equipo</dt>
+            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><Clock3 className="size-4 text-primary" aria-hidden="true" />Tiempo de atención que podrías liberar</dt>
             <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-white">{int.format(hours)} <span className="text-base font-normal text-white/45">horas al mes</span></dd>
           </div>
           <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><TrendingUp className="size-4 text-primary" aria-hidden="true" />Ventas que hoy se quedan en el chat</dt>
+            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><TrendingUp className="size-4 text-primary" aria-hidden="true" />Ventas adicionales estimadas</dt>
             <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-primary">{cop.format(recoveredValue)} <span className="text-base font-normal text-white/45">al mes</span></dd>
-            <dd className="mt-1 text-xs text-white/45">≈ {int.format(recoveredOrders)} pedidos · tu cierre pasaría de {pct.format(closeRate)}% a {pct.format(newCloseRate)}%</dd>
+            <dd className="mt-1 text-xs text-white/45">≈ {int.format(recoveredOrders)} pedidos · cierre estimado: {pct.format(newCloseRate)}% frente al {pct.format(closeRate)}% actual</dd>
           </div>
         </dl>
 
         <p className="mt-5 text-xs leading-5 text-white/40">
-          Estimación con tus datos y los supuestos visibles, no una promesa de resultados. Supone que los chats que hoy se pierden fuera de horario cerrarían a tu tasa actual si se responden a tiempo. En la evaluación lo revisamos con tus números reales.
+          Estimación con tus datos y los supuestos visibles, no una promesa de resultados. Supone que los chats que hoy se pierden fuera de horario cerrarían a tu tasa actual si se responden a tiempo. Por WhatsApp revisamos si estos supuestos encajan con tu negocio.
         </p>
 
         <div className="mt-6 lg:mt-auto">
@@ -132,16 +132,17 @@ export function SalesCalculator() {
             </p>
             {plan ? (
               <a href={`#plan-${plan.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
-                Ver plan <ArrowDown className="size-3.5" aria-hidden="true" />
+                Ver plan <ArrowUp className="size-3.5" aria-hidden="true" />
               </a>
             ) : null}
           </div>
           <p className="mt-2 text-xs leading-5 text-white/40">
             ≈ {int.format(estimatedUnits)} turnos al mes: {UNITS_PER_CONVERSATION} por conversación y {pct.format((PLAN_RECOMMENDATION_MARGIN - 1) * 100)}% de margen.
           </p>
-          <Link href={primaryCta.href} className="group mt-5 inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full bg-primary px-6 text-sm font-bold text-ink transition hover:bg-[#c8ff5a]">
-            Revisarlo con mis números <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-          </Link>
+          <WhatsAppJuanButton context={{ kind: "calculator", chats, ticket }} placement="calculator" className="mt-5 w-full self-start text-sm sm:w-auto">
+            Revisar mis números
+          </WhatsAppJuanButton>
+          <p className="mt-2 text-xs leading-5 text-white/55">Se abre WhatsApp con tus estimaciones. Puedes editar el mensaje antes de enviarlo.</p>
         </div>
       </div>
     </div>

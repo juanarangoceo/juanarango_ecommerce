@@ -1,3 +1,5 @@
+import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
+import { SalesContact } from "@/components/commercial/sales-contact";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -52,7 +54,7 @@ const faqs = [
   ],
   [
     "¿Necesito Shopify?",
-    "No. NitroBot puede sincronizarse con Shopify o usar un catálogo administrado directamente en su panel. En la evaluación definimos cuál ruta reduce más trabajo y riesgo para tu negocio.",
+    "No. NitroBot puede sincronizarse con Shopify o usar un catálogo administrado directamente en su panel. Por WhatsApp revisamos cuál ruta reduce más trabajo y riesgo para tu negocio.",
   ],
   [
     "¿La inteligencia artificial puede inventar precios?",
@@ -68,7 +70,7 @@ const faqs = [
   ],
   [
     "¿Cuánto cuesta la implementación?",
-    `La implementación estándar cuesta ${nitroCompleteImplementation} COP, una sola vez. En la evaluación revisamos catálogo, volumen y alcance; si tu caso necesita algo fuera del estándar, lo sabes antes de iniciar.`,
+    `La implementación estándar cuesta ${nitroCompleteImplementation} COP, una sola vez. Por WhatsApp revisamos catálogo, volumen y alcance; si tu caso necesita algo fuera del estándar, lo sabes antes de iniciar.`,
   ],
 ];
 
@@ -86,22 +88,8 @@ const schema = {
   provider: { "@id": `${SITE_URL}/#organization` },
 };
 
-function Cta({
-  children = "Evaluar mi operación",
-  dark = false,
-}: {
-  children?: React.ReactNode;
-  dark?: boolean;
-}) {
-  return (
-    <Link
-      href="/nitrobot/conectar"
-      className={`group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold transition ${dark ? "bg-black text-white hover:bg-[#111512]" : "bg-primary text-[#111311] hover:bg-[#c8ff5a]"}`}
-    >
-      {children}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-    </Link>
-  );
+function Cta({ children = "Hablar por WhatsApp", dark = false }: { children?: React.ReactNode; dark?: boolean }) {
+  return <WhatsAppJuanButton context={{ kind: "evaluation" }} placement="organic_product" variant={dark ? "dark" : "primary"}>{children}</WhatsAppJuanButton>;
 }
 
 function ProductPreview() {
@@ -400,9 +388,9 @@ export default function NitroBotPage() {
             </p>
           </div>
           <div className="mt-14 grid gap-5 lg:grid-cols-3">
-            {plans.map((plan) => <article key={plan.name} className={`relative flex flex-col rounded-3xl border p-7 ${plan.featured ? "border-primary/38 bg-primary/[.065] shadow-[0_0_50px_rgba(183,255,42,.06)]" : "border-white/10 bg-[#0d110e]"}`}>{plan.featured ? <span className="absolute right-5 top-5 rounded-full bg-primary px-3 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-[#111311]">Recomendado</span> : null}<p className="font-mono text-[10px] uppercase tracking-[.18em] text-primary">{plan.name}</p><div className="mt-7 flex items-end gap-2"><span className="text-4xl font-bold tracking-tight text-white">{plan.price}</span><span className="pb-1 text-xs text-white/38">COP / mes</span></div><p className="mt-5 border-t border-white/9 pt-5 text-sm font-semibold text-white/78">{plan.capacity}</p><p className="mt-3 text-sm leading-6 text-white/48">{plan.fit}</p><ul className="mt-6 space-y-3 text-xs leading-5 text-white/58">{["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-auto pt-7"><Cta>Ver si es mi plan</Cta></div></article>)}
+            {plans.map((plan) => <article key={plan.name} className={`relative flex flex-col rounded-3xl border p-7 ${plan.featured ? "border-primary/38 bg-primary/[.065] shadow-[0_0_50px_rgba(183,255,42,.06)]" : "border-white/10 bg-[#0d110e]"}`}>{plan.featured ? <span className="absolute right-5 top-5 rounded-full bg-primary px-3 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-[#111311]">Para crecer</span> : null}<p className="font-mono text-[10px] uppercase tracking-[.18em] text-primary">{plan.name}</p><div className="mt-7 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-bold tracking-tight text-white">{plan.price}</span><span className="pb-1 text-xs text-white/38">COP / mes</span></div><p className="mt-3 rounded-xl bg-white/5 px-3 py-2.5 text-sm leading-5 text-white/75">+ <strong className="font-semibold">{nitroCompleteImplementation}</strong> de implementación, una sola vez</p><p className="mt-5 border-t border-white/9 pt-5 text-sm font-semibold text-white/78">{plan.capacity}</p><p className="mt-3 text-sm leading-6 text-white/48">{plan.fit}</p><ul className="mt-6 space-y-3 text-xs leading-5 text-white/58">{["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-auto pt-7"><WhatsAppJuanButton context={{ kind: "plan", planName: plan.name }} placement={`organic_${plan.name}`} className="w-full text-sm">Consultar {plan.name}</WhatsAppJuanButton></div></article>)}
           </div>
-          <div className="mt-6 grid gap-4 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7"><div><p className="font-semibold text-white">Implementación estándar: {nitroCompleteImplementation} COP, una sola vez.</p><p className="mt-2 text-xs leading-5 text-white/42">El alcance final se confirma antes de iniciar. Plantillas de Meta, campañas, desarrollos a medida e integraciones no soportadas se cotizan aparte.</p></div><p className="rounded-full border border-primary/20 bg-primary/7 px-4 py-2 text-center text-xs font-medium text-primary">Sin compra automática</p></div>
+          <div className="mt-6 grid gap-4 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7"><div><p className="font-semibold text-white">Implementación estándar: {nitroCompleteImplementation} COP, una sola vez.</p><p className="mt-2 text-xs leading-5 text-white/42">El alcance final se confirma antes de iniciar. La mensualidad se paga aparte. Las plantillas adicionales, los desarrollos a medida y las integraciones no soportadas se cotizan aparte.</p></div><p className="rounded-full border border-primary/20 bg-primary/7 px-4 py-2 text-center text-xs font-medium text-primary">Sin compra automática</p></div>
         </div>
       </section>
 
@@ -437,19 +425,7 @@ export default function NitroBotPage() {
       </section>
 
       <section className="px-5 py-24 sm:px-6 lg:py-32" data-nitro-orb="diagnostic">
-        <div className="mx-auto max-w-5xl rounded-[36px] border border-primary/20 bg-[radial-gradient(circle_at_top_right,rgba(183,255,42,.14),transparent_38%),#0d110e] px-6 py-16 text-center sm:px-12">
-          <h2 className="mx-auto max-w-3xl font-display text-4xl font-bold tracking-tight sm:text-6xl">
-            Primero comprobamos <span className="text-primary">si encaja.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/58">
-            Responde una evaluación corta sobre tu catálogo, volumen y equipo.
-            Recibes una recomendación inmediata y, si hay encaje, revisamos
-            juntos la conexión.
-          </p>
-          <div className="mt-9">
-            <Cta />
-          </div>
-        </div>
+        <SalesContact placement="organic_closing" />
       </section>
     </main>
   );

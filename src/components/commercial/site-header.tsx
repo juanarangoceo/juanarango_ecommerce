@@ -3,17 +3,18 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { NitroMark } from "@/components/commercial/nitro-mark";
+import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
+import { WhatsAppSalesLink } from "@/components/commercial/whatsapp-sales-link";
+import { WhatsAppLogo } from "@/components/commercial/brand-logos";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
-import { primaryCta, primaryNavigation } from "@/lib/commercial-content";
+import { primaryNavigation } from "@/lib/commercial-content";
 
 interface SiteHeaderProps {
-  registerUrl: string;
   loginUrl: string;
 }
 
-export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
+export function SiteHeader({ loginUrl }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -27,13 +28,13 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#0b0d0b]/88 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-5 px-5 lg:px-8">
-        <Link href="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="nitro-brand-mark flex size-8 items-center justify-center text-primary">
-            <NitroMark className="size-6" />
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-5 sm:gap-5 lg:px-8">
+        <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3" onClick={() => setOpen(false)}>
+          <span className="nitro-brand-mark flex size-6 sm:size-8 items-center justify-center text-primary">
+            <NitroMark className="size-5 sm:size-6" />
           </span>
-          <span className="leading-none">
-            <span className="block text-sm font-bold tracking-[0.13em] text-white">JUAN ARANGO</span>
+          <span className="whitespace-nowrap leading-none max-[359px]:hidden">
+            <span className="block text-xs font-bold tracking-[0.13em] sm:text-sm text-white">JUAN ARANGO</span>
             <span className="mt-1 block font-mono text-[9px] tracking-[0.27em] text-white/45">NITRO ECOM</span>
           </span>
         </Link>
@@ -54,17 +55,13 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
 
         <div className="flex items-center gap-2">
           <LanguageToggle />
-          <div className="hidden items-center gap-2 xl:flex">
-            <a href={loginUrl} className="inline-flex min-h-10 items-center rounded-full px-3 text-sm font-medium text-white/75 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-              Ingresar
-            </a>
-            <a href={registerUrl} className="inline-flex min-h-10 items-center rounded-full border border-primary/30 bg-primary/5 px-4 text-sm font-semibold text-primary transition-colors hover:border-primary/60 hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-              Crear cuenta
-            </a>
-          </div>
-          <Button asChild className="hidden h-10 rounded-full px-5 font-semibold sm:inline-flex">
-            <Link href={primaryCta.href}>{primaryCta.label}</Link>
-          </Button>
+          <a href={loginUrl} className="hidden min-h-11 items-center rounded-full px-3 text-sm font-medium text-white/75 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary xl:inline-flex">
+            Ingresar
+          </a>
+          <WhatsAppJuanButton context={{ kind: "hero" }} placement="header" className="hidden min-h-11 px-5 text-sm sm:inline-flex">Hablar por WhatsApp</WhatsAppJuanButton>
+          <WhatsAppSalesLink context={{ kind: "hero" }} placement="header_mobile" aria-label="Consultar Nitro Complete por WhatsApp" className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:hidden">
+            <WhatsAppLogo className="size-5" mono title="" />
+          </WhatsAppSalesLink>
           <button
             type="button"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -107,19 +104,15 @@ export function SiteHeader({ registerUrl, loginUrl }: SiteHeaderProps) {
               ),
             )}
             <div className="mt-3 border-t border-white/8 pt-4">
-              <p className="px-4 text-sm text-white/45">Tu cuenta de Nitro Complete</p>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <a href={loginUrl} onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center rounded-xl border border-white/12 px-3 text-sm font-medium text-white/80 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-primary">
-                  Ingresar
-                </a>
-                <a href={registerUrl} onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center rounded-xl border border-primary/30 bg-primary/5 px-3 text-sm font-semibold text-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary">
-                  Crear cuenta
-                </a>
-              </div>
+              <WhatsAppSalesLink context={{ kind: "hero" }} placement="menu_mobile" onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+                <WhatsAppLogo className="size-5" mono title="" />
+                Hablar por WhatsApp
+              </WhatsAppSalesLink>
+              <p className="mt-3 text-center text-xs leading-5 text-white/55">Mi asistente te orienta sobre Nitro Complete.</p>
+              <a href={loginUrl} onClick={() => setOpen(false)} className="mt-4 flex min-h-12 items-center justify-center rounded-xl border border-white/12 px-3 text-sm font-medium text-white/80 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-primary">
+                Ya soy cliente · Ingresar
+              </a>
             </div>
-            <Button asChild className="mt-3 h-12 rounded-xl text-base sm:hidden">
-              <Link href={primaryCta.href} onClick={() => setOpen(false)}>{primaryCta.label}</Link>
-            </Button>
           </div>
         </nav>
       ) : null}

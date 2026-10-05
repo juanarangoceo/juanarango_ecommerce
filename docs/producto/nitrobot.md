@@ -63,12 +63,33 @@ Apoyo:
   Como alternativa comprobada, el negocio puede administrar su catálogo en
   NitroBot y gestionar los pedidos desde el panel.
 
+## Claridad de precios y activación (5-oct-2026)
+
+- Kit: $199.000 COP, 500 turnos y 100 plantillas, con número gestionado por
+  Nitro. Instalación en máximo 48 h desde pago y ficha completos.
+- Plan: mensualidad del plan más $700.000 COP de implementación, una sola
+  vez. La mensualidad no está incluida en ese pago; ambas aparecen juntas.
+- Conservar el número actual depende del proceso con Meta. Se revisa por
+  WhatsApp antes del pago, sin prometer compatibilidad universal.
+- Cada respuesta del asesor cuenta como un turno; conversaciones equivalentes
+  y resultados de la calculadora son estimaciones. Los importes y la fórmula
+  de recomendación se conservan, sin modificar NitroBot.
+
 ## Relación entre páginas
 
+Actualización de contacto, 5-oct-2026 (publicación autorizada por Juan;
+comprobación registrada en la bitácora): el recorrido principal de Nitro Complete comienza por WhatsApp con
+el asistente de Juan, en **+57 311 300 5150**. Orienta sobre kit/planes y recoge
+la ficha para preparar el alta que Juan autoriza. La calculadora transmite
+los datos elegidos como estimaciones en el mensaje editable. El contacto del
+titular en los documentos legales se conserva separado del canal de ventas.
+
 - `/nitrobot` explica el producto con profundidad y está orientada a orgánico.
-- `/nitrobot/conectar` filtra la viabilidad mediante cinco pasos y entrega el
-  prospecto al panel comercial de Nitro Bot.
+- `/nitrobot/conectar` queda como alternativa para evaluar por formulario:
+  filtra la viabilidad mediante cinco pasos, entrega el prospecto al panel
+  comercial de Nitro Bot y permite continuar con el vendedor por WhatsApp.
 - `/nitrobot/vsl` es una landing breve de Meta Ads y está marcada `noindex`.
-- El calificador y la VSL comparten formulario; plataforma, volumen, capacidad
+- La VSL prioriza la conversación por WhatsApp y enlaza el formulario como
+  alternativa; plataforma, volumen, capacidad
   humana y plazo son señales de calificación. La decisión final siempre se
   recalcula en Nitro Bot y nunca se acepta desde el navegador.

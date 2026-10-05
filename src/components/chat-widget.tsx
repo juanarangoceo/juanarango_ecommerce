@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, RotateCcw, X } from "lucide-react";
 import { PixelSphere, type LookTarget, type PixelSphereShape } from "@/components/commercial/pixel-sphere";
+import { WhatsAppSalesLink } from "@/components/commercial/whatsapp-sales-link";
+import type { JuanWhatsAppContext } from "@/lib/juan-whatsapp";
 import { WaTicks } from "@/components/commercial/whatsapp-ui";
 
 // Asistente Nitro: una guía con respuestas predefinidas que lleva a rutas
@@ -31,7 +33,7 @@ type NodeId = "root" | "sell" | "plans" | "ecommerce" | "landing" | "unsure";
 type GuideNode = {
   bot: string;
   choices?: readonly { label: string; next: NodeId }[];
-  links?: readonly { label: string; href: string; primary?: boolean }[];
+  links?: readonly { label: string; href: string; primary?: boolean; salesContext?: JuanWhatsAppContext }[];
 };
 
 const GUIDE: Record<NodeId, GuideNode> = {
@@ -47,15 +49,15 @@ const GUIDE: Record<NodeId, GuideNode> = {
   sell: {
     bot: "Para eso está Nitro Complete: **atiende con tu catálogo real**, **crea el pedido**, **lo confirma antes del despacho** y **avisa el envío**. Tu equipo entra cuando hace falta.",
     links: [
-      { label: "Comprobar si encaja", href: "/nitrobot/conectar", primary: true },
+      { label: "Consultar por WhatsApp", href: "whatsapp", primary: true, salesContext: { kind: "evaluation" } },
       { label: "Ver cómo funciona", href: "/nitro-complete" },
     ],
     choices: [{ label: "¿Cuánto cuesta?", next: "plans" }],
   },
   plans: {
-    bot: "Los tres planes incluyen lo mismo: **asesor, pedidos, panel y control humano**. Cambia la capacidad mensual. La evaluación te dice cuál encaja con tu volumen, **sin llamada obligatoria**.",
+    bot: "Los tres planes incluyen lo mismo: **asesor, pedidos, panel y control humano**. Cambia la capacidad mensual. También puedes empezar con un **kit sin mensualidad**. Mi asistente te ayuda a comparar por WhatsApp y Juan revisa la instalación.",
     links: [
-      { label: "Evaluar mi operación", href: "/nitrobot/conectar", primary: true },
+      { label: "Comparar por WhatsApp", href: "whatsapp", primary: true, salesContext: { kind: "evaluation" } },
       { label: "Ver planes y precios", href: "/nitro-complete#planes" },
     ],
     choices: [{ label: "Tengo otra consulta", next: "root" }],
@@ -396,19 +398,17 @@ export function ChatWidget() {
 
               {!botTyping && lastBot?.node ? (
                 <div className="wa-enter grid gap-2 pt-1">
-                  {GUIDE[lastBot.node].links?.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={link.primary
-                        ? "flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-ink transition-transform hover:scale-[1.015] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55"
-                        : "flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/12 px-5 text-sm font-semibold text-white/80 transition hover:border-primary/35 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45"}
-                    >
-                      {link.label}
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
-                  ))}
+                  {GUIDE[lastBot.node].links?.map((link) => {
+                    const className = link.primary
+                      ? "flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-ink transition-colors hover:bg-primary/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      : "flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/12 px-5 text-sm font-semibold text-white/80 transition hover:border-primary/35 hover:text-white focus-visible:outline-2 focus-visible:outline-primary";
+                    const content = <>{link.label}<ArrowRight className="size-4" aria-hidden="true" /></>;
+                    return link.salesContext ? (
+                      <WhatsAppSalesLink key={link.href} context={link.salesContext} placement="guide" onClick={() => setIsOpen(false)} className={className}>{content}</WhatsAppSalesLink>
+                    ) : (
+                      <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={className}>{content}</Link>
+                    );
+                  })}
                   {GUIDE[lastBot.node].choices?.map((choice) => (
                     <button
                       key={choice.next}

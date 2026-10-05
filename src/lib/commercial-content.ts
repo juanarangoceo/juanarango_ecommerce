@@ -23,7 +23,6 @@ export const primaryNavigation = [
 ] as const;
 
 /** Acción principal del embudo: el calificador de Nitro Complete. */
-export const primaryCta = { label: "Evaluar mi operación", href: "/nitrobot/conectar" } as const;
 
 // Nitro Complete es el producto principal. Cada módulo describe una capacidad
 // comprobada en /home/juan/nitro_bot (docs/modules). Varias dependen de

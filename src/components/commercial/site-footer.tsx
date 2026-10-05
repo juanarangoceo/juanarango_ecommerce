@@ -1,5 +1,6 @@
 import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import Link from "next/link";
+import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 
 const groups = [
   {
@@ -51,6 +52,7 @@ export function SiteFooter() {
           <p className="mt-5 text-sm leading-6 text-white/55">
             Ventas por WhatsApp con IA y asesoría ecommerce. Tecnología que vende y dirección humana para negocios de Colombia y Latinoamérica.
           </p>
+          <WhatsAppJuanButton context={{ kind: "hero" }} placement="footer" variant="outline" className="mt-6 w-full text-sm sm:w-auto">Consultar Nitro Complete</WhatsAppJuanButton>
           <a href={`mailto:${CONTACT_EMAILS.contacto}`} className="mt-6 inline-block text-sm text-white underline decoration-primary/60 underline-offset-4">
             {CONTACT_EMAILS.contacto}
           </a>

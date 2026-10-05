@@ -1,19 +1,13 @@
 import { TypingDots } from "./typing-dots"
 
-// El número de WhatsApp del bot es un dato de Juan: vive en NEXT_PUBLIC_NITROBOT_WA.
-// Si la variable no está definida, el CTA cae al formulario de respaldo (#contacto-nitrobot)
-// en lugar de inventar un número.
-const WA_NUMBER = process.env.NEXT_PUBLIC_NITROBOT_WA
-const WA_MESSAGE = "Hola NitroBot, quiero ver cómo funcionas para mi negocio"
+import { juanWhatsAppHref } from "@/lib/juan-whatsapp";
 
 export function nitrobotWaHref(): string {
-  return WA_NUMBER
-    ? `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`
-    : "#contacto-nitrobot"
+  return juanWhatsAppHref({ kind: "hero" });
 }
 
 // CTA primario con el gradiente NitroBot. En hover, los tres puntos de "escribiendo...".
-export function NitroBotCta({ children = "Habla con NitroBot ahora", className = "" }: { children?: React.ReactNode; className?: string }) {
+export function NitroBotCta({ children = "Consultar por WhatsApp", className = "" }: { children?: React.ReactNode; className?: string }) {
   const href = nitrobotWaHref()
   const isExternal = href.startsWith("https://")
   return (
