@@ -3,6 +3,20 @@
 Estado vivo al 30 de septiembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
+## Film de Nitro Complete en la web — 6 de octubre de 2026
+
+Integrado y publicado (detalle en `bitacora/2026-10.md`). Falta:
+
+- Revisión visual en el teléfono y el computador de Juan: bucle del hero,
+  ventana del film (ya sin el velo encima), video vertical en móvil,
+  subtítulos y el ajuste del encabezado de `/nitro-complete`.
+- Mirar en Meta los eventos `NitroFilmPlay` / `NitroFilmProgress` tras unos
+  días para comparar el bucle de la home con el film de `/nitro-complete`.
+- La VSL de campañas (`/nitrobot/vsl`) sigue sin video
+  (`NEXT_PUBLIC_NITROBOT_VSL_ID` vacío); decidir si usa este film.
+- Si se cambia el film, actualizar los public ids en `src/lib/nitro-film.ts` y
+  copiar los subtítulos nuevos (`npm run captions` en `nitro_video_studio`).
+
 ## Contacto de Nitro Complete por WhatsApp — 5 de octubre de 2026
 
 Implementado por pedido de Juan: portada, menú, producto, kit,
@@ -14,8 +28,11 @@ para el comprador colombiano: demo y precios antes de los detalles, pesos COP,
 turnos, implementación junto a mensualidad y preguntas sobre número/ficha.
 Se conserva el precio del kit y las reglas de recomendación.
 
-Juan autorizó publicar por el camino habitual de `master` el 5-oct.
-La entrega incluye comprobar el dominio real y la salud de NitroBot. Si Vercel tiene `NEXT_PUBLIC_JUAN_WHATSAPP`,
+Publicado por el camino habitual de `master` el 5-oct, commit `a2abd82`,
+despliegue `dpl_HcqNe89sXi45ismr3a62J2uddRWL` en `READY`. Dominio, WhatsApp,
+precios, móvil, calculadora, rutas alternativas y salud de NitroBot comprobados.
+El diagnóstico conserva un evento reciente escalado que debe revisarse en el
+panel de Salud de NitroBot; el equipo humano ya atendió ese chat. Si Vercel tiene `NEXT_PUBLIC_JUAN_WHATSAPP`,
 verificar que valga `573113005150`; sin override, ese es el destino incorporado
 al código. No aplicar el parche histórico de `bot_super_admin/docs/web` sobre
 esta implementación. Resultado del despliegue y comprobaciones en `bitacora/2026-10.md`.
