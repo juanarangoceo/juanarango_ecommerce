@@ -226,7 +226,7 @@ export default function NitroBotPage() {
       </section>
 
       {/* Nitro en 30 segundos */}
-      <section id="video" className="px-5 pb-16 pt-4 sm:px-6 lg:pb-24">
+      <section id="video" className="scroll-mt-20 px-5 pb-16 pt-4 sm:px-6 lg:pb-24" data-nitro-orb="flow">
         <div className="mx-auto max-w-5xl">
           <h2 className="mb-8 text-balance text-center font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Nitro en <span className="text-primary">30 segundos.</span>

@@ -132,12 +132,7 @@ export default function NitroCompletePage() {
         <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
         <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
-            <p className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-white/80 lg:justify-start">
-              <WhatsAppLogo className="size-4" />Para WhatsApp
-              <span className="text-white/30" aria-hidden="true">·</span>
-              <span className="inline-flex items-center gap-1.5">con <ShopifyLogo className="size-3.5" /> Shopify o sin tienda</span>
-            </p>
-            <h1 className="mt-5 text-white">
+            <h1 className="text-white">
               <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
               <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
                 Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
@@ -150,7 +145,13 @@ export default function NitroCompletePage() {
               <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Hablar por WhatsApp</WhatsAppJuanButton>
               <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#recarga">Empieza desde {nitroCompleteStarterKit.price}</Link></Button>
             </div>
-            <p className="mt-5 text-sm text-white/55">
+            {/* Compatibilidad después de la promesa y los botones: el nombre del producto va primero. */}
+            <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-white/70 lg:justify-start">
+              <WhatsAppLogo className="size-4" />Para WhatsApp
+              <span className="text-white/30" aria-hidden="true">·</span>
+              <Link href="#shopify" className="inline-flex items-center gap-1.5 underline decoration-white/20 underline-offset-4 hover:text-white">con <ShopifyLogo className="size-3.5" /> Shopify o sin tienda</Link>
+            </p>
+            <p className="mt-3 text-sm text-white/55">
               ¿Ya eres cliente? <a href={nitroAppUrl("/login")} className="font-semibold text-white/70 hover:text-white hover:underline">Ingresar</a>
             </p>
           </div>
@@ -159,11 +160,11 @@ export default function NitroCompletePage() {
       </section>
 
       {/* El film: la venta completa en 86 segundos, con voz y subtítulos */}
-      <section id="video" className="px-5 pb-4 pt-6 lg:px-8 lg:pt-10">
+      <section id="video" className="scroll-mt-20 px-5 pb-4 pt-6 lg:px-8 lg:pt-10" data-nitro-orb="flow">
         <div className="mx-auto max-w-5xl">
           <div className="mb-8 text-center">
             <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Míralo vender <span className="text-primary">de principio a fin.</span></h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/58">La venta, la confirmación, el envío y el seguimiento en {NITRO_FILMS.full.duration} minutos. Con sonido.</p>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/58">La venta, la confirmación, el envío y el seguimiento, en menos de un minuto y medio. Con sonido.</p>
           </div>
           <NitroFilmPlayer film={NITRO_FILMS.full} />
         </div>
@@ -364,7 +365,7 @@ export default function NitroCompletePage() {
 
       {/* Shopify: la integración más completa. Solo capacidades verificadas en
           nitro_bot (sync, pedidos, etiqueta de Aria, despacho, carritos, botón). */}
-      <section className="border-b border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
+      <section id="shopify" className="scroll-mt-20 border-b border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
           <div className="text-center lg:sticky lg:top-28 lg:self-start lg:text-left">
             <ShopifyLogo className="mx-auto size-10 lg:mx-0" />
