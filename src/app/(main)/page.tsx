@@ -17,7 +17,8 @@ import {
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { SalesContact } from "@/components/commercial/sales-contact";
-import { NitroHero } from "@/components/nitro/nitro-hero";
+import { NitroFilmTeaser } from "@/components/nitro/nitro-film";
+import { NITRO_FILMS } from "@/lib/nitro-film";
 
 export const metadata: Metadata = {
   title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
@@ -68,7 +69,7 @@ export default function HomePage() {
               <Link href="/soluciones/nitro-commerce" className="inline-flex items-center gap-1 font-semibold text-white underline decoration-primary/60 underline-offset-4 hover:text-primary">Conoce la asesoría <ArrowRight className="size-3.5" aria-hidden="true" /></Link>
             </p>
           </div>
-          <NitroHero />
+          <NitroFilmTeaser teaser={NITRO_FILMS.teaser} full={NITRO_FILMS.full} />
         </div>
       </section>
 

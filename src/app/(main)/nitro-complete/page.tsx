@@ -26,6 +26,8 @@ import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
 import { SalesContact } from "@/components/commercial/sales-contact";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
+import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
+import { NITRO_FILMS } from "@/lib/nitro-film";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -153,6 +155,17 @@ export default function NitroCompletePage() {
             </p>
           </div>
           <NitroHero />
+        </div>
+      </section>
+
+      {/* El film: la venta completa en 86 segundos, con voz y subtítulos */}
+      <section id="video" className="px-5 pb-4 pt-6 lg:px-8 lg:pt-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-8 text-center">
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Míralo vender <span className="text-primary">de principio a fin.</span></h2>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/58">La venta, la confirmación, el envío y el seguimiento en {NITRO_FILMS.full.duration} minutos. Con sonido.</p>
+          </div>
+          <NitroFilmPlayer film={NITRO_FILMS.full} />
         </div>
       </section>
 

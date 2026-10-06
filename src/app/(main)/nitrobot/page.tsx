@@ -27,6 +27,8 @@ import {
 import { nitroCompleteImplementation, nitroCompletePlans } from "@/lib/commercial-content";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
 import { WaTicks } from "@/components/commercial/whatsapp-ui";
+import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
+import { NITRO_FILMS } from "@/lib/nitro-film";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
@@ -220,6 +222,16 @@ export default function NitroBotPage() {
             </div>
             <ProductPreview />
           </div>
+        </div>
+      </section>
+
+      {/* Nitro en 30 segundos */}
+      <section id="video" className="px-5 pb-16 pt-4 sm:px-6 lg:pb-24">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="mb-8 text-balance text-center font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            Nitro en <span className="text-primary">30 segundos.</span>
+          </h2>
+          <NitroFilmPlayer film={NITRO_FILMS.cut30} />
         </div>
       </section>
 
