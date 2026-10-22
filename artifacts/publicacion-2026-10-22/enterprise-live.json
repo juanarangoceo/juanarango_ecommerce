@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "formulario ya recibido, sin repetir envío",
+    "panel real accesible con sesión autorizada",
+    "solicitud localizada en filtro Empresas",
+    "panel muestra empresa y necesidad enviadas desde la web",
+    "formulario no habilita respuestas automáticas ni ventana WhatsApp",
+    "panel real móvil sin desbordamiento",
+    "sin errores de consola ni excepciones en el recorrido real"
+  ],
+  "errors": [],
+  "contactId": "78c61028-5d54-431b-8285-9661c34c08d1",
+  "phone": "12025550163",
+  "company": "Verificación Nitro 22 oct 2026",
+  "need": "PRUEBA TÉCNICA AUTORIZADA de publicación. Verificar conexión web-panel. No contactar; registro ficticio para eliminar al cerrar la revisión.",
+  "name": "Prueba técnica publicación",
+  "scope": "Un registro técnico ficticio autorizado para comprobar web → receptor firmado → base del vendedor → panel. Sin email, mensajes ni cobros; eliminar solo este registro al cerrar."
+}

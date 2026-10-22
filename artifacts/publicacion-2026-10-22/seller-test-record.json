@@ -1,0 +1,17 @@
+{
+  "testContactId": "78c61028-5d54-431b-8285-9661c34c08d1",
+  "requests": 1,
+  "inboundJobs": 0,
+  "nitroEvents": 0,
+  "lastInboundAt": null,
+  "lastOutboundAt": null,
+  "nitroLeadId": null,
+  "nitroTenantId": null,
+  "consent": true,
+  "utm_source": "verificacion-publicacion",
+  "utm_campaign": "2026-10-22",
+  "cleanup": {
+    "remaining_contacts": 0,
+    "remaining_messages": 0
+  }
+}

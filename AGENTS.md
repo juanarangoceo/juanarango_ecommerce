@@ -139,13 +139,14 @@ Autenticación interna (endurecida el 25-09-2026):
 
 ## Estado actual — 25 de septiembre de 2026
 
-Actualización 22-oct-2026: rediseño con **publicación autorizada por Juan** en esta web
+Actualización 22-oct-2026: rediseño **publicado y verificado en producción** en esta web
 más `/home/juan/bot_super_admin`: activación inicial de Nitro Complete, recargas
 sin mensualidad, retiro de planes públicos, contacto empresarial al panel del
 vendedor y recepción por WhatsApp más breve. Incluye voces, llamadas y logos de
 pagos/transportadoras con narrativa para Colombia; Skydropx se muestra en
 preparación, sin creación de guías disponible. NitroBot se consultó solo en lectura;
-no se modifica ni se despliega. La conexión empresarial usa el origen HTTPS del
+no se modificó ni se desplegó. Formulario del dominio verificado hasta el panel real;
+registro ficticio retirado, sin mensajes ni cobros. La conexión empresarial usa el origen HTTPS del
 vendedor (`SALES_ASSISTANT_API_URL`) y su clave propia (`SALES_ASSISTANT_INTAKE_SECRET`),
 independiente de la clave previa de la web para NitroBot. Estado y
 validaciones en `docs/pendientes.md` y `docs/bitacora/2026-10.md`.

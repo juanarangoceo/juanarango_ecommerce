@@ -121,7 +121,8 @@ facturación de NitroBot.
 - Empresas con más capacidad o conexiones especiales solicitan revisión a Juan.
   El nuevo formulario llega al **panel del vendedor** (`bot_super_admin`), no
   al admin de NitroBot. No crea cuentas ni mensajes automáticos.
-- Juan solicitó publicar el rediseño el 22-oct. Resultado y comprobaciones en
+- Rediseño publicado el 22-oct; contacto empresarial verificado hasta el panel.
+  Resultado y comprobaciones en
   `docs/bitacora/2026-10.md`; no se modifica NitroBot.
 
 ## Relación entre páginas

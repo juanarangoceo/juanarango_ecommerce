@@ -5,44 +5,28 @@ registra en la bitácora correspondiente.
 
 ## Rediseño de activación y recargas — 22 de octubre de 2026
 
-Publicación **autorizada por Juan** el 22-oct. El receptor y la narrativa del
-vendedor ya están publicados (`49edca4`); la web está en cierre de publicación.
-NitroBot solo se consultó, sin cambios de código, configuración, datos ni despliegue.
-La decisión retira planes públicos y reemplaza el kit como narrativa por
-activación inicial; supera los pendientes antiguos de ratificar los planes.
+Publicado y verificado el 22-oct en web (`2dea20d`) y vendedor (`49edca4`).
+Activación inicial y recargas sustituyen los planes públicos; se restauró Nitro
+3D y se añadieron 18 logos pequeños bajo el header. Voces, llamadas e
+integraciones presentan sus condiciones reales para Colombia.
 
-La ampliación de voz, llamadas, logos de pagos/transportadoras y narrativa para
-Colombia también está implementada localmente. Se revisaron Confío para
-compradores, 17TRACK y Skydropx contra código y configuración de NitroBot.
-Skydropx **no está habilitado para crear guías** y la web lo indica claramente.
-Las muestras de voz son estáticas; no hacen llamadas al proveedor de IA.
-Juan descartó la composición de Saturno: se restauró el Nitro 3D animado
-original y se añadió una sola franja con 18 logos pequeños debajo del header.
-La franja permite desplazamiento horizontal en móvil. El subtexto del film
-sigue sin «Con sonido». Evidencia: `artifacts/franja-logos-2026-10-22/`.
+El formulario empresarial del dominio llegó al panel del vendedor, con campaña
+y consentimiento. El registro ficticio se retiró del vendedor y del CRM web;
+no envió WhatsApps, correos, pagos ni altas de NitroBot. Diseño, audio, rutas y
+panel comprobados en producción. NitroBot permaneció intacto.
 
-Antes de publicar:
+Pendientes del producto, fuera de esta publicación:
 
-- Revisión visual local aprobada por Juan, incluida la franja de logos.
-  Evidencia: `artifacts/franja-logos-2026-10-22/`.
-- Receptor del vendedor publicado y saludable. URL y clave específicas de la
-  conexión empresarial configuradas en producción de la web. No se rotaron
-  claves de NitroBot ni se sustituyó la clave anterior de evaluación de la web.
-- Verificar la entrega en el panel del vendedor sobre el dominio publicado.
-  La prueba completa actual usa PostgREST aislado, sin formularios reales.
-- Confío: autenticación y acceso a la tienda Nitro Ecom comprobados con HTTP 200.
-  Quedan fuera de esta prueba cobro, pago real, conciliación y acreditación;
-  cualquier transacción real requiere una solicitud explícita. El acceso a la
-  tienda del vendedor no sustituye la validación del cobro a compradores en
-  cada cuenta Confío de los comercios.
-- Seguimiento: validar guías representativas de cada transportadora y los avisos
-  antes de prometer cobertura concreta. Servientrega requiere especial revisión
-  de su código de proveedor. No cambiar el estado de NitroBot desde esta tarea.
-- Skydropx: la validación sandbox/producción y posterior habilitación pertenecen
-  al producto y quedan fuera del rediseño web.
+- Confío: autenticación y tienda comprobadas con HTTP 200. No se probaron cobro,
+  pago real, conciliación ni acreditación. Los pagos a compradores requieren
+  validar la cuenta Confío de cada comercio.
+- 17TRACK: validar guías reales representativas y avisos antes de ampliar las
+  promesas de cobertura; revisar especialmente el proveedor de Servientrega.
+- Skydropx: sigue en preparación. Habilitación y validación sandbox/producción
+  pertenecen a NitroBot, sin creación de guías disponible en esta publicación.
 
-Detalle y evidencia: `docs/bitacora/2026-10.md` y
-`artifacts/activacion-recargas-2026-10-22/`.
+Evidencia y cierre: `artifacts/publicacion-2026-10-22/` y
+`docs/bitacora/2026-10.md`.
 
 ## Film de Nitro Complete en la web — 6 de octubre de 2026
 

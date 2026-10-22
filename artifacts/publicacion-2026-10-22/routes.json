@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/",
+    "status": 200
+  },
+  {
+    "path": "/nitro-complete",
+    "status": 200
+  },
+  {
+    "path": "/nitrobot",
+    "status": 200
+  },
+  {
+    "path": "/nitrobot/vsl",
+    "status": 200
+  },
+  {
+    "path": "/nitrobot/conectar",
+    "status": 200
+  },
+  {
+    "path": "/nitro-complete/privacidad",
+    "status": 200
+  }
+]
