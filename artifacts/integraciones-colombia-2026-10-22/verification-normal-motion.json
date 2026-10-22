@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "hero comunica Colombia, voz, pagos y recargas",
+    "sin reproducción automática de muestras",
+    "no planes públicos y schema COP",
+    "muestras Sara y Carlos con retratos cargados",
+    "muestra Sara reproduce audio real",
+    "muestra Carlos reproduce y pausa Sara",
+    "llamadas separan voz clonada y saldo",
+    "logos originales cargan, pagos y transportadoras",
+    "Confío para compradores requiere cuenta del comercio",
+    "17TRACK indica saldo por guía y disponibilidad",
+    "Skydropx claramente no disponible",
+    "herramientas se pueden explorar sin abandonar landing",
+    "sin desbordamiento a 360 px",
+    "sin desbordamiento a 390 px",
+    "sin desbordamiento a 768 px",
+    "sin desbordamiento a 1440 px",
+    "FAQ visible y schema alineados a disponibilidad",
+    "WhatsApp conserva campaña sin abrir ni enviar mensajes",
+    "fallo de audio muestra alternativa accesible",
+    "sin excepciones JavaScript"
+  ],
+  "errors": [],
+  "origin": "http://localhost:4321",
+  "scope": "Solo lectura y muestras locales; no envíos de formularios, pagos, llamadas reales ni cambios en NitroBot."
+}

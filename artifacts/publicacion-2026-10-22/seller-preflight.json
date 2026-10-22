@@ -1,0 +1,11 @@
+{
+  "url": "https://bot-super-admin.vercel.app/api/sales/enterprise",
+  "invalidSignature": 401,
+  "validSignatureInvalidPayload": 422,
+  "healthStatus": 200,
+  "health": {
+    "ok": true,
+    "db": "ok"
+  },
+  "rowsWritten": false
+}

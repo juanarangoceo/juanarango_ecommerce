@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: el cálculo ofrece una compra real y conserva el excedente
+ok 1 - el cálculo ofrece una compra real y conserva el excedente
+  ---
+  duration_ms: 1.293484
+  type: 'test'
+  ...
+# Subtest: rechaza referencias de consumo inválidas
+ok 2 - rechaza referencias de consumo inválidas
+  ---
+  duration_ms: 0.280453
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 243.274363

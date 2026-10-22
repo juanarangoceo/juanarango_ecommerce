@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import {
   Camera,
   CheckCheck,
@@ -204,7 +204,7 @@ function useConversationPlayback(
   started: boolean,
   playbackKey: number
 ) {
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = useReducedMotionPreference();
   const [items, setItems] = useState<RenderedItem[]>([]);
   const [active, setActive] = useState<ActiveMessage | null>(null);
 

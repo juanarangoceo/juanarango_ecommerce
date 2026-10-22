@@ -1,0 +1,53 @@
+
+> juanarango_ecommerce@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  ✓ inlineCss
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 39.0s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+  Generating static pages using 7 workers (0/639) ...
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+  Generating static pages using 7 workers (159/639)
+  Generating static pages using 7 workers (319/639)
+  Generating static pages using 7 workers (479/639)
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+Error occurred prerendering page "/blog/fmi-ia-tsunami-mercado-laboral-marketing". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: fetch failed
+    at ignore-listed frames {
+  isNetworkError: true,
+  request: [Object],
+  digest: '3618439343',
+  [cause]: Error [SocketError]: other side closed
+      at ignore-listed frames {
+    code: 'UND_ERR_SOCKET',
+    socket: {
+      localAddress: '192.168.1.9',
+      localPort: 40842,
+      remoteAddress: '34.98.114.57',
+      remotePort: 443,
+      remoteFamily: 'IPv4',
+      timeout: undefined,
+      bytesWritten: 2562,
+      bytesRead: 0
+    }
+  }
+}
+Export encountered an error on /(main)/blog/[...slug]/page: /blog/fmi-ia-tsunami-mercado-laboral-marketing, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

@@ -24,7 +24,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { nitroCompleteImplementation, nitroCompletePlans } from "@/lib/commercial-content";
+import { nitroCompleteStarterKit } from "@/lib/commercial-content";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
 import { WaTicks } from "@/components/commercial/whatsapp-ui";
 import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
@@ -71,12 +71,10 @@ const faqs = [
     "Revisamos el volumen de conversaciones, la complejidad del catálogo y la participación del equipo. La propuesta se ajusta a esa operación para no sobredimensionarla.",
   ],
   [
-    "¿Cuánto cuesta la implementación?",
-    `La implementación estándar cuesta ${nitroCompleteImplementation} COP, una sola vez. Por WhatsApp revisamos catálogo, volumen y alcance; si tu caso necesita algo fuera del estándar, lo sabes antes de iniciar.`,
+    "¿Cuánto cuesta empezar?",
+    `La activación de Nitro Complete cuesta ${nitroCompleteStarterKit.price} COP una sola vez, con instalación, ${nitroCompleteStarterKit.units} turnos y ${nitroCompleteStarterKit.templates} plantillas. Después recargas cuando lo necesites, sin mensualidad. El saldo comprado no vence.`,
   ],
 ];
-
-const plans = nitroCompletePlans;
 
 const schema = {
   "@context": "https://schema.org",
@@ -389,20 +387,10 @@ export default function NitroBotPage() {
         </div>
       </section>
 
-      <section id="planes" className="px-5 py-20 sm:px-6 lg:py-28" data-nitro-orb="pricing">
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-4xl font-bold tracking-tight sm:text-6xl">
-              Elige capacidad sin perder <span className="text-primary">el núcleo del producto.</span>
-            </h2>
-            <p className="mt-5 text-white/58">
-              Los tres planes incluyen el sistema de venta, el panel y el control humano. Cambia la capacidad mensual, no la posibilidad de cerrar pedidos.
-            </p>
-          </div>
-          <div className="mt-14 grid gap-5 lg:grid-cols-3">
-            {plans.map((plan) => <article key={plan.name} className={`relative flex flex-col rounded-3xl border p-7 ${plan.featured ? "border-primary/38 bg-primary/[.065] shadow-[0_0_50px_rgba(183,255,42,.06)]" : "border-white/10 bg-[#0d110e]"}`}>{plan.featured ? <span className="absolute right-5 top-5 rounded-full bg-primary px-3 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-[#111311]">Para crecer</span> : null}<p className="font-mono text-[10px] uppercase tracking-[.18em] text-primary">{plan.name}</p><div className="mt-7 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-bold tracking-tight text-white">{plan.price}</span><span className="pb-1 text-xs text-white/38">COP / mes</span></div><p className="mt-3 rounded-xl bg-white/5 px-3 py-2.5 text-sm leading-5 text-white/75">+ <strong className="font-semibold">{nitroCompleteImplementation}</strong> de implementación, una sola vez</p><p className="mt-5 border-t border-white/9 pt-5 text-sm font-semibold text-white/78">{plan.capacity}</p><p className="mt-3 text-sm leading-6 text-white/48">{plan.fit}</p><ul className="mt-6 space-y-3 text-xs leading-5 text-white/58">{["Asesor con tu catálogo real", "Pedidos, casos y control humano", "Panel e implementación acompañada"].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-3.5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-auto pt-7"><WhatsAppJuanButton context={{ kind: "plan", planName: plan.name }} placement={`organic_${plan.name}`} className="w-full text-sm">Consultar {plan.name}</WhatsAppJuanButton></div></article>)}
-          </div>
-          <div className="mt-6 grid gap-4 rounded-3xl border border-white/9 bg-[#0d110e] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7"><div><p className="font-semibold text-white">Implementación estándar: {nitroCompleteImplementation} COP, una sola vez.</p><p className="mt-2 text-xs leading-5 text-white/42">El alcance final se confirma antes de iniciar. La mensualidad se paga aparte. Las plantillas adicionales, los desarrollos a medida y las integraciones no soportadas se cotizan aparte.</p></div><p className="rounded-full border border-primary/20 bg-primary/7 px-4 py-2 text-center text-xs font-medium text-primary">Sin compra automática</p></div>
+      <section id="recarga" className="px-5 py-16 sm:px-6 lg:py-24" data-nitro-orb="pricing">
+        <div className="mx-auto grid max-w-6xl gap-8 rounded-[2rem] border border-primary/30 bg-superficie-nitro p-7 sm:p-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+          <div><h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Tu asesor empieza con una activación.<br /><span className="text-primary">Después, recargas.</span></h2><p className="mt-5 text-lg leading-8 text-white/75">{nitroCompleteStarterKit.price} COP, una sola vez. Incluye instalación, número gestionado por Nitro, {nitroCompleteStarterKit.units} turnos y {nitroCompleteStarterKit.templates} plantillas. Sin mensualidad.</p></div>
+          <div className="flex flex-col gap-4"><WhatsAppJuanButton context={{ kind: "kit" }} placement="organic_activation">Activar mi asesor</WhatsAppJuanButton><Link href="/nitro-complete#recarga" className="py-2 text-center text-sm font-semibold text-white underline underline-offset-4 hover:text-primary">Ver qué incluye y precios de recargas</Link><Link href="/nitro-complete#empresas" className="py-2 text-center text-sm font-semibold text-white/75 underline underline-offset-4 hover:text-primary">Contacto para empresas con mayor capacidad</Link></div>
         </div>
       </section>
 

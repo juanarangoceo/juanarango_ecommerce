@@ -1,0 +1,24 @@
+{
+  "origin": "http://localhost:4321",
+  "checks": [
+    "imagen y logos reales cargan",
+    "órbita aparece en el hero antes del video",
+    "contraentrega y pago anticipado presentes",
+    "se eliminó Con sonido del subtexto",
+    "todos los enlaces de la órbita tienen destino real",
+    "sin desbordamiento de página a 360",
+    "rótulos no se superponen a 360",
+    "sin desbordamiento de página a 390",
+    "rótulos no se superponen a 390",
+    "sin desbordamiento de página a 768",
+    "rótulos no se superponen a 768",
+    "sin desbordamiento de página a 1024",
+    "rótulos no se superponen a 1024",
+    "sin desbordamiento de página a 1440",
+    "rótulos no se superponen a 1440",
+    "desde contraentrega se llega al recorrido de pagos y envíos",
+    "sin errores de consola ni excepciones JS"
+  ],
+  "errors": [],
+  "scope": "Navegación local de solo lectura; sin envíos ni cambios en NitroBot."
+}

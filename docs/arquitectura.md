@@ -93,6 +93,29 @@ suscritos de `contacts` y la baja usa `crm_unsubscribe`.
 - Inngest para trabajos asíncronos.
 - Gemini y OpenAI para funciones generativas.
 
+## Captación empresarial de Nitro Complete (22-oct-2026)
+
+`/nitro-complete#empresas` envía nombre, empresa, WhatsApp, referencia de volumen,
+necesidad y consentimiento por `submitEnterpriseLead`. El servidor valida y
+firma `nitro-enterprise-v1.timestamp.rawBody` con HMAC-SHA256. La clave es la
+`SALES_ASSISTANT_INTAKE_SECRET` de la web, que coincide con la clave existente
+`NITROBOT_LEAD_INTAKE_SECRET` del vendedor. La otra clave de la web para NitroBot
+se conserva: ambos proyectos usan claves distintas desde el 5-oct. El dominio
+criptográfico del contrato empresarial también es distinto. No se rota ninguna clave.
+
+El destino es `SALES_ASSISTANT_API_URL/api/sales/enterprise` en
+`/home/juan/bot_super_admin`. El receptor valida firma, cinco minutos de ventana,
+contrato y límite de cuerpo. Guarda en su propia base: contacto por teléfono y
+solicitud como mensaje de sistema `enterprise_request`, idempotente por UUID.
+Preserva datos y bajas existentes, atribución, consentimiento y próximas acciones.
+No cambia `last_inbound_at`, no abre la ventana de WhatsApp ni envía mensajes.
+
+La solicitud se muestra en Conversaciones (filtro Empresas), Embudo y seguimiento
+mediante las lecturas existentes del panel. La web confirma éxito solo después
+comprobar la recepción; ante error conserva los campos y la clave para reintentar.
+Después de recibirla, copia el contacto al CRM de la web mediante `captureContact`
+con su regla habitual de escritura. No hay migraciones ni escrituras nuevas a NitroBot.
+
 ## NitroBot en este repositorio
 
 Hay tres experiencias diferentes:

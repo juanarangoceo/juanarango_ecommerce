@@ -63,6 +63,29 @@ contrato `nitrobot-lead-v1` a Nitro Bot y aparece en `/admin/leads`. Los preview
 pueden mantener `ENABLE_NITROBOT_LEAD_SUBMISSIONS` desactivada; producción debe
 tener las tres variables Nitro configuradas y la función de Inngest sincronizada.
 
+### Contacto empresarial de Nitro Complete (22-oct-2026)
+
+- `SALES_ASSISTANT_API_URL`: origen HTTPS del vendedor `bot_super_admin`, solo servidor.
+  Es distinto de `NITROBOT_API_URL`; no apuntar este formulario a NitroBot.
+- `SALES_ASSISTANT_INTAKE_SECRET`: clave de la conexión empresarial, solo servidor.
+  Debe coincidir con `NITROBOT_LEAD_INTAKE_SECRET` del vendedor. Esta variable
+  de la web es independiente de su `NITROBOT_LEAD_INTAKE_SECRET`, que conserva
+  el valor de la conexión de evaluación con NitroBot. El contrato usa el prefijo
+  de firma `nitro-enterprise-v1`. No cambiar claves ni configuración de NitroBot.
+- El vendedor necesita únicamente su base `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY`
+  para recibir estas solicitudes. No necesita acceso a la base de NitroBot.
+
+Publicar primero el receptor del vendedor y configurar `SALES_ASSISTANT_API_URL`
+y `SALES_ASSISTANT_INTAKE_SECRET` en producción de la web al publicar la landing. El entorno local habitual no tiene esa URL ni
+la clave de captación de la web; no se copiaron secretos ni modificaron variables
+remotas durante esta sesión. El ensayo usa credenciales ficticias y un PostgREST
+en memoria; instrucciones y evidencia en `artifacts/activacion-recargas-2026-10-22/`.
+
+Confío se comprueba, sin crear pagos, desde el vendedor:
+`npx tsx scripts/verify-confio-readonly.ts`. Solo consulta `GET /v1/stores` y
+confirma que la tienda configurada pertenece a la credencial. Los métodos
+habilitados, el pago y la acreditación no se prueban con esa consulta.
+
 ### Diagnóstico comercial y CRM
 
 - `ENABLE_DIAGNOSTIC_SUBMISSIONS`: solo el valor exacto `true` habilita el
@@ -109,6 +132,7 @@ producción:
 2. Revisar que no se mezclen cambios ajenos.
 3. Ejecutar TypeScript, ESLint y build.
 4. Confirmar las variables requeridas en el entorno destino.
-5. Crear primero un preview desde Git y verificar las rutas afectadas.
+5. Por preferencia de Juan del 30-sep, publicar directamente `master` después
+   de las pruebas locales; no crear previews por rama salvo solicitud expresa.
 6. Desplegar solo con autorización explícita mediante merge/push a `master`.
 7. Verificar la URL real y los flujos con efectos externos de forma controlada.

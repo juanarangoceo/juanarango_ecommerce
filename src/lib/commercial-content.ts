@@ -53,7 +53,7 @@ export const nitroCompleteModules = [
     text: "Informa el despacho, comparte la guía y pregunta si el pedido llegó. Tu equipo deja de responder “¿dónde va mi pedido?”.",
     icon: Truck,
     how: "Cuando el pedido sale, avisa al comprador con la transportadora y la guía, y después le pregunta si lo recibió.",
-    needs: "Registrar el despacho: en Shopify se detecta solo; sin Shopify, desde el panel. Los estados de reparto o entrega se actualizan en el panel o con un archivo CSV.",
+    needs: "Registrar el despacho: en Shopify se detecta solo; sin Shopify, desde el panel. Los estados se actualizan en el panel, por CSV o con 17TRACK al habilitar la conexión y su saldo por guía.",
   },
   {
     key: "seguimiento",
@@ -61,8 +61,8 @@ export const nitroCompleteModules = [
     title: "Seguimiento y recuperación",
     text: "Retoma conversaciones que quedaron a medias y, con permiso del comprador, vuelve a escribir a quien recibió una cotización y no compró.",
     icon: RefreshCw,
-    how: "Retoma el chat que quedó a medias dentro de las 24 horas que permite WhatsApp, en tu horario de atención. A quien recibió una cotización y no compró le puede enviar un segundo mensaje con la oferta que tú autorices.",
-    needs: "Para el segundo mensaje: permiso del comprador, una plantilla de marketing aprobada por Meta y la oferta definida por producto. Nunca escribe a quien pidió no recibir mensajes.",
+    how: "Retoma el chat que quedó a medias dentro de la ventana de WhatsApp, en tu horario de atención. También puede acordar con el comprador un día y una franja para volver a conversar, con su permiso.",
+    needs: "Permiso del comprador y horarios definidos. Fuera de la ventana de WhatsApp requiere una plantilla aprobada por Meta. Nunca escribe a quien pidió no recibir mensajes.",
   },
   {
     key: "equipo",
@@ -84,14 +84,6 @@ export const nitroCompleteModules = [
   },
 ] as const;
 
-export const nitroCompletePlans = [
-  { slug: "nitro-5k", name: "Nitro 5K", units: 5_000, capacity: "5.000 turnos al mes", price: "$590.000", fit: "Para una operación pequeña con volumen estable.", featured: false },
-  { slug: "nitro-15k", name: "Nitro 15K", units: 15_000, capacity: "15.000 turnos al mes", price: "$1.190.000", fit: "Para un equipo comercial en crecimiento.", featured: true },
-  { slug: "nitro-30k", name: "Nitro 30K", units: 30_000, capacity: "30.000 turnos al mes", price: "$2.200.000", fit: "Para una operación intensiva y mayor volumen.", featured: false },
-] as const;
-
-export type NitroCompletePlan = (typeof nitroCompletePlans)[number];
-
 // La unidad de consumo es el turno: cada respuesta que el asesor envía a un
 // comprador (nitro_bot: términos del servicio y `consume_turn`). El código no
 // define turnos por conversación; se midió en producción (ciclos de sept. 2026,
@@ -99,47 +91,10 @@ export type NitroCompletePlan = (typeof nitroCompletePlans)[number];
 // 3 el 30-09-2026 (NIT-79). Cambiarlo aquí mueve tarjetas y calculadora a la vez.
 export const UNITS_PER_CONVERSATION = 3;
 
-/** Margen de la calculadora sobre el consumo estimado antes de recomendar plan. */
-export const PLAN_RECOMMENDATION_MARGIN = 1.15;
-
-/** Conversaciones de venta al mes que cubre un plan, redondeadas hacia abajo a 50. */
-export function planConversations(plan: NitroCompletePlan) {
-  return Math.floor(plan.units / UNITS_PER_CONVERSATION / 50) * 50;
-}
-
-/** Plan más pequeño que cubre el volumen con margen; null si supera el mayor. */
-export function recommendPlan(monthlyConversations: number): NitroCompletePlan | null {
-  const units = monthlyConversations * UNITS_PER_CONVERSATION * PLAN_RECOMMENDATION_MARGIN;
-  return nitroCompletePlans.find((plan) => plan.units >= units) ?? null;
-}
-
-export const nitroCompleteImplementation = "$700.000";
-
-/**
- * Lo que trae la implementación de un plan, en el orden en que ocurre. Misma
- * lista que nitro_bot (`IMPLEMENTATION_INCLUDES` en lib/commercial/plans.ts):
- * si cambia allá, se cambia aquí. No incluye meses gratis (se retiró el
- * 2026-10-01).
- */
-export const nitroCompleteImplementationIncludes = [
-  "Asesoría personalizada con Juan sobre tu operación, tu catálogo y cómo vendes hoy",
-  "Tu asesor entrenado con tu tono, tus reglas y hasta dónde puede negociar",
-  "Conexión de tu WhatsApp, tu catálogo y las plantillas aprobadas por Meta",
-  "Pruebas con conversaciones reales y encendido por partes, ajustando contigo",
-] as const;
-
-/** Plantillas de WhatsApp incluidas cada mes en los planes (nitro_bot: PLAN_TEMPLATES_PER_CYCLE). */
-export const PLAN_TEMPLATES_PER_CYCLE = 200;
-
 const copFormat = new Intl.NumberFormat("es-CO");
 /** «$1.190.000» a partir del número. */
 export function formatCop(value: number) {
   return `$${copFormat.format(Math.round(value))}`;
-}
-
-/** Pesos por turno de un plan, sin decimales. */
-export function planUnitPrice(plan: NitroCompletePlan) {
-  return Math.round(Number(plan.price.replace(/[^0-9]/g, "")) / plan.units);
 }
 
 // Modalidad Prepago (NIT-80, decisión de Juan del 2026-10-01). Fuente de verdad:

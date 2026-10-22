@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { WhatsAppLogo } from "@/components/commercial/brand-logos";
 import { SneakerArt, pasoUrbano } from "@/components/commercial/demo-stores";
 import { WaPhone, WaThread, WaTyping, type WaMessage } from "@/components/commercial/whatsapp-ui";
@@ -68,7 +68,7 @@ const chapters: readonly Chapter[] = [
 ];
 
 export function WhatsAppStory() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const rootRef = useRef<HTMLDivElement>(null);
   const [chapter, setChapter] = useState(0);
   const [count, setCount] = useState(2);

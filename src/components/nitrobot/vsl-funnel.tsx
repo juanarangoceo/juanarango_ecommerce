@@ -33,7 +33,7 @@ export function VslFunnel({ onReveal }: { onReveal?: () => void }) {
       /> : null}
       <div className="mt-5 rounded-2xl border border-primary/25 bg-primary/[0.04] p-5 text-center sm:p-7">
         <h2 className="text-xl font-semibold text-white sm:text-2xl">¿Lo revisamos con tu negocio?</h2>
-        <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-white/65">Mi asistente te atiende por WhatsApp, te orienta entre kit y planes y recoge tu ficha. Juan revisa y autoriza el alta.</p>
+        <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-white/65">Mi asistente te explica la activación y te acompaña para crear tu cuenta. Después recargas cuando lo necesitas, sin mensualidad.</p>
         <WhatsAppSalesLink context={{ kind: "evaluation" }} placement="vsl" onClick={() => onReveal?.()} className="mt-5 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-base font-bold text-ink hover:bg-primary/85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto">
           <WhatsAppLogo className="size-5 shrink-0" mono title="" />
           Hablar por WhatsApp

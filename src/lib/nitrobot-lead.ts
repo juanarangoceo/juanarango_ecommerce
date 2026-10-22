@@ -68,7 +68,7 @@ export const qualificationCopy: Record<QualificationStatus, { eyebrow: string; t
   review: {
     eyebrow: "Hay potencial",
     title: "Vamos a revisar tu operación",
-    body: "Nitro Complete puede encajar, pero necesitamos confirmar volumen, catálogo o integración antes de recomendarte un plan.",
+    body: "Nitro Complete puede encajar, pero necesitamos confirmar volumen, catálogo o integración para orientarte sobre la activación.",
   },
   not_recommended: {
     eyebrow: "Primero conviene ordenar la base",

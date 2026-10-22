@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { ChevronLeft, MoreVertical, Phone, Video } from "lucide-react";
 
 // Piezas de interfaz que imitan WhatsApp visto desde el teléfono del
@@ -124,7 +124,7 @@ export function WaPhone({ store, status, children, className = "" }: { store: Wa
  */
 export function useChatPlayback(total: number, options: { loop?: boolean; isBusiness: (index: number) => boolean; startAt?: number }) {
   const { loop = true, isBusiness, startAt = 1 } = options;
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(startAt);
   const [typing, setTyping] = useState(false);

@@ -1,149 +1,42 @@
 "use client";
 
 import { useId, useState } from "react";
-import { ArrowUp, ArrowRight, ChevronDown, Clock3, MessagesSquare, TrendingUp } from "lucide-react";
+import Link from "next/link";
+import { formatCop, nitroCompleteStarterKit, nitroCompleteUnitPacks, UNITS_PER_CONVERSATION } from "@/lib/commercial-content";
+import { estimateRecharge } from "@/lib/recharge-estimate";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
-import { PLAN_RECOMMENDATION_MARGIN, UNITS_PER_CONVERSATION, recommendPlan } from "@/lib/commercial-content";
-
-// Estimación transparente: todo sale de los datos del visitante y de supuestos
-// visibles y editables. No publica resultados de clientes ni promete uplift;
-// la evaluación comercial trabaja luego con los números reales del negocio.
-
-const cop = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
-const int = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
-const pct = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 1 });
-
-function Slider({
-  label,
-  hint,
-  value,
-  min,
-  max,
-  step,
-  format,
-  onChange,
-}: {
-  label: string;
-  hint?: string;
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  format: (value: number) => string;
-  onChange: (value: number) => void;
-}) {
-  const id = useId();
-  return (
-    <div>
-      <div className="flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-sm font-medium text-white/80">{label}</label>
-        <output htmlFor={id} className="shrink-0 font-mono text-sm font-semibold tabular-nums text-white">{format(value)}</output>
-      </div>
-      {hint ? <p className="mt-0.5 text-xs text-white/40">{hint}</p> : null}
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="mt-3 h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#B7FF2A]"
-      />
-    </div>
-  );
-}
 
 export function SalesCalculator() {
-  const [chats, setChats] = useState(1500);
-  const [ticket, setTicket] = useState(150000);
-  const [closeRate, setCloseRate] = useState(8);
-  const [offHours, setOffHours] = useState(30);
-  const [lostOffHours, setLostOffHours] = useState(50);
-  const [repetitive, setRepetitive] = useState(70);
-  const [minutes, setMinutes] = useState(6);
-  const [showAssumptions, setShowAssumptions] = useState(false);
-
-  const delegable = chats * (repetitive / 100);
-  const hours = (delegable * minutes) / 60;
-  const recoveredOrders = chats * (offHours / 100) * (lostOffHours / 100) * (closeRate / 100);
-  const recoveredValue = recoveredOrders * ticket;
-  const newCloseRate = closeRate * (1 + (offHours / 100) * (lostOffHours / 100));
-  const estimatedUnits = chats * UNITS_PER_CONVERSATION * PLAN_RECOMMENDATION_MARGIN;
-  const plan = recommendPlan(chats);
-
+  const [chats, setChats] = useState(300);
+  const [turns, setTurns] = useState(UNITS_PER_CONVERSATION);
+  const id = useId();
+  const estimate = estimateRecharge(chats, turns, nitroCompleteUnitPacks);
   return (
-    <div className="grid overflow-hidden rounded-[2rem] border border-white/10 bg-superficie-nitro lg:grid-cols-[1fr_1fr]">
-      <div className="space-y-7 p-6 sm:p-9">
-        <p className="text-sm font-semibold text-white">Tu operación hoy</p>
-        <Slider label="Conversaciones de venta al mes" value={chats} min={100} max={10000} step={100} format={int.format} onChange={setChats} />
-        <Slider label="Valor promedio de un pedido" hint="En pesos colombianos (COP)." value={ticket} min={30000} max={800000} step={10000} format={cop.format} onChange={setTicket} />
-        <Slider label="Chats que hoy terminan en venta" value={closeRate} min={1} max={30} step={0.5} format={(v) => `${pct.format(v)}%`} onChange={setCloseRate} />
-        <Slider label="Chats que llegan fuera de horario" value={offHours} min={0} max={70} step={5} format={(v) => `${v}%`} onChange={setOffHours} />
-
-        <div className="rounded-2xl border border-white/8">
-          <button
-            type="button"
-            onClick={() => setShowAssumptions((open) => !open)}
-            aria-expanded={showAssumptions}
-            className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-sm font-medium text-white/70 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45"
-          >
-            Ver y ajustar los supuestos
-            <ChevronDown className={`size-4 transition-transform ${showAssumptions ? "rotate-180" : ""}`} aria-hidden="true" />
-          </button>
-          {showAssumptions ? (
-            <div className="space-y-6 border-t border-white/8 px-4 pb-5 pt-5">
-              <Slider label="De esos, se pierden por no responder a tiempo" hint="Supuesto: ajústalo a tu caso." value={lostOffHours} min={0} max={100} step={5} format={(v) => `${v}%`} onChange={setLostOffHours} />
-              <Slider label="Conversaciones que el asesor resuelve solo" hint="Supuesto: preguntas de producto, precio, envío y datos de entrega." value={repetitive} min={0} max={100} step={5} format={(v) => `${v}%`} onChange={setRepetitive} />
-              <Slider label="Minutos de tu equipo por conversación" hint="Supuesto: tiempo promedio que hoy dedica una persona." value={minutes} min={1} max={20} step={1} format={(v) => `${v} min`} onChange={setMinutes} />
-            </div>
-          ) : null}
+    <div className="grid overflow-hidden rounded-[2rem] border border-white/12 bg-superficie-nitro lg:grid-cols-2">
+      <div className="space-y-8 p-6 sm:p-9">
+        <h3 className="text-xl font-semibold text-white">¿Cómo conversa tu negocio?</h3>
+        <div>
+          <label htmlFor={`${id}-chats`} className="block text-base font-medium text-white">Conversaciones de venta al mes</label>
+          <input id={`${id}-chats`} type="number" min={1} max={100000} value={chats} onChange={(e) => setChats(Math.max(1, Math.min(100000, Number(e.target.value) || 1)))} className="mt-3 min-h-13 w-full rounded-xl border border-white/20 bg-background px-4 text-xl tabular-nums text-white outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+          <p className="mt-2 text-sm leading-6 text-white/65">Tu estimación de clientes que consultan en un mes.</p>
+        </div>
+        <div>
+          <div className="flex items-center justify-between gap-4"><label htmlFor={`${id}-turns`} className="text-base font-medium text-white">Respuestas del asesor por conversación</label><output htmlFor={`${id}-turns`} className="text-xl font-semibold text-primary">{turns}</output></div>
+          <input id={`${id}-turns`} type="range" min={1} max={15} value={turns} onChange={(e) => setTurns(Number(e.target.value))} className="mt-5 w-full accent-[#B7FF2A]" />
+          <p className="mt-2 text-sm leading-6 text-white/65">Empezamos con {UNITS_PER_CONVERSATION} como referencia. Si tus ventas necesitan más conversación, sube este valor.</p>
         </div>
       </div>
-
-      <div className="flex flex-col border-t border-white/10 bg-[#0d110e] p-6 sm:p-9 lg:border-l lg:border-t-0" aria-live="polite">
-        <p className="text-sm font-semibold text-white">Lo que Nitro Complete podría cambiar</p>
-
-        <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/8 bg-white/8">
-          <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><MessagesSquare className="size-4 text-primary" aria-hidden="true" />Conversaciones que podrías delegar</dt>
-            <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-white">{int.format(delegable)} <span className="text-base font-normal text-white/45">al mes</span></dd>
-            <dd className="mt-1 text-xs text-white/45">El resto pasa a tu equipo con la conversación completa.</dd>
-          </div>
-          <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><Clock3 className="size-4 text-primary" aria-hidden="true" />Tiempo de atención que podrías liberar</dt>
-            <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-white">{int.format(hours)} <span className="text-base font-normal text-white/45">horas al mes</span></dd>
-          </div>
-          <div className="bg-[#0d110e] p-5">
-            <dt className="flex items-center gap-2 text-xs font-medium text-white/55"><TrendingUp className="size-4 text-primary" aria-hidden="true" />Ventas adicionales estimadas</dt>
-            <dd className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-primary">{cop.format(recoveredValue)} <span className="text-base font-normal text-white/45">al mes</span></dd>
-            <dd className="mt-1 text-xs text-white/45">≈ {int.format(recoveredOrders)} pedidos · cierre estimado: {pct.format(newCloseRate)}% frente al {pct.format(closeRate)}% actual</dd>
-          </div>
-        </dl>
-
-        <p className="mt-5 text-xs leading-5 text-white/40">
-          Estimación con tus datos y los supuestos visibles, no una promesa de resultados. Supone que los chats que hoy se pierden fuera de horario cerrarían a tu tasa actual si se responden a tiempo. Por WhatsApp revisamos si estos supuestos encajan con tu negocio.
-        </p>
-
-        <div className="mt-6 lg:mt-auto">
-          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl border border-primary/25 bg-primary/[0.06] px-4 py-3.5">
-            <p className="text-sm text-white/70">
-              {plan ? <>Para tu volumen: <strong className="font-semibold text-white">{plan.name}</strong></> : <strong className="font-semibold text-white">Hablemos de un plan a medida</strong>}
-            </p>
-            {plan ? (
-              <a href={`#plan-${plan.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
-                Ver plan <ArrowUp className="size-3.5" aria-hidden="true" />
-              </a>
-            ) : null}
-          </div>
-          <p className="mt-2 text-xs leading-5 text-white/40">
-            ≈ {int.format(estimatedUnits)} turnos al mes: {UNITS_PER_CONVERSATION} por conversación y {pct.format((PLAN_RECOMMENDATION_MARGIN - 1) * 100)}% de margen.
-          </p>
-          <WhatsAppJuanButton context={{ kind: "calculator", chats, ticket }} placement="calculator" className="mt-5 w-full self-start text-sm sm:w-auto">
-            Revisar mis números
-          </WhatsAppJuanButton>
-          <p className="mt-2 text-xs leading-5 text-white/55">Se abre WhatsApp con tus estimaciones. Puedes editar el mensaje antes de enviarlo.</p>
+      <div className="border-t border-white/10 bg-white/[0.035] p-6 sm:p-9 lg:border-l lg:border-t-0" aria-live="polite" aria-atomic="true">
+        <p className="text-sm font-medium text-white/75">Tu consumo estimado</p>
+        <p className="mt-3 text-4xl font-semibold tracking-tight tabular-nums text-white">{estimate.units.toLocaleString("es-CO")} <span className="text-lg font-normal text-white/65">turnos al mes</span></p>
+        <div className="mt-6 rounded-2xl border border-primary/25 bg-primary/[0.05] p-5">
+          <p className="text-base font-semibold text-white">Una recarga para cubrir esa referencia</p>
+          <p className="mt-3 text-xl font-semibold text-primary">{estimate.packCount > 1 ? `${estimate.packCount} × ` : ""}{estimate.pack.units.toLocaleString("es-CO")} turnos · {formatCop(estimate.totalCop)}</p>
+          <p className="mt-2 text-sm leading-6 text-white/70">El saldo que no uses queda disponible. Esta es una compra de saldo, no una mensualidad.</p>
         </div>
+        <p className="mt-5 text-sm leading-6 text-white/65">Cálculo: {chats.toLocaleString("es-CO")} conversaciones × {turns} respuestas. No incluye plantillas. La activación de {nitroCompleteStarterKit.price} se paga aparte una sola vez e incluye {nitroCompleteStarterKit.units} turnos iniciales; aquí estimamos una recarga posterior.</p>
+        <WhatsAppJuanButton context={{ kind: "calculator", chats, turns }} placement="calculator" className="mt-6 w-full sm:w-auto">Revisar mi consumo por WhatsApp</WhatsAppJuanButton>
+        <Link href="#empresas" className="mt-4 block w-fit py-2 text-sm font-semibold text-white underline underline-offset-4 hover:text-primary">Mi empresa necesita una revisión de capacidad</Link>
       </div>
     </div>
   );

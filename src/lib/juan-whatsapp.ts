@@ -9,21 +9,24 @@ export type JuanWhatsAppContext =
   | { kind: "kit" }
   | { kind: "plan"; planName: string }
   | { kind: "evaluation" }
-  | { kind: "calculator"; chats: number; ticket: number };
+  | { kind: "enterprise" }
+  | { kind: "calculator"; chats: number; turns: number };
 
 // Contrato con bot_super_admin/lib/sales/origin.ts: mantener estas frases.
 export function juanWhatsAppMessage(context: JuanWhatsAppContext): string {
   switch (context.kind) {
     case "hero":
-      return "Hola Juan 👋 Vengo de la página de Nitro Complete y quiero saber cómo funciona para mi negocio.";
+      return "Hola Juan 👋 Vengo de la página de Nitro Complete y quiero activar mi asesor con recargas.";
     case "kit":
-      return "Hola Juan, quiero empezar con el kit de arranque de Nitro Complete.";
+      return "Hola Juan, quiero activar mi asesor de Nitro Complete y después recargar a mi ritmo.";
     case "plan":
       return `Hola Juan, me interesa el plan ${context.planName} de Nitro Complete.`;
+    case "enterprise":
+      return "Hola Juan, mi empresa necesita mayor capacidad en Nitro Complete y quiero revisar el alcance contigo.";
     case "evaluation":
-      return "Hola Juan, quiero que revisemos si Nitro Complete encaja con mi negocio.";
+      return "Hola Juan, quiero empezar con Nitro Complete sin mensualidad.";
     case "calculator":
-      return `Hola Juan, quiero que revisemos si Nitro Complete encaja con mi negocio. En la calculadora indiqué ${Math.round(context.chats).toLocaleString("es-CO")} conversaciones al mes y un valor promedio por pedido de $${Math.round(context.ticket).toLocaleString("es-CO")} COP. Son estimaciones para revisar juntos.`;
+      return `Hola Juan, quiero revisar mi consumo de Nitro Complete. En la calculadora indiqué ${Math.round(context.chats).toLocaleString("es-CO")} conversaciones al mes y ${Math.round(context.turns)} respuestas del asesor por conversación. Son estimaciones para elegir una recarga; quiero saber cómo empezar.`;
   }
 }
 

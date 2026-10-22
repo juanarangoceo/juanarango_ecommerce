@@ -7,11 +7,8 @@ import { LatestPostsSection } from "@/components/landing/latest-posts-section";
 import { NewsletterSection } from "@/components/commercial/newsletter-section";
 import {
   formatCop,
-  nitroCompleteImplementation,
-  nitroCompletePlans,
   nitroCompleteStarterKit,
   nitroCompleteUnitPacks,
-  PLAN_TEMPLATES_PER_CYCLE,
   solutions,
 } from "@/lib/commercial-content";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
@@ -38,7 +35,7 @@ const gaps = [
 ] as const;
 
 const steps = [
-  { title: "Empezamos por WhatsApp", text: "Mi asistente pregunta por tu catálogo, volumen y equipo. Revisamos si encaja antes de avanzar." },
+  { title: "Empezamos por WhatsApp", text: "Mi asistente resuelve tus dudas y te da el enlace para crear tu cuenta y preparar la activación." },
   { title: "Conectamos tu WhatsApp", text: "Con Shopify o con el catálogo de Nitro, y las plantillas que Meta debe aprobar." },
   { title: "Entrenamos a tu asesor", text: "Tono, reglas, lo que puede negociar y cuándo debe pasar el chat a una persona." },
   { title: "Salimos con control", text: "Lo encendemos por partes, revisamos conversaciones reales y ajustamos contigo." },
@@ -135,19 +132,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Dos formas de empezar con Nitro Complete. La recarga va primero: es la
-          entrada más fácil (NIT-89). Precios de lib/commercial-content. */}
+      {/* Activación y recargas; revisión empresarial como contacto secundario. */}
       <section id="precios" className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Empieza a tu medida. <span className="text-primary">Sin mensualidad, si quieres.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Empieza con el kit y recarga cuando lo necesites, o elige un plan mensual para un volumen constante de consultas. Todos los precios están en pesos colombianos (COP).</p>
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Activa una vez.<br /><span className="text-primary">Recarga cuando lo necesites.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Preparamos tu asesor con tu negocio y te entregamos saldo para empezar. Después recargas desde el panel: sin mensualidad y sin vencimiento del saldo comprado.</p>
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-2">
             <Link href="/nitro-complete#recarga" className="group flex flex-col rounded-3xl bg-ink p-7 ring-1 ring-primary/35 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:ring-primary sm:p-9">
               <span className="w-fit rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">La forma más fácil de empezar</span>
-              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Con recargas</h3>
-              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">COP, kit de arranque, un solo pago</span></p>
+              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Activación de Nitro Complete</h3>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">COP · activación, una sola vez</span></p>
               <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
                 {[
                   `${nitroCompleteStarterKit.units.toLocaleString("es-CO")} turnos y tu número de WhatsApp gestionado por Nitro`,
@@ -155,21 +151,12 @@ export default function HomePage() {
                   "Sin mensualidad ni fecha de corte. Lo que compras no vence",
                 ].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}
               </ul>
-              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-primary">Conocer el kit <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
+              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver activación y recargas <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
             </Link>
-            <Link href="/nitro-complete#planes" className="group flex flex-col rounded-3xl border border-white/10 bg-superficie-nitro p-7 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/40 sm:p-9">
-              <span className="w-fit rounded-full border border-white/15 px-2.5 py-1 text-[11px] font-semibold text-white/70">Para vender todos los días</span>
-              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Con un plan mensual</h3>
-              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompletePlans[0].price}</span><span className="text-sm text-white/50">desde, COP al mes</span></p>
-              <p className="mt-3 rounded-xl bg-white/5 px-3 py-2.5 text-sm leading-5 text-white/75">+ <strong className="font-semibold">{nitroCompleteImplementation}</strong> de implementación, una sola vez</p>
-              <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
-                {[
-                  "Implementación conmigo: catálogo, conexión y pruebas",
-                  `El turno más barato y ${PLAN_TEMPLATES_PER_CYCLE} plantillas cada mes`,
-                  "Campañas, recuperación de ventas y soporte prioritario",
-                ].map((item) => <li key={item} className="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}
-              </ul>
-              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-white group-hover:text-primary">Ver planes <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            <Link href="/nitro-complete#empresas" className="group flex flex-col justify-center rounded-3xl border border-white/15 bg-superficie-nitro p-7 transition-colors hover:border-primary/50 sm:p-9">
+              <h3 className="text-2xl font-semibold tracking-tight text-white">¿Tu empresa necesita mayor capacidad?</h3>
+              <p className="mt-5 text-lg leading-8 text-white/75">Si manejas un volumen alto o necesitas conexiones especiales, cuéntanos tu operación. Juan revisará el alcance contigo.</p>
+              <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-primary">Contactar para mi empresa <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
             </Link>
           </div>
         </div>

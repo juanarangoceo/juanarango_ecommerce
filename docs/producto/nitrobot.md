@@ -30,6 +30,40 @@ conserva sus datos aislados y dispone de dashboard.
 - Incluye funciones operativas como recordatorios, carritos, recuperación de
   ventas y módulos de confirmación o postventa según configuración del cliente.
 
+## Voz, pagos y logística — verificados el 22-oct-2026
+
+La revisión combinó documentación, código y consultas de solo lectura a la
+configuración del producto. No se hicieron cobros, llamadas, clonaciones ni
+guías reales. No se modificó NitroBot.
+
+| Función | Promesa permitida | Condición y límite |
+|---|---|---|
+| Notas de voz | Responder audios con Sara, Carlos o voz propia clonada | Elegir voz; la propia requiere grabación, autorización y preparación/prueba por Nitro. No prometer clonación instantánea ni precio no verificado. |
+| Nitro Call | Atender llamadas entrantes de WhatsApp | Habilitación, elección entre 8 voces y saldo propio en COP, consumido por segundos. No usa la voz clonada de los audios. Confirmación de compra por escrito. |
+| Confío para compradores | Enviar enlace en el chat y recibir confirmación del pago | El negocio conecta su propia cuenta. Medios según lo habilitado en esa cuenta y las condiciones de Confío. Es distinto al cobro de activación/recargas de Nitro. |
+| 17TRACK | Consultar guías y notificar hitos al habilitar avisos | Activación por tienda, saldo por guía, disponibilidad según guía/transportadora, configuración y plantillas para avisos. No crea guías. |
+| Skydropx | Conexión en preparación | Creación de guías todavía no disponible. Las puertas de habilitación y validación siguen apagadas; una conexión sandbox pendiente no prueba producción. |
+| Recuperación | Retomar conversaciones y acordar un día/franja con permiso | Horarios y consentimiento; fuera de ventana, plantilla aprobada por Meta. Reemplaza la descripción antigua de un segundo mensaje genérico con oferta. |
+| Instagram | Atender mensajes con catálogo y llevar a WhatsApp para cerrar | Requiere conectar la cuenta. No anunciar cierre completo de compra dentro de Instagram. |
+
+Medios del catálogo Confío: PSE, Nequi, Bancolombia, DaviPlata, Visa,
+Mastercard y American Express; mostrar logos con la condición anterior.
+Transportadoras contempladas en el catálogo de seguimiento: Inter Rapidísimo,
+Coordinadora, Envía, Servientrega, TCC, Deprisa y 4-72. Sus logos identifican
+transportadoras, no contratos propios ni cobertura garantizada. El código del
+proveedor advierte que Servientrega está catalogada como Ecuador aunque apunta
+a Colombia: revisar las primeras guías antes de prometer disponibilidad en un
+caso concreto.
+
+Fuentes de producto: `docs/modules/{voz-asesor,llamadas,confio,seguimientos,
+skydropx,recovery,instagram}.md`, `lib/voice/{reply-voice,toggle}.ts`,
+`lib/tracking/{provider,config}.ts`, `lib/skydropx/config.ts`,
+`lib/payments/methods.ts` y `lib/complete/capabilities.ts` en NitroBot.
+Las consultas leyeron configuración y resúmenes de disponibilidad; no se
+copiaron datos de clientes ni identificadores de voces/proveedores a la web.
+Marketing/respuestas de campañas no se venden como incluidos en Prepago;
+Nitro Pixel sin despliegue verificado no se promociona como conexión disponible.
+
 ## Mensaje principal de la landing VSL
 
 > Convierte chats de WhatsApp en pedidos listos para despachar.
@@ -63,24 +97,40 @@ Apoyo:
   Como alternativa comprobada, el negocio puede administrar su catálogo en
   NitroBot y gestionar los pedidos desde el panel.
 
-## Claridad de precios y activación (5-oct-2026)
+## Activación y recargas (22-oct-2026)
 
-- Kit: $199.000 COP, 500 turnos y 100 plantillas, con número gestionado por
-  Nitro. Instalación en máximo 48 h desde pago y ficha completos.
-- Plan: mensualidad del plan más $700.000 COP de implementación, una sola
-  vez. La mensualidad no está incluida en ese pago; ambas aparecen juntas.
-- Conservar el número actual depende del proceso con Meta. Se revisa por
-  WhatsApp antes del pago, sin prometer compatibilidad universal.
-- Cada respuesta del asesor cuenta como un turno; conversaciones equivalentes
-  y resultados de la calculadora son estimaciones. Los importes y la fórmula
-  de recomendación se conservan, sin modificar NitroBot.
+Decisión de Juan: la oferta pública se concentra en una activación inicial y
+recargas posteriores. Se retiran los planes de la web y de la recomendación
+automática del vendedor. No se cambian modalidades, planes históricos ni
+facturación de NitroBot.
+
+- **Activación: $199.000 COP una sola vez.** Es el kit existente del producto,
+  presentado en la web como el pago de acceso e instalación: número gestionado
+  por Nitro, 500 turnos y 100 plantillas. Instalación en máximo 48 horas desde
+  pago y ficha completos. No es una primera recarga de $16.000 ni una prueba gratis.
+- **Después: recargas desde $16.000 COP por 100 turnos.** Sin mensualidad,
+  fecha de corte ni vencimiento del saldo comprado. Las plantillas tienen
+  saldo separado y cuestan $70 cada una. Precios con IVA.
+- Precios contrastados mediante una consulta de lectura de
+  `platform_settings.outbound_pricing` el 22-oct: coinciden con el código de la web
+  y el respaldo del vendedor. No se modificó NitroBot ni su base.
+- Un turno es una respuesta enviada por el asesor. La calculadora usa 3 como
+  referencia editable por conversación y presenta paquetes reales de compra;
+  no promete una cantidad garantizada de conversaciones ni ventas.
+- Número actual: revisar el proceso con Meta antes de pagar; no garantizarlo.
+- Empresas con más capacidad o conexiones especiales solicitan revisión a Juan.
+  El nuevo formulario llega al **panel del vendedor** (`bot_super_admin`), no
+  al admin de NitroBot. No crea cuentas ni mensajes automáticos.
+- Juan solicitó publicar el rediseño el 22-oct. Resultado y comprobaciones en
+  `docs/bitacora/2026-10.md`; no se modifica NitroBot.
 
 ## Relación entre páginas
 
 Actualización de contacto, 5-oct-2026 (publicación autorizada por Juan;
 comprobación registrada en la bitácora): el recorrido principal de Nitro Complete comienza por WhatsApp con
-el asistente de Juan, en **+57 311 300 5150**. Orienta sobre kit/planes y recoge
-la ficha para preparar el alta que Juan autoriza. La calculadora transmite
+el asistente de Juan, en **+57 311 300 5150**. Explica activación y recargas y facilita el enlace público de registro. La
+ficha y el pago se completan en la cuenta; las altas manuales conservan la
+autorización de Juan. La calculadora transmite
 los datos elegidos como estimaciones en el mensaje editable. El contacto del
 titular en los documentos legales se conserva separado del canal de ventas.
 

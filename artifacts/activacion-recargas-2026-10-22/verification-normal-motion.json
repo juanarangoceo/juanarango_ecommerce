@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "landing móvil sin desbordamiento",
+    "landing a 360 px sin desbordamiento",
+    "planes retirados del HTML y del schema",
+    "precios de recargas visibles",
+    "recargas mayores desplegables",
+    "calculadora actualiza consumo y mensaje WhatsApp",
+    "formulario tiene privacidad y consentimiento explícito",
+    "el error corresponde al receptor no disponible",
+    "fallo visible conserva los datos y permite reintentar",
+    "éxito solo después de guardar en el vendedor",
+    "un solo contacto y solicitud en la base aislada",
+    "conserva atribución, consentimiento y necesidad",
+    "formulario no abre ventana de WhatsApp ni dispara envíos",
+    "reintento de la misma solicitud no duplica",
+    "solicitud visible en panel con nombre, empresa y necesidad",
+    "panel móvil sin desbordamiento",
+    "ruta sin planes públicos: /",
+    "ruta sin planes públicos: /nitrobot",
+    "ruta sin planes públicos: /nitrobot/vsl",
+    "ruta sin planes públicos: /nitrobot/conectar",
+    "sin excepciones JavaScript"
+  ],
+  "errors": [],
+  "storage": {
+    "contacts": 1,
+    "messages": 1
+  },
+  "scope": "Builds locales con PostgREST simulado; no se escribieron servicios reales."
+}

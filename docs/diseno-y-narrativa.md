@@ -144,6 +144,28 @@ con Meta antes de pagar. La calculadora presenta escenarios estimados.
   editoriales numeradas, una tarjeta protagonista con secundarias y contenido
   real.
 
+## Activación y recargas — 22 de octubre de 2026
+
+Cambio solicitado por Juan, implementado localmente y pendiente de publicación:
+
+- Un solo recorrido público: activación inicial de Nitro Complete y recargas
+  posteriores. El kit técnico se presenta como «Activación de Nitro Complete».
+- Retirar planes, comparaciones y recomendaciones de mensualidad de landing,
+  portada, página orgánica, Guía Nitro, evaluación y datos estructurados.
+- El film existente y la demostración de chat se conservan. Activación y
+  recargas aparecen antes del recorrido detallado de módulos.
+- Separar visualmente el precio de acceso de los paquetes de saldo. Mostrar
+  las primeras recargas directamente; capacidades mayores desplegables.
+- Subtextos con función: resolver una duda concreta, 16–18 px, mayor contraste,
+  interlineado de 1,7 aproximadamente y ancho de lectura contenido. No añadir
+  etiquetas decorativas para llenar secciones.
+- La calculadora estima turnos y una compra de saldo; el visitante ajusta la
+  referencia por conversación. Plantillas y activación quedan explicadas aparte.
+- Contacto empresarial breve, con consentimiento y Privacidad, entregado al
+  panel del vendedor. No es otra oferta de planes ni bloquea la activación normal.
+- El asistente de WhatsApp resuelve dudas y facilita registro; no exige una
+  entrevista comercial ni comparaciones de planes para dar el enlace.
+
 ## Narrativa
 
 ### Principios
@@ -385,3 +407,66 @@ Durante la revisión se guardaron blobs en
 consultar con `git show-ref | rg refs/codex/checkpoints`. Son referencias
 locales de este worktree y no sustituyen un commit: normalmente no viajan al
 hacer push ni deben asumirse disponibles en otro clon.
+
+
+## Colombia, voz e integraciones — 22-oct-2026 (local)
+
+Ampliación solicitada por Juan, todavía sin publicar. La landing comunica
+voz, cobros y seguimiento en el hero, con activación y recargas en pesos
+colombianos. El recorrido es: presentación → film y conversación opcional →
+voz/llamadas → activación/recargas → recorrido visual con integraciones →
+herramientas desplegables → consumo → empresas → preguntas → contacto.
+
+- Los subtextos explican una acción, qué obtiene el negocio y su requisito;
+  se agrupan junto a imágenes, muestras o herramientas que los sustentan.
+- Se reemplazan las largas secciones repetidas de Shopify, radar y control por
+  seis herramientas desplegables. La conversación de ejemplo queda opcional.
+- Retratos y muestras estáticas reales de Sara/Carlos, reutilizados del
+  producto, identificados como voces sintéticas. No representan empleados ni
+  testimonios. Audio sin reproducción automática y una muestra a la vez.
+- Infografía nativa adaptable: conversa → cobra → confirma → acompaña.
+  No representa una transacción real ni inventa pedidos/resultados.
+- Logos originales de pagos y transportadoras al lado de su función. Confío
+  cobra a compradores con la cuenta del comercio; 17TRACK sigue guías. Los
+  logos no implican alianzas propias ni disponibilidad universal.
+- Skydropx se muestra como «En preparación», con creación de guías todavía no
+  disponible. No se mezcla con el seguimiento activo de 17TRACK.
+- Llamadas: voces distintas a las de audios, habilitación y saldo separados.
+  Condiciones junto al beneficio y en preguntas; sin tarifas promocionales
+  transitorias ni promesas de clonación instantánea.
+- Assets copiados sin modificación desde `nitro_bot/public`: `images/voices`,
+  `audio/voices`, logos de pagos/transportadoras y de Confío/17TRACK/Skydropx.
+  En esta web viven bajo `public/nitro/voces` e `integraciones` (≈335 KB).
+
+Evidencia de escritorio y móvil en
+`artifacts/integraciones-colombia-2026-10-22/`. La ficha de producto conserva
+las fuentes y los límites comerciales.
+
+
+## Nitro 3D y franja de logos — 22-oct-2026 (local)
+
+Juan rechazó la composición estática tipo Saturno: perdía el efecto y la
+interacción del personaje original. Esta decisión supera la prueba orbital
+registrada en la bitácora; no volver a aplicarla.
+
+- `/nitro-complete` recupera `NitroHero` y `NitroLive` originales: capas 3D,
+  reflejos, mirada, flotación y saludo. No cambiar ni regenerar sus assets.
+- Una única fila compacta de 18 logos auténticos va inmediatamente debajo del
+  header, antes del hero: WhatsApp, Shopify, Confío, siete medios de pago,
+  17TRACK y siete transportadoras. Los logos identifican canales, métodos y
+  transportadoras contempladas; no se llaman «clientes» ni «socios oficiales».
+- Fondo claro para conservar el contraste y los colores propios de cada logo;
+  sin tarjetas individuales ni textos promocionales. En escritorio ancho
+  caben todos; en pantallas estrechas hay desplazamiento horizontal nativo,
+  accesible con teclado, sin animación automática ni una segunda fila.
+- Skydropx no se añade a esta franja porque la creación de guías no está
+  habilitada. Su bloque inferior conserva «En preparación». Las condiciones
+  de Confío/17TRACK siguen junto a sus funciones en el recorrido detallado.
+- Se restauran alineación y párrafo previos del hero. El subtexto del film
+  conserva la eliminación de «Con sonido», que Juan había pedido por separado.
+- Se retira el componente orbital; su imagen deja `public/` y se archiva
+  con la propuesta descartada en `artifacts/orbita-nitro-2026-10-22/`.
+
+Código: `src/components/commercial/integration-logo-strip.tsx`. Revisión:
+`artifacts/franja-logos-2026-10-22/`. Solo esta landing; no cambia el header
+compartido, la home, NitroBot ni sus integraciones. Sin publicar.

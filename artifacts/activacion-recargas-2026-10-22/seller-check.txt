@@ -1,0 +1,753 @@
+
+> bot-superadmin-nitro@0.1.0 check
+> npm run typecheck && npm run lint && npm test
+
+
+> bot-superadmin-nitro@0.1.0 typecheck
+> tsc --noEmit
+
+
+> bot-superadmin-nitro@0.1.0 lint
+> eslint
+
+
+> bot-superadmin-nitro@0.1.0 test
+> node --import tsx --test "lib/**/*.test.ts"
+
+TAP version 13
+# Subtest: teléfonos
+ok 1 - teléfonos
+  ---
+  duration_ms: 1.677059
+  type: 'test'
+  ...
+# Subtest: órdenes
+ok 2 - órdenes
+  ---
+  duration_ms: 2.771792
+  type: 'test'
+  ...
+# Subtest: lo que no es orden vuelve null (Juan conversa con el bot para probarlo)
+ok 3 - lo que no es orden vuelve null (Juan conversa con el bot para probarlo)
+  ---
+  duration_ms: 0.364319
+  type: 'test'
+  ...
+# Subtest: alterna roles, une seguidos y empieza en el prospecto
+ok 4 - alterna roles, une seguidos y empieza en el prospecto
+  ---
+  duration_ms: 3.840777
+  type: 'test'
+  ...
+# Subtest: partes extra se suman al último turno del usuario
+ok 5 - partes extra se suman al último turno del usuario
+  ---
+  duration_ms: 0.513939
+  type: 'test'
+  ...
+# Subtest: bucle: herramienta → respuesta, con el id del functionCall y datos guardados
+ok 6 - bucle: herramienta → respuesta, con el id del functionCall y datos guardados
+  ---
+  duration_ms: 59.515191
+  type: 'test'
+  ...
+# Subtest: rescate: si escribe su andamiaje, se repite sin herramientas
+ok 7 - rescate: si escribe su andamiaje, se repite sin herramientas
+  ---
+  duration_ms: 3.816561
+  type: 'test'
+  ...
+# Subtest: enlaces inventados no salen; los de herramientas sí
+ok 8 - enlaces inventados no salen; los de herramientas sí
+  ---
+  duration_ms: 4.093047
+  type: 'test'
+  ...
+# Subtest: ensayo de transferencia no consulta las cuentas reales de NitroBot
+ok 9 - ensayo de transferencia no consulta las cuentas reales de NitroBot
+  ---
+  duration_ms: 2.910461
+  type: 'test'
+  ...
+# Subtest: ensayo puede mostrar un cobro ficticio sin credenciales de pasarela
+ok 10 - ensayo puede mostrar un cobro ficticio sin credenciales de pasarela
+  ---
+  duration_ms: 1.233812
+  type: 'test'
+  ...
+# Subtest: enlace de registro sin entrevista ni acceso a NitroBot
+ok 11 - enlace de registro sin entrevista ni acceso a NitroBot
+  ---
+  duration_ms: 0.821253
+  type: 'test'
+  ...
+# Subtest: la IA no crea un cobro o instalación de los planes retirados
+ok 12 - la IA no crea un cobro o instalación de los planes retirados
+  ---
+  duration_ms: 0.511644
+  type: 'test'
+  ...
+# [gemini] gemini-3.8-flash falló, probando el siguiente: gemini-3.8-flash: Model not found
+# Subtest: Gemini: autorización inválida no consume llamadas en otros modelos
+ok 13 - Gemini: autorización inválida no consume llamadas en otros modelos
+  ---
+  duration_ms: 41.328265
+  type: 'test'
+  ...
+# Subtest: Gemini: modelo no disponible pasa al relevo y mantiene el contrato
+ok 14 - Gemini: modelo no disponible pasa al relevo y mantiene el contrato
+  ---
+  duration_ms: 2.869394
+  type: 'test'
+  ...
+# Subtest: Gemini: presupuesto vencido no inicia una llamada externa
+ok 15 - Gemini: presupuesto vencido no inicia una llamada externa
+  ---
+  duration_ms: 0.881164
+  type: 'test'
+  ...
+# Subtest: llamadas a herramienta escritas como texto
+ok 16 - llamadas a herramienta escritas como texto
+  ---
+  duration_ms: 11.646731
+  type: 'test'
+  ...
+# Subtest: andamiaje del turno
+ok 17 - andamiaje del turno
+  ---
+  duration_ms: 3.123839
+  type: 'test'
+  ...
+# Subtest: solo pasan enlaces permitidos
+ok 18 - solo pasan enlaces permitidos
+  ---
+  duration_ms: 4.139394
+  type: 'test'
+  ...
+# Subtest: dominios sin protocolo también se filtran, sin romper correos ni precios
+ok 19 - dominios sin protocolo también se filtran, sin romper correos ni precios
+  ---
+  duration_ms: 0.480637
+  type: 'test'
+  ...
+# Subtest: dominios autorizados se normalizan y los parecidos se bloquean
+ok 20 - dominios autorizados se normalizan y los parecidos se bloquean
+  ---
+  duration_ms: 0.560226
+  type: 'test'
+  ...
+# Subtest: formato de WhatsApp
+ok 21 - formato de WhatsApp
+  ---
+  duration_ms: 0.788862
+  type: 'test'
+  ...
+# Subtest: texto para hablar: sin links, markdown ni emojis
+ok 22 - texto para hablar: sin links, markdown ni emojis
+  ---
+  duration_ms: 5.468474
+  type: 'test'
+  ...
+# Subtest: con enlaces o muy largo va por texto
+ok 23 - con enlaces o muy largo va por texto
+  ---
+  duration_ms: 1.159383
+  type: 'test'
+  ...
+# Subtest: synthesize pide opus con la voz y decodifica base64
+ok 24 - synthesize pide opus con la voz y decodifica base64
+  ---
+  duration_ms: 60.200148
+  type: 'test'
+  ...
+# Subtest: voces: listar y crear la de Juan
+ok 25 - voces: listar y crear la de Juan
+  ---
+  duration_ms: 4.363622
+  type: 'test'
+  ...
+# Subtest: WhatsApp se activa solo explícitamente y con credenciales completas
+ok 26 - WhatsApp se activa solo explícitamente y con credenciales completas
+  ---
+  duration_ms: 1.708918
+  type: 'test'
+  ...
+# Subtest: preparación rechaza texto y archivos antes de usar base o proveedores
+ok 27 - preparación rechaza texto y archivos antes de usar base o proveedores
+  ---
+  duration_ms: 28.851775
+  type: 'test'
+  ...
+# Subtest: el despliegue rechaza un enlace a NitroBot antes de sincronizar
+ok 28 - el despliegue rechaza un enlace a NitroBot antes de sincronizar
+  ---
+  duration_ms: 7.676464
+  type: 'test'
+  ...
+# Subtest: preparación no puede activar WhatsApp ni usar la base de NitroBot
+ok 29 - preparación no puede activar WhatsApp ni usar la base de NitroBot
+  ---
+  duration_ms: 0.633862
+  type: 'test'
+  ...
+# Subtest: credenciales solo en producción, sin OIDC, claves públicas ni variables ajenas
+ok 30 - credenciales solo en producción, sin OIDC, claves públicas ni variables ajenas
+  ---
+  duration_ms: 1.89202
+  type: 'test'
+  ...
+# Subtest: preparación genera secretos internos sin activar WhatsApp ni sustituir credenciales
+ok 31 - preparación genera secretos internos sin activar WhatsApp ni sustituir credenciales
+  ---
+  duration_ms: 12.372517
+  type: 'test'
+  ...
+# Subtest: hora de Bogotá y franja de contacto
+ok 32 - hora de Bogotá y franja de contacto
+  ---
+  duration_ms: 3.009225
+  type: 'test'
+  ...
+# Subtest: primer seguimiento a las 3 h dentro de la ventana
+ok 33 - primer seguimiento a las 3 h dentro de la ventana
+  ---
+  duration_ms: 1.878375
+  type: 'test'
+  ...
+# Subtest: no escribe si el prospecto habló último, si es pronto, de noche, pausado, apagado o si pidió no escribir
+ok 34 - no escribe si el prospecto habló último, si es pronto, de noche, pausado, apagado o si pidió no escribir
+  ---
+  duration_ms: 0.940815
+  type: 'test'
+  ...
+# Subtest: fuera de la ventana solo con plantilla aprobada; nunca más de 4
+ok 35 - fuera de la ventana solo con plantilla aprobada; nunca más de 4
+  ---
+  duration_ms: 0.649291
+  type: 'test'
+  ...
+# Subtest: calendario completo: 3 h, 21 h, 3 días y 7 días sin acumular esperas
+ok 36 - calendario completo: 3 h, 21 h, 3 días y 7 días sin acumular esperas
+  ---
+  duration_ms: 1.175383
+  type: 'test'
+  ...
+# Subtest: un paso atrasado no causa otro seguimiento inmediato y respeta la ventana
+ok 37 - un paso atrasado no causa otro seguimiento inmediato y respeta la ventana
+  ---
+  duration_ms: 0.695869
+  type: 'test'
+  ...
+# Subtest: tiempos configurables y envío manual
+ok 38 - tiempos configurables y envío manual
+  ---
+  duration_ms: 0.868491
+  type: 'test'
+  ...
+# Subtest: opt-out
+ok 39 - opt-out
+  ---
+  duration_ms: 2.612895
+  type: 'test'
+  ...
+# Subtest: ficha: recuerda una vez si la ficha sigue sin enviarse
+ok 40 - ficha: recuerda una vez si la ficha sigue sin enviarse
+  ---
+  duration_ms: 1.753422
+  type: 'test'
+  ...
+# Subtest: ficha: no molesta a quien ya la envió, ni con el estado desconocido
+ok 41 - ficha: no molesta a quien ya la envió, ni con el estado desconocido
+  ---
+  duration_ms: 1.466075
+  type: 'test'
+  ...
+# Subtest: ficha: respeta el tiempo, el vencimiento y el apagado
+ok 42 - ficha: respeta el tiempo, el vencimiento y el apagado
+  ---
+  duration_ms: 0.689056
+  type: 'test'
+  ...
+# Subtest: webhooks malformados no rompen el parser ni crean números inválidos
+ok 43 - webhooks malformados no rompen el parser ni crean números inválidos
+  ---
+  duration_ms: 2.564545
+  type: 'test'
+  ...
+# Subtest: datos numéricos negativos o sin cifras no alteran el diagnóstico
+ok 44 - datos numéricos negativos o sin cifras no alteran el diagnóstico
+  ---
+  duration_ms: 1.126101
+  type: 'test'
+  ...
+# Subtest: ventana de WhatsApp rechaza fecha futura y reserva margen de cierre
+ok 45 - ventana de WhatsApp rechaza fecha futura y reserva margen de cierre
+  ---
+  duration_ms: 0.989286
+  type: 'test'
+  ...
+# Subtest: la clave de idempotencia es estable y pasa la validación de NitroBot
+ok 46 - la clave de idempotencia es estable y pasa la validación de NitroBot
+  ---
+  duration_ms: 2.644525
+  type: 'test'
+  ...
+# Subtest: firma = HMAC-SHA256 de «timestamp.body», igual que la web
+ok 47 - firma = HMAC-SHA256 de «timestamp.body», igual que la web
+  ---
+  duration_ms: 1.206351
+  type: 'test'
+  ...
+# Subtest: alta incompleta en platform_sales_leads: falla y reintenta con la misma cuenta y evidencia
+ok 48 - alta incompleta en platform_sales_leads: falla y reintenta con la misma cuenta y evidencia
+  ---
+  duration_ms: 129.457076
+  type: 'test'
+  ...
+# Subtest: alta incompleta en platform_sales_lead_events: falla y reintenta con la misma cuenta y evidencia
+ok 49 - alta incompleta en platform_sales_lead_events: falla y reintenta con la misma cuenta y evidencia
+  ---
+  duration_ms: 66.671695
+  type: 'test'
+  ...
+# Subtest: alta incompleta en audit_log: falla y reintenta con la misma cuenta y evidencia
+ok 50 - alta incompleta en audit_log: falla y reintenta con la misma cuenta y evidencia
+  ---
+  duration_ms: 73.635709
+  type: 'test'
+  ...
+# Subtest: timeout al guardar auditoría: el reintento verifica la evidencia existente
+ok 51 - timeout al guardar auditoría: el reintento verifica la evidencia existente
+  ---
+  duration_ms: 58.146107
+  type: 'test'
+  ...
+# Subtest: un prospecto convertido a otra empresa no se reasigna al reintentar
+ok 52 - un prospecto convertido a otra empresa no se reasigna al reintentar
+  ---
+  duration_ms: 7.546992
+  type: 'test'
+  ...
+# Subtest: parseMoney entiende cómo escribe la gente
+ok 53 - parseMoney entiende cómo escribe la gente
+  ---
+  duration_ms: 5.909317
+  type: 'test'
+  ...
+# Subtest: applyFichaArgs valida, normaliza y no borra lo bueno
+ok 54 - applyFichaArgs valida, normaliza y no borra lo bueno
+  ---
+  duration_ms: 5.429942
+  type: 'test'
+  ...
+# Subtest: faltantes: el usuario principal sale del contacto si no lo dio aparte
+ok 55 - faltantes: el usuario principal sale del contacto si no lo dio aparte
+  ---
+  duration_ms: 0.936247
+  type: 'test'
+  ...
+# Subtest: pago anticipado exige quién verifica los pagos
+ok 56 - pago anticipado exige quién verifica los pagos
+  ---
+  duration_ms: 4.620742
+  type: 'test'
+  ...
+# Subtest: ficha completa y confirmada pasa la validación de NitroBot
+ok 57 - ficha completa y confirmada pasa la validación de NitroBot
+  ---
+  duration_ms: 1.34515
+  type: 'test'
+  ...
+# Subtest: la validación replica la de NitroBot campo por campo
+ok 58 - la validación replica la de NitroBot campo por campo
+  ---
+  duration_ms: 49.086481
+  type: 'test'
+  ...
+# Subtest: resumen de confirmación: claro y sin huecos
+ok 59 - resumen de confirmación: claro y sin huecos
+  ---
+  duration_ms: 45.54327
+  type: 'test'
+  ...
+# Subtest: confirmación: solo un sí claro
+ok 60 - confirmación: solo un sí claro
+  ---
+  duration_ms: 4.096043
+  type: 'test'
+  ...
+# Subtest: brief de la entrevista: siguiente pregunta y estado
+ok 61 - brief de la entrevista: siguiente pregunta y estado
+  ---
+  duration_ms: 1.348506
+  type: 'test'
+  ...
+# Subtest: lo que se supo en la venta no se vuelve a preguntar
+ok 62 - lo que se supo en la venta no se vuelve a preguntar
+  ---
+  duration_ms: 1.205279
+  type: 'test'
+  ...
+# Subtest: sesión firmada y con vencimiento
+ok 63 - sesión firmada y con vencimiento
+  ---
+  duration_ms: 2.422601
+  type: 'test'
+  ...
+# Subtest: contraseña
+ok 64 - contraseña
+  ---
+  duration_ms: 1.01291
+  type: 'test'
+  ...
+# Subtest: toda etapa cae en exactamente una columna
+ok 65 - toda etapa cae en exactamente una columna
+  ---
+  duration_ms: 6.424187
+  type: 'test'
+  ...
+# Subtest: valor del negocio
+ok 66 - valor del negocio
+  ---
+  duration_ms: 0.56247
+  type: 'test'
+  ...
+# Subtest: embudo histórico con conversión paso a paso
+ok 67 - embudo histórico con conversión paso a paso
+  ---
+  duration_ms: 3.83178
+  type: 'test'
+  ...
+# Subtest: por origen
+ok 68 - por origen
+  ---
+  duration_ms: 0.7825
+  type: 'test'
+  ...
+# Subtest: atención: sin respuesta, te escribió, acción vencida, caliente
+ok 69 - atención: sin respuesta, te escribió, acción vencida, caliente
+  ---
+  duration_ms: 4.831345
+  type: 'test'
+  ...
+# Subtest: no leídos y tiempo relativo
+ok 70 - no leídos y tiempo relativo
+  ---
+  duration_ms: 0.606552
+  type: 'test'
+  ...
+# Subtest: untilTime: fechas futuras
+ok 71 - untilTime: fechas futuras
+  ---
+  duration_ms: 0.534547
+  type: 'test'
+  ...
+# Subtest: una solicitud web puede estar sin leer sin abrir ventana de WhatsApp
+ok 72 - una solicitud web puede estar sin leer sin abrir ventana de WhatsApp
+  ---
+  duration_ms: 2.935828
+  type: 'test'
+  ...
+# Subtest: dinero en centavos, sin decimales
+ok 73 - dinero en centavos, sin decimales
+  ---
+  duration_ms: 1.732132
+  type: 'test'
+  ...
+# Subtest: descripción mínima de 24 caracteres
+ok 74 - descripción mínima de 24 caracteres
+  ---
+  duration_ms: 0.581835
+  type: 'test'
+  ...
+# Subtest: tienda e identificadores
+ok 75 - tienda e identificadores
+  ---
+  duration_ms: 1.712415
+  type: 'test'
+  ...
+# Subtest: estados: FUNDED y posteriores prueban pago; REFUNDED no
+ok 76 - estados: FUNDED y posteriores prueban pago; REFUNDED no
+  ---
+  duration_ms: 0.437286
+  type: 'test'
+  ...
+# Subtest: lo que se cobra por oferta sale del servidor
+ok 77 - lo que se cobra por oferta sale del servidor
+  ---
+  duration_ms: 0.518918
+  type: 'test'
+  ...
+# Subtest: createPayment: cuerpo, idempotencia y errores
+ok 78 - createPayment: cuerpo, idempotencia y errores
+  ---
+  duration_ms: 41.160573
+  type: 'test'
+  ...
+# Subtest: webhook: bearer + checksum SHA256 en mayúscula
+ok 79 - webhook: bearer + checksum SHA256 en mayúscula
+  ---
+  duration_ms: 1.208444
+  type: 'test'
+  ...
+# Subtest: la preparación puede estar lista con el número aplazado
+ok 80 - la preparación puede estar lista con el número aplazado
+  ---
+  duration_ms: 6.53288
+  type: 'test'
+  ...
+# Subtest: aplazar número no omite la separación de bases
+ok 81 - aplazar número no omite la separación de bases
+  ---
+  duration_ms: 5.399676
+  type: 'test'
+  ...
+# Subtest: entrada firmada: rechaza firma, replay, consentimiento ausente y cuerpo grande antes de escribir
+ok 82 - entrada firmada: rechaza firma, replay, consentimiento ausente y cuerpo grande antes de escribir
+  ---
+  duration_ms: 54.82558
+  type: 'test'
+  ...
+# Subtest: firma con dominio del contrato impide reutilizar una firma de NitroBot
+ok 83 - firma con dominio del contrato impide reutilizar una firma de NitroBot
+  ---
+  duration_ms: 2.081124
+  type: 'test'
+  ...
+# Subtest: normaliza teléfono colombiano y conserva solo atribución permitida
+ok 84 - normaliza teléfono colombiano y conserva solo atribución permitida
+  ---
+  duration_ms: 1.609563
+  type: 'test'
+  ...
+# Subtest: recepción real con cliente Supabase y transporte aislado: idempotencia y ningún envío ni acceso a NitroBot
+ok 85 - recepción real con cliente Supabase y transporte aislado: idempotencia y ningún envío ni acceso a NitroBot
+  ---
+  duration_ms: 29.841742
+  type: 'test'
+  ...
+# Subtest: sanitizeFacts descarta lo inválido y convierte números
+ok 86 - sanitizeFacts descarta lo inválido y convierte números
+  ---
+  duration_ms: 9.749842
+  type: 'test'
+  ...
+# Subtest: mergeFacts no borra lo bueno y acumula objeciones
+ok 87 - mergeFacts no borra lo bueno y acumula objeciones
+  ---
+  duration_ms: 0.634173
+  type: 'test'
+  ...
+# Subtest: missingDiscovery pide primero lo importante
+ok 88 - missingDiscovery pide primero lo importante
+  ---
+  duration_ms: 0.652708
+  type: 'test'
+  ...
+# Subtest: factsBrief sin datos invita a descubrir
+ok 89 - factsBrief sin datos invita a descubrir
+  ---
+  duration_ms: 4.181622
+  type: 'test'
+  ...
+# Subtest: reconoce los mensajes prellenados de la web
+ok 90 - reconoce los mensajes prellenados de la web
+  ---
+  duration_ms: 10.822324
+  type: 'test'
+  ...
+# Subtest: anuncios
+ok 91 - anuncios
+  ---
+  duration_ms: 0.694766
+  type: 'test'
+  ...
+# Subtest: mensajes antiguos y nuevos, calculadora y empresa conservan su origen
+ok 92 - mensajes antiguos y nuevos, calculadora y empresa conservan su origen
+  ---
+  duration_ms: 5.548333
+  type: 'test'
+  ...
+# Subtest: buckets del contrato nitrobot-lead-v1
+ok 93 - buckets del contrato nitrobot-lead-v1
+  ---
+  duration_ms: 1.578535
+  type: 'test'
+  ...
+# Subtest: exige nombre, tipo de negocio y plataforma
+ok 94 - exige nombre, tipo de negocio y plataforma
+  ---
+  duration_ms: 3.846107
+  type: 'test'
+  ...
+# Subtest: arma un payload válido con valores neutros
+ok 95 - arma un payload válido con valores neutros
+  ---
+  duration_ms: 1.32417
+  type: 'test'
+  ...
+# Subtest: unidades al mes: 3 por conversación y 15% de margen
+ok 96 - unidades al mes: 3 por conversación y 15% de margen
+  ---
+  duration_ms: 1.929611
+  type: 'test'
+  ...
+# Subtest: costo en recargas usa el precio por unidad del paquete más grande que alcanza
+ok 97 - costo en recargas usa el precio por unidad del paquete más grande que alcanza
+  ---
+  duration_ms: 0.464086
+  type: 'test'
+  ...
+# Subtest: poco volumen → kit
+ok 98 - poco volumen → kit
+  ---
+  duration_ms: 0.928934
+  type: 'test'
+  ...
+# Subtest: volumen normal o explorando → activación, sin planes alternativos
+ok 99 - volumen normal o explorando → activación, sin planes alternativos
+  ---
+  duration_ms: 1.893814
+  type: 'test'
+  ...
+# Subtest: volumen por encima de la mayor recarga → revisión empresarial, sin cotización automática
+ok 100 - volumen por encima de la mayor recarga → revisión empresarial, sin cotización automática
+  ---
+  duration_ms: 0.633011
+  type: 'test'
+  ...
+# Subtest: no pide volumen para empezar; servicios o falta de catálogo requieren orientación
+ok 101 - no pide volumen para empezar; servicios o falta de catálogo requieren orientación
+  ---
+  duration_ms: 0.473112
+  type: 'test'
+  ...
+# Subtest: smallestPlanFor
+ok 102 - smallestPlanFor
+  ---
+  duration_ms: 0.506665
+  type: 'test'
+  ...
+# Subtest: impacto: mismas fórmulas y defaults que la calculadora de la web
+ok 103 - impacto: mismas fórmulas y defaults que la calculadora de la web
+  ---
+  duration_ms: 0.537954
+  type: 'test'
+  ...
+# Subtest: redacción: enlaces, correos y teléfonos
+ok 104 - redacción: enlaces, correos y teléfonos
+  ---
+  duration_ms: 2.316002
+  type: 'test'
+  ...
+# Subtest: sin mensajes del prospecto no hay pregunta para JEV
+ok 105 - sin mensajes del prospecto no hay pregunta para JEV
+  ---
+  duration_ms: 1.859139
+  type: 'test'
+  ...
+# Subtest: regla local entiende tildes al final de palabra
+ok 106 - regla local entiende tildes al final de palabra
+  ---
+  duration_ms: 11.187485
+  type: 'test'
+  ...
+# Subtest: JEV manda solo si está seguro; paying y customer no bajan solos
+ok 107 - JEV manda solo si está seguro; paying y customer no bajan solos
+  ---
+  duration_ms: 0.677304
+  type: 'test'
+  ...
+# Subtest: evaluateStageWithJev valida la respuesta y no lanza
+ok 108 - evaluateStageWithJev valida la respuesta y no lanza
+  ---
+  duration_ms: 40.3014
+  type: 'test'
+  ...
+# Subtest: transición caliente
+ok 109 - transición caliente
+  ---
+  duration_ms: 0.433218
+  type: 'test'
+  ...
+# Subtest: firma de Meta sobre el body crudo
+ok 110 - firma de Meta sobre el body crudo
+  ---
+  duration_ms: 1.637164
+  type: 'test'
+  ...
+# Subtest: extrae entrantes y estados, descarta los incompletos
+ok 111 - extrae entrantes y estados, descarta los incompletos
+  ---
+  duration_ms: 0.70768
+  type: 'test'
+  ...
+# Subtest: las credenciales se cifran, la manipulación y otra clave se rechazan
+ok 112 - las credenciales se cifran, la manipulación y otra clave se rechazan
+  ---
+  duration_ms: 3.610637
+  type: 'test'
+  ...
+# Subtest: suscripción de otra app o de otro webhook no habilita el vendedor
+ok 113 - suscripción de otra app o de otro webhook no habilita el vendedor
+  ---
+  duration_ms: 0.256218
+  type: 'test'
+  ...
+# Subtest: tokens temporales o sin permisos se rechazan antes de conectar
+ok 114 - tokens temporales o sin permisos se rechazan antes de conectar
+  ---
+  duration_ms: 23.259471
+  type: 'test'
+  ...
+# Subtest: un error de Meta nunca devuelve el token al navegador
+ok 115 - un error de Meta nunca devuelve el token al navegador
+  ---
+  duration_ms: 0.783122
+  type: 'test'
+  ...
+# Subtest: una WABA o cualquiera de sus números ocupado en NitroBot bloquea el cambio
+ok 116 - una WABA o cualquiera de sus números ocupado en NitroBot bloquea el cambio
+  ---
+  duration_ms: 14.487383
+  type: 'test'
+  ...
+# Subtest: cada plantilla declara tantas variables como usa su cuerpo
+ok 117 - cada plantilla declara tantas variables como usa su cuerpo
+  ---
+  duration_ms: 0.982744
+  type: 'test'
+  ...
+# Subtest: nombres válidos para Meta, únicos y sin precios fijos en el texto
+ok 118 - nombres válidos para Meta, únicos y sin precios fijos en el texto
+  ---
+  duration_ms: 0.457964
+  type: 'test'
+  ...
+# Subtest: los botones de URL tienen base fija + variable al final y ejemplo
+ok 119 - los botones de URL tienen base fija + variable al final y ejemplo
+  ---
+  duration_ms: 0.288409
+  type: 'test'
+  ...
+# Subtest: marketing permite recategorizar; utilidad no
+ok 120 - marketing permite recategorizar; utilidad no
+  ---
+  duration_ms: 0.128179
+  type: 'test'
+  ...
+# Subtest: estado contra la WABA
+ok 121 - estado contra la WABA
+  ---
+  duration_ms: 0.280153
+  type: 'test'
+  ...
+1..121
+# tests 121
+# suites 0
+# pass 121
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2936.78344

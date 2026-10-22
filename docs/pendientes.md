@@ -1,7 +1,48 @@
 # Pendientes
 
-Estado vivo al 30 de septiembre de 2026. Lo terminado se elimina de aquí y se
+Estado vivo al 22 de octubre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
+
+## Rediseño de activación y recargas — 22 de octubre de 2026
+
+Publicación **autorizada por Juan** el 22-oct. El receptor y la narrativa del
+vendedor ya están publicados (`49edca4`); la web está en cierre de publicación.
+NitroBot solo se consultó, sin cambios de código, configuración, datos ni despliegue.
+La decisión retira planes públicos y reemplaza el kit como narrativa por
+activación inicial; supera los pendientes antiguos de ratificar los planes.
+
+La ampliación de voz, llamadas, logos de pagos/transportadoras y narrativa para
+Colombia también está implementada localmente. Se revisaron Confío para
+compradores, 17TRACK y Skydropx contra código y configuración de NitroBot.
+Skydropx **no está habilitado para crear guías** y la web lo indica claramente.
+Las muestras de voz son estáticas; no hacen llamadas al proveedor de IA.
+Juan descartó la composición de Saturno: se restauró el Nitro 3D animado
+original y se añadió una sola franja con 18 logos pequeños debajo del header.
+La franja permite desplazamiento horizontal en móvil. El subtexto del film
+sigue sin «Con sonido». Evidencia: `artifacts/franja-logos-2026-10-22/`.
+
+Antes de publicar:
+
+- Revisión visual local aprobada por Juan, incluida la franja de logos.
+  Evidencia: `artifacts/franja-logos-2026-10-22/`.
+- Receptor del vendedor publicado y saludable. URL y clave específicas de la
+  conexión empresarial configuradas en producción de la web. No se rotaron
+  claves de NitroBot ni se sustituyó la clave anterior de evaluación de la web.
+- Verificar la entrega en el panel del vendedor sobre el dominio publicado.
+  La prueba completa actual usa PostgREST aislado, sin formularios reales.
+- Confío: autenticación y acceso a la tienda Nitro Ecom comprobados con HTTP 200.
+  Quedan fuera de esta prueba cobro, pago real, conciliación y acreditación;
+  cualquier transacción real requiere una solicitud explícita. El acceso a la
+  tienda del vendedor no sustituye la validación del cobro a compradores en
+  cada cuenta Confío de los comercios.
+- Seguimiento: validar guías representativas de cada transportadora y los avisos
+  antes de prometer cobertura concreta. Servientrega requiere especial revisión
+  de su código de proveedor. No cambiar el estado de NitroBot desde esta tarea.
+- Skydropx: la validación sandbox/producción y posterior habilitación pertenecen
+  al producto y quedan fuera del rediseño web.
+
+Detalle y evidencia: `docs/bitacora/2026-10.md` y
+`artifacts/activacion-recargas-2026-10-22/`.
 
 ## Film de Nitro Complete en la web — 6 de octubre de 2026
 
@@ -133,9 +174,6 @@ Prioridad alta:
 
 Decisiones comerciales del usuario:
 
-4. Ratificar `Nitro Complete` como nombre público, los planes Nitro 5K/15K/30K
-   y la implementación de $700.000 (hoy publicados). La unidad ya quedó
-   definida: el turno (30-09).
 5. Decidir el futuro de `/nitrobot`: repite planes y buena parte de la
    narrativa de `/nitro-complete`. Mantenerla o redirigirla 301 tras revisar
    Search Console. `/nitrobot/conectar` y `/nitrobot/vsl` se conservan.
@@ -158,29 +196,6 @@ Mantenimiento:
     superados por `master`).
 11. Segunda fase del asistente: seguir como guía de respuestas predefinidas o
     conectarlo a una conversación real. No presentarlo como IA mientras tanto.
-
-## Embudo comercial de NitroBot — antes de publicar
-
-La landing, el calificador, la entrega firmada y el panel comercial ya están
-implementados. El plan maestro sigue en
-[`estrategia-nitrobot-embudo.md`](estrategia-nitrobot-embudo.md). Antes de
-publicar hay que cerrar estas decisiones comerciales:
-
-1. Aprobar nombres definitivos: `Nitro 5K`, `Nitro 15K`, `Nitro 30K` o nombres
-   orientados a etapa. La recomendación del plan es conservar la capacidad en
-   el nombre.
-2. Confirmar las mensualidades propuestas: $590.000, $1.190.000 y $2.200.000
-   COP.
-3. Confirmar implementación estándar de $700.000 COP y qué condiciones sacan
-   un caso de ese alcance.
-4. ~~Definir el nombre comercial de la unidad~~: es el **turno** (30-09).
-5. Definir precio, vencimiento y comportamiento del bloque adicional de 2.000.
-
-La tabla volvió a `/nitrobot` por decisión del usuario con las mensualidades y
-la implementación propuestas. Antes del despliegue hay que ratificar nombres,
-unidad de consumo, adicional y excepciones de alcance para que la información
-pública coincida con el catálogo comercial definitivo. Estas decisiones no
-cambian la seguridad ni la entrega del prospecto.
 
 ## Lanzamiento de NitroBot — sitio y campañas
 

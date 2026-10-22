@@ -70,12 +70,12 @@ export default function NitroBotConnectPage() {
               Evaluación Nitro Complete
             </div>
             <h1 className="mt-6 break-words font-display text-4xl font-bold leading-[1.02] tracking-[-.04em] sm:text-6xl">
-              Antes de venderte un plan, comprobamos si encaja.
+              Revisemos si Nitro encaja con tu negocio.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-white/58">
-              La evaluación cruza tu catálogo, demanda, operación y momento de
-              implementación. Así evitamos sobredimensionar el plan o
-              automatizar un proceso que todavía necesita orden.
+              Revisamos tu catálogo, demanda y operación para orientarte sobre la
+              activación y el consumo. Si tienes una necesidad especial, Juan
+              revisará el alcance contigo.
             </p>
             <TrustNotes className="hidden lg:block" />
           </aside>

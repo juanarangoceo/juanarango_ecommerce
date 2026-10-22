@@ -1,0 +1,26 @@
+{
+  "origin": "http://localhost:4321",
+  "checks": [
+    "Nitro 3D original restaurado",
+    "Saturno retirado del HTML",
+    "18 logos en una sola fila",
+    "franja inmediatamente debajo del header",
+    "todos los logos caben en escritorio",
+    "Con sonido sigue retirado",
+    "Nitro responde al saludo",
+    "animación respeta preferencia de movimiento",
+    "sin desbordamiento de página a 360",
+    "fila se mantiene única a 360",
+    "sin desbordamiento de página a 390",
+    "fila se mantiene única a 390",
+    "sin desbordamiento de página a 768",
+    "fila se mantiene única a 768",
+    "sin desbordamiento de página a 1440",
+    "fila se mantiene única a 1440",
+    "desplazamiento horizontal permite llegar al último logo",
+    "logos originales cargan",
+    "sin errores de consola ni excepciones JS"
+  ],
+  "errors": [],
+  "scope": "Navegación local de solo lectura; sin envíos ni cambios en NitroBot."
+}

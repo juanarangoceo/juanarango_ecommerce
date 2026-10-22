@@ -329,8 +329,7 @@ export function NitroBotForm({
           ¿Qué volumen mueve hoy tu WhatsApp?
         </h3>
         <p className="mt-2 text-sm text-white/58">
-          No buscamos el número más grande; buscamos recomendarte un plan
-          proporcional.
+          Con este dato podemos estimar el consumo de tu asesor.
         </p>
       </header>
       <div>
@@ -590,25 +589,9 @@ export function NitroBotForm({
           ? "Guardamos tus datos de forma segura. Nitro Complete estaba tardando más de lo normal y completará el análisis automáticamente; puedes continuar por WhatsApp mientras termina."
           : copy?.body}
       </p>
-      {result?.qualification.plan.monthlyPriceCop && (
-        <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-white/10 bg-white/[.04] p-5">
-          <p className="text-xs uppercase tracking-widest text-white/45">
-            Plan orientativo
-          </p>
-          <p className="mt-2 text-xl font-bold text-white">
-            {result.qualification.plan.name}
-          </p>
-          <p className="mt-1 text-sm text-white/58">
-            {result.qualification.plan.includedUnits?.toLocaleString("es-CO")}{" "}
-            turnos · $
-            {result.qualification.plan.monthlyPriceCop.toLocaleString("es-CO")}{" "}
-            COP/mes
-          </p>
-        </div>
-      )}
       <div className="mx-auto mt-7 max-w-sm">
         <WhatsAppJuanButton context={{ kind: "evaluation" }} placement="evaluation_result" className="w-full">Continuar por WhatsApp</WhatsAppJuanButton>
-        <p className="mt-3 text-xs leading-6 text-white/55">Mi asistente te orienta con el siguiente paso. Juan revisa y autoriza el alta antes de preparar la instalación.</p>
+        <p className="mt-3 text-xs leading-6 text-white/55">Mi asistente te explica la activación y te acompaña para crear tu cuenta y empezar con recargas.</p>
       </div>
     </section>
   );

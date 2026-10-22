@@ -1,0 +1,138 @@
+
+> juanarango_ecommerce@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  ✓ inlineCss
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 37.5s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+  Generating static pages using 7 workers (0/639) ...
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+  Generating static pages using 7 workers (159/639)
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+  Generating static pages using 7 workers (319/639)
+  Generating static pages using 7 workers (479/639)
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+✓ Generating static pages using 7 workers (639/639) in 18.0s
+  Finalizing page optimization ...
+
+Route (app)                                                       Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /admin
+├ ƒ /admin/contactos
+├ ƒ /admin/crecimiento
+├ ƒ /admin/formularios
+├ ○ /admin/login
+├ ƒ /admin/newsletter
+├ ƒ /api/acceso-anticipado
+├ ƒ /api/admin/auth
+├ ƒ /api/admin/crm/export
+├ ƒ /api/admin/sync
+├ ƒ /api/audio/generate-chunk
+├ ƒ /api/audio/save-resources
+├ ƒ /api/debug-pseo
+├ ƒ /api/debug-search
+├ ƒ /api/generate-comparison
+├ ƒ /api/generate-tag-content
+├ ƒ /api/inngest
+├ ƒ /api/newsletter-dispatch
+├ ƒ /api/newsletter-generate
+├ ƒ /api/newsletter-test-send
+├ ƒ /api/newsletter-unsubscribe
+├ ƒ /api/og
+├ ƒ /api/revalidate-nitro
+├ ƒ /api/sanity-webhook
+├ ƒ /api/send-pdf-summary
+├ ƒ /api/telegram-prompt-publish
+├ ƒ /api/telegram-publish
+├ ƒ /api/webhooks/cal
+├ ○ /app-tools
+├ ● /app-tools/[slug]
+│ ├ /app-tools/vsco
+│ ├ /app-tools/bluehost
+│ ├ /app-tools/elevenlabs
+│ └ [+43 more paths]
+├ ○ /apple-icon.png
+├ ƒ /auth/callback
+├ ƒ /blog
+├ ● /blog/[...slug]                                                       1h      1y
+│ ├ /blog/ecommerce                                                       1h      1y
+│ ├ /blog/estrategia-marketing                                            1h      1y
+│ ├ /blog/ia-automatizacion                                               1h      1y
+│ └ [+521 more paths]
+├ ○ /blog/prompts
+├ ƒ /blog/tags/[tag]
+├ ○ /casos
+├ ○ /comparar
+├ ● /comparar/[slug]
+│ ├ /comparar/manus-vs-chat-gpt
+│ ├ /comparar/sim-ai-vs-manus
+│ ├ /comparar/chat-gpt-vs-grok
+│ └ [+5 more paths]
+├ ○ /demos/aura-stetic
+├ ƒ /demos/luxe-estates
+├ ○ /diagnostico
+├ ○ /guias
+├ ○ /guias/claude-code
+├ ○ /guias/mcp
+├ ○ /guias/openclaw-ai
+├ ○ /guias/shopify
+├ ○ /icon.svg
+├ ○ /industrias
+├ ○ /laboratorio
+├ ○ /laboratorio/nitro-dropshipping
+├ ○ /legal
+├ ○ /legal/aviso-legal
+├ ○ /legal/cookies
+├ ○ /legal/privacidad
+├ ○ /legal/terminos
+├ ○ /manifest.webmanifest
+├ ○ /newsletter
+├ ○ /nitro-complete
+├ ○ /nitro-complete/eliminacion-de-datos
+├ ○ /nitro-complete/privacidad
+├ ○ /nitro-strategy
+├ ○ /nitrobot
+├ ○ /nitrobot/conectar
+├ ○ /nitrobot/vsl
+├ ○ /robots.txt
+├ ○ /shopify
+├ ƒ /sitemap.xml
+├ ○ /sobre-mi
+├ ○ /soluciones
+├ ○ /soluciones/b2b
+├ ○ /soluciones/clinicas
+├ ○ /soluciones/nitro-commerce
+├ ● /soluciones/nitro-commerce/[slug]
+│ ├ /soluciones/nitro-commerce/clinicas-esteticas-bogota
+│ ├ /soluciones/nitro-commerce/clinicas-esteticas-pereira
+│ └ /soluciones/nitro-commerce/alto-rendimiento-empresas-mundial
+├ ○ /soluciones/nitro-inmobiliaria
+├ ○ /soluciones/nitro-landing
+├ ○ /soluciones/nitro-retail
+├ ○ /soluciones/nitro-search
+├ ƒ /studio/[[...index]]
+└ ○ /studio/audio-gen
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand

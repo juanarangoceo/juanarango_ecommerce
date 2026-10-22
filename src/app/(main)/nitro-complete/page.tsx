@@ -1,26 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ChevronDown, Clock3, Hand, LayoutTemplate, Megaphone, Radar, ShieldCheck, SlidersHorizontal, Store } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { NitroCompleteModules } from "@/components/commercial/nitro-complete-modules";
+import { NitroVoiceShowcase } from "@/components/commercial/nitro-voice-showcase";
+import { NitroCommerceJourney } from "@/components/commercial/nitro-commerce-journey";
+import { NitroOperationsToolkit } from "@/components/commercial/nitro-operations-toolkit";
 import { NitroHero } from "@/components/nitro/nitro-hero";
+import { IntegrationLogoStrip } from "@/components/commercial/integration-logo-strip";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
-import {
-  formatCop,
-  nitroCompleteImplementation,
-  nitroCompleteImplementationIncludes,
-  nitroCompletePlans,
-  nitroCompleteStarterKit,
-  nitroCompleteTemplatePrice,
-  nitroCompleteUnitPacks,
-  PLAN_TEMPLATES_PER_CYCLE,
-  planConversations,
-  planUnitPrice,
-  UNITS_PER_CONVERSATION,
-} from "@/lib/commercial-content";
+import { nitroCompleteStarterKit, nitroCompleteUnitPacks, formatCop } from "@/lib/commercial-content";
+import { PrepaidPricing } from "@/components/commercial/prepaid-pricing";
+import { EnterpriseContact } from "@/components/commercial/enterprise-contact";
 import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
@@ -32,14 +25,14 @@ import { NITRO_FILMS } from "@/lib/nitro-film";
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
 export const metadata: Metadata = {
-  title: "Nitro Complete | Vende, confirma y haz seguimiento por WhatsApp con IA",
+  title: "Nitro Complete | WhatsApp con IA, voz y pagos en Colombia",
   description:
-    "Nitro Complete atiende con tu catálogo real, crea el pedido, lo confirma antes del despacho, avisa el envío y retoma las ventas pendientes. Con Shopify o sin tienda online.",
+    "Vende por WhatsApp con texto, voz, pagos con Confío y seguimiento de pedidos. Activa Nitro Complete en Colombia y recarga en pesos, sin mensualidad.",
   alternates: { canonical: `${SITE_URL}/nitro-complete` },
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
-    title: "Nitro Complete | Un equipo de ventas completo dentro de tu WhatsApp",
-    description: "Asesor con IA, confirmación de pedidos, postventa y seguimiento en un solo sistema, con tu equipo al mando.",
+    title: "Nitro Complete | Tu WhatsApp vende con voz, pagos y seguimiento",
+    description: "Texto, audios y llamadas para atender a tus clientes. Pagos con Confío y seguimiento de pedidos, con conexiones y saldos según la función.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
     type: "website",
@@ -47,56 +40,21 @@ export const metadata: Metadata = {
   },
 };
 
-const controls = [
-  { icon: ShieldCheck, title: "Precios que no se inventan", text: "Precios, envíos y totales los calcula el sistema desde tu catálogo, no el modelo de IA." },
-  { icon: Hand, title: "Una persona cuando hace falta", text: "Cambios, reclamos o casos delicados pasan a tu equipo con la conversación completa." },
-  { icon: Clock3, title: "Horarios y permisos", text: "Los mensajes de seguimiento respetan tus horarios y solo llegan a quien no pidió dejar de recibirlos." },
-  { icon: SlidersHorizontal, title: "Cada parte se enciende por separado", text: "Empezamos en observación, revisamos y activamos cuando está lista. Si algo no convence, se apaga." },
-] as const;
-
-const growth = [
-  { icon: LayoutTemplate, title: "Nitro Landing", text: "Una página por producto que envía cada pedido a tu panel." },
-  { icon: Megaphone, title: "Campañas por WhatsApp", text: "Promociones a tus compradores con plantillas aprobadas por Meta." },
-  { icon: Radar, title: "Oportunidades", text: "Revisa las dudas y objeciones de quienes preguntaron y no compraron." },
-] as const;
-
-const shopifyFeatures = [
-  ["Catálogo sincronizado", "Tus productos y precios llegan desde la tienda y se mantienen al día. El asesor responde con lo que tienes publicado."],
-  ["El pedido se crea en tu tienda", "Cuando el cliente compra en el chat, el pedido contraentrega queda en Shopify con sus datos de entrega."],
-  ["Confirmación a la vista", "El pedido que el comprador confirma por WhatsApp queda etiquetado en Shopify antes de despacharlo."],
-  ["Aviso de envío automático", "Al registrar el despacho en Shopify, el comprador recibe la transportadora y la guía por WhatsApp."],
-  ["Carritos abandonados", "Recuerda por WhatsApp a quien dejó la compra a medias, con el carrito listo para terminar la compra. Requiere plantillas aprobadas por Meta."],
-  ["Botón de WhatsApp en tu tienda", "Abre la conversación con el producto que el cliente está viendo. Lo instalamos en la implementación."],
-] as const;
-
-// Catálogo nativo (nitro_bot: app/dashboard/catalogo y lib/catalog/upsert.ts).
-// La IA no redacta el catálogo: genera el embedding con el que el asesor
-// encuentra cada producto por significado, no por palabra exacta.
-const nativeCatalog = [
-  "Creas cada producto desde el panel, con sus fotos, precio y descripción.",
-  "Si ya tienes tu lista en Excel, la importas en CSV de una vez.",
-  "La IA aprende cada producto para que el asesor lo encuentre aunque el cliente lo describa con sus palabras.",
-] as const;
-
-// Radar de oportunidades (nitro_bot: docs/modules/sales-radar.md,
-// lib/radar/taxonomy.ts). Solo causas reales de la taxonomía.
-const lostReasons = ["Precio", "Costo de envío", "Tiempo de entrega", "Sin disponibilidad", "Medio de pago", "Garantía o confianza", "Información insuficiente"] as const;
-
-const conversationsFormat = new Intl.NumberFormat("es-CO");
-
 const faqs = [
-  ["¿Puedo usar mi número actual de WhatsApp?", "El kit incluye un número gestionado por Nitro. Si quieres usar el número que ya tienes, revisamos su situación con Meta y la conexión que necesita antes de que pagues. Conservarlo depende de ese proceso."],
-  ["¿Qué necesito para empezar?", "Tu catálogo con fotos, precios y descripciones, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Puedes tener el catálogo en Shopify o cargarlo en Nitro. Por WhatsApp te ayudamos a completar la ficha y revisamos la conexión del número."],
-  ["¿Cuándo queda listo?", `El kit incluye instalación en máximo ${nitroCompleteStarterKit.installHours} horas desde que estén completos el pago y la ficha. En un plan, el tiempo depende de tu catálogo y de la aprobación de Meta; confirmamos el alcance y los tiempos por WhatsApp antes de que pagues.`],
-  ["¿Puedo empezar sin pagar mensualidad?", `Sí. Compras el kit de arranque por ${nitroCompleteStarterKit.price} y después recargas desde ${formatCop(nitroCompleteUnitPacks[0].priceCop)} cuando lo necesites. Sin mensualidad ni fecha de corte; el saldo comprado no vence. Los planes tienen un menor precio por turno y pueden convenirte cuando tu consumo aumenta.`],
-  ["¿Qué incluye la implementación de un plan?", `Cuesta ${nitroCompleteImplementation} una sola vez, aparte de la mensualidad. Incluye ${nitroCompleteImplementationIncludes.map((i) => i.charAt(0).toLowerCase() + i.slice(1)).join("; ")}. El alcance se confirma antes de iniciar.`],
-  ["¿Cuántas conversaciones puedo atender?", `Depende de cuántas respuestas necesite cada cliente. Las equivalencias que ves en los precios se calculan con un promedio de ${UNITS_PER_CONVERSATION} turnos por conversación y son una referencia, no un límite de conversaciones.`],
-  ["¿Necesito Shopify?", "No. Puedes sincronizar tu tienda Shopify o administrar el catálogo directamente en Nitro. Por WhatsApp revisamos la ruta que te da menos trabajo."],
-  ["¿Qué hace además de responder chats?", "Consulta tu catálogo, calcula precios y envíos, crea pedidos y organiza las confirmaciones, la postventa y el seguimiento. Tu equipo atiende los casos que necesitan una persona desde el mismo panel."],
-  ["¿Qué diferencia hay con NitroBot?", "NitroBot es el asesor que conversa y crea el pedido. Nitro Complete reúne ese asesor con las herramientas para gestionar lo que ocurre después de la venta, en un solo panel."],
-  ["¿Puede equivocarse con los precios?", "Los precios, envíos y totales no quedan a criterio de la IA: se consultan y calculan desde el sistema antes de responder."],
-  ["¿Le escribe a mis clientes sin permiso?", "Responde cuando el cliente escribe. Los mensajes de seguimiento y recuperación usan plantillas aprobadas por Meta, respetan horarios y excluyen a quien pidió no recibir promociones."],
-  ["¿Puedo pasar de recargas a un plan, o al revés?", "Sí. Si pasas a un plan, tu saldo de turnos se conserva como paquete. Si vuelves a recargas, sigues con tu saldo y sin fecha de corte."],
+  ["¿Qué pago para empezar?", `La activación de Nitro Complete cuesta ${nitroCompleteStarterKit.price} COP una sola vez. Incluye número gestionado por Nitro, instalación, ${nitroCompleteStarterKit.units} turnos y ${nitroCompleteStarterKit.templates} plantillas. Después recargas el saldo que necesites, sin mensualidad.`],
+  ["¿Qué necesito para la activación?", "Tu catálogo con fotos, precios y descripciones, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Puedes conectar Shopify o cargar el catálogo en Nitro. Te acompañamos por WhatsApp para crear tu cuenta y completar la ficha."],
+  ["¿Cuándo queda listo?", `La instalación se realiza en máximo ${nitroCompleteStarterKit.installHours} horas desde que estén completos el pago y la ficha. Crear la cuenta por sí solo no activa el asesor.`],
+  ["¿Puedo usar mi número actual?", "La activación incluye un número gestionado por Nitro. Si quieres usar el que ya tienes, revisamos su situación y el proceso con Meta antes de que pagues; no todos los números tienen la misma conexión."],
+  ["¿Cómo funcionan las recargas?", `Después de la activación, agregas saldo desde tu panel cuando lo necesites. Las recargas de turnos empiezan en ${formatCop(nitroCompleteUnitPacks[0].priceCop)}. El saldo comprado no vence y no hay mensualidad ni fecha de corte. Las plantillas tienen su propio saldo. Las llamadas y el seguimiento con 17TRACK también se habilitan y recargan por separado.`],
+  ["¿Qué es un turno y qué es una plantilla?", "Un turno es cada respuesta que envía tu asesor. Una conversación puede necesitar varios turnos. Las plantillas son mensajes aprobados por Meta, como confirmaciones o avisos de envío, y se cobran de su saldo separado. La calculadora estima turnos, no conversaciones garantizadas."],
+  ["¿Puede responder con mi voz y atender llamadas?", "Sí. Para las notas de voz puedes elegir Sara o Carlos, o solicitar una voz clonada con una grabación y tu autorización. Nitro prepara y prueba la voz antes de activarla. Nitro Call atiende llamadas entrantes de WhatsApp al habilitarlo, tiene 8 voces propias y saldo separado en COP que se consume por segundos. La voz clonada para audios no se usa en llamadas. La confirmación de compra continúa por escrito en el chat."],
+  ["¿Cómo cobra a mis compradores?", "Conectas tu cuenta de comercio Confío y Nitro comparte un enlace de pago dentro de WhatsApp. La integración recibe la confirmación del pago para continuar con el pedido. Los medios disponibles y las condiciones dependen de tu cuenta Confío. También puedes trabajar con pedidos contraentrega."],
+  ["¿El seguimiento y las guías están incluidos?", "17TRACK se habilita por tienda para consultar guías y tiene un saldo separado por guía rastreada. Los avisos al comprador requieren configuración y plantillas de WhatsApp. La disponibilidad depende de la guía y la transportadora. La creación de guías con Skydropx está en preparación y todavía no está disponible; no forma parte de la activación."],
+  ["¿Qué pasa si se acaba el saldo?", "El panel te permite consultar el saldo y recargar. Existe un crédito temporal de 24 horas; lo consumido se descuenta de la siguiente recarga. Vencido ese plazo, hay un préstamo limitado para conversaciones en curso y las nuevas pasan al equipo. Conviene recargar antes de agotarlo."],
+  ["¿Necesito Shopify?", "No. Puedes sincronizar tu tienda Shopify o administrar el catálogo directamente en Nitro. Los pedidos quedan en Shopify cuando usas esa integración o en tu panel cuando trabajas con catálogo propio."],
+  ["¿Qué pasa si mi empresa necesita más capacidad?", "Cuéntanos tu volumen y qué necesitas en el bloque para empresas. Juan revisará tu operación y te contactará para definir el alcance, las conexiones y la capacidad adecuada."],
+  ["¿Qué diferencia hay con NitroBot?", "NitroBot es el asesor que conversa y crea el pedido. Nitro Complete reúne ese asesor con las herramientas para gestionar lo que ocurre después de la venta, en un solo panel. Algunas funciones requieren configuración y plantillas aprobadas."],
+  ["¿Le escribe a mis clientes sin permiso?", "Responde cuando el cliente escribe. Los mensajes de seguimiento y recuperación respetan los horarios y permisos del comprador; fuera de la ventana de WhatsApp requieren plantillas aprobadas por Meta. Nunca escribe a quien pidió no recibir mensajes."],
 ] as const;
 
 const schema = {
@@ -105,15 +63,16 @@ const schema = {
   name: "Nitro Complete",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web, WhatsApp",
-  description: "Sistema de ventas por WhatsApp con IA: asesor con catálogo real, pedidos, confirmación, postventa, seguimiento y panel operativo.",
+  description: "Sistema de ventas por WhatsApp con IA para Colombia: catálogo real, texto y voz, llamadas entrantes, pagos con Confío y seguimiento con 17TRACK. Las conexiones y saldos se habilitan según cada función.",
   url: `${SITE_URL}/nitro-complete`,
   provider: { "@id": `${SITE_URL}/#organization` },
-  offers: nitroCompletePlans.map((plan) => ({
+  offers: {
     "@type": "Offer",
-    name: plan.name,
-    price: plan.price.replace(/[^0-9]/g, ""),
+    name: "Activación de Nitro Complete",
+    price: nitroCompleteStarterKit.price.replace(/[^0-9]/g, ""),
     priceCurrency: "COP",
-  })),
+    description: "Pago inicial con instalación y saldo incluido; después, recargas por consumo.",
+  },
 };
 
 const faqSchema = {
@@ -128,22 +87,24 @@ export default function NitroCompletePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <section className="relative px-5 pb-16 pt-28 lg:px-8 lg:pb-24 lg:pt-40" data-nitro-orb="idle">
+      <div className="pt-[73px]"><IntegrationLogoStrip /></div>
+
+      <section className="relative px-5 pb-16 pt-10 lg:px-8 lg:pb-24 lg:pt-16" data-nitro-orb="idle">
         <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
         <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
             <h1 className="text-white">
               <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
               <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
-                Un equipo de ventas completo <span className="text-primary">dentro de tu WhatsApp.</span>
+                Vende por WhatsApp.<br /><span className="text-primary">Con voz, pagos y seguimiento.</span>
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/62 lg:mx-0">
-              Un asesor con IA que <strong className="nitro-hl">vende con tu catálogo real</strong> y un sistema que <strong className="nitro-hl">acompaña cada pedido hasta la entrega</strong>. Tú ves todo en el panel y decides cuándo entra tu equipo.
+              Tu negocio en Colombia, con un asesor que <strong className="nitro-hl">vende con tu catálogo real</strong>, recibe pedidos y acompaña a tus clientes. Empiezas con nuestra ayuda y después <strong className="font-semibold text-white">recargas en pesos, sin mensualidad.</strong>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Hablar por WhatsApp</WhatsAppJuanButton>
-              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#recarga">Empieza desde {nitroCompleteStarterKit.price}</Link></Button>
+              <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Quiero empezar</WhatsAppJuanButton>
+              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#recarga">Ver activación y recargas</Link></Button>
             </div>
             {/* Compatibilidad después de la promesa y los botones: el nombre del producto va primero. */}
             <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-white/70 lg:justify-start">
@@ -164,308 +125,36 @@ export default function NitroCompletePage() {
         <div className="mx-auto max-w-5xl">
           <div className="mb-8 text-center">
             <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Míralo vender <span className="text-primary">de principio a fin.</span></h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/58">La venta, la confirmación, el envío y el seguimiento, en menos de un minuto y medio. Con sonido.</p>
+            <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/75">La venta, la confirmación, el envío y el seguimiento, en menos de un minuto y medio.</p>
           </div>
           <NitroFilmPlayer film={NITRO_FILMS.full} />
         </div>
       </section>
 
-      {/* Una venta completa */}
-      <section className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="conversation">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Así se ve <span className="text-primary">en el chat de tu cliente.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Elige un momento de la venta o deja que la conversación avance sola.</p>
-          </div>
-          <WhatsAppStory />
-        </div>
-      </section>
+      <div className="mx-auto max-w-5xl px-5 pb-16 lg:px-0">
+        <details className="group mt-6 rounded-2xl border border-white/12 bg-superficie-nitro">
+          <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-sm font-semibold text-white [&::-webkit-details-marker]:hidden">Explorar una conversación de ejemplo<ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" /></summary>
+          <div className="border-t border-white/10 p-4 sm:p-6"><WhatsAppStory /></div>
+        </details>
+      </div>
 
-      {/* Recorrido del pedido */}
-      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="flow">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="mx-auto max-w-2xl text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:mx-0 lg:text-left">Del primer mensaje <span className="text-nitro-text">a la entrega.</span></h2>
-          <NitroCompleteModules />
-          <details className="mt-6 rounded-2xl border border-line bg-white px-5 py-4">
-            <summary className="flex min-h-6 cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold [&::-webkit-details-marker]:hidden">Qué necesitas para activar estas funciones <ChevronDown className="size-4 shrink-0" aria-hidden="true" /></summary>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-ink/65">La confirmación aplica a pedidos contraentrega de Shopify y de Nitro Landing. Seguimiento y recuperación requieren plantillas aprobadas por Meta y el permiso del comprador.</p>
-          </details>
-        </div>
-      </section>
-
-      {/* Precios, puerta de entrada: el kit de arranque (NIT-89). Es la única
-          forma de empezar sin mensualidad; las recargas vienen después, desde
-          el panel, y sus precios quedan plegados dentro del kit. */}
-      <section id="recarga" className="scroll-mt-20 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
-        <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Opción 1 · Kit prepago</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Empieza con el kit. <span className="text-primary">Sin mensualidad.</span></h2>
-            <p className="mt-5 text-base leading-7 text-white/58">Pagas el kit una sola vez. Después recargas cuando lo necesites, como recargas el celular. El kit se instala en máximo 48 horas desde que completes el pago y la ficha.</p>
-          </div>
-
-          <nav aria-label="Opciones de pago" className="mt-6 flex flex-wrap justify-center gap-3 text-sm">
-            <a href="#planes" className="rounded-full border border-white/20 px-4 py-2.5 font-semibold text-white/80 hover:border-primary hover:text-primary">Comparar con un plan mensual</a>
-            <a href="#preguntas" className="rounded-full border border-white/20 px-4 py-2.5 font-semibold text-white/80 hover:border-primary hover:text-primary">Qué necesitas para empezar</a>
-          </nav>
-          <article className="mt-8 overflow-hidden rounded-[2rem] bg-ink text-white ring-1 ring-primary/30">
-            <div className="grid lg:grid-cols-[.9fr_1.1fr]">
-              <div className="flex flex-col p-7 sm:p-10">
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Kit de arranque</p>
-                <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-5xl font-extrabold tracking-tight tabular-nums sm:text-6xl">{nitroCompleteStarterKit.price}</span><span className="text-sm text-white/50">pesos colombianos · un solo pago</span></p>
-                <p className="mt-4 max-w-sm text-sm leading-6 text-white/62">Número, instalación y saldo inicial para atender a tus clientes. Sin mensualidad ni fecha de corte.</p>
-                <WhatsAppJuanButton context={{ kind: "kit" }} placement="product_kit" className="mt-8 w-full sm:w-auto sm:self-start">Empezar con el kit</WhatsAppJuanButton>
-                <p className="mt-3 text-xs text-white/45">Puedes pagar en línea con Nequi, PSE o Bancolombia.</p>
-              </div>
-              <div className="border-t border-white/10 bg-white/[0.03] p-7 sm:p-10 lg:border-l lg:border-t-0">
-                <p className="text-sm font-semibold text-white">Incluye</p>
-                <ul className="mt-5 space-y-4 text-sm leading-6 text-white/75">
-                  {[
-                    ["Número de WhatsApp incluido", "Gestionado por Nitro. Revisamos tu catálogo y conectamos el asesor."],
-                    [`${nitroCompleteStarterKit.units.toLocaleString("es-CO")} turnos para tu asesor`, `≈ ${Math.floor(nitroCompleteStarterKit.units / UNITS_PER_CONVERSATION).toLocaleString("es-CO")} conversaciones de venta. Cada respuesta del asesor cuenta como un turno.`],
-                    [`${nitroCompleteStarterKit.templates} plantillas de WhatsApp`, "Para confirmar pedidos y avisar envíos."],
-                    ["Asesor y panel de pedidos", "Responde con tu catálogo, crea pedidos y organiza las confirmaciones."],
-                  ].map(([title, text]) => (
-                    <li key={title} className="flex gap-3">
-                      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary"><Check className="size-3 text-ink" aria-hidden="true" /></span>
-                      <span><strong className="block font-semibold text-white">{title}</strong>{text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <ol className="grid border-t border-white/10 sm:grid-cols-3">
-              {[
-                ["Empiezas por WhatsApp", "Mi asistente te orienta y te ayuda con el pago y la ficha de tu negocio."],
-                ["Preparamos la instalación", `Revisamos el catálogo y conectamos el asesor después del pago y la ficha completa.`],
-                ["Recargas a tu ritmo", `Desde ${formatCop(nitroCompleteUnitPacks[0].priceCop)}, en tu panel. Lo que compras no vence.`],
-              ].map(([title, text], index) => (
-                <li key={title} className="flex gap-3 border-white/10 p-6 sm:border-l sm:first:border-l-0 [&:not(:first-child)]:border-t sm:[&:not(:first-child)]:border-t-0">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-primary/40 font-mono text-xs text-primary">{index + 1}</span>
-                  <span className="text-sm leading-6 text-white/58"><strong className="block font-semibold text-white">{title}</strong>{text}</span>
-                </li>
-              ))}
-            </ol>
-
-            <details className="group border-t border-white/10">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-7 text-sm font-semibold text-white hover:text-primary sm:px-10 [&::-webkit-details-marker]:hidden">
-                Ver precios de las recargas
-                <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
-              </summary>
-              <div className="px-7 pb-8 sm:px-10">
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {nitroCompleteUnitPacks.map((pack) => (
-                    <div key={pack.units} className="rounded-2xl bg-white/5 p-4">
-                      <p className="text-lg font-semibold tabular-nums text-white">{pack.units.toLocaleString("es-CO")} <span className="text-xs font-normal text-white/45">turnos</span></p>
-                      <p className="text-xs text-white/45">≈ {Math.floor(pack.units / UNITS_PER_CONVERSATION).toLocaleString("es-CO")} conversaciones</p>
-                      <p className="mt-2 text-sm font-semibold tabular-nums text-primary">{formatCop(pack.priceCop)}</p>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-4 text-xs leading-5 text-white/45">Precios en pesos colombianos con IVA incluido. Plantillas aparte a {nitroCompleteTemplatePrice} cada una. Si se te acaban los turnos, las conversaciones en curso no se cortan.</p>
-              </div>
-            </details>
-          </article>
-        </div>
-      </section>
-
-      {/* Planes: para quien vende todos los días. El turno sale más barato y la
-          implementación es asesoría personalizada con Juan. Sin meses gratis
-          (se retiró el 2026-10-01). */}
-      <section id="planes" className="scroll-mt-20 bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="pricing">
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.12em] text-nitro-text">Opción 2 · Plan mensual</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Para un volumen constante, <span className="text-nitro-text">compara los planes.</span></h2>
-            <p className="mt-5 text-base leading-7 text-ink/62">Cada plan incluye turnos y {PLAN_TEMPLATES_PER_CYCLE} plantillas al mes. La implementación se paga una sola vez y la trabajas conmigo: catálogo, reglas de atención, conexión y pruebas.</p>
-          </div>
-          <div className="mt-12 grid gap-4 lg:grid-cols-3">
-            {nitroCompletePlans.map((plan) => (
-              <article key={plan.name} id={`plan-${plan.slug}`} className={`relative flex scroll-mt-28 flex-col rounded-3xl p-7 outline-3 outline-offset-2 outline-transparent transition-[outline-color] duration-500 target:outline-[var(--verde-nitro)] sm:p-8 ${plan.featured ? "bg-ink text-white" : "border border-line bg-white"}`}>
-                <div className="flex items-center justify-between">
-                  <p className={`font-mono text-xs uppercase tracking-[0.12em] ${plan.featured ? "text-primary" : "text-ink/55"}`}>{plan.name}</p>
-                  {plan.featured ? <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">Para crecer</span> : null}
-                </div>
-                <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{plan.price}</span><span className={`text-sm ${plan.featured ? "text-white/50" : "text-ink/50"}`}>COP / mes</span></p>
-                <p className={`mt-3 rounded-xl px-3 py-2.5 text-sm leading-5 ${plan.featured ? "bg-white/8 text-white/80" : "bg-ground text-ink/75"}`}>+ <strong className="font-semibold">{nitroCompleteImplementation}</strong> de implementación, una sola vez</p>
-                <p className={`mt-4 text-sm font-semibold ${plan.featured ? "text-white" : "text-ink"}`}>{plan.capacity} · {formatCop(planUnitPrice(plan))} por turno</p>
-                <p className={`mt-0.5 text-sm ${plan.featured ? "text-primary" : "text-nitro-text"}`}>≈ {conversationsFormat.format(planConversations(plan))} conversaciones de venta al mes</p>
-                <p className={`mt-1 text-sm ${plan.featured ? "text-white/60" : "text-ink/60"}`}>{plan.fit}</p>
-                <ul className={`mt-6 space-y-2.5 border-t pt-6 text-sm ${plan.featured ? "border-white/10 text-white/70" : "border-line text-ink/70"}`}>
-                  {[
-                    "Asesor con tu catálogo real, pedidos y panel",
-                    `${PLAN_TEMPLATES_PER_CYCLE} plantillas de WhatsApp cada mes`,
-                    "Campañas, recuperación de ventas y Nitro Marketing",
-                    "Asesoría personalizada con Juan y soporte prioritario",
-                  ].map((item) => (
-                    <li key={item} className="flex gap-2.5"><Check className={`mt-0.5 size-4 shrink-0 ${plan.featured ? "text-primary" : "text-nitro-text"}`} />{item}</li>
-                  ))}
-                </ul>
-                <WhatsAppJuanButton context={{ kind: "plan", planName: plan.name }} placement={`product_${plan.slug}`} variant={plan.featured ? "primary" : "dark"} className="mt-8">Consultar {plan.name}</WhatsAppJuanButton>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-4 overflow-hidden rounded-3xl bg-ink text-white">
-            <div className="grid gap-6 p-7 sm:p-9 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Implementación con Juan</p>
-                <h3 className="mt-3 text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">Preparamos el asesor <span className="text-primary">con tu negocio.</span></h3>
-                <p className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums">{nitroCompleteImplementation}</span><span className="text-sm text-white/50">COP, una sola vez</span></p>
-                <p className="mt-3 text-sm leading-6 text-white/58">Revisamos lo que vendes, cómo atiendes y las reglas de tu negocio. Este pago cubre la implementación; la mensualidad del plan se paga aparte.</p>
-              </div>
-              <ol className="grid gap-3 sm:grid-cols-2">
-                {nitroCompleteImplementationIncludes.map((item, index) => (
-                  <li key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                    <span className="flex size-7 items-center justify-center rounded-full border border-primary/40 font-mono text-xs text-primary">{index + 1}</span>
-                    <p className="mt-3 text-sm leading-6 text-white/78">{item}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <p className="border-t border-white/10 px-7 py-4 text-xs leading-5 text-white/45 sm:px-9">Desarrollos a medida e integraciones no soportadas se cotizan aparte.</p>
-          </div>
-
-          {/* Prepago o plan, en cinco líneas. Solo diferencias reales (nitro_bot:
-              docs/modules/prepago.md). */}
-          <details className="group mt-8 overflow-hidden rounded-2xl border border-line bg-white">
-            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-sm font-semibold [&::-webkit-details-marker]:hidden">Comparar el kit y un plan mensual<ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" /></summary>
-            <div className="overflow-x-auto border-t border-line">
-            <table className="w-full min-w-[34rem] border-separate border-spacing-0 overflow-hidden rounded-2xl bg-white text-left text-sm">
-              <caption className="sr-only">Prepago frente a plan mensual</caption>
-              <thead>
-                <tr className="text-xs uppercase tracking-[0.08em] text-ink/50">
-                  <th scope="col" className="px-5 py-3 font-medium"></th>
-                  <th scope="col" className="px-5 py-3 font-medium">Prepago</th>
-                  <th scope="col" className="px-5 py-3 font-medium text-nitro-text">Plan mensual</th>
-                </tr>
-              </thead>
-              <tbody className="[&_td]:border-t [&_td]:border-line [&_td]:px-5 [&_td]:py-3 [&_th]:border-t [&_th]:border-line [&_th]:px-5 [&_th]:py-3">
-                {[
-                  ["Para empezar", `Kit de ${nitroCompleteStarterKit.price}`, `${nitroCompleteImplementation} de implementación + mensualidad`],
-                  ["Cómo pagas", "Recargas cuando quieras, sin fecha de corte", "Mensualidad con fecha de corte"],
-                  ["Precio del turno", `De ${formatCop(Math.min(...nitroCompleteUnitPacks.map((p) => p.priceCop / p.units)))} a ${formatCop(Math.max(...nitroCompleteUnitPacks.map((p) => p.priceCop / p.units)))}`, `Desde ${formatCop(Math.min(...nitroCompletePlans.map(planUnitPrice)))}`],
-                  ["Plantillas", `Las compras a ${nitroCompleteTemplatePrice}`, `${PLAN_TEMPLATES_PER_CYCLE} incluidas cada mes`],
-                  ["Acompañamiento", `Instalación en máximo ${nitroCompleteStarterKit.installHours} horas desde pago y ficha`, "Asesoría personalizada con Juan"],
-                  ["Ideal para", "Empezar y recargar según tu consumo", "Vender todos los días con volumen"],
-                ].map(([label, prepaid, plan]) => (
-                  <tr key={label}>
-                    <th scope="row" className="font-medium text-ink/60">{label}</th>
-                    <td className="text-ink/80">{prepaid}</td>
-                    <td className="font-medium text-ink">{plan}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-          </details>
-        </div>
-      </section>
-
-      {/* Shopify: la integración más completa. Solo capacidades verificadas en
-          nitro_bot (sync, pedidos, etiqueta de Aria, despacho, carritos, botón). */}
-      <section id="shopify" className="scroll-mt-20 border-b border-white/7 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
-          <div className="text-center lg:sticky lg:top-28 lg:self-start lg:text-left">
-            <ShopifyLogo className="mx-auto size-10 lg:mx-0" />
-            <h2 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Hecho para vender <span className="text-primary">con Shopify.</span></h2>
-            <p className="mx-auto mt-5 max-w-md text-base leading-7 text-white/58 lg:mx-0">Conectas tu tienda y Nitro Complete trabaja con lo que ya tienes: tus productos, tus pedidos y tus envíos. No cambias de plataforma ni duplicas el catálogo.</p>
-            <div className="mx-auto mt-8 max-w-md rounded-2xl border border-white/10 bg-background p-6 text-left lg:mx-0">
-              <p className="flex items-center gap-2.5 text-base font-semibold text-white"><Store className="size-5 shrink-0 text-primary" aria-hidden="true" />¿Sin Shopify? Carga tu catálogo en Nitro.</p>
-              <ul className="mt-4 space-y-2.5 text-sm leading-6 text-white/58">
-                {nativeCatalog.map((item) => (
-                  <li key={item} className="flex gap-2.5"><Check className="mt-1 size-3.5 shrink-0 text-primary" aria-hidden="true" />{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <ol className="divide-y divide-white/8 border-y border-white/8">
-            {shopifyFeatures.map(([title, text], index) => (
-              <li key={title} className="grid grid-cols-[2.5rem_1fr] gap-x-4 py-6">
-                <span className="pt-1 font-mono text-xs text-primary">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">{title}</h3>
-                  <p className="mt-1.5 text-sm leading-6 text-white/55">{text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Por qué no compraron: la ventaja del chat frente a la web */}
-      <section className="bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="about">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Encuentra los motivos que <span className="text-nitro-text">frenan tus ventas.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-ink/65 lg:mx-0 lg:justify-self-end lg:text-left">Precio, envío, formas de pago: las dudas que tus clientes dejan en WhatsApp te ayudan a entender qué revisar en tu negocio.</p>
-          </div>
-          <div className="mt-12 grid gap-4 lg:grid-cols-[.8fr_1.2fr]">
-            <article className="rounded-2xl border border-line bg-white p-7">
-              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">Solo con tu web</p>
-              <p className="mt-4 text-xl font-semibold tracking-tight">Ves visitas, clics y carritos abandonados.</p>
-              <p className="mt-3 text-sm leading-6 text-ink/60">Estos datos muestran dónde se detiene la compra. Las conversaciones pueden aportar las dudas que el cliente expresó.</p>
-            </article>
-            <article className="rounded-2xl bg-ink p-7 text-white">
-              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-primary">Oportunidades · activación por separado</p>
-              <p className="mt-4 text-xl font-semibold tracking-tight">Revisa los motivos que aparecen en tus conversaciones.</p>
-              <p className="mt-3 text-sm leading-6 text-white/62">Oportunidades clasifica las conversaciones con intención de compra que llevan siete días sin compra. Puedes revisar el motivo identificado junto a los mensajes que lo respaldan y decidir qué mejorar.</p>
-              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Causas que detecta">
-                {lostReasons.map((reason) => (
-                  <li key={reason} className="rounded-full border border-white/12 px-3 py-1 text-xs text-white/75">{reason}</li>
-                ))}
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* Control */}
-      <section className="border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
-          <div className="text-center lg:text-left">
-            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Automatiza lo repetitivo. <span className="text-primary">Conserva el mando.</span></h2>
-            <p className="mx-auto mt-5 max-w-md text-base leading-7 text-white/55 lg:mx-0">Define cómo responde el asesor, cuándo interviene tu equipo y qué funciones activas en tu negocio.</p>
-          </div>
-          <div className="grid gap-px overflow-hidden rounded-3xl border border-white/8 bg-white/8 sm:grid-cols-2">
-            {controls.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="bg-background p-7">
-                <Icon className="size-5 text-primary" aria-hidden="true" />
-                <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/52">{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Crecer */}
-      <section className="px-5 py-16 lg:px-8 lg:py-20" data-nitro-orb="ecosystem">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-balance text-center text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl lg:text-left">Más herramientas <span className="text-primary">para tu negocio.</span></h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {growth.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="rounded-2xl border border-white/10 bg-superficie-nitro p-6">
-                <div className="flex items-center justify-between"><Icon className="size-5 text-primary" /><span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary">Según tu modalidad</span></div>
-                <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/52">{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <NitroVoiceShowcase />
+      <PrepaidPricing />
+      <NitroCommerceJourney />
+      <NitroOperationsToolkit />
 
       {/* Calculadora */}
-      <section className="border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="calculator">
+      <section id="calculadora" className="scroll-mt-24 border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="calculator">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Haz las cuentas <span className="text-primary">con tu negocio.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta tus consultas, el valor de tus pedidos y los supuestos para estimar tiempo de atención y posibles ventas.</p>
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Estima tu consumo.<br /><span className="text-primary">Recarga con una referencia.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Obtén una referencia en turnos y pesos colombianos.</p>
           </div>
           <SalesCalculator />
         </div>
       </section>
+
+      <EnterpriseContact />
 
       {/* FAQ */}
       <section id="preguntas" className="scroll-mt-24 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="faq">
@@ -484,7 +173,7 @@ export default function NitroCompletePage() {
 
       <section className="px-5 pb-20 lg:px-8 lg:pb-24" data-nitro-orb="diagnostic">
         <SalesContact placement="product_closing" />
-        <p className="mx-auto mt-5 max-w-7xl text-center text-sm leading-6 text-white/55">
+        <p className="mx-auto mt-5 max-w-7xl text-center text-base leading-7 text-white/70">
           ¿Ya eres cliente? <a href={`mailto:${CONTACT_EMAILS.soporte}`} className="font-semibold text-white underline underline-offset-4 hover:text-primary">Escríbenos a soporte</a>
         </p>
       </section>

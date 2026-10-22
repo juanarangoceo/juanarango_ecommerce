@@ -30,7 +30,7 @@ export function NitroCompleteModules() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50">{moment}</span>
               </span>
               <span className="mt-5 block text-xl font-semibold tracking-tight text-ink">{title}</span>
-              <span className="mt-3 block text-sm leading-6 text-ink/62">{text}</span>
+              <span className="mt-3 block text-base leading-7 text-ink/75">{text}</span>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-nitro-text">
                 {expanded ? "Cerrar" : "Cómo funciona"}
                 <Plus className={`size-4 transition-transform duration-200 ${expanded ? "rotate-45" : "group-hover:rotate-90"}`} aria-hidden="true" />
@@ -40,11 +40,11 @@ export function NitroCompleteModules() {
               <div className="space-y-4 border-t border-line pt-5 text-sm leading-6">
                 <div>
                   <p className="font-semibold text-ink">Cómo funciona</p>
-                  <p className="mt-1 text-ink/65">{how}</p>
+                  <p className="mt-1 text-ink/75">{how}</p>
                 </div>
                 <div>
                   <p className="font-semibold text-ink">Qué necesitas</p>
-                  <p className="mt-1 text-ink/65">{needs}</p>
+                  <p className="mt-1 text-ink/75">{needs}</p>
                 </div>
               </div>
             </div>

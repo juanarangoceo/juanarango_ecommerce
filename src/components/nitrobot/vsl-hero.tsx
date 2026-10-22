@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { BadgeCheck, UserRoundCheck } from "lucide-react";
 import { VslFunnel } from "@/components/nitrobot/vsl-funnel";
 
@@ -28,7 +29,7 @@ export function VslHero() {
   const [typewriterPhase, setTypewriterPhase] =
     useState<TypewriterPhase>("pausing");
   const [visibleMessage, setVisibleMessage] = useState(heroMessages[0]);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotionPreference();
 
   useEffect(() => {
     if (prefersReducedMotion) return;

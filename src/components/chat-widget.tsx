@@ -25,7 +25,7 @@ const CONTEXTS: Record<ContextName, SphereContext> = {
   ideas: { shape: "spark", label: "Descubre una idea" },
   conversation: { shape: "ticks", label: "Así responde tu asesor", teaser: "¿Te gustaría vender así por WhatsApp? Te muestro cómo empezar.", opener: "sell" },
   calculator: { shape: "bars", label: "Calcula tu caso", teaser: "¿Revisamos estos números con tu caso real?", opener: "plans" },
-  pricing: { shape: "chat", label: "Te ayudo a elegir", teaser: "¿Dudas con el plan? Te digo cómo elegirlo.", opener: "plans" },
+  pricing: { shape: "chat", label: "Te ayudo a elegir", teaser: "¿Quieres empezar? Te explico la activación y las recargas.", opener: "plans" },
   faq: { shape: "question", label: "¿Otra pregunta?", teaser: "¿No encuentras tu pregunta? Te oriento.", opener: "root" },
 };
 
@@ -55,10 +55,10 @@ const GUIDE: Record<NodeId, GuideNode> = {
     choices: [{ label: "¿Cuánto cuesta?", next: "plans" }],
   },
   plans: {
-    bot: "Los tres planes incluyen lo mismo: **asesor, pedidos, panel y control humano**. Cambia la capacidad mensual. También puedes empezar con un **kit sin mensualidad**. Mi asistente te ayuda a comparar por WhatsApp y Juan revisa la instalación.",
+    bot: "Empiezas con una **activación de $199.000 COP**: número gestionado por Nitro, instalación, 500 turnos y 100 plantillas. Después **recargas cuando lo necesitas, sin mensualidad**. Mi asistente te ayuda a crear tu cuenta por WhatsApp.",
     links: [
       { label: "Comparar por WhatsApp", href: "whatsapp", primary: true, salesContext: { kind: "evaluation" } },
-      { label: "Ver planes y precios", href: "/nitro-complete#planes" },
+      { label: "Ver activación y recargas", href: "/nitro-complete#recarga" },
     ],
     choices: [{ label: "Tengo otra consulta", next: "root" }],
   },
