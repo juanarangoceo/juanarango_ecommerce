@@ -5,23 +5,26 @@ registra en la bitácora correspondiente.
 
 ## Hub «Vender por WhatsApp» — 30 de octubre de 2026 (NIT-199)
 
-Infraestructura lista en local, sin commit ni despliegue: tipo `guia` en
-Sanity, rutas del hub, bloque Nitro con origen, JSON-LD, sitemap, `llms.txt`
-y «Guías» en el menú. Alcance decidido por Juan: solo guías; sin páginas por
-tipo de negocio ni de plantillas de mensajes; los posts del blog no se tocan.
+Publicado el 30-oct: código en `master` (`180e2d4`) y guía pilar en Sanity
+(`guia-vender-por-whatsapp-pilar`). Alcance decidido por Juan: solo guías; sin
+páginas por tipo de negocio ni de plantillas de mensajes; los posts del blog no
+se tocan.
 
-- Publicar (commit a `master`) cuando Juan lo pida.
-- Escribir y revisar la guía pilar y los primeros artículos (orden propuesto:
-  confirmar pedidos contraentrega, señales de que ya no das abasto, cobrar por
-  WhatsApp en Colombia, por qué bloquean el número). Validar antes las
-  búsquedas en Keyword Planner y contrastar con NitroBot lo que diga de Nitro.
-- Confirmar que el webhook de Sanity incluye el tipo `guia` y envía `hub`,
-  `tipo` y `slug`; si no, la página tarda hasta 1 h en aparecer.
+- **Webhook de Sanity:** publicar una guía no revalidó el sitio. Revisar en
+  sanity.io/manage que el webhook apunte a `/api/sanity-webhook` e incluya el
+  tipo `guia` con `hub`, `tipo` y `slug` en la proyección. Mientras tanto, los
+  artículos nuevos salen al primer acceso, pero el índice del hub, `/guias` y
+  `/llms.txt` tardan hasta 1 h.
+- Revisión de Juan de la guía pilar en su teléfono y su computador.
+- Siguientes artículos (orden propuesto): confirmar pedidos contraentrega,
+  señales de que ya no das abasto, cobrar por WhatsApp en Colombia, por qué
+  bloquean el número. Validar antes las búsquedas en Keyword Planner y
+  contrastar con NitroBot lo que diga de Nitro.
 - Regla de origen en `bot_super_admin/lib/sales/origin.ts`: detectar
   «vengo de la guía «…»» (otro repositorio, requiere aprobación).
 - Registrar `page_type` y `page_slug` como dimensiones personalizadas en GA4.
-- Tras publicar el pilar: enviarlo a inspección en Search Console y enlazar el
-  hub desde `/nitro-complete` y la home.
+- Search Console: inspeccionar `/guias/vender-por-whatsapp` y pedir indexación.
+- Enlazar el hub desde `/nitro-complete` y la home.
 
 ## Rediseño de activación y recargas — 22 de octubre de 2026
 
