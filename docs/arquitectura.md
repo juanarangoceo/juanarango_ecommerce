@@ -52,10 +52,34 @@ continuación del registro conserva el contrato existente.
 ## Contenido y datos
 
 - **Sanity:** blog, contenido editorial, Studio y funciones de generación.
+  El tipo `guia` alimenta los hubs de `/guias` (ver abajo).
 - **Supabase:** CRM propio (`contacts` + `contact_events`), autenticación,
   `posts` (búsqueda semántica del blog) y `pseo_pages` (páginas locales).
 - **Cloudinary:** imágenes de marca y video VSL.
 - **Notion:** fuentes usadas por algunos flujos editoriales.
+
+## Hubs de guías y descubrimiento (30-oct-2026, NIT-199)
+
+- `/guias/vender-por-whatsapp` muestra la guía pilar (tipo `pilar`) y el índice
+  del hub; sin pilar publicado responde 404 y no aparece en `/guias`.
+  `/guias/vender-por-whatsapp/[tema]` muestra cada artículo (tipo `articulo`).
+- Contenido en Sanity, tipo `guia` (`src/sanity/schemas/guia.ts`). Studio no
+  deja publicar si falta un campo obligatorio ni sin marcar la revisión
+  editorial. Hubs y grupos en `src/lib/guias/hubs.ts`; consultas en
+  `queries.ts`; JSON-LD (`Article`, `BreadcrumbList`, `FAQPage`,
+  `CollectionPage`) en `json-ld.ts`, enlazado al `#person` y
+  `#organization` del layout. Plantilla en `src/components/guias/`.
+- Las preguntas frecuentes usan `<details>`: quedan en el HTML para buscadores
+  y agentes que no ejecutan JavaScript.
+- Cierre común `NitroGuideBlock`: WhatsApp del vendedor con
+  `{ kind: "guide", title }` («vengo de la guía «…»») y evento
+  `whatsapp_click` con `page_type`/`page_slug`.
+- Descubrimiento: guías publicadas en `sitemap.xml` y en `/llms.txt`
+  (resumen para agentes con datos de Nitro tomados de `commercial-content`).
+  El webhook `api/sanity-webhook` revalida `/guias`, el hub, el artículo y
+  `/llms.txt`; ISR de 1 h como respaldo.
+- El blog no se modifica: las guías no comparten tipo, rutas ni sitemap con
+  `post`.
 
 ## CRM y panel `/admin` (25-09-2026)
 

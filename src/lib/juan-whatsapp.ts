@@ -10,7 +10,8 @@ export type JuanWhatsAppContext =
   | { kind: "plan"; planName: string }
   | { kind: "evaluation" }
   | { kind: "enterprise" }
-  | { kind: "calculator"; chats: number; turns: number };
+  | { kind: "calculator"; chats: number; turns: number }
+  | { kind: "guide"; title: string };
 
 // Contrato con bot_super_admin/lib/sales/origin.ts: mantener estas frases.
 export function juanWhatsAppMessage(context: JuanWhatsAppContext): string {
@@ -27,6 +28,10 @@ export function juanWhatsAppMessage(context: JuanWhatsAppContext): string {
       return "Hola Juan, quiero empezar con Nitro Complete sin mensualidad.";
     case "calculator":
       return `Hola Juan, quiero revisar mi consumo de Nitro Complete. En la calculadora indiqué ${Math.round(context.chats).toLocaleString("es-CO")} conversaciones al mes y ${Math.round(context.turns)} respuestas del asesor por conversación. Son estimaciones para elegir una recarga; quiero saber cómo empezar.`;
+    // «vengo de la guía» identifica el origen; el título dice cuál. Falta la
+    // regla equivalente en bot_super_admin/lib/sales/origin.ts (detectOrigin).
+    case "guide":
+      return `Hola Juan, vengo de la guía «${context.title.replace(/[\r\n«»]/g, " ").slice(0, 90)}» y quiero saber cómo Nitro Complete puede atender el WhatsApp de mi tienda.`;
   }
 }
 

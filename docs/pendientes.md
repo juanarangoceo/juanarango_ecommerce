@@ -1,7 +1,27 @@
 # Pendientes
 
-Estado vivo al 22 de octubre de 2026. Lo terminado se elimina de aquí y se
+Estado vivo al 30 de octubre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
+
+## Hub «Vender por WhatsApp» — 30 de octubre de 2026 (NIT-199)
+
+Infraestructura lista en local, sin commit ni despliegue: tipo `guia` en
+Sanity, rutas del hub, bloque Nitro con origen, JSON-LD, sitemap, `llms.txt`
+y «Guías» en el menú. Alcance decidido por Juan: solo guías; sin páginas por
+tipo de negocio ni de plantillas de mensajes; los posts del blog no se tocan.
+
+- Publicar (commit a `master`) cuando Juan lo pida.
+- Escribir y revisar la guía pilar y los primeros artículos (orden propuesto:
+  confirmar pedidos contraentrega, señales de que ya no das abasto, cobrar por
+  WhatsApp en Colombia, por qué bloquean el número). Validar antes las
+  búsquedas en Keyword Planner y contrastar con NitroBot lo que diga de Nitro.
+- Confirmar que el webhook de Sanity incluye el tipo `guia` y envía `hub`,
+  `tipo` y `slug`; si no, la página tarda hasta 1 h en aparecer.
+- Regla de origen en `bot_super_admin/lib/sales/origin.ts`: detectar
+  «vengo de la guía «…»» (otro repositorio, requiere aprobación).
+- Registrar `page_type` y `page_slug` como dimensiones personalizadas en GA4.
+- Tras publicar el pilar: enviarlo a inspección en Search Console y enlazar el
+  hub desde `/nitro-complete` y la home.
 
 ## Rediseño de activación y recargas — 22 de octubre de 2026
 

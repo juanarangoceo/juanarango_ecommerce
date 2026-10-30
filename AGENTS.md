@@ -139,6 +139,12 @@ Autenticación interna (endurecida el 25-09-2026):
 
 ## Estado actual — 25 de septiembre de 2026
 
+Actualización 30-oct-2026 (NIT-199): infraestructura del hub de guías
+`/guias/vender-por-whatsapp` (tipo `guia` en Sanity, JSON-LD, sitemap,
+`/llms.txt`, «Guías» en el menú) lista en local, sin commit. Solo guías: sin
+pSEO por negocio ni plantillas, y los posts del blog no se tocan. Falta el
+contenido; ver `docs/pendientes.md` y `docs/arquitectura.md`.
+
 Actualización 22-oct-2026: rediseño **publicado y verificado en producción** en esta web
 más `/home/juan/bot_super_admin`: activación inicial de Nitro Complete, recargas
 sin mensualidad, retiro de planes públicos, contacto empresarial al panel del

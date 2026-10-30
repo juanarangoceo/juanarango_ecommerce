@@ -9,9 +9,11 @@ import { juanWhatsAppHref, type JuanWhatsAppContext } from "@/lib/juan-whatsapp"
 type Props = Omit<ComponentProps<"a">, "href"> & {
   context: JuanWhatsAppContext;
   placement: string;
+  /** Página de contenido que originó el clic, para comparar qué guía trae contactos. */
+  page?: { type: string; slug: string };
 };
 
-export function WhatsAppSalesLink({ context, placement, onClick, children, ...props }: Props) {
+export function WhatsAppSalesLink({ context, placement, page, onClick, children, ...props }: Props) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
     if (event.defaultPrevented) return;
@@ -19,8 +21,9 @@ export function WhatsAppSalesLink({ context, placement, onClick, children, ...pr
     // Abrir WhatsApp no equivale a recibir un lead ni a cerrar una compra.
     // La analítica es opcional y nunca debe bloquear el contacto.
     try {
-      sendGAEvent("event", "whatsapp_click", { placement, interest: context.kind });
-      trackMeta("WhatsAppClick", { placement, interest: context.kind }, true);
+      const params = { placement, interest: context.kind, ...(page && { page_type: page.type, page_slug: page.slug }) };
+      sendGAEvent("event", "whatsapp_click", params);
+      trackMeta("WhatsAppClick", params, true);
     } catch { /* El enlace funciona aunque la analítica esté bloqueada. */ }
   }
 

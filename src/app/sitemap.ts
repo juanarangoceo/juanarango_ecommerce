@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { client } from "@/sanity/lib/client";
 import { normalizeTagSlug } from "@/lib/normalize-tag";
+import { guidePath } from "@/lib/guias/hubs";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,7 @@ type SanityContent = {
   comparisons: { slug: string; updatedAt: string }[];
   apps: { slug: string; updatedAt: string }[];
   forcedTags: { slug: string; updatedAt: string }[];
+  guides: { slug: string; hub: string; tipo: string; updatedAt: string }[];
 };
 
 async function getPseoRoutes(): Promise<MetadataRoute.Sitemap> {
@@ -55,6 +57,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     "apps": *[_type == "appTool" && defined(slug.current) && !(_id in path("drafts.**"))] {
       "slug": slug.current, "updatedAt": _updatedAt
+    },
+    "guides": *[_type == "guia" && defined(slug.current) && !(_id in path("drafts.**"))] {
+      "slug": slug.current, hub, tipo, "updatedAt": coalesce(revisadoEn, _updatedAt)
     }
   }`);
 
@@ -83,7 +88,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tagRoutes = [...tags].filter(([, value]) => value.count >= 2).map(([slug, value]) => ({ url: `${baseUrl}/blog/tags/${slug}`, lastModified: new Date(value.updatedAt), changeFrequency: "monthly" as const, priority: 0.45 }));
   const comparisonRoutes = content.comparisons.map((item) => ({ url: `${baseUrl}/comparar/${item.slug}`, lastModified: new Date(item.updatedAt), changeFrequency: "monthly" as const, priority: 0.6 }));
   const appRoutes = content.apps.map((item) => ({ url: `${baseUrl}/app-tools/${item.slug}`, lastModified: new Date(item.updatedAt), changeFrequency: "monthly" as const, priority: 0.55 }));
+  // El pilar vive en la raíz del hub (/guias/<hub>); si hubiera dos, una sola URL.
+  const guideRoutes = [...new Map(content.guides.map((guide) => {
+    const url = `${baseUrl}${guidePath(guide.hub, guide.slug, guide.tipo)}`;
+    return [url, { url, lastModified: new Date(guide.updatedAt), changeFrequency: "monthly" as const, priority: guide.tipo === "pilar" ? 0.85 : 0.75 }];
+  })).values()];
   const pseoRoutes = await getPseoRoutes();
 
-  return [...staticRoutes, ...categoryRoutes, ...postRoutes, ...tagRoutes, ...comparisonRoutes, ...appRoutes, ...pseoRoutes];
+  return [...staticRoutes, ...guideRoutes, ...categoryRoutes, ...postRoutes, ...tagRoutes, ...comparisonRoutes, ...appRoutes, ...pseoRoutes];
 }

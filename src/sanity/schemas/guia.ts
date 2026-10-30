@@ -1,0 +1,252 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { BookOpen } from "lucide-react";
+import { GUIDE_HUBS, GUIDE_GROUPS } from "../../lib/guias/hubs";
+
+// Guías de los hubs editoriales (/guias/<hub> y /guias/<hub>/<tema>). Son
+// independientes de `post`: no aparecen en /blog ni en su sitemap. Studio no
+// deja publicar mientras falte un campo obligatorio: esa es la regla de calidad.
+export default defineType({
+  name: "guia",
+  title: "Guías (hubs)",
+  type: "document",
+  icon: BookOpen as never,
+  groups: [
+    { name: "contenido", title: "Contenido", default: true },
+    { name: "seo", title: "SEO y agentes" },
+    { name: "conversion", title: "Nitro" },
+  ],
+  fields: [
+    defineField({
+      name: "hub",
+      title: "Hub",
+      type: "string",
+      group: "contenido",
+      options: { list: GUIDE_HUBS.map((hub) => ({ title: hub.title, value: hub.slug })), layout: "radio" },
+      initialValue: GUIDE_HUBS[0].slug,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "tipo",
+      title: "Tipo",
+      type: "string",
+      group: "contenido",
+      options: { list: [{ title: "Guía pilar (una por hub)", value: "pilar" }, { title: "Artículo del hub", value: "articulo" }], layout: "radio" },
+      initialValue: "articulo",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "grupo",
+      title: "Grupo",
+      type: "string",
+      group: "contenido",
+      options: { list: GUIDE_GROUPS.map((group) => ({ title: group.title, value: group.value })) },
+      hidden: ({ document }) => document?.tipo === "pilar",
+      validation: (Rule) => Rule.custom((value, { document }) => document?.tipo === "pilar" || value ? true : "Un artículo necesita grupo."),
+    }),
+    defineField({
+      name: "orden",
+      title: "Orden dentro del grupo",
+      type: "number",
+      group: "contenido",
+      initialValue: 10,
+    }),
+    defineField({
+      name: "title",
+      title: "Título",
+      type: "string",
+      group: "contenido",
+      validation: (Rule) => [Rule.required(), Rule.max(70).warning("Google suele cortar títulos de más de 60–70 caracteres.")],
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      group: "contenido",
+      description: "Define la URL: /guias/<hub>/<slug>. No cambiarlo después de publicar.",
+      options: { source: "title", maxLength: 80 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "respuestaCorta",
+      title: "Respuesta corta",
+      type: "text",
+      rows: 3,
+      group: "contenido",
+      description: "Responde la búsqueda en dos o tres frases. Se muestra arriba del artículo y es lo que más citan buscadores y agentes de IA.",
+      validation: (Rule) => [Rule.required(), Rule.min(80), Rule.max(360)],
+    }),
+    defineField({
+      name: "puntosClave",
+      title: "Lo esencial",
+      type: "array",
+      group: "contenido",
+      description: "Entre 3 y 6 ideas que el lector debe llevarse, una frase cada una.",
+      of: [defineArrayMember({ type: "string" })],
+      validation: (Rule) => Rule.required().min(3).max(6),
+    }),
+    defineField({
+      name: "body",
+      title: "Cuerpo",
+      type: "array",
+      group: "contenido",
+      description: "Usa Título 2 para cada sección: arma el índice del artículo.",
+      of: [
+        defineArrayMember({
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Título 2", value: "h2" },
+            { title: "Título 3", value: "h3" },
+            { title: "Cita", value: "blockquote" },
+          ],
+          lists: [
+            { title: "Viñetas", value: "bullet" },
+            { title: "Numerada", value: "number" },
+          ],
+          marks: {
+            decorators: [
+              { title: "Negrita", value: "strong" },
+              { title: "Cursiva", value: "em" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Enlace",
+                fields: [{ name: "href", type: "string", title: "URL o ruta interna (/guias/...)", validation: (Rule) => Rule.required() }],
+              },
+            ],
+          },
+        }),
+        defineArrayMember({
+          type: "image",
+          options: { hotspot: true },
+          fields: [{ name: "alt", type: "string", title: "Texto alternativo", validation: (Rule) => Rule.required() }],
+        }),
+        defineArrayMember({
+          type: "object",
+          name: "comparisonTable",
+          title: "Tabla",
+          fields: [
+            { name: "title", title: "Título", type: "string" },
+            { name: "headers", title: "Columnas", type: "array", of: [{ type: "string" }], validation: (Rule) => Rule.required().min(2) },
+            {
+              name: "rows",
+              title: "Filas",
+              type: "array",
+              of: [{ type: "object", fields: [{ name: "cells", title: "Celdas", type: "array", of: [{ type: "string" }] }, { name: "highlight", title: "Destacar fila", type: "boolean" }] }],
+              validation: (Rule) => Rule.required().min(1),
+            },
+          ],
+          preview: { select: { title: "title" }, prepare: ({ title }) => ({ title: title || "Tabla", subtitle: "Tabla" }) },
+        }),
+        defineArrayMember({
+          type: "object",
+          name: "conversacionEjemplo",
+          title: "Conversación de ejemplo",
+          description: "Siempre con una tienda ficticia. Se muestra marcada como ilustrativa.",
+          fields: [
+            { name: "tienda", title: "Tienda ficticia", type: "string", validation: (Rule) => Rule.required() },
+            {
+              name: "mensajes",
+              title: "Mensajes",
+              type: "array",
+              of: [{
+                type: "object",
+                fields: [
+                  { name: "autor", title: "Quién escribe", type: "string", options: { list: [{ title: "Comprador", value: "comprador" }, { title: "Tienda", value: "tienda" }], layout: "radio" }, validation: (Rule) => Rule.required() },
+                  { name: "texto", title: "Texto", type: "text", rows: 2, validation: (Rule) => Rule.required() },
+                ],
+                preview: { select: { title: "texto", subtitle: "autor" } },
+              }],
+              validation: (Rule) => Rule.required().min(2),
+            },
+          ],
+          preview: { select: { title: "tienda" }, prepare: ({ title }) => ({ title: title || "Conversación", subtitle: "Conversación ilustrativa" }) },
+        }),
+      ],
+      validation: (Rule) => Rule.required().min(4),
+    }),
+    defineField({
+      name: "faq",
+      title: "Preguntas frecuentes",
+      type: "array",
+      group: "contenido",
+      of: [defineArrayMember({
+        type: "object",
+        fields: [
+          { name: "question", title: "Pregunta", type: "string", validation: (Rule) => Rule.required() },
+          { name: "answer", title: "Respuesta", type: "text", rows: 3, validation: (Rule) => Rule.required() },
+        ],
+        preview: { select: { title: "question" } },
+      })],
+      validation: (Rule) => Rule.required().min(4).max(8),
+    }),
+    defineField({
+      name: "relacionados",
+      title: "Artículos relacionados",
+      type: "array",
+      group: "contenido",
+      description: "De 2 a 4 guías del mismo hub; idealmente del mismo grupo.",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "guia" }] })],
+      validation: (Rule) => Rule.max(4).unique(),
+    }),
+    defineField({
+      name: "busquedaObjetivo",
+      title: "Búsqueda objetivo",
+      type: "string",
+      group: "seo",
+      description: "La búsqueda principal que responde esta guía. Dos guías no deben compartirla.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "metaDescription",
+      title: "Meta descripción",
+      type: "text",
+      rows: 2,
+      group: "seo",
+      validation: (Rule) => [Rule.required(), Rule.max(160).warning("Google suele cortar después de 155–160 caracteres.")],
+    }),
+    defineField({
+      name: "publishedAt",
+      title: "Fecha de publicación",
+      type: "datetime",
+      group: "seo",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "revisadoEn",
+      title: "Revisada por última vez",
+      type: "date",
+      group: "seo",
+      description: "Actualízala cada vez que revises que la guía sigue vigente. Se muestra en la página.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "bloqueNitro",
+      title: "Bloque Nitro",
+      type: "object",
+      group: "conversion",
+      description: "Cierre del artículo: cómo resuelve Nitro Complete este problema. Solo capacidades verificadas en docs/producto/nitrobot.md.",
+      fields: [
+        { name: "titulo", title: "Titular", type: "string", validation: (Rule) => Rule.required().max(90) },
+        { name: "texto", title: "Texto", type: "text", rows: 3, validation: (Rule) => Rule.required().max(320) },
+      ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "verificado",
+      title: "Revisión editorial",
+      type: "boolean",
+      group: "conversion",
+      description: "Confirmo que los ejemplos usan tiendas ficticias, que no hay cifras ni clientes inventados, que no se nombran competidores y que lo dicho de Nitro está verificado.",
+      initialValue: false,
+      validation: (Rule) => Rule.custom((value) => value === true ? true : "Marca la revisión editorial antes de publicar."),
+    }),
+  ],
+  orderings: [{ title: "Hub y orden", name: "hubOrden", by: [{ field: "hub", direction: "asc" }, { field: "grupo", direction: "asc" }, { field: "orden", direction: "asc" }] }],
+  preview: {
+    select: { title: "title", tipo: "tipo", grupo: "grupo" },
+    prepare: ({ title, tipo, grupo }) => ({ title, subtitle: tipo === "pilar" ? "Guía pilar" : grupo ?? "Sin grupo" }),
+  },
+});

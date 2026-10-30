@@ -17,6 +17,7 @@ import {
 
 export const primaryNavigation = [
   { label: "Nitro Complete", href: "/nitro-complete", featured: true },
+  { label: "Guías", href: "/guias" },
   { label: "Asesoría", href: "/soluciones/nitro-commerce" },
   { label: "Blog", href: "/blog" },
   { label: "Sobre Juan", href: "/sobre-mi" },

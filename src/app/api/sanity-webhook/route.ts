@@ -67,6 +67,14 @@ export async function POST(request: Request) {
       }
     }
 
+    // Guías de los hubs: índice de /guias, raíz del hub (pilar e índice) y artículo.
+    const hub = body?.hub as string | undefined
+    if (docType === 'guia' && hub) {
+      const guidePaths = ['/guias', `/guias/${hub}`, ...(slug && body?.tipo !== 'pilar' ? [`/guias/${hub}/${slug}`] : []), '/llms.txt']
+      for (const path of guidePaths) revalidatePath(path)
+      revalidated.push(...guidePaths)
+    }
+
     // ── blogPdfConfig: revalidate the linked post immediately ──────────────
     // When activating/deactivating the PDF capture on a post, the post page
     // is revalidated so the email banner appears/disappears without any delay.
