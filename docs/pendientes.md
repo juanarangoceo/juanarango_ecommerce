@@ -16,6 +16,10 @@ se tocan.
   artículos nuevos salen al primer acceso, pero el índice del hub, `/guias` y
   `/llms.txt` tardan hasta 1 h.
 - Revisión de Juan de la guía pilar en su teléfono y su computador.
+- Cómo se crean las guías (decisión de Juan, 30-oct): Claude Code las redacta,
+  contrasta con NitroBot lo que diga de Nitro y las sube a Sanity como
+  borrador; Juan revisa y publica en Studio («Guías (hubs)»). El tipo `guia`
+  no tiene botón de IA; añadirlo (como el de `post`) queda aplazado.
 - Siguientes artículos (orden propuesto): confirmar pedidos contraentrega,
   señales de que ya no das abasto, cobrar por WhatsApp en Colombia, por qué
   bloquean el número. Validar antes las búsquedas en Keyword Planner y
