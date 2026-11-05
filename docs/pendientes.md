@@ -9,11 +9,10 @@ Primera campaña pagada de Nitro Complete (Advantage+ de ventas) con destino a
 `/nitro-complete`. Videos y textos en `nitro_video_studio`
 (`docs/campana-meta.md`, `out/deliver/meta/`).
 
-- **Bloquea la campaña:** `NEXT_PUBLIC_META_PIXEL_ID` no existe en ningún
-  entorno de Vercel (revisado el 05-nov), así que el pixel no carga en ninguna
-  página, ni siquiera en `(landing)`. Juan saca el ID del Administrador de
-  eventos de Meta; se crea en Vercel (Production) y hay que redesplegar, porque
-  la variable se incrusta en el build.
+- `NEXT_PUBLIC_META_PIXEL_ID` = `28893913893604458` creada en Vercel
+  (solo Production) el 05-nov; Meta responde con la configuración del pixel.
+  **Falta redesplegar producción**: la variable se incrusta en el build y el
+  despliegue actual se construyó sin ella, así que el pixel aún no carga.
 - Verificar en producción con «Probar eventos»: en `/nitro-complete`,
   `PageView` al cargar y `WhatsAppClick` + `Contact` al tocar «Quiero empezar».
 - Evento de conversión de la campaña: `Contact` (estándar). `Lead` queda para
@@ -228,7 +227,8 @@ Mantenimiento:
 
 1. Producir y aprobar el VSL de 55–70 segundos.
 2. Subir el MP4 a Cloudinary y configurar `NEXT_PUBLIC_NITROBOT_VSL_ID`.
-3. Configurar `NEXT_PUBLIC_META_PIXEL_ID` (ver «Campaña de Meta» arriba).
+3. `NEXT_PUBLIC_META_PIXEL_ID` ya existe en Production; falta el redespliegue
+   (ver «Campaña de Meta» arriba).
 4. La Política de Privacidad y la de Cookies ya nombran el Pixel de Meta
    (05-nov). Falta confirmar que cubren la captación del formulario de
    `/nitrobot/conectar`.
