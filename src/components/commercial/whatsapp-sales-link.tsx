@@ -24,6 +24,10 @@ export function WhatsAppSalesLink({ context, placement, page, onClick, children,
       const params = { placement, interest: context.kind, ...(page && { page_type: page.type, page_slug: page.slug }) };
       sendGAEvent("event", "whatsapp_click", params);
       trackMeta("WhatsAppClick", params, true);
+      // Evento estándar «Contact» (inicia contacto por chat): es el que puede
+      // optimizar una campaña de ventas de Meta sin conversión personalizada.
+      // No es «Lead»: abrir WhatsApp todavía no es un prospecto.
+      trackMeta("Contact", params);
     } catch { /* El enlace funciona aunque la analítica esté bloqueada. */ }
   }
 

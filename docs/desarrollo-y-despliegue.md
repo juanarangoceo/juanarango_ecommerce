@@ -51,7 +51,9 @@ HTTP, contenido renderizado y logs del servidor, dejando explícita la limitaci�
 ### Landing NitroBot
 
 - `NEXT_PUBLIC_NITROBOT_VSL_ID`: public ID del video en Cloudinary.
-- `NEXT_PUBLIC_META_PIXEL_ID`: identificador público del Pixel.
+- `NEXT_PUBLIC_META_PIXEL_ID`: identificador público del Pixel. Lo montan el
+  layout `(landing)` y `src/app/(main)/nitro-complete/layout.tsx` (destino de
+  la campaña de Meta). Se incrusta en el build: tras cambiarlo, redesplegar.
 - `NEXT_PUBLIC_NITROBOT_WA`: destino público de WhatsApp cuando aplique.
 - `ENABLE_NITROBOT_LEAD_SUBMISSIONS`: solo `true` habilita entregas reales.
 - `NITROBOT_API_URL`: origen HTTPS de la aplicación Nitro Bot.

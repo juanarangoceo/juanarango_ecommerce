@@ -1,7 +1,23 @@
 # Pendientes
 
-Estado vivo al 30 de octubre de 2026. Lo terminado se elimina de aquí y se
+Estado vivo al 5 de noviembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
+
+## Campaña de Meta a /nitro-complete — 5 de noviembre de 2026
+
+Primera campaña pagada de Nitro Complete (Advantage+ de ventas) con destino a
+`/nitro-complete`. Videos y textos en `nitro_video_studio`
+(`docs/campana-meta.md`, `out/deliver/meta/`).
+
+- **Bloquea la campaña:** `NEXT_PUBLIC_META_PIXEL_ID` no existe en ningún
+  entorno de Vercel (revisado el 05-nov), así que el pixel no carga en ninguna
+  página, ni siquiera en `(landing)`. Juan saca el ID del Administrador de
+  eventos de Meta; se crea en Vercel (Production) y hay que redesplegar, porque
+  la variable se incrusta en el build.
+- Verificar en producción con «Probar eventos»: en `/nitro-complete`,
+  `PageView` al cargar y `WhatsAppClick` + `Contact` al tocar «Quiero empezar».
+- Evento de conversión de la campaña: `Contact` (estándar). `Lead` queda para
+  el formulario de `/nitrobot/conectar`.
 
 ## Hub «Vender por WhatsApp» — 30 de octubre de 2026 (NIT-199)
 
@@ -212,9 +228,10 @@ Mantenimiento:
 
 1. Producir y aprobar el VSL de 55–70 segundos.
 2. Subir el MP4 a Cloudinary y configurar `NEXT_PUBLIC_NITROBOT_VSL_ID`.
-3. Configurar `NEXT_PUBLIC_META_PIXEL_ID`.
-4. Confirmar que la Política de Privacidad cubra captación y contacto desde
-   campañas de Meta.
+3. Configurar `NEXT_PUBLIC_META_PIXEL_ID` (ver «Campaña de Meta» arriba).
+4. La Política de Privacidad y la de Cookies ya nombran el Pixel de Meta
+   (05-nov). Falta confirmar que cubren la captación del formulario de
+   `/nitrobot/conectar`.
 5. Revisar el diff completo de `codex/reconstruccion-web`, crear un commit
    coherente y obtener un preview mediante la integración Git de Vercel.
 6. En el preview, comprobar `/nitrobot`, `/nitrobot/conectar` y `/nitrobot/vsl`;

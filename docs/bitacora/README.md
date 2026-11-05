@@ -11,4 +11,6 @@ archivos, validaciones y el punto de cierre; los pendientes vigentes se mantiene
 - [`2026-10.md`](2026-10.md): entrada por recarga (planificador por uso),
   planes con el primer mes y la asesoría incluidos en la implementación, y
   correos del dominio.
+- [`2026-11.md`](2026-11.md): Pixel de Meta en `/nitro-complete` para la
+  primera campaña de Nitro Complete.
 - [`2026-06.md`](2026-06.md): estado heredado de la antigua guía de Claude.

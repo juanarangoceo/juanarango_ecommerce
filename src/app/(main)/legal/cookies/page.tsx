@@ -13,6 +13,7 @@ export default function CookiesPage() {
   return (
     <LegalShell
       title="Política de Cookies"
+      updated="5 de noviembre de 2026"
       intro="Usamos cookies para que el sitio funcione bien y para entender cómo se usa. Aquí te contamos cuáles, para qué y cómo controlarlas."
     >
       <h2>1. Qué son las cookies</h2>
@@ -35,6 +36,13 @@ export default function CookiesPage() {
         sitio: qué páginas se visitan más, de dónde llega el tráfico y cómo mejorar el contenido.
         Usamos <strong>Google Analytics</strong> para esta finalidad.
       </p>
+      <h3>Cookies de publicidad</h3>
+      <p>
+        En las páginas a las que llegan nuestros anuncios usamos el <strong>Pixel de Meta</strong>
+        para medir visitas y clics para escribirnos por WhatsApp, saber qué anuncios funcionan y
+        mostrarlos a personas con intereses parecidos. Puedes bloquearlas desde tu navegador o en la
+        configuración de anuncios de tu cuenta de Facebook o Instagram.
+      </p>
       <h3>Cookies de funcionalidad</h3>
       <p>
         Permiten recordar preferencias (como si ya cerraste un aviso o un formulario) para no
@@ -43,8 +51,8 @@ export default function CookiesPage() {
 
       <h2>3. Cookies de terceros</h2>
       <p>
-        Algunos servicios externos que integramos (como la analítica de Google o vídeos incrustados de
-        YouTube) pueden instalar sus propias cookies. Estas se rigen por las políticas de privacidad de
+        Algunos servicios externos que integramos (como la analítica de Google, el Pixel de Meta o
+        vídeos incrustados de YouTube) pueden instalar sus propias cookies. Estas se rigen por las políticas de privacidad de
         cada proveedor.
       </p>
 

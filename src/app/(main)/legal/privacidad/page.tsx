@@ -14,7 +14,7 @@ export default function PrivacidadPage() {
     <LegalShell
       title="Política de Privacidad"
       intro="Tu privacidad nos importa. Aquí te explicamos, sin letra pequeña, qué datos recopilamos, para qué los usamos y qué derechos tienes sobre ellos."
-      updated="1 de septiembre de 2026"
+      updated="5 de noviembre de 2026"
     >
       <h2>1. Responsable del tratamiento</h2>
       <p>
@@ -87,6 +87,11 @@ export default function PrivacidadPage() {
         <li><strong>Sanity</strong> — gestión de contenidos.</li>
         <li><strong>Resend</strong> — envío de correos electrónicos transaccionales y boletines.</li>
         <li><strong>Google Analytics</strong> — analítica de uso del sitio de forma agregada.</li>
+        <li>
+          <strong>Meta Pixel</strong> (Meta Platforms) — en las páginas de campañas pagadas, mide
+          visitas y clics para escribirnos por WhatsApp, para saber qué anuncios funcionan y
+          mostrarlos a personas con intereses parecidos.
+        </li>
         <li>
           Modelos de inteligencia artificial (<strong>OpenAI</strong> y <strong>Google Gemini</strong>)
           para funciones de contenido y asistencia, sin usar tus datos personales para entrenar modelos.
