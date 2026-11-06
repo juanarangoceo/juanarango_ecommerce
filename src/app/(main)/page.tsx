@@ -137,14 +137,14 @@ export default function HomePage() {
       <section id="precios" className="px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Empieza por {nitroCompleteMonthly.price} al mes.<br /><span className="text-primary">Recarga si vendes más.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Preparamos tu asesor con tu negocio, con o sin tienda online. Pagas el mes cuando quieres seguir, sin contrato, y lo que recargas no vence.</p>
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Actívalo por {nitroCompleteMonthly.price}.<br /><span className="text-primary">Con el primer mes incluido.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-base leading-7 text-white/58 lg:mx-0 lg:justify-self-end lg:text-left">Sin costo de instalación: preparamos tu asesor con tu negocio, con o sin tienda online. Después pagas {nitroCompleteMonthly.price} al mes, solo si quieres seguir, y si vendes más recargas; lo recargado no vence.</p>
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-2">
             <Link href="/nitro-complete#precio" className="group flex flex-col rounded-3xl bg-ink p-7 ring-1 ring-primary/35 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:ring-primary sm:p-9">
               <span className="w-fit rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold text-ink">La forma más fácil de empezar</span>
               <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">Nitro Complete</h3>
-              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompleteMonthly.price}</span><span className="text-sm text-white/50">COP al mes · IVA incluido</span></p>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-4xl font-extrabold tracking-tight tabular-nums text-white">{nitroCompleteMonthly.price}</span><span className="text-sm text-white/50">COP · activación y primer mes · luego igual cada mes · IVA incluido</span></p>
               <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6 text-sm text-white/70">
                 {[
                   `Tu número de WhatsApp, ${nitroCompleteMonthly.turns} turnos (≈${nitroCompleteMonthlyConversations} conversaciones) y ${nitroCompleteMonthly.templates} plantillas cada mes`,

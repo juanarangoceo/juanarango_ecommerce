@@ -1,24 +1,26 @@
-import { CalendarCheck, MessageCircle, Store } from "lucide-react";
+import { MessageCircle, Rocket, Wallet } from "lucide-react";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { nitroCompleteMonthly as plan } from "@/lib/commercial-content";
 
-// Lo primero que se entiende después del hero: empezar es corto y no exige
-// una tienda online. Tres pasos reales del alta (NIT-209), sin promesas.
+// Lo primero que se entiende después del hero: arrancar cuesta poco y es
+// corto (NIT-209). Pensado para quien vende por WhatsApp con poco
+// presupuesto: primero conversa sin compromiso, luego activa y en menos de
+// 24 horas atiende. Es el orden real del alta.
 const steps = [
   {
     icon: MessageCircle,
-    title: "Nos escribes",
-    text: "Cuéntanos qué vendes. Mi asistente te resuelve las dudas y te manda el enlace de pago por el mismo chat.",
+    title: "Nos escribes por WhatsApp",
+    text: "Nos cuentas qué vendes y cómo te llegan los pedidos. Te resolvemos las dudas sin compromiso.",
   },
   {
-    icon: Store,
-    title: `Pagas ${plan.price} y nos cuentas de tu negocio`,
-    text: "Tus productos con foto y precio, cómo cobras y a dónde envías. Lo hacemos conversando; no necesitas página web.",
+    icon: Wallet,
+    title: `Activas con ${plan.price}`,
+    text: "Pagas por Nequi, PSE o Bancolombia desde el mismo chat. Incluye tu primer mes. Sin contrato y sin cobros automáticos.",
   },
   {
-    icon: CalendarCheck,
+    icon: Rocket,
     title: `En menos de ${plan.installHours} horas, tu asesor atiende`,
-    text: "Te damos un número de WhatsApp listo para compartir. Tu primer mes empieza ese día, no el día que pagas.",
+    text: "Nos dices cómo cobras y a dónde envías, subes tus productos y te entregamos tu número de WhatsApp listo. Tu mes empieza ese día.",
   },
 ] as const;
 
@@ -28,10 +30,10 @@ export function NitroEasyStart() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
           <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">
-            Empezar toma un día.<br /><span className="text-nitro-text">Y tres pasos.</span>
+            Arrancas con poco.<br /><span className="text-nitro-text">Y sin enredos.</span>
           </h2>
           <p className="mx-auto max-w-lg text-pretty text-lg leading-8 text-ink/75 lg:mx-0 lg:justify-self-end">
-            No necesitas saber de tecnología ni tener tienda online. Si vendes productos por WhatsApp, tu asesor puede empezar a atender esta semana.
+            No necesitas página web, ni saber de tecnología, ni contratar a nadie. Si vendes productos por WhatsApp, así de simple es empezar:
           </p>
         </div>
         <ol className="mt-10 grid gap-3 md:grid-cols-3">

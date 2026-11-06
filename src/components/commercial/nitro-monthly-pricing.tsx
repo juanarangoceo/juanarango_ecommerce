@@ -9,13 +9,15 @@ import {
   nitroCompleteUnitPacks,
 } from "@/lib/commercial-content";
 
-// Precio de Nitro Complete para clientes nuevos (NIT-209). Un solo precio de
-// entrada y las recargas aparte, separadas visualmente: lo del mes vence, lo
-// recargado no. Condiciones en un desplegable, no en notas sueltas.
+// Precio de Nitro Complete para clientes nuevos (NIT-209). $49.900 es a la vez
+// la activación (con el primer mes incluido, sin instalación aparte) y la
+// mensualidad. Las recargas, aparte y separadas visualmente: lo del mes vence,
+// lo recargado no. Condiciones en un desplegable, no en notas sueltas.
 const includes = [
+  ["Instalación y configuración", "Armamos tu asesor contigo por WhatsApp: tono, envíos y formas de pago. No se cobra aparte."],
   ["Tu número de WhatsApp", "Gestionado por Nitro y listo para compartir en tus redes, anuncios y tienda."],
-  [`${plan.turns} turnos cada mes`, `Alcanzan para unas ${conversations} conversaciones de venta. Un turno es cada respuesta que envía tu asesor.`],
-  [`${plan.templates} envíos de plantilla`, "Para confirmar pedidos y avisar envíos fuera de la ventana de 24 horas de WhatsApp, según aprobación de Meta."],
+  [`${plan.turns} turnos al mes`, `Alcanzan para unas ${conversations} conversaciones de venta. Un turno es cada respuesta que envía tu asesor.`],
+  [`${plan.templates} envíos de plantilla al mes`, "Para confirmar pedidos y avisar envíos fuera de la ventana de 24 horas de WhatsApp, según aprobación de Meta."],
   ["Tu asesor y tu panel", "Catálogo real, conversaciones, pedidos y los casos que necesita atender tu equipo."],
 ] as const;
 
@@ -39,29 +41,31 @@ export function NitroMonthlyPricing() {
     <section id="precio" className="scroll-mt-24 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">Un solo precio para empezar.<br /><span className="text-primary">{plan.price} al mes.</span></h2>
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Sin contrato y sin cobro automático: pagas el mes cuando quieres seguir. Si un mes vendes más, recargas, y <strong className="font-semibold text-white">lo que recargas no vence.</strong></p>
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">Activas con {plan.price}.<br /><span className="text-primary">Y sigues con {plan.price} al mes.</span></h2>
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Un solo valor para todo. El primer pago activa tu asesor <strong className="font-semibold text-white">y ya incluye tu primer mes</strong>: no hay costo de instalación. Después pagas el mismo valor cada mes, solo si quieres seguir.</p>
         </div>
 
         <article className="mt-10 overflow-hidden rounded-[2rem] border border-primary/35 bg-superficie-nitro">
           <div className="grid lg:grid-cols-[.9fr_1.1fr]">
             <div className="p-7 sm:p-10">
               <p className="text-base font-semibold text-white">Nitro Complete</p>
-              <p className="mt-6 flex items-baseline gap-2"><span className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">{plan.price}</span><span className="text-lg text-white/65">/ mes</span></p>
-              <p className="mt-2 text-sm text-white/65">COP · IVA incluido</p>
-              <p className="mt-6 max-w-sm text-base leading-7 text-white/75">Te instalamos el asesor con tu catálogo y tu forma de vender. Tu primer mes empieza cuando ya está atendiendo.</p>
-              <WhatsAppJuanButton context={{ kind: "kit" }} placement="product_activation" className="mt-7 w-full sm:w-auto">Empezar mi primer mes</WhatsAppJuanButton>
+              <p className="mt-6 text-sm font-semibold text-primary">Activación con primer mes incluido</p>
+              <p className="mt-1 flex items-baseline gap-2"><span className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">{plan.price}</span></p>
+              <p className="mt-3 text-base text-white/80">Después, <strong className="font-semibold text-white">{plan.price} al mes</strong>. Sin contrato.</p>
+              <p className="mt-1 text-sm text-white/65">COP · IVA incluido · Nequi, PSE o Bancolombia</p>
+              <p className="mt-6 max-w-sm text-base leading-7 text-white/75">Tu primer mes empieza el día que tu asesor queda atendiendo, no el día que pagas: no pierdes días mientras lo preparamos.</p>
+              <WhatsAppJuanButton context={{ kind: "kit" }} placement="product_activation" className="mt-7 w-full sm:w-auto">Activar mi asesor</WhatsAppJuanButton>
               <p className="mt-4 text-sm leading-6 text-white/65">Te enviamos el enlace de pago por WhatsApp.</p>
             </div>
             <div className="border-t border-white/10 bg-white/[0.035] p-7 sm:p-10 lg:border-l lg:border-t-0">
-              <h3 className="text-xl font-semibold text-white">Cada mes incluye</h3>
+              <h3 className="text-xl font-semibold text-white">Qué incluye</h3>
               <ul className="mt-6 space-y-5">
                 {includes.map(([title, text]) => <li key={title} className="flex gap-3"><Check className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" /><div><h4 className="text-base font-semibold text-white">{title}</h4><p className="mt-1 text-sm leading-6 text-white/70">{text}</p></div></li>)}
               </ul>
             </div>
           </div>
           <details className="group border-t border-white/10">
-            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-7 text-sm font-semibold text-white sm:px-10 [&::-webkit-details-marker]:hidden">Cómo funciona la mensualidad<ChevronDown className="size-4 transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" /></summary>
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-7 text-sm font-semibold text-white sm:px-10 [&::-webkit-details-marker]:hidden">Cómo funcionan el pago y la renovación<ChevronDown className="size-4 transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" /></summary>
             <ul className="space-y-3 px-7 pb-7 sm:px-10">
               {conditions.map((c) => <li key={c} className="flex gap-3 text-sm leading-6 text-white/75"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-white/50" aria-hidden="true" />{c}</li>)}
             </ul>

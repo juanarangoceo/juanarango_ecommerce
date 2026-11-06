@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
-import { AudioLines, Mic, PhoneIncoming } from "lucide-react";
+import { AudioLines, AudioWaveform, Mic, PhoneIncoming } from "lucide-react";
 
 const voices = [
-  { id: "sara", name: "Sara", description: "Voz femenina colombiana" },
-  { id: "carlos", name: "Carlos", description: "Voz masculina colombiana" },
+  { id: "sara", name: "Sara", description: "Voz femenina colombiana", icon: AudioWaveform, tile: "bg-primary text-ink" },
+  { id: "carlos", name: "Carlos", description: "Voz masculina colombiana", icon: AudioLines, tile: "bg-ink text-primary" },
 ] as const;
 
 export function NitroVoiceShowcase() {
@@ -29,7 +28,7 @@ export function NitroVoiceShowcase() {
               {voices.map((voice, index) => (
                 <div key={voice.id}>
                   <div className="flex items-center gap-3">
-                    <Image src={`/nitro/voces/${voice.id}.webp`} alt="" width={64} height={64} className="size-16 rounded-2xl object-cover" />
+                    <span className={`flex size-16 shrink-0 items-center justify-center rounded-2xl ${voice.tile}`}><voice.icon className="size-7" aria-hidden="true" /></span>
                     <div><p id={`voice-${voice.id}`} className="text-lg font-semibold">{voice.name}</p><p className="mt-0.5 text-xs leading-5 text-ink/65">{voice.description}</p></div>
                   </div>
                   <audio

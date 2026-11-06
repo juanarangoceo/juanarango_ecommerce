@@ -55,7 +55,7 @@ const GUIDE: Record<NodeId, GuideNode> = {
     choices: [{ label: "¿Cuánto cuesta?", next: "plans" }],
   },
   plans: {
-    bot: "Empiezas con **$49.900 COP al mes**, sin contrato: número gestionado por Nitro, 200 turnos y 50 plantillas cada mes, con o sin tienda online. Si vendes más, **recargas, y lo recargado no vence**. Mi asistente te acompaña por WhatsApp.",
+    bot: "Activas tu asesor con **$49.900 COP, con el primer mes incluido**, y después pagas lo mismo cada mes, sin contrato: número gestionado por Nitro, 200 turnos y 50 plantillas cada mes, con o sin tienda online. Si vendes más, **recargas, y lo recargado no vence**. Mi asistente te acompaña por WhatsApp.",
     links: [
       { label: "Comparar por WhatsApp", href: "whatsapp", primary: true, salesContext: { kind: "evaluation" } },
       { label: "Ver precio y recargas", href: "/nitro-complete#precio" },

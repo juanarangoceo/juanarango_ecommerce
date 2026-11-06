@@ -4,8 +4,8 @@ import { SALES_EVALUATION_HREF } from "@/lib/juan-whatsapp";
 import { nitroCompleteMonthly as plan } from "@/lib/commercial-content";
 
 const steps = [
-  ["Cuéntanos qué vendes", "Con Shopify o con tus productos como los tengas: Excel, fotos o una lista."],
-  ["Paga tu primer mes", `${plan.price} por el chat, con Nequi, PSE o Bancolombia. Sin contrato.`],
+  ["Cuéntanos qué vendes", "Con Shopify o sin tienda online: tus productos los subes tú a Nitro en minutos."],
+  ["Activa tu asesor", `${plan.price} por el chat, con Nequi, PSE o Bancolombia. Incluye tu primer mes. Sin contrato.`],
   ["Tu asesor atiende", `En menos de ${plan.installHours} horas desde el pago y la información de tu negocio. Ese día empieza tu mes.`],
 ] as const;
 
