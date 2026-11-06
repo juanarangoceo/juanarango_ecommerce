@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: `Nitro Complete | Tu WhatsApp vende solo. Actívalo por ${plan.price}`,
-    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Con Shopify o con tus productos cargados en Nitro.",
+    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Con Shopify o con tus productos subidos a Nitro.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
     type: "website",

@@ -36,7 +36,7 @@ export const nitroCompleteModules = [
     text: "Responde, recomienda productos, cotiza con precios y envíos calculados por el sistema, toma los datos de entrega y deja el pedido creado.",
     icon: MessageCircle,
     how: "Consulta producto, precio y envío en tu catálogo antes de responder, y el total lo calcula el sistema. Toma nombre, dirección y ciudad, y crea el pedido; si tienes Shopify, queda creado en tu tienda.",
-    needs: "Tu catálogo en Shopify o cargado en Nitro, y definir con nosotros el tono del asesor y hasta dónde puede negociar.",
+    needs: "Tu catálogo en Shopify o subido por ti a Nitro, y definir con nosotros el tono del asesor y hasta dónde puede negociar.",
   },
   {
     key: "confirmacion",
