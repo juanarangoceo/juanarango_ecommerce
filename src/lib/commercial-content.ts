@@ -98,15 +98,21 @@ export function formatCop(value: number) {
   return `$${copFormat.format(Math.round(value))}`;
 }
 
-// Modalidad Prepago (NIT-80, decisión de Juan del 2026-10-01). Fuente de verdad:
-// nitro_bot, `platform_settings.outbound_pricing` (starter_kit y turn_packs,
-// migración 20261001200100). Si cambian allá, se cambian aquí.
-export const nitroCompleteStarterKit = {
-  price: "$199.000",
-  units: 500,
-  templates: 100,
-  installHours: 48,
+// Entrada de Nitro Complete para clientes nuevos (NIT-209, decisión de Juan del
+// 2026-11-06). Fuente de verdad: nitro_bot, `lib/monthly-plans/base.ts` y
+// `nitro_subscription_private.plan_capacity('nitro_base')` (migración
+// 20261106170000). El mes empieza el día que el asesor queda atendiendo; sin
+// renovar, el asesor se pausa aunque haya recargas. Reemplaza al kit de $199.000.
+export const nitroCompleteMonthly = {
+  price: "$49.900",
+  priceCop: 49_900,
+  turns: 200,
+  templates: 50,
+  installHours: 24,
 } as const;
+
+/** Conversaciones de venta de referencia que caben en el mes. */
+export const nitroCompleteMonthlyConversations = Math.floor(nitroCompleteMonthly.turns / UNITS_PER_CONVERSATION);
 
 export const nitroCompleteUnitPacks = [
   { units: 100, priceCop: 16_000 },

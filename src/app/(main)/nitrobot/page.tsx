@@ -24,7 +24,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { nitroCompleteStarterKit } from "@/lib/commercial-content";
+import { nitroCompleteMonthly } from "@/lib/commercial-content";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
 import { WaTicks } from "@/components/commercial/whatsapp-ui";
 import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
@@ -72,7 +72,7 @@ const faqs = [
   ],
   [
     "¿Cuánto cuesta empezar?",
-    `La activación de Nitro Complete cuesta ${nitroCompleteStarterKit.price} COP una sola vez, con instalación, ${nitroCompleteStarterKit.units} turnos y ${nitroCompleteStarterKit.templates} plantillas. Después recargas cuando lo necesites, sin mensualidad. El saldo comprado no vence.`,
+    `Nitro Complete cuesta ${nitroCompleteMonthly.price} COP al mes, sin contrato ni cobro automático. Cada mes incluye número gestionado por Nitro, ${nitroCompleteMonthly.turns} turnos y ${nitroCompleteMonthly.templates} plantillas. Si vendes más, recargas; lo recargado no vence.`,
   ],
 ];
 
@@ -389,8 +389,8 @@ export default function NitroBotPage() {
 
       <section id="recarga" className="px-5 py-16 sm:px-6 lg:py-24" data-nitro-orb="pricing">
         <div className="mx-auto grid max-w-6xl gap-8 rounded-[2rem] border border-primary/30 bg-superficie-nitro p-7 sm:p-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-          <div><h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Tu asesor empieza con una activación.<br /><span className="text-primary">Después, recargas.</span></h2><p className="mt-5 text-lg leading-8 text-white/75">{nitroCompleteStarterKit.price} COP, una sola vez. Incluye instalación, número gestionado por Nitro, {nitroCompleteStarterKit.units} turnos y {nitroCompleteStarterKit.templates} plantillas. Sin mensualidad.</p></div>
-          <div className="flex flex-col gap-4"><WhatsAppJuanButton context={{ kind: "kit" }} placement="organic_activation">Activar mi asesor</WhatsAppJuanButton><Link href="/nitro-complete#recarga" className="py-2 text-center text-sm font-semibold text-white underline underline-offset-4 hover:text-primary">Ver qué incluye y precios de recargas</Link><Link href="/nitro-complete#empresas" className="py-2 text-center text-sm font-semibold text-white/75 underline underline-offset-4 hover:text-primary">Contacto para empresas con mayor capacidad</Link></div>
+          <div><h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Tu asesor empieza por {nitroCompleteMonthly.price} al mes.<br /><span className="text-primary">Si vendes más, recargas.</span></h2><p className="mt-5 text-lg leading-8 text-white/75">Incluye instalación, número gestionado por Nitro, {nitroCompleteMonthly.turns} turnos y {nitroCompleteMonthly.templates} plantillas cada mes. Sin contrato; tu primer mes empieza cuando tu asesor ya atiende.</p></div>
+          <div className="flex flex-col gap-4"><WhatsAppJuanButton context={{ kind: "kit" }} placement="organic_activation">Empezar mi primer mes</WhatsAppJuanButton><Link href="/nitro-complete#precio" className="py-2 text-center text-sm font-semibold text-white underline underline-offset-4 hover:text-primary">Ver qué incluye y precios de recargas</Link><Link href="/nitro-complete#empresas" className="py-2 text-center text-sm font-semibold text-white/75 underline underline-offset-4 hover:text-primary">Contacto para empresas con mayor capacidad</Link></div>
         </div>
       </section>
 

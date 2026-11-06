@@ -3,6 +3,16 @@
 Estado vivo al 5 de noviembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
+## Rediseño de /nitro-complete por la mensualidad de $49.900 — 6 de noviembre de 2026
+
+Local, sin commit ni publicación. Hero con el precio de entrada, «Empezar toma
+un día» (3 pasos), «Con Shopify o sin él», precio mensual con recargas
+aparte, calculadora «¿Te alcanza el mes?», preguntas nuevas y ritmo claro /
+oscuro alternado. También portada, `/nitrobot`, `llms.txt`, chat del sitio y
+mensajes prellenados de WhatsApp (el vendedor reconoce los nuevos y los
+viejos). **Publicar solo cuando NitroBot tenga `entry_plan` encendido.**
+Capturas en el scratchpad de la sesión (no versionadas).
+
 ## Campaña de Meta a /nitro-complete — 5 de noviembre de 2026
 
 Primera campaña pagada de Nitro Complete (Advantage+ de ventas) con destino a

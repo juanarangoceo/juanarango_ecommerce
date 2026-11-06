@@ -97,7 +97,26 @@ Apoyo:
   Como alternativa comprobada, el negocio puede administrar su catálogo en
   NitroBot y gestionar los pedidos desde el panel.
 
-## Activación y recargas (22-oct-2026)
+## Mensualidad de entrada: $49.900 al mes (NIT-209, 6-nov-2026)
+
+Reemplaza a la activación de $199.000 para **clientes nuevos**. Fuente de
+verdad en nitro_bot: `lib/monthly-plans/base.ts`, migración
+`20261106170000_nitro_base_entry_plan.sql` y
+`docs/modules/nitro-complete-mensual.md`.
+
+- $49.900 COP al mes, IVA incluido, pagado con Confío; sin contrato ni cobro
+  automático. Cada mes: número gestionado por Nitro, 200 turnos (≈66
+  conversaciones con 3 turnos de referencia) y 50 plantillas.
+- El primer mes empieza el día que el asesor queda atendiendo. Instalación en
+  menos de 24 h desde pago e información del negocio (promesa comercial del
+  vendedor; el reloj interno de NitroBot para alertas sigue en 48 h).
+- Lo del mes vence y se usa antes que las recargas; las recargas no vencen.
+  Sin renovar, el asesor se pausa aunque haya recargas; el panel sigue abierto.
+- Funciona con Shopify o con catálogo cargado en Nitro (manual o CSV).
+- La web solo debe publicarse con `platform_settings.entry_plan` encendido en
+  NitroBot: si no, la web anunciaría $49.900 y el vendedor cobraría el kit.
+
+## Activación y recargas (22-oct-2026) — reemplazada el 6-nov por la mensualidad
 
 Decisión de Juan: la oferta pública se concentra en una activación inicial y
 recargas posteriores. Se retiran los planes de la web y de la recomendación

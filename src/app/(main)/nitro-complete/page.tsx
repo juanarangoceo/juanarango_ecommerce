@@ -10,9 +10,10 @@ import { NitroHero } from "@/components/nitro/nitro-hero";
 import { IntegrationLogoStrip } from "@/components/commercial/integration-logo-strip";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
-import { ShopifyLogo, WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { nitroCompleteStarterKit, nitroCompleteUnitPacks, formatCop } from "@/lib/commercial-content";
-import { PrepaidPricing } from "@/components/commercial/prepaid-pricing";
+import { nitroCompleteMonthly as plan, nitroCompleteMonthlyConversations, nitroCompleteUnitPacks, formatCop } from "@/lib/commercial-content";
+import { NitroMonthlyPricing } from "@/components/commercial/nitro-monthly-pricing";
+import { NitroEasyStart } from "@/components/commercial/nitro-easy-start";
+import { NitroCatalogPaths } from "@/components/commercial/nitro-catalog-paths";
 import { EnterpriseContact } from "@/components/commercial/enterprise-contact";
 import { CONTACT_EMAILS } from "@/lib/contact-emails";
 import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
@@ -27,12 +28,12 @@ const SITE_URL = "https://www.juanarangoecommerce.com";
 export const metadata: Metadata = {
   title: "Nitro Complete | WhatsApp con IA, voz y pagos en Colombia",
   description:
-    "Vende por WhatsApp con texto, voz, pagos con Confío y seguimiento de pedidos. Activa Nitro Complete en Colombia y recarga en pesos, sin mensualidad.",
+    `Un asesor que vende por tu WhatsApp con tu catálogo real, con o sin Shopify. Nitro Complete desde ${plan.price} al mes en Colombia, listo en menos de ${plan.installHours} horas.`,
   alternates: { canonical: `${SITE_URL}/nitro-complete` },
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
-    title: "Nitro Complete | Tu WhatsApp vende con voz, pagos y seguimiento",
-    description: "Texto, audios y llamadas para atender a tus clientes. Pagos con Confío y seguimiento de pedidos, con conexiones y saldos según la función.",
+    title: `Nitro Complete | Tu WhatsApp vende solo, desde ${plan.price} al mes`,
+    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Con Shopify o con tus productos cargados en Nitro.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
     type: "website",
@@ -41,17 +42,17 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-  ["¿Qué pago para empezar?", `La activación de Nitro Complete cuesta ${nitroCompleteStarterKit.price} COP una sola vez. Incluye número gestionado por Nitro, instalación, ${nitroCompleteStarterKit.units} turnos y ${nitroCompleteStarterKit.templates} plantillas. Después recargas el saldo que necesites, sin mensualidad.`],
-  ["¿Qué necesito para la activación?", "Tu catálogo con fotos, precios y descripciones, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Puedes conectar Shopify o cargar el catálogo en Nitro. Te acompañamos por WhatsApp para crear tu cuenta y completar la ficha."],
-  ["¿Cuándo queda listo?", `La instalación se realiza en máximo ${nitroCompleteStarterKit.installHours} horas desde que estén completos el pago y la ficha. Crear la cuenta por sí solo no activa el asesor.`],
-  ["¿Puedo usar mi número actual?", "La activación incluye un número gestionado por Nitro. Si quieres usar el que ya tienes, revisamos su situación y el proceso con Meta antes de que pagues; no todos los números tienen la misma conexión."],
-  ["¿Cómo funcionan las recargas?", `Después de la activación, agregas saldo desde tu panel cuando lo necesites. Las recargas de turnos empiezan en ${formatCop(nitroCompleteUnitPacks[0].priceCop)}. El saldo comprado no vence y no hay mensualidad ni fecha de corte. Las plantillas tienen su propio saldo. Las llamadas y el seguimiento con 17TRACK también se habilitan y recargan por separado.`],
-  ["¿Qué es un turno y qué es una plantilla?", "Un turno es cada respuesta que envía tu asesor. Una conversación puede necesitar varios turnos. Las plantillas son mensajes aprobados por Meta, como confirmaciones o avisos de envío, y se cobran de su saldo separado. La calculadora estima turnos, no conversaciones garantizadas."],
+  ["¿Cuánto cuesta empezar?", `${plan.price} COP al mes, IVA incluido. Cada mes trae tu número de WhatsApp gestionado por Nitro, ${plan.turns} turnos (unas ${nitroCompleteMonthlyConversations} conversaciones de venta) y ${plan.templates} envíos de plantilla. No hay contrato ni cobro automático: pagas el mes cuando quieres seguir.`],
+  ["¿Necesito Shopify o una tienda online?", "No. Si no tienes tienda, nos mandas tus productos como los tengas y quedan cargados en Nitro; después los cambias tú desde tu panel, uno a uno o por CSV, y los pedidos quedan ahí. Si tienes Shopify, lo conectas y productos y pedidos se sincronizan con tu tienda."],
+  ["¿Qué necesito para empezar?", "Productos con foto, precio y descripción, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Lo completamos contigo por WhatsApp."],
+  ["¿Cuándo queda listo y cuándo empieza mi mes?", `La instalación toma menos de ${plan.installHours} horas desde que estén el pago y la información de tu negocio. Tu primer mes empieza el día que tu asesor queda atendiendo, no el día que pagas.`],
+  ["¿Qué pasa si se me acaban los turnos del mes?", `Recargas desde tu panel cuando lo necesites; las recargas empiezan en ${formatCop(nitroCompleteUnitPacks[0].priceCop)}. Se usan después de lo incluido en el mes y no vencen. Existe un crédito temporal de 24 horas mientras recargas; lo consumido se descuenta de la siguiente recarga.`],
+  ["¿Y si no renuevo el mes?", "Tu asesor se pausa, aunque tengas recargas, y tus clientes dejan de recibir respuesta automática. Tu panel, tus datos y lo que recargaste se conservan. Cuando pagas el mes, vuelve a atender y tu fecha de renovación se mantiene."],
+  ["¿Puedo usar mi número actual?", "Nitro Complete incluye un número gestionado por Nitro. Si quieres usar el que ya tienes, revisamos su situación y el proceso con Meta antes de que pagues; no todos los números tienen la misma conexión."],
+  ["¿Qué es un turno y qué es una plantilla?", "Un turno es cada respuesta que envía tu asesor; una conversación puede necesitar varios. Las plantillas son mensajes aprobados por Meta, como confirmaciones o avisos de envío, y tienen su propio saldo. La calculadora estima turnos, no conversaciones garantizadas."],
   ["¿Puede responder con mi voz y atender llamadas?", "Sí. Para las notas de voz puedes elegir Sara o Carlos, o solicitar una voz clonada con una grabación y tu autorización. Nitro prepara y prueba la voz antes de activarla. Nitro Call atiende llamadas entrantes de WhatsApp al habilitarlo, tiene 8 voces propias y saldo separado en COP que se consume por segundos. La voz clonada para audios no se usa en llamadas. La confirmación de compra continúa por escrito en el chat."],
   ["¿Cómo cobra a mis compradores?", "Conectas tu cuenta de comercio Confío y Nitro comparte un enlace de pago dentro de WhatsApp. La integración recibe la confirmación del pago para continuar con el pedido. Los medios disponibles y las condiciones dependen de tu cuenta Confío. También puedes trabajar con pedidos contraentrega."],
-  ["¿El seguimiento y las guías están incluidos?", "17TRACK se habilita por tienda para consultar guías y tiene un saldo separado por guía rastreada. Los avisos al comprador requieren configuración y plantillas de WhatsApp. La disponibilidad depende de la guía y la transportadora. La creación de guías con Skydropx está en preparación y todavía no está disponible; no forma parte de la activación."],
-  ["¿Qué pasa si se acaba el saldo?", "El panel te permite consultar el saldo y recargar. Existe un crédito temporal de 24 horas; lo consumido se descuenta de la siguiente recarga. Vencido ese plazo, hay un préstamo limitado para conversaciones en curso y las nuevas pasan al equipo. Conviene recargar antes de agotarlo."],
-  ["¿Necesito Shopify?", "No. Puedes sincronizar tu tienda Shopify o administrar el catálogo directamente en Nitro. Los pedidos quedan en Shopify cuando usas esa integración o en tu panel cuando trabajas con catálogo propio."],
+  ["¿El seguimiento y las guías están incluidos?", "17TRACK se habilita por tienda para consultar guías y tiene un saldo separado por guía rastreada. Los avisos al comprador requieren configuración y plantillas de WhatsApp. La disponibilidad depende de la guía y la transportadora. La creación de guías con Skydropx está en preparación y todavía no está disponible."],
   ["¿Qué pasa si mi empresa necesita más capacidad?", "Cuéntanos tu volumen y qué necesitas en el bloque para empresas. Juan revisará tu operación y te contactará para definir el alcance, las conexiones y la capacidad adecuada."],
   ["¿Qué diferencia hay con NitroBot?", "NitroBot es el asesor que conversa y crea el pedido. Nitro Complete reúne ese asesor con las herramientas para gestionar lo que ocurre después de la venta, en un solo panel. Algunas funciones requieren configuración y plantillas aprobadas."],
   ["¿Le escribe a mis clientes sin permiso?", "Responde cuando el cliente escribe. Los mensajes de seguimiento y recuperación respetan los horarios y permisos del comprador; fuera de la ventana de WhatsApp requieren plantillas aprobadas por Meta. Nunca escribe a quien pidió no recibir mensajes."],
@@ -68,10 +69,10 @@ const schema = {
   provider: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "Offer",
-    name: "Activación de Nitro Complete",
-    price: nitroCompleteStarterKit.price.replace(/[^0-9]/g, ""),
+    name: "Nitro Complete · mensualidad",
+    price: String(plan.priceCop),
     priceCurrency: "COP",
-    description: "Pago inicial con instalación y saldo incluido; después, recargas por consumo.",
+    description: `Mensualidad con número gestionado, ${plan.turns} turnos y ${plan.templates} plantillas; recargas aparte que no vencen.`,
   },
 };
 
@@ -96,22 +97,24 @@ export default function NitroCompletePage() {
             <h1 className="text-white">
               <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
               <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
-                Vende por WhatsApp.<br /><span className="text-primary">Con voz, pagos y seguimiento.</span>
+                Tu WhatsApp vende solo.<br /><span className="text-primary">Desde {plan.price} al mes.</span>
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/62 lg:mx-0">
-              Tu negocio en Colombia, con un asesor que <strong className="nitro-hl">vende con tu catálogo real</strong>, recibe pedidos y acompaña a tus clientes. Empiezas con nuestra ayuda y después <strong className="font-semibold text-white">recargas en pesos, sin mensualidad.</strong>
+              Un asesor que le contesta a tus clientes a cualquier hora, <strong className="nitro-hl">vende con tu catálogo real</strong> y te deja el pedido creado. Con Shopify o con tus productos cargados en Nitro: <strong className="font-semibold text-white">no necesitas tienda online.</strong>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Quiero empezar</WhatsAppJuanButton>
-              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#recarga">Ver activación y recargas</Link></Button>
+              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#empezar">Cómo empiezo</Link></Button>
             </div>
-            {/* Compatibilidad después de la promesa y los botones: el nombre del producto va primero. */}
-            <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-white/70 lg:justify-start">
-              <WhatsAppLogo className="size-4" />Para WhatsApp
-              <span className="text-white/30" aria-hidden="true">·</span>
-              <Link href="#shopify" className="inline-flex items-center gap-1.5 underline decoration-white/20 underline-offset-4 hover:text-white">con <ShopifyLogo className="size-3.5" /> Shopify o sin tienda</Link>
-            </p>
+            {/* Lo que decide la entrada, en una línea: precio, tiempo y requisito. */}
+            <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-semibold text-white/75 lg:justify-start">
+              <li>Listo en menos de {plan.installHours} h</li>
+              <li aria-hidden="true" className="text-white/30">·</li>
+              <li><Link href="#catalogo" className="underline decoration-white/25 underline-offset-4 hover:text-white">Con o sin tienda online</Link></li>
+              <li aria-hidden="true" className="text-white/30">·</li>
+              <li>Sin contrato</li>
+            </ul>
             <p className="mt-3 text-sm text-white/55">
               ¿Ya eres cliente? <a href={nitroAppUrl("/login")} className="font-semibold text-white/70 hover:text-white hover:underline">Ingresar</a>
             </p>
@@ -119,6 +122,8 @@ export default function NitroCompletePage() {
           <NitroHero />
         </div>
       </section>
+
+      <NitroEasyStart />
 
       {/* El film: la venta completa en 86 segundos, con voz y subtítulos */}
       <section id="video" className="scroll-mt-20 px-5 pb-4 pt-6 lg:px-8 lg:pt-10" data-nitro-orb="flow">
@@ -138,17 +143,18 @@ export default function NitroCompletePage() {
         </details>
       </div>
 
-      <NitroVoiceShowcase />
-      <PrepaidPricing />
+      <NitroCatalogPaths />
+      <NitroMonthlyPricing />
       <NitroCommerceJourney />
       <NitroOperationsToolkit />
+      <NitroVoiceShowcase />
 
       {/* Calculadora */}
       <section id="calculadora" className="scroll-mt-24 border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="calculator">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">Estima tu consumo.<br /><span className="text-primary">Recarga con una referencia.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Obtén una referencia en turnos y pesos colombianos.</p>
+            <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">¿Te alcanza el mes?<br /><span className="text-primary">Calcúlalo en un minuto.</span></h2>
+            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Te mostramos si te alcanzan los {plan.turns} turnos del mes o cuánto recargar.</p>
           </div>
           <SalesCalculator />
         </div>

@@ -17,17 +17,17 @@ export type JuanWhatsAppContext =
 export function juanWhatsAppMessage(context: JuanWhatsAppContext): string {
   switch (context.kind) {
     case "hero":
-      return "Hola Juan 👋 Vengo de la página de Nitro Complete y quiero activar mi asesor con recargas.";
+      return "Hola Juan 👋 Vengo de la página de Nitro Complete y quiero empezar con mi asesor.";
     case "kit":
-      return "Hola Juan, quiero activar mi asesor de Nitro Complete y después recargar a mi ritmo.";
+      return "Hola Juan, quiero empezar con Nitro Complete por $49.900 al mes.";
     case "plan":
       return `Hola Juan, me interesa el plan ${context.planName} de Nitro Complete.`;
     case "enterprise":
       return "Hola Juan, mi empresa necesita mayor capacidad en Nitro Complete y quiero revisar el alcance contigo.";
     case "evaluation":
-      return "Hola Juan, quiero empezar con Nitro Complete sin mensualidad.";
+      return "Hola Juan, quiero empezar con Nitro Complete.";
     case "calculator":
-      return `Hola Juan, quiero revisar mi consumo de Nitro Complete. En la calculadora indiqué ${Math.round(context.chats).toLocaleString("es-CO")} conversaciones al mes y ${Math.round(context.turns)} respuestas del asesor por conversación. Son estimaciones para elegir una recarga; quiero saber cómo empezar.`;
+      return `Hola Juan, quiero revisar mi consumo de Nitro Complete. En la calculadora indiqué ${Math.round(context.chats).toLocaleString("es-CO")} conversaciones al mes y ${Math.round(context.turns)} respuestas del asesor por conversación. Son estimaciones; quiero saber si me alcanza el mes o cuánto debo recargar.`;
     // «vengo de la guía» identifica el origen; el título dice cuál. Falta la
     // regla equivalente en bot_super_admin/lib/sales/origin.ts (detectOrigin).
     case "guide":

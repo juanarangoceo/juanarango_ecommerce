@@ -2,15 +2,18 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { formatCop, nitroCompleteStarterKit, nitroCompleteUnitPacks, UNITS_PER_CONVERSATION } from "@/lib/commercial-content";
+import { formatCop, nitroCompleteMonthly, nitroCompleteUnitPacks, UNITS_PER_CONVERSATION } from "@/lib/commercial-content";
 import { estimateRecharge } from "@/lib/recharge-estimate";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 
 export function SalesCalculator() {
-  const [chats, setChats] = useState(300);
+  const [chats, setChats] = useState(60);
   const [turns, setTurns] = useState(UNITS_PER_CONVERSATION);
   const id = useId();
-  const estimate = estimateRecharge(chats, turns, nitroCompleteUnitPacks);
+  // Primero se usan los turnos del mes (NIT-209); solo lo que sobra pide recarga.
+  const units = Math.ceil(chats * turns);
+  const extra = Math.max(0, units - nitroCompleteMonthly.turns);
+  const estimate = extra > 0 ? estimateRecharge(extra, 1, nitroCompleteUnitPacks) : null;
   return (
     <div className="grid overflow-hidden rounded-[2rem] border border-white/12 bg-superficie-nitro lg:grid-cols-2">
       <div className="space-y-8 p-6 sm:p-9">
@@ -28,13 +31,23 @@ export function SalesCalculator() {
       </div>
       <div className="border-t border-white/10 bg-white/[0.035] p-6 sm:p-9 lg:border-l lg:border-t-0" aria-live="polite" aria-atomic="true">
         <p className="text-sm font-medium text-white/75">Tu consumo estimado</p>
-        <p className="mt-3 text-4xl font-semibold tracking-tight tabular-nums text-white">{estimate.units.toLocaleString("es-CO")} <span className="text-lg font-normal text-white/65">turnos al mes</span></p>
+        <p className="mt-3 text-4xl font-semibold tracking-tight tabular-nums text-white">{units.toLocaleString("es-CO")} <span className="text-lg font-normal text-white/65">turnos al mes</span></p>
         <div className="mt-6 rounded-2xl border border-primary/25 bg-primary/[0.05] p-5">
-          <p className="text-base font-semibold text-white">Una recarga para cubrir esa referencia</p>
-          <p className="mt-3 text-xl font-semibold text-primary">{estimate.packCount > 1 ? `${estimate.packCount} × ` : ""}{estimate.pack.units.toLocaleString("es-CO")} turnos · {formatCop(estimate.totalCop)}</p>
-          <p className="mt-2 text-sm leading-6 text-white/70">El saldo que no uses queda disponible. Esta es una compra de saldo, no una mensualidad.</p>
+          {estimate ? (
+            <>
+              <p className="text-base font-semibold text-white">Tu mes de {nitroCompleteMonthly.price} y una recarga</p>
+              <p className="mt-3 text-xl font-semibold text-primary">+ {estimate.packCount > 1 ? `${estimate.packCount} × ` : ""}{estimate.pack.units.toLocaleString("es-CO")} turnos · {formatCop(estimate.totalCop)}</p>
+              <p className="mt-2 text-sm leading-6 text-white/70">Referencia de un mes: {formatCop(nitroCompleteMonthly.priceCop + estimate.totalCop)} en total. Lo recargado que no uses no vence.</p>
+            </>
+          ) : (
+            <>
+              <p className="text-base font-semibold text-white">Te alcanza con el mes de {nitroCompleteMonthly.price}</p>
+              <p className="mt-3 text-xl font-semibold text-primary">{nitroCompleteMonthly.turns.toLocaleString("es-CO")} turnos incluidos</p>
+              <p className="mt-2 text-sm leading-6 text-white/70">Si un mes vendes más, recargas desde tu panel cuando lo necesites.</p>
+            </>
+          )}
         </div>
-        <p className="mt-5 text-sm leading-6 text-white/65">Cálculo: {chats.toLocaleString("es-CO")} conversaciones × {turns} respuestas. No incluye plantillas. La activación de {nitroCompleteStarterKit.price} se paga aparte una sola vez e incluye {nitroCompleteStarterKit.units} turnos iniciales; aquí estimamos una recarga posterior.</p>
+        <p className="mt-5 text-sm leading-6 text-white/65">Cálculo: {chats.toLocaleString("es-CO")} conversaciones × {turns} respuestas. El mes incluye {nitroCompleteMonthly.turns} turnos y {nitroCompleteMonthly.templates} plantillas, y se usa antes que las recargas. Es una estimación, no un consumo garantizado.</p>
         <WhatsAppJuanButton context={{ kind: "calculator", chats, turns }} placement="calculator" className="mt-6 w-full sm:w-auto">Revisar mi consumo por WhatsApp</WhatsAppJuanButton>
         <Link href="#empresas" className="mt-4 block w-fit py-2 text-sm font-semibold text-white underline underline-offset-4 hover:text-primary">Mi empresa necesita una revisión de capacidad</Link>
       </div>

@@ -12,7 +12,7 @@ const tools = [
 
 export function NitroOperationsToolkit() {
   return (
-    <section id="shopify" className="scroll-mt-24 border-b border-white/10 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
+    <section id="herramientas" className="scroll-mt-24 border-b border-white/10 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
           <div><h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">También organiza<br /><span className="text-primary">lo que hay detrás de vender.</span></h2></div>
