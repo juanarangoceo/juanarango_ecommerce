@@ -15,7 +15,7 @@ const steps = [
   {
     icon: Wallet,
     title: `Activas con ${plan.price}`,
-    text: "Pagas por Nequi, PSE o Bancolombia desde el mismo chat. Incluye tu primer mes. Sin contrato y sin cobros automáticos.",
+    text: "Pagas por Nequi, PSE o Bancolombia desde el mismo chat. Es tu mes: número, turnos y plantillas. Sin contrato.",
   },
   {
     icon: Rocket,

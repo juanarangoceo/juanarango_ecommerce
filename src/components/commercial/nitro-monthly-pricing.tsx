@@ -9,9 +9,8 @@ import {
   nitroCompleteUnitPacks,
 } from "@/lib/commercial-content";
 
-// Precio de Nitro Complete para clientes nuevos (NIT-209). $49.900 es a la vez
-// la activación (con el primer mes incluido, sin instalación aparte) y la
-// mensualidad. Las recargas, aparte y separadas visualmente: lo del mes vence,
+// Precio de Nitro Complete para clientes nuevos (NIT-209). Se cuenta como
+// «$49.900 / mes» (activa número, turnos y plantillas) y luego recargas; sin IVA. Las recargas, aparte y separadas visualmente: lo del mes vence,
 // lo recargado no. Condiciones en un desplegable, no en notas sueltas.
 const includes = [
   ["Instalación y configuración", "Armamos tu asesor contigo por WhatsApp: tono, envíos y formas de pago. No se cobra aparte."],
@@ -41,24 +40,31 @@ export function NitroMonthlyPricing() {
     <section id="precio" className="scroll-mt-24 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">Activas con {plan.price}.<br /><span className="text-primary">Y sigues con {plan.price} al mes.</span></h2>
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Un solo valor para todo. El primer pago activa tu asesor <strong className="font-semibold text-white">y ya incluye tu primer mes</strong>: no hay costo de instalación. Después pagas el mismo valor cada mes, solo si quieres seguir.</p>
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl"><span className="text-primary">{plan.price} / mes.</span><br />Y recargas solo lo que necesites.</h2>
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Con tu mes activas el asesor: número, turnos y plantillas. Si vendes más, recargas; <strong className="font-semibold text-white">lo que recargas no vence.</strong></p>
         </div>
+
+        {/* El recorrido del dinero en tres pasos: el mes activa, se usa, se recarga. */}
+        <ol className="mx-auto mt-10 grid max-w-5xl gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center" aria-label="Cómo funciona el pago">
+          <li className="rounded-2xl border border-primary/40 bg-primary/10 p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-primary">1 · Tu mes</p><p className="mt-2 text-2xl font-semibold text-white">{plan.price}</p><p className="mt-1 text-sm text-white/70">Activa tu asesor con número, {plan.turns} turnos y {plan.templates} plantillas.</p></li>
+          <li aria-hidden="true" className="hidden text-2xl text-white/40 md:block">→</li>
+          <li className="rounded-2xl border border-white/12 bg-superficie-nitro p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-white/60">2 · Tu asesor vende</p><p className="mt-2 text-2xl font-semibold text-white">Usa tus turnos</p><p className="mt-1 text-sm text-white/70">Cada respuesta a un cliente es un turno.</p></li>
+          <li aria-hidden="true" className="hidden text-2xl text-white/40 md:block">→</li>
+          <li className="rounded-2xl border border-white/12 bg-superficie-nitro p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-white/60">3 · ¿Vendes más?</p><p className="mt-2 text-2xl font-semibold text-white">Recargas</p><p className="mt-1 text-sm text-white/70">Desde {formatCop(nitroCompleteUnitPacks[0].priceCop)}, cuando lo necesites. No vencen.</p></li>
+        </ol>
 
         <article className="mt-10 overflow-hidden rounded-[2rem] border border-primary/35 bg-superficie-nitro">
           <div className="grid lg:grid-cols-[.9fr_1.1fr]">
             <div className="p-7 sm:p-10">
               <p className="text-base font-semibold text-white">Nitro Complete</p>
-              <p className="mt-6 text-sm font-semibold text-primary">Activación con primer mes incluido</p>
-              <p className="mt-1 flex items-baseline gap-2"><span className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">{plan.price}</span></p>
-              <p className="mt-3 text-base text-white/80">Después, <strong className="font-semibold text-white">{plan.price} al mes</strong>. Sin contrato.</p>
-              <p className="mt-1 text-sm text-white/65">COP · IVA incluido · Nequi, PSE o Bancolombia</p>
+              <p className="mt-6 flex items-baseline gap-2"><span className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">{plan.price}</span><span className="text-lg text-white/65">/ mes</span></p>
+              <p className="mt-2 text-sm text-white/65">COP · Sin contrato · Nequi, PSE o Bancolombia</p>
               <p className="mt-6 max-w-sm text-base leading-7 text-white/75">Tu primer mes empieza el día que tu asesor queda atendiendo, no el día que pagas: no pierdes días mientras lo preparamos.</p>
               <WhatsAppJuanButton context={{ kind: "kit" }} placement="product_activation" className="mt-7 w-full sm:w-auto">Activar mi asesor</WhatsAppJuanButton>
               <p className="mt-4 text-sm leading-6 text-white/65">Te enviamos el enlace de pago por WhatsApp.</p>
             </div>
             <div className="border-t border-white/10 bg-white/[0.035] p-7 sm:p-10 lg:border-l lg:border-t-0">
-              <h3 className="text-xl font-semibold text-white">Qué incluye</h3>
+              <h3 className="text-xl font-semibold text-white">Qué incluye tu mes</h3>
               <ul className="mt-6 space-y-5">
                 {includes.map(([title, text]) => <li key={title} className="flex gap-3"><Check className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" /><div><h4 className="text-base font-semibold text-white">{title}</h4><p className="mt-1 text-sm leading-6 text-white/70">{text}</p></div></li>)}
               </ul>
@@ -82,7 +88,7 @@ export function NitroMonthlyPricing() {
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-white [&::-webkit-details-marker]:hidden">Ver recargas de mayor capacidad<ChevronDown className="size-4 transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" /></summary>
             <ul className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">{packs.slice(4).map(packCard)}</ul>
           </details>
-          <p className="mt-4 text-sm leading-6 text-white/65">Precios en pesos colombianos (COP), con IVA incluido. Plantillas adicionales a {nitroCompleteTemplatePrice} cada una. Llamadas y seguimiento con 17TRACK tienen su propio saldo y se habilitan por separado.</p>
+          <p className="mt-4 text-sm leading-6 text-white/65">Precios en pesos colombianos (COP). Plantillas adicionales a {nitroCompleteTemplatePrice} cada una. Llamadas y seguimiento con 17TRACK tienen su propio saldo y se habilitan por separado.</p>
           <Link href="#calculadora" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary hover:underline">¿Me alcanza el mes? Calcúlalo<ArrowDown className="size-4" aria-hidden="true" /></Link>
         </div>
       </div>

@@ -28,11 +28,11 @@ const SITE_URL = "https://www.juanarangoecommerce.com";
 export const metadata: Metadata = {
   title: "Nitro Complete | WhatsApp con IA, voz y pagos en Colombia",
   description:
-    `Un asesor que vende por tu WhatsApp con tu catálogo real, con o sin Shopify. Actívalo por ${plan.price} con el primer mes incluido, en Colombia y listo en menos de ${plan.installHours} horas.`,
+    `Un asesor que vende por tu WhatsApp con tu catálogo real, con o sin Shopify. ${plan.price} al mes en Colombia, listo en menos de ${plan.installHours} horas.`,
   alternates: { canonical: `${SITE_URL}/nitro-complete` },
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
-    title: `Nitro Complete | Tu WhatsApp vende solo. Actívalo por ${plan.price}`,
+    title: `Nitro Complete | Tu WhatsApp vende solo. ${plan.price} / mes`,
     description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Con Shopify o con tus productos subidos a Nitro.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-  ["¿Cuánto cuesta empezar?", `${plan.price} COP, IVA incluido. Ese pago activa tu asesor e incluye tu primer mes; la instalación no se cobra aparte. Después, ${plan.price} al mes. Cada mes trae tu número de WhatsApp gestionado por Nitro, ${plan.turns} turnos (unas ${nitroCompleteMonthlyConversations} conversaciones de venta) y ${plan.templates} envíos de plantilla. No hay contrato ni cobro automático: pagas el mes cuando quieres seguir.`],
+  ["¿Cuánto cuesta empezar?", `${plan.price} COP Cada mes trae tu número de WhatsApp gestionado por Nitro, ${plan.turns} turnos (unas ${nitroCompleteMonthlyConversations} conversaciones de venta) y ${plan.templates} envíos de plantilla. No hay contrato ni cobro automático: pagas el mes cuando quieres seguir.`],
   ["¿Necesito Shopify o una tienda online?", "No. Si no tienes tienda, creas tus productos en tu panel de Nitro: uno a uno con fotos desde el celular, o todos de una vez con la plantilla de Excel. Los pedidos quedan en tu panel. Si tienes Shopify, lo conectas y productos y pedidos se sincronizan con tu tienda."],
   ["¿Qué necesito para empezar?", "Productos con foto, precio y descripción, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Lo completamos contigo por WhatsApp."],
   ["¿Cuándo queda listo y cuándo empieza mi mes?", `La instalación toma menos de ${plan.installHours} horas desde que estén el pago y la información de tu negocio. Tu primer mes empieza el día que tu asesor queda atendiendo, no el día que pagas.`],
@@ -97,7 +97,7 @@ export default function NitroCompletePage() {
             <h1 className="text-white">
               <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
               <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
-                Tu WhatsApp vende solo.<br /><span className="text-primary">Actívalo por {plan.price}.</span>
+                Tu WhatsApp vende solo.<br /><span className="text-primary">{plan.price} / mes.</span>
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/62 lg:mx-0">
@@ -109,8 +109,6 @@ export default function NitroCompletePage() {
             </div>
             {/* Lo que decide la entrada, en una línea: qué cubre el pago, tiempo y requisito. */}
             <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-semibold text-white/75 lg:justify-start">
-              <li>Primer mes incluido</li>
-              <li aria-hidden="true" className="text-white/30">·</li>
               <li>Listo en menos de {plan.installHours} h</li>
               <li aria-hidden="true" className="text-white/30">·</li>
               <li><Link href="#catalogo" className="underline decoration-white/25 underline-offset-4 hover:text-white">Con o sin tienda online</Link></li>

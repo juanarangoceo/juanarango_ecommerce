@@ -5,7 +5,7 @@ import { nitroCompleteMonthly as plan } from "@/lib/commercial-content";
 
 const steps = [
   ["Cuéntanos qué vendes", "Con Shopify o sin tienda online: tus productos los subes tú a Nitro en minutos."],
-  ["Activa tu asesor", `${plan.price} por el chat, con Nequi, PSE o Bancolombia. Incluye tu primer mes. Sin contrato.`],
+  ["Activa tu asesor", `${plan.price} por el chat, con Nequi, PSE o Bancolombia. Tu mes, sin contrato.`],
   ["Tu asesor atiende", `En menos de ${plan.installHours} horas desde el pago y la información de tu negocio. Ese día empieza tu mes.`],
 ] as const;
 
