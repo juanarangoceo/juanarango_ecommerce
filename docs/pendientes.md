@@ -13,9 +13,18 @@ calculadora junto al precio; recorrido, herramientas y voz en pestañas
 (`NitroDepthTabs`); cierre «No es un chatbot. Es el turno que te faltaba.».
 Se retiró la nota del titular (Todopolis) por decisión de Juan.
 
-- Revisión de Juan en su celular y su computador sobre el dominio real.
-- Sigue vigente la condición de la demo: publicar solo con el vendedor
-  desplegado y la demo encendida.
+- Revisión de Juan en su celular y su computador sobre el dominio real:
+  aspecto, reproducción del video del hero y el cierre «No es un chatbot. Es
+  el turno que te faltaba.» (no se vio en captura).
+- Confirmar que el vendedor tiene la demo encendida (Ajustes → Demo): el botón
+  «Probarlo con mi tienda» ya está publicado.
+- Meta, «Probar eventos»: `PageView` al cargar y `WhatsAppClick` + `Contact`
+  al tocar «Quiero empezar» con la página nueva. Los botones nuevos usan
+  `product_turno` y `product_turno_demo` como `placement`.
+- El titular del bloque de precio repite «$49.900» con la tarjeta de abajo;
+  alternativa propuesta: «Menos que contratar a alguien para la noche».
+- Lo que más le falta a la página para vender: un caso real con nombre y
+  resultado. No inventarlo.
 - También se quitó la misma frase del pie de página de todo el sitio
   (`site-footer.tsx`), porque seguía saliendo en la landing.
 - La nota del titular nació en NIT-57 (verificación de Meta y derechos de
