@@ -489,3 +489,15 @@ compartido, la home, NitroBot ni sus integraciones. Sin publicar.
   que el primer resultado muestre también el caso con recarga.
 - Se retira el traductor automático (botón EN) del encabezado comercial.
 - Subtextos de portada y de `/nitro-complete` suben a blanco 72–75 %.
+
+## `/nitro-complete` en celular (12-nov-2026)
+
+- El detalle que no decide la compra se pliega en celular con `MobileFold`
+  (visible siempre desde `lg`): medios de pago de Confío, transportadoras de
+  17TRACK, condiciones de Nitro Call y el formulario de empresas.
+- «Con Shopify / Sin tienda online» son pestañas en celular; en escritorio
+  siguen las dos tarjetas.
+- Los pasos de «Arrancas con poco» y del recorrido Conversa → Acompaña son
+  filas dentro de una sola tarjeta en celular.
+- Sin botón fijo adicional: el encabezado ya lleva el de WhatsApp siempre
+  visible y el orbe ocupa la esquina inferior.

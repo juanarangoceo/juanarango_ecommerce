@@ -21,9 +21,9 @@ export function NitroOperationsToolkit() {
         <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {tools.map(({ icon: Icon, title, text, detail }) => (
             <details key={title} className="group self-start rounded-2xl border border-white/12 bg-background">
-              <summary className="cursor-pointer list-none p-6 focus-visible:rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary [&::-webkit-details-marker]:hidden">
+              <summary className="cursor-pointer list-none p-5 sm:p-6 focus-visible:rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center justify-between"><Icon className="size-5 text-primary" aria-hidden="true" /><ChevronDown className="size-4 text-white/60 transition-transform group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" /></span>
-                <h3 className="mt-5 text-lg font-semibold leading-6 text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-white/70">{text}</p>
+                <h3 className="mt-3 text-lg font-semibold leading-6 text-white sm:mt-5">{title}</h3><p className="mt-2 text-sm leading-6 text-white/70">{text}</p>
               </summary>
               <p className="mx-6 border-t border-white/12 pb-6 pt-4 text-sm leading-6 text-white/75">{detail}</p>
             </details>

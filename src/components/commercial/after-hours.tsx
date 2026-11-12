@@ -49,7 +49,7 @@ export function AfterHours() {
             </select>
           </label>
           <label htmlFor={`${id}-days`} className="flex flex-col text-sm font-medium text-ink/75">
-            Días / semana
+            Días
             <select id={`${id}-days`} value={days} onChange={(e) => setDays(Number(e.target.value))} className={select}>
               {[5, 6, 7].map((value) => <option key={value} value={value}>{value}</option>)}
             </select>

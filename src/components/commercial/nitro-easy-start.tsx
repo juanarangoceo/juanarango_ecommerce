@@ -36,15 +36,17 @@ export function NitroEasyStart() {
             No necesitas página web, ni saber de tecnología, ni contratar a nadie. Si vendes productos por WhatsApp, así de simple es empezar:
           </p>
         </div>
-        <ol className="mt-10 grid gap-3 md:grid-cols-3">
+        <ol className="mt-8 divide-y divide-line rounded-2xl border border-line bg-white md:mt-10 md:grid md:grid-cols-3 md:gap-3 md:divide-y-0 md:rounded-none md:border-0 md:bg-transparent">
           {steps.map(({ icon: Icon, title, text }, i) => (
-            <li key={title} className="rounded-2xl border border-line bg-white p-6 sm:p-7">
-              <div className="flex items-center justify-between">
+            <li key={title} className="flex items-start gap-4 p-5 md:block md:rounded-2xl md:border md:border-line md:bg-white md:p-7">
+              <div className="flex shrink-0 items-center justify-between">
                 <span className="flex size-10 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="size-5" aria-hidden="true" /></span>
-                <span className="font-mono text-xs text-ink/45">0{i + 1}</span>
+                <span className="hidden font-mono text-xs text-ink/45 md:inline">0{i + 1}</span>
               </div>
-              <h3 className="mt-5 text-xl font-semibold leading-snug tracking-tight">{title}</h3>
-              <p className="mt-2 text-base leading-7 text-ink/70">{text}</p>
+              <div>
+                <h3 className="text-lg font-semibold leading-snug tracking-tight md:mt-5 md:text-xl">{title}</h3>
+                <p className="mt-1.5 text-base leading-7 text-ink/70 md:mt-2">{text}</p>
+              </div>
             </li>
           ))}
         </ol>

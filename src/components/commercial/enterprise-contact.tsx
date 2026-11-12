@@ -5,6 +5,7 @@ import { useId, useRef, useState, useTransition } from "react";
 import { Check, ArrowUpRight } from "lucide-react";
 import { submitEnterpriseLead } from "@/app/actions/submit-enterprise-lead";
 import { readSalesCampaign } from "@/components/commercial/sales-campaign-context";
+import { MobileFold } from "@/components/commercial/mobile-fold";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 
 export function EnterpriseContact() {
@@ -23,6 +24,7 @@ export function EnterpriseContact() {
           <p className="mt-6 text-lg leading-8 text-ink/75">Si manejas un volumen alto de conversaciones o necesitas conexiones especiales, cuéntanos cómo opera tu empresa. <strong className="font-semibold text-ink">Juan revisará tu caso y te contactará para definir el alcance.</strong></p>
           <p className="mt-6 border-t border-ink/15 pt-6 text-base leading-7 text-ink/70">Puedes empezar con activación y recargas. Este contacto es para revisar los requerimientos que tu operación necesita resolver por separado.</p>
         </div>
+        <MobileFold label="Contar el caso de mi empresa">
         <div className="rounded-[2rem] border border-ink/10 bg-white p-6 sm:p-8">
           {sent ? <div role="status" className="py-8"><Check className="size-9 text-nitro-text" aria-hidden="true" /><h3 className="mt-5 text-2xl font-semibold">Recibimos tu solicitud.</h3><p className="mt-3 text-base leading-7 text-ink/75">Juan revisará lo que nos cuentas y te contactará en el WhatsApp que dejaste.</p></div> : <form onChange={() => { requestId.current = ""; }} onSubmit={(event) => {
             event.preventDefault();
@@ -57,6 +59,7 @@ export function EnterpriseContact() {
             {error ? <WhatsAppJuanButton context={{ kind: "enterprise" }} placement="enterprise_fallback" variant="dark" className="mt-3 w-full">Continuar por WhatsApp</WhatsAppJuanButton> : null}
           </form>}
         </div>
+        </MobileFold>
       </div>
     </section>
   );

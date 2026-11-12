@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Check, Smartphone } from "lucide-react";
 import { ShopifyLogo } from "@/components/commercial/brand-logos";
 
@@ -34,6 +37,8 @@ const paths = [
 ] as const;
 
 export function NitroCatalogPaths() {
+  // En celular se ve un camino a la vez (pestañas); desde lg, los dos.
+  const [active, setActive] = useState<(typeof paths)[number]["key"]>("nativo");
   return (
     <section id="catalogo" className="scroll-mt-24 bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
       <div className="mx-auto max-w-7xl">
@@ -45,9 +50,14 @@ export function NitroCatalogPaths() {
             Lo único que necesitas son productos con foto y precio. Los subes tú en minutos o los trae tu Shopify, y el asesor vende con ellos igual en los dos casos.
           </p>
         </div>
-        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+        <div role="tablist" aria-label="Cómo tienes tus productos" className="mt-8 grid grid-cols-2 gap-1 rounded-full border border-line bg-white p-1 lg:hidden">
           {paths.map((p) => (
-            <article key={p.key} className="rounded-[2rem] border border-line bg-white p-6 sm:p-8">
+            <button key={p.key} type="button" role="tab" id={`tab-${p.key}`} aria-selected={active === p.key} aria-controls={`panel-${p.key}`} onClick={() => setActive(p.key)} className={`min-h-11 rounded-full px-3 text-sm font-semibold transition-colors motion-reduce:transition-none ${active === p.key ? "bg-ink text-white" : "text-ink/75"}`}>{p.title}</button>
+          ))}
+        </div>
+        <div className="mt-4 grid gap-4 lg:mt-10 lg:grid-cols-2">
+          {paths.map((p) => (
+            <article key={p.key} id={`panel-${p.key}`} aria-labelledby={`tab-${p.key}`} className={`rounded-[2rem] border border-line bg-white p-6 sm:p-8 lg:block ${active === p.key ? "" : "hidden"}`}>
               <div className="flex items-center gap-3">
                 <span className="flex size-11 items-center justify-center rounded-xl bg-ground">{p.mark}</span>
                 <h3 className="text-2xl font-semibold tracking-tight">{p.title}</h3>

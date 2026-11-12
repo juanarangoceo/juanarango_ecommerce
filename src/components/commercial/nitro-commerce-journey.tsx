@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { MobileFold } from "@/components/commercial/mobile-fold";
 import { ArrowRight, CreditCard, MessageCircle, PackageCheck, Truck } from "lucide-react";
 
 const paymentMethods = [
@@ -27,12 +28,14 @@ export function NitroCommerceJourney() {
           <p className="mx-auto max-w-lg text-pretty text-lg leading-8 text-ink/75 lg:mx-0 lg:justify-self-end">Pago en línea o contraentrega. Conecta el cobro y el seguimiento para que tu cliente encuentre las respuestas en el mismo WhatsApp.</p>
         </div>
 
-        <ol aria-label="Recorrido de una compra con Nitro" className="my-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ol aria-label="Recorrido de una compra con Nitro" className="my-8 divide-y divide-line rounded-2xl border border-line bg-white sm:my-10 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:rounded-none sm:border-0 sm:bg-transparent lg:grid-cols-4">
           {steps.map(({ icon: Icon, title, text }, index) => (
-            <li key={title} className="relative rounded-2xl border border-line bg-white p-6">
-              <div className="flex items-center justify-between"><span className="flex size-10 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="size-5" aria-hidden="true" /></span><span className="font-mono text-xs text-ink/45">0{index + 1}</span></div>
-              <h3 className="mt-5 text-xl font-semibold tracking-tight">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-ink/70">{text}</p>
+            <li key={title} className="relative flex items-start gap-4 p-4 sm:block sm:rounded-2xl sm:border sm:border-line sm:bg-white sm:p-6">
+              <div className="flex shrink-0 items-center justify-between"><span className="flex size-10 items-center justify-center rounded-xl bg-ink text-primary"><Icon className="size-5" aria-hidden="true" /></span><span className="hidden font-mono text-xs text-ink/45 sm:inline">0{index + 1}</span></div>
+              <div>
+                <h3 className="text-lg font-semibold tracking-tight sm:mt-5 sm:text-xl">{title}</h3>
+                <p className="mt-1 text-sm leading-6 text-ink/70 sm:mt-2">{text}</p>
+              </div>
               {index < steps.length - 1 ? <ArrowRight className="absolute -right-4 top-10 z-10 hidden size-5 rounded-full bg-ground text-ink/45 lg:block" aria-hidden="true" /> : null}
             </li>
           ))}
@@ -43,20 +46,24 @@ export function NitroCommerceJourney() {
             <div className="flex items-center gap-3"><Image src="/nitro/integraciones/confio.png" alt="" width={36} height={36} className="size-9 object-contain" /><p className="text-xl font-semibold">Confío</p></div>
             <h3 className="mt-6 text-2xl font-semibold leading-tight tracking-tight">Que pagar sea parte de la conversación.</h3>
             <p className="mt-3 text-base leading-7 text-ink/75">Conectas tu cuenta Confío. Nitro envía el enlace por WhatsApp y recibe la confirmación del pago para continuar con el pedido.</p>
-            <ul aria-label="Medios de pago de Confío" className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <MobileFold label="Ver medios de pago" className="mt-5 lg:mt-0">
+            <ul aria-label="Medios de pago de Confío" className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:mt-6">
               {paymentMethods.map(([id, name]) => <li key={id} className="flex h-16 items-center justify-center rounded-xl border border-line bg-white px-1"><Image src={`/nitro/integraciones/pagos/${id}.png`} alt={name} width={200} height={60} className="h-10 w-full object-contain" /></li>)}
             </ul>
             <p className="mt-5 text-sm leading-6 text-ink/65">Medios disponibles según tu cuenta Confío. Requiere conexión y habilitación del comercio; aplican las condiciones de la pasarela.</p>
+            </MobileFold>
           </article>
 
           <article className="flex flex-col rounded-[2rem] border border-line bg-white p-6 sm:p-8">
             <div className="flex items-center gap-3"><Image src="/nitro/integraciones/17track.png" alt="" width={36} height={36} className="size-9 object-contain" /><p className="text-xl font-semibold">17TRACK</p></div>
             <h3 className="mt-6 text-2xl font-semibold leading-tight tracking-tight">“¿Dónde va mi pedido?”<br />Dale seguimiento en el chat.</h3>
             <p className="mt-3 text-base leading-7 text-ink/75">17TRACK consulta las guías registradas. Al habilitar los avisos, Nitro informa novedades como salida a reparto, incidencias y entrega.</p>
-            <ul aria-label="Transportadoras contempladas para seguimiento" className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <MobileFold label="Ver transportadoras" className="mt-5 lg:mt-0">
+            <ul aria-label="Transportadoras contempladas para seguimiento" className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:mt-6">
               {carriers.map(([id, name]) => <li key={id} className="flex min-h-20 flex-col items-center justify-center gap-2 rounded-xl border border-line bg-white px-1 py-3"><Image src={`/nitro/integraciones/transportadoras/${id}.png`} alt="" width={36} height={36} className="size-8 object-contain" /><span className="text-center text-[10px] font-medium leading-4 text-ink/75">{name}</span></li>)}
             </ul>
             <p className="mt-5 text-sm leading-6 text-ink/65">Disponibilidad según guía y transportadora. Se habilita por tienda y tiene saldo por guía; los avisos requieren configuración y plantillas de WhatsApp.</p>
+            </MobileFold>
           </article>
         </div>
 

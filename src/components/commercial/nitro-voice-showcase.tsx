@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AudioLines, AudioWaveform, Mic, PhoneIncoming } from "lucide-react";
+import { MobileFold } from "@/components/commercial/mobile-fold";
 
 const voices = [
   { id: "sara", name: "Sara", description: "Voz femenina colombiana", icon: AudioWaveform, tile: "bg-primary text-ink" },
@@ -59,14 +60,16 @@ export function NitroVoiceShowcase() {
               <p className="text-lg font-semibold">Nitro Call</p>
               <span className="rounded-full border border-primary/25 px-3 py-1 text-xs font-medium text-primary">Llamadas por WhatsApp</span>
             </div>
-            <div className="relative my-8 flex items-center justify-center gap-1.5" aria-hidden="true">
+            <div className="relative my-8 hidden items-center justify-center gap-1.5 sm:flex" aria-hidden="true">
               {[14, 27, 43, 24].map((height, index) => <span key={index} className="w-1 rounded-full bg-primary/35" style={{ height }} />)}
               <span className="mx-5 flex size-20 items-center justify-center rounded-full border border-primary/30 bg-primary/10"><PhoneIncoming className="size-8 text-primary" /></span>
               {[24, 43, 27, 14].map((height, index) => <span key={index} className="w-1 rounded-full bg-primary/35" style={{ height }} />)}
             </div>
-            <h3 className="text-balance text-3xl font-semibold leading-tight tracking-tight">Te llaman.<br />Nitro contesta.</h3>
+            <h3 className="mt-6 text-balance text-3xl font-semibold leading-tight tracking-tight sm:mt-0">Te llaman.<br />Nitro contesta.</h3>
             <p className="mt-3 text-base leading-7 text-white/75">Atiende llamadas entrantes, conversa sobre tus productos y continúa la compra por escrito en el chat.</p>
-            <p className="mt-6 border-t border-white/15 pt-5 text-sm leading-6 text-white/65"><strong className="font-semibold text-white">Se habilita por separado:</strong> eliges entre 8 voces para llamadas y recargas su saldo en COP. Se cobra por segundos; no consume turnos. La voz clonada de los audios no aplica a llamadas.</p>
+            <MobileFold label="Cómo se habilita y se cobra" tone="dark" className="mt-6">
+            <p className="text-sm leading-6 text-white/75 lg:border-t lg:border-white/15 lg:pt-5"><strong className="font-semibold text-white">Se habilita por separado:</strong> eliges entre 8 voces para llamadas y recargas su saldo en COP. Se cobra por segundos; no consume turnos. La voz clonada de los audios no aplica a llamadas.</p>
+            </MobileFold>
           </article>
         </div>
       </div>
