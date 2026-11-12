@@ -291,3 +291,29 @@ pendiente del antiguo buzón `hola@` queda cerrado para la interfaz. La ruta
 publicarse: el 2 de septiembre se retiraron del recorrido comparativas,
 testimonios y garantías no verificadas, pero precios, condiciones y alcance del
 programa todavía deben contrastarse con una fuente autorizada.
+
+## Portada y `/nitro-complete` — 12 de noviembre de 2026
+
+Publicado en `master` (commits `3c18e76` y `09d5f04`); detalle de cada decisión
+en `docs/diseno-y-narrativa.md`. Verificado en producción en 390 px y 1440 px:
+bloque de horario, pestañas de catálogo y plegables responden, sin desborde
+horizontal. `/nitro-complete` en celular pasó de 20.567 px a 17.407 px; en
+escritorio no cambió.
+
+Pendiente, por decisión de Juan:
+
+- **Prueba real.** No hay evidencia de terceros en el sitio. Sin capturas de
+  clientes actuales (indicación de Juan): sirve uso propio en sus tiendas o un
+  caso con permiso.
+- **Promesa única.** La portada dice «Tú diriges» y `/nitro-complete` «Tu
+  WhatsApp vende solo» (mensaje de la landing de los anuncios de Meta).
+- **Recorrido de tres pasos del precio** (mes → turnos → recargas, commit
+  `ad26744`): se retiró por repetir $49.900. Reponerlo si Juan lo prefiere.
+- **Largo de `/nitro-complete` en celular:** sigue en unas 20 pantallas; bajar
+  más exige fusionar secciones (precio + recargas + calculadora, por ejemplo).
+- **Guías en portada:** hoy solo existe la guía pilar; la sección muestra hasta
+  tres artículos cuando se publiquen.
+- **Fuente Syne** (`(landing)/layout.tsx`): una compilación falló al
+  descargarla de Google Fonts y pasó al relanzar. Alojarla en el proyecto si
+  se repite.
+- No se midió velocidad de carga ni se probó en un teléfono físico.
