@@ -15,19 +15,20 @@ import {
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { SalesContact } from "@/components/commercial/sales-contact";
-import { NitroFilmTeaser } from "@/components/nitro/nitro-film";
+import { NitroFilmPlayer, NitroFilmTeaser } from "@/components/nitro/nitro-film";
+import { NitroTryDemo } from "@/components/commercial/nitro-try-demo";
 import { NITRO_FILMS } from "@/lib/nitro-film";
 
 export const metadata: Metadata = {
   title: "Juan Arango · Ventas por WhatsApp con IA y consultoría ecommerce",
-  description: "Soy Juan Arango. Construí Nitro Complete, un sistema que vende por WhatsApp con tu catálogo real, confirma pedidos y acompaña la entrega. También te asesoro para hacer crecer tu ecommerce.",
+  description: "Soy Juan Arango. Construí Nitro Complete, un asesor que vende por WhatsApp con tu catálogo real, confirma pedidos y acompaña la entrega. Pruébalo con tu tienda en dos minutos, sin pagar.",
   alternates: { canonical: "https://www.juanarangoecommerce.com" },
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }], title: "Juan Arango · NITRO ECOM", description: "Tu WhatsApp vende, confirma y hace seguimiento. Tú diriges.", url: "https://www.juanarangoecommerce.com", type: "website", locale: "es_CO" },
 };
 
 const steps = [
-  { title: "Empezamos por WhatsApp", text: "Mi asistente resuelve tus dudas y te manda el enlace para pagar tu primer mes por el mismo chat." },
+  { title: "Lo pruebas y empezamos", text: "Mi asistente te lo muestra con tus productos, resuelve tus dudas y te manda el enlace para pagar tu primer mes por el mismo chat." },
   { title: "Conectamos tu WhatsApp", text: "Con Shopify o con el catálogo de Nitro, y las plantillas que Meta debe aprobar." },
   { title: "Entrenamos a tu asesor", text: "Tono, reglas, lo que puede negociar y cuándo debe pasar el chat a una persona." },
   { title: "Salimos con control", text: "Lo encendemos por partes, revisamos conversaciones reales y ajustamos contigo." },
@@ -53,9 +54,12 @@ export default function HomePage() {
               </p>
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <WhatsAppJuanButton context={{ kind: "hero" }} placement="home_hero">Hablar por WhatsApp</WhatsAppJuanButton>
+              <WhatsAppJuanButton context={{ kind: "demo" }} placement="home_hero_demo">Probarlo con mi tienda</WhatsAppJuanButton>
               <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="/nitro-complete">Conocer Nitro Complete</Link></Button>
             </div>
+            <p className="mt-4 text-sm leading-6 text-white/70">
+              Dos minutos en WhatsApp, con tus productos y tus precios. Sin pagar ni instalar nada.
+            </p>
             <p className="mt-6 border-t border-white/8 pt-5 text-sm text-white/72">
               ¿Buscas asesoría para tu ecommerce?{" "}
               <Link href="/soluciones/nitro-commerce" className="inline-flex items-center gap-1 font-semibold text-white underline decoration-primary/60 underline-offset-4 hover:text-primary">Conoce la asesoría <ArrowRight className="size-3.5" aria-hidden="true" /></Link>
@@ -77,8 +81,19 @@ export default function HomePage() {
             </p>
           </div>
           <AfterHours />
+          {/* El mismo problema, contado en 43 segundos (pieza del estudio, 11-nov). */}
+          <div className="mt-14 grid items-center gap-8 lg:mt-20 lg:grid-cols-[.9fr_1.1fr] lg:gap-14">
+            <div className="text-center lg:text-left">
+              <h3 className="text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.035em] sm:text-4xl">El turno que <span className="text-alert-text">nadie cubre.</span></h3>
+              <p className="mx-auto mt-4 max-w-md text-lg leading-8 text-ink/75 lg:mx-0">El día de una tienda, hora por hora: cuándo escriben los clientes, cuánto esperan y qué cambia cuando alguien responde de noche. 43 segundos, con una tienda de ejemplo.</p>
+              <WhatsAppJuanButton context={{ kind: "demo" }} placement="home_turno_demo" variant="dark" className="mt-7 w-full sm:w-auto">Probarlo con mi tienda</WhatsAppJuanButton>
+            </div>
+            <NitroFilmPlayer film={NITRO_FILMS.turno} className="border-line" />
+          </div>
         </div>
       </section>
+
+      <NitroTryDemo placement="home_try_demo" />
 
       {/* Una venta completa en WhatsApp */}
       <section className="relative px-5 py-20 lg:px-8 lg:py-28" id="nitro-complete" data-nitro-orb="conversation">

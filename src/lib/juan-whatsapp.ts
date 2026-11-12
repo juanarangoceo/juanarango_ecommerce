@@ -6,6 +6,7 @@ export const SALES_EVALUATION_HREF = "/nitrobot/conectar";
 
 export type JuanWhatsAppContext =
   | { kind: "hero" }
+  | { kind: "demo" }
   | { kind: "kit" }
   | { kind: "plan"; planName: string }
   | { kind: "evaluation" }
@@ -18,6 +19,10 @@ export function juanWhatsAppMessage(context: JuanWhatsAppContext): string {
   switch (context.kind) {
     case "hero":
       return "Hola Juan 👋 Vengo de la página de Nitro Complete y quiero empezar con mi asesor.";
+    // Demo «pruébalo con tu tienda» (NIT-218): el vendedor la reconoce por
+    // esta frase exacta (WEB_PREFILLS.demo) y no la cuenta como compra.
+    case "demo":
+      return "Hola Juan, quiero probar el asesor de Nitro con mi tienda.";
     case "kit":
       return "Hola Juan, quiero empezar con Nitro Complete por $49.900 al mes.";
     case "plan":

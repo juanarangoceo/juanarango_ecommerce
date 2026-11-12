@@ -40,6 +40,7 @@ export async function GET() {
     line("/nitro-complete", "Nitro Complete", "Asesor de ventas con IA para WhatsApp. Consulta el catálogo real (Shopify o productos que el negocio sube a Nitro), recomienda productos, responde notas de voz, recopila los datos de entrega, crea pedidos contraentrega en Shopify y escala a una persona los casos que lo necesitan. Pagos con Confío y seguimiento con 17TRACK según la configuración de cada tienda."),
     `- Precio: ${nitroCompleteMonthly.price} COP al mes, sin contrato ni cobro automático, con número gestionado por Nitro, ${nitroCompleteMonthly.turns} turnos y ${nitroCompleteMonthly.templates} plantillas por mes; el primer mes empieza cuando el asesor queda atendiendo (instalación en menos de ${nitroCompleteMonthly.installHours} horas desde el pago y la información del negocio). Funciona con Shopify o con productos que el negocio sube a su panel de Nitro (uno a uno o con plantilla de Excel). Recargas aparte desde ${formatCop(firstPack.priceCop)} COP por ${firstPack.units} turnos, que no vencen. Sin renovar, el asesor se pausa. Un turno es una respuesta enviada por el asesor.`,
     `- Contacto comercial: WhatsApp https://wa.me/${phone}`,
+    `- Demostración gratuita: al escribir «quiero probar el asesor de Nitro con mi tienda» a ese WhatsApp, el dueño da un producto con su precio y el asesor lo atiende como si fuera su tienda. No crea pedidos ni cobros reales.`,
     "",
     ...guideSections,
     "## Más información",

@@ -21,6 +21,7 @@ import { nitroAppUrl } from "@/lib/nitrobot-intake";
 import { SalesContact } from "@/components/commercial/sales-contact";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
+import { NitroTryDemo } from "@/components/commercial/nitro-try-demo";
 import { NITRO_FILMS } from "@/lib/nitro-film";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
     title: `Nitro Complete | Tu WhatsApp vende solo. ${plan.price} / mes`,
-    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Con Shopify o con tus productos subidos a Nitro.",
+    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Pruébalo con tu tienda por WhatsApp antes de pagar.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
     type: "website",
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
+  ["¿Puedo probarlo antes de pagar?", "Sí. Escríbenos por WhatsApp con el botón «Probarlo con mi tienda», dinos al menos un producto con su precio y, por unos mensajes, te atendemos como el asesor de tu tienda mientras tú escribes como si fueras un cliente. Al final recibes un resumen de cuántos mensajes respondió y en cuánto tiempo. Es una muestra dentro del chat: no crea pedidos ni cobros reales y no deja nada instalado."],
   ["¿Cuánto cuesta empezar?", `${plan.price} COP Cada mes trae tu número de WhatsApp gestionado por Nitro, ${plan.turns} turnos (unas ${nitroCompleteMonthlyConversations} conversaciones de venta) y ${plan.templates} envíos de plantilla. No hay contrato ni cobro automático: pagas el mes cuando quieres seguir.`],
   ["¿Necesito Shopify o una tienda online?", "No. Si no tienes tienda, creas tus productos en tu panel de Nitro: uno a uno con fotos desde el celular, o todos de una vez con la plantilla de Excel. Los pedidos quedan en tu panel. Si tienes Shopify, lo conectas y productos y pedidos se sincronizan con tu tienda."],
   ["¿Qué necesito para empezar?", "Productos con foto, precio y descripción, y los datos de tu negocio: cómo cobras, a dónde envías y quién atiende los casos que requieren una persona. Lo completamos contigo por WhatsApp."],
@@ -103,10 +105,12 @@ export default function NitroCompletePage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Quiero empezar</WhatsAppJuanButton>
-              <Button asChild size="lg" variant="outline" className="h-13 rounded-full border-white/15 bg-transparent px-7 text-base text-white hover:bg-white/7 hover:text-white"><Link href="#empezar">Cómo empiezo</Link></Button>
+              <WhatsAppJuanButton context={{ kind: "demo" }} placement="product_hero_demo" variant="outline">Probarlo con mi tienda</WhatsAppJuanButton>
             </div>
             {/* Lo que decide la entrada, en una línea: qué cubre el pago, tiempo y requisito. */}
             <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-semibold text-white/75 lg:justify-start">
+              <li><Link href="#probar" className="underline decoration-white/25 underline-offset-4 hover:text-white">Pruébalo gratis en 2 min</Link></li>
+              <li aria-hidden="true" className="text-white/30">·</li>
               <li>Listo en menos de {plan.installHours} h</li>
               <li aria-hidden="true" className="text-white/30">·</li>
               <li><Link href="#catalogo" className="underline decoration-white/25 underline-offset-4 hover:text-white">Con o sin tienda online</Link></li>
@@ -123,7 +127,7 @@ export default function NitroCompletePage() {
 
       <IntegrationLogoStrip />
 
-      <NitroEasyStart />
+      <NitroTryDemo placement="product_try_demo" />
 
       {/* El film: la venta completa en 86 segundos, con voz y subtítulos */}
       <section id="video" className="scroll-mt-20 px-5 pb-4 pt-6 lg:px-8 lg:pt-10" data-nitro-orb="flow">
@@ -143,6 +147,7 @@ export default function NitroCompletePage() {
         </details>
       </div>
 
+      <NitroEasyStart />
       <NitroCatalogPaths />
       <NitroMonthlyPricing />
       <NitroCommerceJourney />

@@ -3,6 +3,21 @@
 Estado vivo al 5 de noviembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
+
+## «Pruébalo con tu tienda» y video «El turno que nadie cubre» — 12 de noviembre de 2026 (NIT-218)
+
+Local, sin commit ni publicación. Botón «Probarlo con mi tienda» (portada,
+`/nitro-complete`, cierre), sección `NitroTryDemo`, pregunta frecuente y línea
+en `llms.txt`. El mensaje prellenado (`kind: "demo"` en
+`src/lib/juan-whatsapp.ts`) es contrato con `bot_super_admin`
+(`WEB_PREFILLS.demo`). Video nuevo del estudio en la portada
+(`NITRO_FILMS.turno`, 4:5 y 9:16 en Cloudinary; cifras de «Casa Brava · tienda
+de ejemplo»). `npm run build` pasa; falta revisión visual en celular y
+computador.
+
+**Publicar solo después de que el vendedor esté desplegado con la demo
+encendida** (Ajustes → Demo); antes, el botón lleva a un vendedor que no la hace.
+
 ## Rediseño de /nitro-complete por la mensualidad de $49.900 — 6 de noviembre de 2026
 
 Local, sin commit ni publicación. Hero con el precio de entrada, «Empezar toma

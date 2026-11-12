@@ -21,6 +21,8 @@ export interface NitroFilm {
   landscape: string;
   /** Public id vertical (9:16), con versión. Opcional. */
   portrait?: string;
+  /** La versión de escritorio es 4:5 (pieza de feed) en vez de 16:9. */
+  frame?: "4x5";
   /** Subtítulos (mismo dominio: un <track> de otro origen exige CORS). */
   captions?: string;
   /** Duración para mostrar («1:26»). */
@@ -55,6 +57,20 @@ export const NITRO_FILMS = {
     duration: "0:30",
     posterAt: 14.5,
     name: "Nitro Complete 30s",
+  },
+  /**
+   * «El turno que nadie cubre» (42,7 s, con voz y subtítulos quemados): el día
+   * de una tienda hora por hora. Pieza de feed del estudio (11-nov-2026,
+   * docs/linkedin-turno.md): 4:5 en escritorio y 9:16 en móvil. Sus cifras son
+   * de «Casa Brava · tienda de ejemplo» y así lo dice el video.
+   */
+  turno: {
+    landscape: "v1794502776/nitro-complete-turno-4x5",
+    portrait: "v1794502806/nitro-complete-turno-9x16",
+    frame: "4x5",
+    duration: "0:43",
+    posterAt: 0,
+    name: "Nitro Complete turno",
   },
 } satisfies Record<string, NitroFilm>;
 

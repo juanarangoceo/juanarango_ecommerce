@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
+import { WhatsAppSalesLink } from "@/components/commercial/whatsapp-sales-link";
 import { SALES_EVALUATION_HREF } from "@/lib/juan-whatsapp";
 import { nitroCompleteMonthly as plan } from "@/lib/commercial-content";
 
@@ -18,6 +19,7 @@ export function SalesContact({ placement }: { placement: string }) {
           <p className="mt-5 text-left text-base leading-7 text-white/75">Mi asistente te resuelve las dudas, te ayuda a contar tu negocio y te manda el enlace de pago por el mismo chat. Si un mes vendes más, recargas desde tu panel.</p>
           <WhatsAppJuanButton context={{ kind: "evaluation" }} placement={placement} className="mt-7 w-full sm:w-auto">Quiero empezar</WhatsAppJuanButton>
           <div className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm leading-6 text-white/60 lg:justify-start">
+            <WhatsAppSalesLink context={{ kind: "demo" }} placement={`${placement}_demo`} className="underline underline-offset-4 hover:text-white">Primero quiero probarlo</WhatsAppSalesLink>
             <Link href={SALES_EVALUATION_HREF} className="underline underline-offset-4 hover:text-white">Prefiero el formulario</Link>
             <Link href="/nitro-complete/privacidad" className="underline underline-offset-4 hover:text-white">Privacidad de mis datos</Link>
           </div>

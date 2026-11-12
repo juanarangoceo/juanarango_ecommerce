@@ -23,6 +23,10 @@ type Size = "inline" | "dialog";
 /** Proporción y ancho de la caja según los formatos disponibles. Clases literales para Tailwind. */
 function frameClass(film: NitroFilm, size: Size) {
   const { hasPortrait, hasLandscape } = filmIds(film);
+  if (film.frame === "4x5")
+    return size === "inline"
+      ? "mx-auto aspect-[9/16] w-full max-w-[calc(78svh*9/16)] md:aspect-[4/5] md:max-w-[calc(82svh*4/5)]"
+      : "aspect-[9/16] w-[min(94vw,calc(86svh*9/16))] md:aspect-[4/5] md:w-[min(94vw,calc(86svh*4/5))]";
   if (hasPortrait && hasLandscape)
     return size === "inline"
       ? "mx-auto aspect-[9/16] w-full max-w-[calc(78svh*9/16)] md:aspect-video md:max-w-none"
@@ -42,7 +46,7 @@ function FilmPoster({ film, hidden = false }: { film: NitroFilm; hidden?: boolea
     <picture className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${hidden ? "opacity-0" : "opacity-100"}`}>
       {hasPortrait && portrait ? <source media={FILM_MOBILE_QUERY} srcSet={filmPoster(portrait, film.posterAt, { portrait: true })} /> : null}
       {/* next/image no hace dirección de arte por media query; la portada ya viene optimizada por Cloudinary. */}
-      <img src={filmPoster(landscape, film.posterAt, { portrait: !film.landscape })} alt="" className="size-full object-cover" loading="lazy" decoding="async" />
+      <img src={filmPoster(landscape, film.posterAt, { portrait: !film.landscape || film.frame === "4x5" })} alt="" className="size-full object-cover" loading="lazy" decoding="async" />
     </picture>
   );
 }
@@ -51,7 +55,8 @@ function pickSource(film: NitroFilm, muted = false) {
   const { landscape, portrait, hasPortrait } = filmIds(film);
   const mobile = window.matchMedia(FILM_MOBILE_QUERY).matches;
   const usePortrait = (mobile && hasPortrait) || !film.landscape;
-  return filmUrl(usePortrait && portrait ? portrait : landscape, { portrait: usePortrait, muted });
+  // La pieza 4:5 es angosta: se entrega con el ancho de la vertical.
+  return filmUrl(usePortrait && portrait ? portrait : landscape, { portrait: usePortrait || film.frame === "4x5", muted });
 }
 
 const formatTime = (s: number) => (Number.isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}` : "0:00");
