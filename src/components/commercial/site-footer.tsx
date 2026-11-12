@@ -82,7 +82,6 @@ export function SiteFooter() {
         <p>© 2026 Juan Arango. Todos los derechos reservados.</p>
         <div className="space-y-1 sm:text-right">
           <p>NITRO ECOM es la estructura de implementación de Juan Arango.</p>
-          <p>Nitro Complete es un producto de TODOPOLIS S.A.S., NIT 901.225.969-6, Pereira, Colombia.</p>
         </div>
       </div>
     </footer>

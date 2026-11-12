@@ -16,6 +16,8 @@ Se retiró la nota del titular (Todopolis) por decisión de Juan.
 - Revisión de Juan en su celular y su computador sobre el dominio real.
 - Sigue vigente la condición de la demo: publicar solo con el vendedor
   desplegado y la demo encendida.
+- También se quitó la misma frase del pie de página de todo el sitio
+  (`site-footer.tsx`), porque seguía saliendo en la landing.
 - La nota del titular nació en NIT-57 (verificación de Meta y derechos de
   datos). El titular sigue en `/nitro-complete/privacidad` y
   `/eliminacion-de-datos`; si Meta lo pide en la página, hay que reponerla.
