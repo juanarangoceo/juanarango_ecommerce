@@ -14,9 +14,9 @@ export function NitroOperationsToolkit() {
   return (
     <section id="herramientas" className="scroll-mt-24 border-b border-white/10 bg-superficie-nitro px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="about">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+        <div className="max-w-3xl">
           <div><h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">También organiza<br /><span className="text-primary">lo que hay detrás de vender.</span></h2></div>
-          <div className="mx-auto max-w-lg lg:mx-0 lg:justify-self-end"><p className="text-pretty text-lg leading-8 text-white/75">Tus productos, tus clientes y tu equipo en el mismo lugar. Abre cada herramienta para conocer cómo funciona.</p></div>
+          <div className="mx-auto mt-5 max-w-2xl lg:mx-0"><p className="text-pretty text-center text-lg leading-8 text-white/75 lg:text-left">Tus productos, tus clientes y tu equipo en el mismo lugar. Abre cada herramienta para conocer cómo funciona.</p></div>
         </div>
         <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {tools.map(({ icon: Icon, title, text, detail }) => (

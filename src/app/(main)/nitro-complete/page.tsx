@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { NitroVoiceShowcase } from "@/components/commercial/nitro-voice-showcase";
 import { NitroCommerceJourney } from "@/components/commercial/nitro-commerce-journey";
 import { NitroOperationsToolkit } from "@/components/commercial/nitro-operations-toolkit";
-import { NitroHero } from "@/components/nitro/nitro-hero";
 import { IntegrationLogoStrip } from "@/components/commercial/integration-logo-strip";
 import { SalesCalculator } from "@/components/commercial/sales-calculator";
 import { WhatsAppStory } from "@/components/commercial/whatsapp-story";
@@ -16,25 +15,26 @@ import { NitroEasyStart } from "@/components/commercial/nitro-easy-start";
 import { NitroCatalogPaths } from "@/components/commercial/nitro-catalog-paths";
 import { EnterpriseContact } from "@/components/commercial/enterprise-contact";
 import { CONTACT_EMAILS } from "@/lib/contact-emails";
-import { NITRO_COMPLETE_ENTITY } from "@/components/legal/legal-shell";
 import { nitroAppUrl } from "@/lib/nitrobot-intake";
 import { SalesContact } from "@/components/commercial/sales-contact";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { NitroFilmPlayer } from "@/components/nitro/nitro-film";
+import { NitroUncoveredShift } from "@/components/commercial/nitro-uncovered-shift";
+import { NitroDepthTabs } from "@/components/commercial/nitro-depth-tabs";
 import { NitroTryDemo } from "@/components/commercial/nitro-try-demo";
 import { NITRO_FILMS } from "@/lib/nitro-film";
 
 const SITE_URL = "https://www.juanarangoecommerce.com";
 
 export const metadata: Metadata = {
-  title: "Nitro Complete | WhatsApp con IA, voz y pagos en Colombia",
+  title: "Nitro Complete | El turno que nadie cubre en tu WhatsApp",
   description:
-    `Un asesor que vende por tu WhatsApp con tu catálogo real, con o sin Shopify. ${plan.price} al mes en Colombia, listo en menos de ${plan.installHours} horas.`,
+    `Tu tienda cierra; tus clientes siguen escribiendo. Nitro les contesta a cualquier hora, vende con tu catálogo real y deja el pedido creado. ${plan.price} al mes en Colombia.`,
   alternates: { canonical: `${SITE_URL}/nitro-complete` },
   openGraph: {
     images: [{ url: "/og-nitro.png", width: 1200, height: 630 }],
-    title: `Nitro Complete | Tu WhatsApp vende solo. ${plan.price} / mes`,
-    description: "Atiende, cotiza y deja el pedido creado con tu catálogo real. Pruébalo con tu tienda por WhatsApp antes de pagar.",
+    title: `Tu tienda cierra a las 6. Tus clientes no. | Nitro Complete, ${plan.price} / mes`,
+    description: "Nitro cubre el turno que nadie cubre: atiende, cotiza y deja el pedido creado con tu catálogo real. Pruébalo con tu tienda por WhatsApp antes de pagar.",
     url: `${SITE_URL}/nitro-complete`,
     siteName: "Juan Arango Ecommerce",
     type: "website",
@@ -90,26 +90,27 @@ export default function NitroCompletePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
+      {/* Hero: el problema antes que el producto. Naranja = lo que nadie atiende. */}
       <section className="relative px-5 pb-16 pt-28 lg:px-8 lg:pb-24 lg:pt-36" data-nitro-orb="idle">
-        <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
-        <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
+        <div className="pointer-events-none absolute right-[6%] top-24 size-96 rounded-full bg-alert/[0.09] blur-[120px]" aria-hidden="true" />
+        <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
             <h1 className="text-white">
-              <span className="block text-[clamp(2.6rem,5.6vw,5rem)] font-semibold leading-[0.95] tracking-[-0.05em]">Nitro Complete</span>
-              <span className="mt-4 block text-balance text-[clamp(1.6rem,3.1vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.035em]">
-                Tu WhatsApp vende solo.<br /><span className="text-primary">{plan.price} / mes.</span>
+              <span className="block text-base font-semibold tracking-tight text-white/70 sm:text-lg">Nitro Complete</span>
+              <span className="mt-3 block text-balance text-[clamp(2.5rem,5.4vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.05em]">
+                Tu tienda cierra a las 6.<br /><span className="text-alert">Tus clientes no.</span>
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/75 lg:mx-0">
-              Un asesor que le contesta a tus clientes a cualquier hora, <strong className="nitro-hl">vende con tu catálogo real</strong> y te deja el pedido creado. Con Shopify o con tus productos subidos a Nitro: <strong className="font-semibold text-white">no necesitas tienda online.</strong>
+            <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-8 text-white/75 lg:mx-0">
+              Nitro cubre el turno que nadie cubre: le contesta a tus clientes a cualquier hora, <strong className="nitro-hl">vende con tu catálogo real</strong> y te deja el pedido creado. <strong className="font-semibold text-white">Sin contratar a nadie.</strong>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <WhatsAppJuanButton context={{ kind: "hero" }} placement="product_hero">Quiero empezar</WhatsAppJuanButton>
               <WhatsAppJuanButton context={{ kind: "demo" }} placement="product_hero_demo" variant="outline">Probarlo con mi tienda</WhatsAppJuanButton>
             </div>
-            {/* Lo que decide la entrada, en una línea: qué cubre el pago, tiempo y requisito. */}
+            {/* Lo que decide la entrada, en una línea: precio, tiempo y requisito. */}
             <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-semibold text-white/75 lg:justify-start">
-              <li><Link href="#probar" className="underline decoration-white/25 underline-offset-4 hover:text-white">Pruébalo gratis en 2 min</Link></li>
+              <li><Link href="#precio" className="text-white underline decoration-primary/60 underline-offset-4 hover:decoration-primary">{plan.price} / mes</Link></li>
               <li aria-hidden="true" className="text-white/30">·</li>
               <li>Listo en menos de {plan.installHours} h</li>
               <li aria-hidden="true" className="text-white/30">·</li>
@@ -121,19 +122,25 @@ export default function NitroCompletePage() {
               ¿Ya eres cliente? <a href={nitroAppUrl("/login")} className="font-semibold text-white/70 hover:text-white hover:underline">Ingresar</a>
             </p>
           </div>
-          <NitroHero />
+          {/* «El turno que nadie cubre» (43 s): su primer fotograma ya dice el titular. */}
+          <div className="min-w-0">
+            <NitroFilmPlayer film={NITRO_FILMS.turno} className="border-alert/25" />
+            <p className="mt-3 text-center text-sm text-white/55">El día de una tienda, hora por hora. Las cifras del video son de una tienda de ejemplo.</p>
+          </div>
         </div>
       </section>
 
       <IntegrationLogoStrip />
 
+      <NitroUncoveredShift />
+
       <NitroTryDemo placement="product_try_demo" />
 
       {/* El film: la venta completa en 86 segundos, con voz y subtítulos */}
-      <section id="video" className="scroll-mt-20 px-5 pb-4 pt-6 lg:px-8 lg:pt-10" data-nitro-orb="flow">
+      <section id="video" className="scroll-mt-20 px-5 pb-4 pt-16 lg:px-8 lg:pt-24" data-nitro-orb="flow">
         <div className="mx-auto max-w-5xl">
           <div className="mb-8 text-center">
-            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Míralo vender <span className="text-primary">de principio a fin.</span></h2>
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">Así cubre el turno: <span className="text-primary">una venta de principio a fin.</span></h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/75">La venta, la confirmación, el envío y el seguimiento, en menos de un minuto y medio.</p>
           </div>
           <NitroFilmPlayer film={NITRO_FILMS.full} />
@@ -150,20 +157,25 @@ export default function NitroCompletePage() {
       <NitroEasyStart />
       <NitroCatalogPaths />
       <NitroMonthlyPricing />
-      <NitroCommerceJourney />
-      <NitroOperationsToolkit />
-      <NitroVoiceShowcase />
 
-      {/* Calculadora */}
+      {/* Calculadora: la misma pregunta del precio, justo debajo. */}
       <section id="calculadora" className="scroll-mt-24 border-t border-white/7 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="calculator">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+          <div className="mb-10 max-w-3xl">
             <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">¿Te alcanza el mes?<br /><span className="text-primary">Calcúlalo en un minuto.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Te mostramos si te alcanzan los {plan.turns} turnos del mes (cada respuesta de tu asesor es un turno) o cuánto recargar.</p>
+            <p className="mx-auto mt-5 max-w-2xl text-pretty text-center text-lg leading-8 text-white/75 lg:mx-0 lg:text-left">Cada respuesta de tu asesor es un turno y el mes trae {plan.turns}. Mueve tus consultas y mira si te alcanzan o cuánto recargar.</p>
           </div>
           <SalesCalculator />
         </div>
       </section>
+
+      <NitroDepthTabs
+        tabs={[
+          { id: "integraciones", label: "Vende, cobra y entrega", content: <NitroCommerceJourney /> },
+          { id: "herramientas", label: "Organiza tu operación", content: <NitroOperationsToolkit /> },
+          { id: "voz", label: "Responde con voz", content: <NitroVoiceShowcase /> },
+        ]}
+      />
 
       <EnterpriseContact />
 
@@ -183,21 +195,14 @@ export default function NitroCompletePage() {
       </section>
 
       <section className="px-5 pb-20 lg:px-8 lg:pb-24" data-nitro-orb="diagnostic">
-        <SalesContact placement="product_closing" />
+        <SalesContact placement="product_closing" headline={<>No es un chatbot. <span className="text-primary">Es el turno que te faltaba.</span></>} />
         <p className="mx-auto mt-5 max-w-7xl text-center text-base leading-7 text-white/70">
           ¿Ya eres cliente? <a href={`mailto:${CONTACT_EMAILS.soporte}`} className="font-semibold text-white underline underline-offset-4 hover:text-primary">Escríbenos a soporte</a>
         </p>
       </section>
 
-      {/* Titular del producto (NIT-57): debe seguir siendo inequívoco para Meta
-          y para quien ejerce sus derechos, pero como nota discreta de cierre. */}
-      <section className="px-5 pb-12 lg:px-8" aria-label="Titular de Nitro Complete">
+      <section className="px-5 pb-12 lg:px-8" aria-label="Privacidad de Nitro Complete">
         <p className="mx-auto max-w-4xl text-center text-xs leading-5 text-white/40">
-          Nitro Complete es un producto de {NITRO_COMPLETE_ENTITY.name} (NIT {NITRO_COMPLETE_ENTITY.nit}), {NITRO_COMPLETE_ENTITY.location}.{" "}
-          <a href={`mailto:${NITRO_COMPLETE_ENTITY.email}`} className="underline underline-offset-2 hover:text-white/70">{NITRO_COMPLETE_ENTITY.email}</a>
-          {" · "}
-          <a href={NITRO_COMPLETE_ENTITY.whatsappLink} className="underline underline-offset-2 hover:text-white/70">WhatsApp {NITRO_COMPLETE_ENTITY.whatsapp}</a>
-          {" · "}
           <Link href="/nitro-complete/privacidad" className="underline underline-offset-2 hover:text-white/70">Privacidad</Link>
           {" · "}
           <Link href="/nitro-complete/eliminacion-de-datos" className="underline underline-offset-2 hover:text-white/70">Eliminación de datos</Link>

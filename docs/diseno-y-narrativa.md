@@ -33,12 +33,21 @@ El sitio adopta la identidad oficial de Nitro definida en
 | `ink` | `#111311` | Texto y botones en secciones claras; bloque de resultado |
 | `ground` / `line` | `#F6F8F1` / `#E2E6DA` | Secciones claras («negro y blancos») y sus bordes |
 | `alert` / `alert-soft` / `alert-text` | `#FF6A13` / `#FFF1E7` / `#B84500` | Acento naranja: algo espera o pide atención |
+| `cafe` | `#1E130C` | Fondo cálido del bloque del problema («el turno que nadie cubre») |
 | `background` / `superficie-nitro` | `#0B0D0B` / `#131613` | Lienzo oscuro y superficies |
 
 Reglas:
 
 - El naranja es acento del sistema Nitro completo, con el mismo significado que
   en el producto: señala lo que espera o lo que se pierde. No decora.
+- En `/nitro-complete` (12-nov-2026) el color cuenta la historia igual que el
+  video «El turno que nadie cubre»: naranja y café en el hero y en el bloque
+  del problema (lo que nadie atiende); verde desde que Nitro cubre el turno.
+  El titular del hero lleva el énfasis en naranja, no en verde.
+- El texto de apoyo va debajo del titular, en una frase. No usar el patrón de
+  titular a la izquierda y párrafo a la derecha, ni párrafos que terminen en
+  dos puntos lejos de lo que anuncian. Las objeciones de entrada («Sin página
+  web», «Sin saber de tecnología», «Sin contratar a nadie») son sellos visibles.
 - Alternar secciones oscuras con secciones claras `bg-ground text-ink` para dar
   ritmo; nunca secciones completas en verde intenso.
 - En un titular, resaltar como máximo una frase corta.

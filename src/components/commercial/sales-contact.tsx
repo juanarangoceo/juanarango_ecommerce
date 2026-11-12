@@ -10,12 +10,12 @@ const steps = [
   ["Tu asesor atiende", `En menos de ${plan.installHours} horas desde el pago y la información de tu negocio. Ese día empieza tu mes.`],
 ] as const;
 
-export function SalesContact({ placement }: { placement: string }) {
+export function SalesContact({ placement, headline }: { placement: string; headline?: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-primary/25 bg-superficie-nitro">
       <div className="grid gap-10 p-6 sm:p-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16 lg:p-12">
         <div className="text-center lg:text-left">
-          <h2 className="text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.035em] text-white sm:text-4xl">Tu asesor empieza aquí. <span className="text-primary">Te acompañamos por WhatsApp.</span></h2>
+          <h2 className="text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.035em] text-white sm:text-4xl">{headline ?? <>Tu asesor empieza aquí. <span className="text-primary">Te acompañamos por WhatsApp.</span></>}</h2>
           <p className="mt-5 text-left text-base leading-7 text-white/75">Mi asistente te resuelve las dudas, te ayuda a contar tu negocio y te manda el enlace de pago por el mismo chat. Si un mes vendes más, recargas desde tu panel.</p>
           <WhatsAppJuanButton context={{ kind: "evaluation" }} placement={placement} className="mt-7 w-full sm:w-auto">Quiero empezar</WhatsAppJuanButton>
           <div className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm leading-6 text-white/60 lg:justify-start">

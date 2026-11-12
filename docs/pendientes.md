@@ -4,6 +4,27 @@ Estado vivo al 5 de noviembre de 2026. Lo terminado se elimina de aquí y se
 registra en la bitácora correspondiente.
 
 
+## Renovación de /nitro-complete: «El turno que nadie cubre» — 12 de noviembre de 2026
+
+Publicado en `master` el 12-nov por autorización de Juan. Hero con el problema («Tu tienda cierra a
+las 6. Tus clientes no.») y el video del turno; bloque café `NitroUncoveredShift`
+(más clientes, sin más personal, tu tiempo); pasos con sellos de objeciones;
+calculadora junto al precio; recorrido, herramientas y voz en pestañas
+(`NitroDepthTabs`); cierre «No es un chatbot. Es el turno que te faltaba.».
+Se retiró la nota del titular (Todopolis) por decisión de Juan.
+
+- Revisión de Juan en su celular y su computador sobre el dominio real.
+- Sigue vigente la condición de la demo: publicar solo con el vendedor
+  desplegado y la demo encendida.
+- La nota del titular nació en NIT-57 (verificación de Meta y derechos de
+  datos). El titular sigue en `/nitro-complete/privacidad` y
+  `/eliminacion-de-datos`; si Meta lo pide en la página, hay que reponerla.
+- Nitro (mascota) ya no aparece en el hero de esta página;
+  `src/components/nitro/nitro-hero.tsx` quedó sin uso. Decidir si vuelve en el
+  cierre o se elimina el archivo.
+- Sin cifras de ahorro ni de ventas: no hay datos reales. Si se consiguen
+  casos, van en el bloque del turno.
+
 ## «Pruébalo con tu tienda» y video «El turno que nadie cubre» — 12 de noviembre de 2026 (NIT-218)
 
 Local, sin commit ni publicación. Botón «Probarlo con mi tienda» (portada,

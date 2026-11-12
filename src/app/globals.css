@@ -21,6 +21,7 @@
   --nitro-soft: #F1FFD6;
   --alert-soft: #FFF1E7;
   --alert-text: #B84500;
+  --cafe-nitro: #1E130C; /* fondo cálido: el turno que nadie cubre */
 
   --background: var(--negro-profundo);
   --foreground: oklch(0.98 0 0);
@@ -150,6 +151,7 @@
   --color-nitro-soft: var(--nitro-soft);
   --color-alert: var(--naranja-nitro);
   --color-alert-soft: var(--alert-soft);
+  --color-cafe: var(--cafe-nitro);
   --color-alert-text: var(--alert-text);
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;

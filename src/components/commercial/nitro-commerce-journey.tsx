@@ -23,9 +23,9 @@ export function NitroCommerceJourney() {
   return (
     <section id="integraciones" className="scroll-mt-24 bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="ecosystem">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+        <div className="max-w-3xl">
           <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">Del “¿cuánto vale?”<br /><span className="text-nitro-text">al pedido entregado.</span></h2>
-          <p className="mx-auto max-w-lg text-pretty text-lg leading-8 text-ink/75 lg:mx-0 lg:justify-self-end">Pago en línea o contraentrega. Conecta el cobro y el seguimiento para que tu cliente encuentre las respuestas en el mismo WhatsApp.</p>
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-center text-lg leading-8 text-ink/75 lg:mx-0 lg:text-left">Pago en línea o contraentrega. Conecta el cobro y el seguimiento para que tu cliente encuentre las respuestas en el mismo WhatsApp.</p>
         </div>
 
         <ol aria-label="Recorrido de una compra con Nitro" className="my-8 divide-y divide-line rounded-2xl border border-line bg-white sm:my-10 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:rounded-none sm:border-0 sm:bg-transparent lg:grid-cols-4">

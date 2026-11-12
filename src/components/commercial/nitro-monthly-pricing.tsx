@@ -41,8 +41,8 @@ export function NitroMonthlyPricing() {
     <section id="precio" className="scroll-mt-24 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">Pagas tu mes.<br /><span className="text-primary">Recargas solo si vendes más.</span></h2>
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Con tu mes activas el asesor: número, turnos y plantillas. Si vendes más, recargas; <strong className="font-semibold text-white">lo que recargas no vence.</strong></p>
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">{plan.price} al mes<br /><span className="text-primary">por tener el turno cubierto.</span></h2>
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Sin contratar a nadie para la noche ni el fin de semana. Tu mes trae número, turnos y plantillas; si vendes más, recargas, y <strong className="font-semibold text-white">lo que recargas no vence.</strong></p>
         </div>
 
         <article className="mt-10 overflow-hidden rounded-[2rem] border border-primary/35 bg-superficie-nitro">

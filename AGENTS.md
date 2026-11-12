@@ -139,6 +139,11 @@ Autenticación interna (endurecida el 25-09-2026):
 
 ## Estado actual — 25 de septiembre de 2026
 
+Actualización 12-nov-2026: `/nitro-complete` renovada y publicada en `master`
+con la narrativa «El turno que nadie cubre»: hero con el problema y el video,
+naranja y café para lo que nadie atiende, funciones en pestañas y sin la nota
+del titular. Detalle en `docs/pendientes.md` y `docs/bitacora/2026-11.md`.
+
 Actualización 30-oct-2026 (NIT-199): hub de guías
 `/guias/vender-por-whatsapp` publicado con su guía pilar (tipo `guia` en
 Sanity, JSON-LD, sitemap, `/llms.txt`, «Guías» en el menú). Solo guías: sin

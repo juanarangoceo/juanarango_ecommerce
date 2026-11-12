@@ -29,11 +29,11 @@ export function NitroTryDemo({ placement, id = "probar" }: { placement: string; 
   return (
     <section id={id} className="scroll-mt-24 bg-ground px-5 py-16 text-ink lg:px-8 lg:py-24" data-nitro-orb="conversation">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+        <div className="max-w-3xl">
           <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-left">
             No nos creas.<br /><span className="text-nitro-text">Pruébalo con tu tienda.</span>
           </h2>
-          <p className="mx-auto max-w-lg text-pretty text-lg leading-8 text-ink/75 lg:mx-0 lg:justify-self-end">
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-center text-lg leading-8 text-ink/75 lg:mx-0 lg:text-left">
             En dos minutos y sin pagar, ves cómo atendería a tus clientes: con tus productos y tus precios, aquí mismo en WhatsApp.
           </p>
         </div>
