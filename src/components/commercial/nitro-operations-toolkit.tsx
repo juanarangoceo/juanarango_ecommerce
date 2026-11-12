@@ -16,7 +16,7 @@ export function NitroOperationsToolkit() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
           <div><h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">También organiza<br /><span className="text-primary">lo que hay detrás de vender.</span></h2></div>
-          <div className="mx-auto max-w-lg lg:mx-0 lg:justify-self-end"><p className="text-pretty text-lg leading-8 text-white/75">Tus productos, tus clientes y tu equipo en el mismo lugar. Abre cada herramienta para conocer cómo funciona.</p><p className="mt-4 flex items-center gap-2 text-sm font-semibold text-white/80"><ShopifyLogo className="size-5" />Con Shopify o sin tienda online.</p></div>
+          <div className="mx-auto max-w-lg lg:mx-0 lg:justify-self-end"><p className="text-pretty text-lg leading-8 text-white/75">Tus productos, tus clientes y tu equipo en el mismo lugar. Abre cada herramienta para conocer cómo funciona.</p></div>
         </div>
         <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {tools.map(({ icon: Icon, title, text, detail }) => (

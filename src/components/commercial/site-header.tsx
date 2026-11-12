@@ -7,7 +7,6 @@ import { NitroMark } from "@/components/commercial/nitro-mark";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 import { WhatsAppSalesLink } from "@/components/commercial/whatsapp-sales-link";
 import { WhatsAppLogo } from "@/components/commercial/brand-logos";
-import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { primaryNavigation } from "@/lib/commercial-content";
 
 interface SiteHeaderProps {
@@ -54,7 +53,6 @@ export function SiteHeader({ loginUrl }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <LanguageToggle />
           <a href={loginUrl} className="hidden min-h-11 items-center rounded-full px-3 text-sm font-medium text-white/75 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary xl:inline-flex">
             Ingresar
           </a>

@@ -88,9 +88,7 @@ export default function NitroCompletePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <div className="pt-[73px]"><IntegrationLogoStrip /></div>
-
-      <section className="relative px-5 pb-16 pt-10 lg:px-8 lg:pb-24 lg:pt-16" data-nitro-orb="idle">
+      <section className="relative px-5 pb-16 pt-28 lg:px-8 lg:pb-24 lg:pt-36" data-nitro-orb="idle">
         <div className="pointer-events-none absolute right-[8%] top-24 size-96 rounded-full bg-primary/[0.06] blur-[120px]" />
         <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0 text-center lg:text-left">
@@ -100,7 +98,7 @@ export default function NitroCompletePage() {
                 Tu WhatsApp vende solo.<br /><span className="text-primary">{plan.price} / mes.</span>
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/62 lg:mx-0">
+            <p className="mx-auto mt-6 max-w-xl text-left text-lg leading-8 text-white/75 lg:mx-0">
               Un asesor que le contesta a tus clientes a cualquier hora, <strong className="nitro-hl">vende con tu catálogo real</strong> y te deja el pedido creado. Con Shopify o con tus productos subidos a Nitro: <strong className="font-semibold text-white">no necesitas tienda online.</strong>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -115,13 +113,15 @@ export default function NitroCompletePage() {
               <li aria-hidden="true" className="text-white/30">·</li>
               <li>Sin contrato</li>
             </ul>
-            <p className="mt-3 text-sm text-white/55">
+            <p className="mt-3 text-sm text-white/70">
               ¿Ya eres cliente? <a href={nitroAppUrl("/login")} className="font-semibold text-white/70 hover:text-white hover:underline">Ingresar</a>
             </p>
           </div>
           <NitroHero />
         </div>
       </section>
+
+      <IntegrationLogoStrip />
 
       <NitroEasyStart />
 
@@ -154,7 +154,7 @@ export default function NitroCompletePage() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
             <h2 className="text-balance text-center text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-left">¿Te alcanza el mes?<br /><span className="text-primary">Calcúlalo en un minuto.</span></h2>
-            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Te mostramos si te alcanzan los {plan.turns} turnos del mes o cuánto recargar.</p>
+            <p className="mx-auto max-w-lg text-center text-lg leading-8 text-white/75 lg:mx-0 lg:justify-self-end lg:text-left">Ajusta las consultas que recibes y las respuestas que suele necesitar cada cliente. Te mostramos si te alcanzan los {plan.turns} turnos del mes (cada respuesta de tu asesor es un turno) o cuánto recargar.</p>
           </div>
           <SalesCalculator />
         </div>
@@ -170,7 +170,7 @@ export default function NitroCompletePage() {
             {faqs.map(([question, answer]) => (
               <AccordionItem key={question} value={question} className="border-white/10">
                 <AccordionTrigger className="py-5 text-left text-base font-semibold text-white hover:no-underline">{question}</AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm leading-6 text-white/58">{answer}</AccordionContent>
+                <AccordionContent className="pb-5 text-base leading-7 text-white/75">{answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

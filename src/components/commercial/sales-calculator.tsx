@@ -7,7 +7,7 @@ import { estimateRecharge } from "@/lib/recharge-estimate";
 import { WhatsAppJuanButton } from "@/components/commercial/whatsapp-juan-button";
 
 export function SalesCalculator() {
-  const [chats, setChats] = useState(60);
+  const [chats, setChats] = useState(100);
   const [turns, setTurns] = useState(UNITS_PER_CONVERSATION);
   const id = useId();
   // Primero se usan los turnos del mes (NIT-209); solo lo que sobra pide recarga.

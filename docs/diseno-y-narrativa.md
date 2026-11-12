@@ -470,3 +470,22 @@ registrada en la bitácora; no volver a aplicarla.
 Código: `src/components/commercial/integration-logo-strip.tsx`. Revisión:
 `artifacts/franja-logos-2026-10-22/`. Solo esta landing; no cambia el header
 compartido, la home, NitroBot ni sus integraciones. Sin publicar.
+
+## Ajustes del 12-nov-2026 (rama `mejoras-web-2026-11`, sin publicar)
+
+- Portada: las cuatro tarjetas de «dónde se pierde la venta» pasan a un bloque
+  interactivo, «¿Cuántas horas al día nadie responde tu WhatsApp?»
+  (`after-hours.tsx`). El visitante marca su horario y la cifra es aritmética
+  con sus datos (24 − horas abiertas); no hay promedios ni cifras de mercado.
+  Naranja = horas sin nadie; los otros tres momentos quedan en una lista corta.
+- Portada: foto pequeña de Juan junto a «Soy Juan Arango» en el hero; el precio
+  queda en una sola franja con enlace a `/nitro-complete#precio`; las guías de
+  «Vender por WhatsApp» reemplazan a los últimos artículos del blog.
+- `/nitro-complete`: la franja de logos baja debajo del hero; se quita el
+  recorrido de tres pasos del precio (repetía $49.900) y la línea repetida
+  «Con Shopify o sin tienda online» de las herramientas.
+- «Turnos» se mantiene (así se llama en el panel), siempre explicado como
+  «respuestas de tu asesor». La calculadora arranca en 100 conversaciones para
+  que el primer resultado muestre también el caso con recarga.
+- Se retira el traductor automático (botón EN) del encabezado comercial.
+- Subtextos de portada y de `/nitro-complete` suben a blanco 72–75 %.

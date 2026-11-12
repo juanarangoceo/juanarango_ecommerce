@@ -7,6 +7,7 @@ import {
   nitroCompleteMonthlyConversations as conversations,
   nitroCompleteTemplatePrice,
   nitroCompleteUnitPacks,
+  UNITS_PER_CONVERSATION,
 } from "@/lib/commercial-content";
 
 // Precio de Nitro Complete para clientes nuevos (NIT-209). Se cuenta como
@@ -15,7 +16,7 @@ import {
 const includes = [
   ["Instalación y configuración", "Armamos tu asesor contigo por WhatsApp: tono, envíos y formas de pago. No se cobra aparte."],
   ["Tu número de WhatsApp", "Gestionado por Nitro y listo para compartir en tus redes, anuncios y tienda."],
-  [`${plan.turns} turnos al mes`, `Alcanzan para unas ${conversations} conversaciones de venta. Un turno es cada respuesta que envía tu asesor.`],
+  [`${plan.turns} turnos al mes`, `Un turno es cada respuesta que envía tu asesor. Con ${UNITS_PER_CONVERSATION} respuestas por conversación alcanzan para unas ${conversations}; si tus ventas conversan más, calcula tu caso abajo.`],
   [`${plan.templates} envíos de plantilla al mes`, "Para confirmar pedidos y avisar envíos fuera de la ventana de 24 horas de WhatsApp, según aprobación de Meta."],
   ["Tu asesor y tu panel", "Catálogo real, conversaciones, pedidos y los casos que necesita atender tu equipo."],
 ] as const;
@@ -40,18 +41,9 @@ export function NitroMonthlyPricing() {
     <section id="precio" className="scroll-mt-24 px-5 py-16 lg:px-8 lg:py-24" data-nitro-orb="pricing">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl"><span className="text-primary">{plan.price} / mes.</span><br />Y recargas solo lo que necesites.</h2>
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl">Pagas tu mes.<br /><span className="text-primary">Recargas solo si vendes más.</span></h2>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/75">Con tu mes activas el asesor: número, turnos y plantillas. Si vendes más, recargas; <strong className="font-semibold text-white">lo que recargas no vence.</strong></p>
         </div>
-
-        {/* El recorrido del dinero en tres pasos: el mes activa, se usa, se recarga. */}
-        <ol className="mx-auto mt-10 grid max-w-5xl gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center" aria-label="Cómo funciona el pago">
-          <li className="rounded-2xl border border-primary/40 bg-primary/10 p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-primary">1 · Tu mes</p><p className="mt-2 text-2xl font-semibold text-white">{plan.price}</p><p className="mt-1 text-sm text-white/70">Activa tu asesor con número, {plan.turns} turnos y {plan.templates} plantillas.</p></li>
-          <li aria-hidden="true" className="hidden text-2xl text-white/40 md:block">→</li>
-          <li className="rounded-2xl border border-white/12 bg-superficie-nitro p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-white/60">2 · Tu asesor vende</p><p className="mt-2 text-2xl font-semibold text-white">Usa tus turnos</p><p className="mt-1 text-sm text-white/70">Cada respuesta a un cliente es un turno.</p></li>
-          <li aria-hidden="true" className="hidden text-2xl text-white/40 md:block">→</li>
-          <li className="rounded-2xl border border-white/12 bg-superficie-nitro p-5 text-center"><p className="text-xs font-semibold uppercase tracking-wide text-white/60">3 · ¿Vendes más?</p><p className="mt-2 text-2xl font-semibold text-white">Recargas</p><p className="mt-1 text-sm text-white/70">Desde {formatCop(nitroCompleteUnitPacks[0].priceCop)}, cuando lo necesites. No vencen.</p></li>
-        </ol>
 
         <article className="mt-10 overflow-hidden rounded-[2rem] border border-primary/35 bg-superficie-nitro">
           <div className="grid lg:grid-cols-[.9fr_1.1fr]">
